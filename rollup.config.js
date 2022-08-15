@@ -10,7 +10,7 @@ export default {
   input: "src/index.js",
   output: [
     {
-      file: `dist/${pkg.main}`,
+      file: pkg.main,
       format: "cjs",
       exports: "named",
       sourcemap: true,
