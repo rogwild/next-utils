@@ -2,8 +2,8 @@
   "name": "@rogwild/next-utils",
   "version": "1.3.0",
   "description": "Additional fuctions for Next.js",
-  "main": "dist/index.js",
-  "source": "dist/index.js",
+  "main": "index.js",
+  "source": "index.js",
   "files": [
     "dist"
   ],

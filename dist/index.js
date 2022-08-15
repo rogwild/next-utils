@@ -164,7 +164,5 @@ var utils = /*#__PURE__*/Object.freeze({
 
 console.log(`🚀 ~ utils`, utils);
 
-var index = {};
-
-exports["default"] = index;
+exports["default"] = utils;
 //# sourceMappingURL=index.js.map
