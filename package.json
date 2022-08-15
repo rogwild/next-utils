@@ -1,6 +1,6 @@
 {
   "name": "@rogwild/next-utils",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "Additional fuctions for Next.js",
   "main": "index.js",
   "files": [
