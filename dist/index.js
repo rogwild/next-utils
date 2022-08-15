@@ -162,7 +162,5 @@ var utils = /*#__PURE__*/Object.freeze({
   appendFilesToFormData: appendFilesToFormData
 });
 
-console.log(`🚀 ~ utils`, utils);
-
 exports["default"] = utils;
 //# sourceMappingURL=index.js.map

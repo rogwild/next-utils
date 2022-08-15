@@ -3,7 +3,6 @@
   "version": "1.4.0",
   "description": "Additional fuctions for Next.js",
   "main": "index.js",
-  "source": "index.js",
   "files": [
     "dist"
   ],
