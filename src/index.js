@@ -1,7 +1,7 @@
 import * as apiUtils from "./api";
-import * as hooksUtils from "./hooks";
+import hooks from "./hooks";
 
 export default {
   api: apiUtils,
-  hooks: hooksUtils,
+  hooks,
 };

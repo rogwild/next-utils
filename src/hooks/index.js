@@ -1,5 +1,7 @@
 import useLookupTable from "./use-lookup-table";
 
-export default {
+const hooks = {
   useLookupTable,
 };
+
+export default hooks;

@@ -402,18 +402,13 @@ const useLookupTable = ({
   };
 };
 
-var index$1 = {
+const hooks = {
   useLookupTable,
 };
 
-var hooksUtils = /*#__PURE__*/Object.freeze({
-  __proto__: null,
-  'default': index$1
-});
-
 var index = {
   api: apiUtils,
-  hooks: hooksUtils,
+  hooks,
 };
 
 exports["default"] = index;
