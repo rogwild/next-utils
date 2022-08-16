@@ -411,8 +411,6 @@ var hooksUtils = /*#__PURE__*/Object.freeze({
   'default': index$1
 });
 
-// console.log(`🚀 ~ utils`, utils);
-
 var index = {
   api: apiUtils,
   hooks: hooksUtils,
