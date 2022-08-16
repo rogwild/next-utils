@@ -248,6 +248,60 @@ const useLookupTable = ({
 export default useLookupTable;
 
 /**
+ * A function that creates a valid documentation item structure for using in a `Storybook`, section` ArgsTable`.
+ *
+ * export default {
+ *    component: "NameOfCompOrFunction",
+ *    title: "TitleOfComponent",
+ *    argTypes: {*it will be here*}
+ * }
+ *
+ * @param {String} title - Variable name
+ * @param {String} description - Variable description
+ * @param {String} type - Variable type in string `(Array | Object | String | Boolean)`
+ * @param {String} detail - The structure of the passed argument with a description of the types. Supported by `Markdown`. For example:
+ *    "Header: String,\n
+ *     accessor: String,\n
+ *     [hidden]: Boolean,\n
+ *     [Filter]: Function,\n
+ *     [filter]: String,\n
+ *     [className]: String".
+ * @param {String} defaultValue - The default value will be in the table in the `Default` column
+ * @param {Boolean} isRequired - Required field or not
+ * @returns {Object}
+ */
+function createArgDocumentation({
+  title,
+  description,
+  type,
+  detail,
+  defaultValue,
+  isRequired = false,
+}) {
+  const documentation = {
+    [title]: {
+      description,
+      table: {
+        type: {
+          summary: type,
+          detail,
+        },
+        defaultValue: {
+          summary: defaultValue,
+          detail: undefined,
+        },
+      },
+      type: {
+        name: type,
+        required: isRequired,
+      },
+    },
+  };
+
+  return documentation;
+}
+
+/**
  * `columns` documentation for `Storybook`
  */
 const columnsDoc = createArgDocumentation({
@@ -313,58 +367,4 @@ export const sbDocumentation = {
       },
     },
   },
-};
-
-/**
- * A function that creates a valid documentation item structure for using in a `Storybook`, section` ArgsTable`.
- *
- * export default {
- *    component: "NameOfCompOrFunction",
- *    title: "TitleOfComponent",
- *    argTypes: {*it will be here*}
- * }
- *
- * @param {String} title - Variable name
- * @param {String} description - Variable description
- * @param {String} type - Variable type in string `(Array | Object | String | Boolean)`
- * @param {String} detail - The structure of the passed argument with a description of the types. Supported by `Markdown`. For example:
- *    "Header: String,\n
- *     accessor: String,\n
- *     [hidden]: Boolean,\n
- *     [Filter]: Function,\n
- *     [filter]: String,\n
- *     [className]: String".
- * @param {String} defaultValue - The default value will be in the table in the `Default` column
- * @param {Boolean} isRequired - Required field or not
- * @returns {Object}
- */
-const createArgDocumentation = ({
-  title,
-  description,
-  type,
-  detail,
-  defaultValue,
-  isRequired = false,
-}) => {
-  const documentation = {
-    [title]: {
-      description,
-      table: {
-        type: {
-          summary: type,
-          detail,
-        },
-        defaultValue: {
-          summary: defaultValue,
-          detail: undefined,
-        },
-      },
-      type: {
-        name: type,
-        required: isRequired,
-      },
-    },
-  };
-
-  return documentation;
 };
