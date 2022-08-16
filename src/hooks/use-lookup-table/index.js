@@ -33,6 +33,7 @@ const baseFilters = {
 };
 
 /**
+ *
  * Column element, describes how useTable should configure the returned `headerGroups` array
  * @typedef ColumnItemObject
  * @type {object}
