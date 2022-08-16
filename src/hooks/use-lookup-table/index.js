@@ -1,169 +1,12 @@
-Object.defineProperty(exports, '__esModule', { value: true });
-
-var react = require('react');
-var reactTable = require('react-table');
-
-// import qs from "qs";
-
-const getImageUrl = (obj, size = `medium`, BACKEND_URL) => {
-  if (!obj) {
-    return null;
-  }
-
-  const url = obj.formats?.[size]?.url || obj.url;
-
-  return `${BACKEND_URL}${url}`;
-};
-
-const transformResponseItem = (resItem) => {
-  if (isArray(resItem)) {
-    return resItem.map((item) => transformResponseItem(item));
-  }
-
-  if (isObject(resItem)) {
-    if (isArray(resItem.data)) {
-      resItem = [...resItem.data];
-    } else if (isObject(resItem.data)) {
-      resItem = transformEntriesInObj(flatItemAttributes(resItem.data));
-    } else if (resItem.data === null) {
-      resItem = null;
-    } else {
-      resItem = transformEntriesInObj(flatItemAttributes(resItem));
-    }
-
-    for (const key in resItem) {
-      resItem[key] = transformResponseItem(resItem[key]);
-    }
-
-    return resItem;
-  }
-
-  return resItem;
-};
-
-const transformPageBlock = (block, transformers) => {
-  const key = block?._Component;
-
-  if (!transformers?.[key]) {
-    return null;
-  }
-
-  return transformers[key](block);
-};
-
-const isObject = (data) => data && typeof data === `object`;
-
-const isArray = (data) => data && Array.isArray(data);
-
-const flatItemAttributes = (data) => {
-  if (!data?.attributes) return data;
-
-  return {
-    id: data?.id,
-    ...data.attributes,
-  };
-};
-
-const combineHeaders = ({ withAuth }) => {
-  const headers = {};
-
-  if (withAuth) {
-    const token = localStorage.getItem(`jwt`);
-    headers.Authorization = `Bearer ${token}`;
-  }
-
-  return headers;
-};
-
-const snakeToCamel = (str) => {
-  return str.replace(/([-_][a-z])/gi, (char) => {
-    return char.toUpperCase().replace(`-`, ``).replace(`_`, ``);
-  });
-};
-
-const transformEntriesInObj = (item) => {
-  if (isObject(item) && !isArray(item)) {
-    const entries = Object.entries(item).map((entry) => {
-      const key = snakeToCamel(entry[0]);
-
-      let value = entry[1];
-
-      if (isObject(value)) {
-        value = transformEntriesInObj(value);
-      } else if (isArray(value)) {
-        value = value.map((elem) => transformEntriesInObj({ item: elem }));
-      }
-
-      return [key, value];
-    });
-
-    return Object.fromEntries(entries);
-  }
-
-  return item;
-};
-
-const removeEmptyFields = ({ data, passKey, files }) => {
-  // console.log(`🚀 ~ removeEmptyFields ~ files`, files);
-  let modified;
-  if (typeof data === `object` && data !== null) {
-    modified = {};
-    if (Array.isArray(data)) {
-      modified = [];
-      for (const element of data) {
-        modified.push(removeEmptyFields({ data: element, passKey, files }));
-      }
-    } else {
-      for (const key of Object.keys(data)) {
-        if (data[key] === `` && key !== `publishedAt`) {
-          continue;
-        }
-        modified[key] = removeEmptyFields({
-          data: data[key],
-          passKey: `${passKey ? `${passKey}.` : ``}${key}`,
-          files,
-        });
-      }
-    }
-  } else {
-    modified = data;
-  }
-  return modified;
-};
-
-const appendFilesToFormData = (formData, files) => {
-  // console.log(`🚀 ~ appendFilesToFormData ~ formData`, formData);
-  if (Object.keys(files).length) {
-    for (const key of Object.keys(files)) {
-      // console.log(`🚀 ~ key`, key);
-      if (Array.isArray(files[key])) {
-        for (const [_, file] of files[key].entries()) {
-          // console.log(`🚀 ~ file`, file, files[key]);
-          formData.append(`files.${key}`, file);
-        }
-      } else {
-        // console.log(`🚀 ~ appendFilesToFormData ~ key`, key);
-        // console.log(`🚀 ~ file`, file, files[key]);
-        formData.append(`files.${key}`, files[key]);
-      }
-    }
-  }
-};
-
-var apiUtils = /*#__PURE__*/Object.freeze({
-  __proto__: null,
-  getImageUrl: getImageUrl,
-  transformResponseItem: transformResponseItem,
-  transformPageBlock: transformPageBlock,
-  isObject: isObject,
-  isArray: isArray,
-  flatItemAttributes: flatItemAttributes,
-  combineHeaders: combineHeaders,
-  snakeToCamel: snakeToCamel,
-  transformEntriesInObj: transformEntriesInObj,
-  removeEmptyFields: removeEmptyFields,
-  appendFilesToFormData: appendFilesToFormData
-});
+import { useMemo, useState, useEffect } from "react";
+import {
+  useTable,
+  useSortBy,
+  useFilters,
+  useGlobalFilter,
+  useExpanded,
+  useRowSelect,
+} from "react-table";
 
 /**
  * Filter function by text content
@@ -240,26 +83,26 @@ const useLookupTable = ({
   config = { selectedRowIds: [] },
   initialFiltersState = [],
 }) => {
-  const data = react.useMemo(() => {
+  const data = useMemo(() => {
     return passedData;
   }, [passedData.length]);
 
-  const [sortBy, setSortBy] = react.useState(config.sortBy);
-  const [filters, setFilters] = react.useState(initialFiltersState);
-  const [localGlobalFilter, setLocalGlobalFilter] = react.useState(
+  const [sortBy, setSortBy] = useState(config.sortBy);
+  const [filters, setFilters] = useState(initialFiltersState);
+  const [localGlobalFilter, setLocalGlobalFilter] = useState(
     config.globalFilter || ``
   );
 
-  const [localSelectedRowIds, setLocalSelectedRowIds] = react.useState(
+  const [localSelectedRowIds, setLocalSelectedRowIds] = useState(
     config.selectedRowIds || undefined
   );
 
-  react.useMemo(() => config.useRowSelect ?? false, []);
+  const shouldUseRowSelect = useMemo(() => config.useRowSelect ?? false, []);
 
   /**
    * State memoization to prevent data erasure when `data` changes
    * */
-  const initialState = react.useMemo(() => {
+  const initialState = useMemo(() => {
     const state = {};
     if (sortBy) state.sortBy = sortBy;
 
@@ -272,17 +115,17 @@ const useLookupTable = ({
     return state;
   }, [sortBy, filters, localSelectedRowIds]);
 
-  const filterTypes = react.useMemo(() => {
+  const filterTypes = useMemo(() => {
     return { ...baseFilters, ...config.filterTypes };
   }, []);
 
-  react.useEffect(() => {
+  useEffect(() => {
     if (data.length && config.selectedRowIds) {
       setLocalSelectedRowIds(config.selectedRowIds);
     }
   }, [data]);
 
-  const tableInstance = reactTable.useTable(
+  const tableInstance = useTable(
     {
       columns,
       data,
@@ -290,11 +133,11 @@ const useLookupTable = ({
       initialState,
       getRowId,
     },
-    reactTable.useGlobalFilter,
-    reactTable.useFilters,
-    reactTable.useSortBy,
-    reactTable.useExpanded,
-    reactTable.useRowSelect
+    useGlobalFilter,
+    useFilters,
+    useSortBy,
+    useExpanded,
+    useRowSelect
   );
 
   const {
@@ -312,7 +155,7 @@ const useLookupTable = ({
   /**
    * Save `isSelected` IDs state for real-data rendering
    */
-  react.useEffect(() => {
+  useEffect(() => {
     let foundSelected = false;
     if (!rows.length) {
       return;
@@ -335,7 +178,7 @@ const useLookupTable = ({
   /**
    * Save `isSorted` value for real-data rendering
    */
-  react.useEffect(() => {
+  useEffect(() => {
     let foundSorted = false;
     if (!rows.length) {
       return;
@@ -356,7 +199,7 @@ const useLookupTable = ({
    * Save `filterValue` for real-data rendering
    */
 
-  react.useEffect(() => {
+  useEffect(() => {
     let foundFiltered = false;
 
     if (!rows.length) {
@@ -373,7 +216,7 @@ const useLookupTable = ({
     if (!foundFiltered) setFilters([]);
   }, [rows]);
 
-  const [inputValue, setInputValue] = react.useState(state.globalFilter);
+  const [inputValue, setInputValue] = useState(state.globalFilter);
 
   const onGlobalFilterChange = (value) => {
     setGlobalFilter(value || undefined);
@@ -401,6 +244,8 @@ const useLookupTable = ({
     toggleAllRowsSelected,
   };
 };
+
+export default useLookupTable;
 
 /**
  * `columns` documentation for `Storybook`
@@ -452,7 +297,7 @@ const returnDoc = createArgDocumentation({
 /**
  * `Storybook` default export object with documentation for `props` and `return`
  */
-({
+export const sbDocumentation = {
   component: useLookupTable,
   title: `Hooks/useLookupTable`,
   argTypes: {
@@ -468,7 +313,7 @@ const returnDoc = createArgDocumentation({
       },
     },
   },
-});
+};
 
 /**
  * A function that creates a valid documentation item structure for using in a `Storybook`, section` ArgsTable`.
@@ -523,22 +368,3 @@ const createArgDocumentation = ({
 
   return documentation;
 };
-
-var index$1 = {
-  useLookupTable,
-};
-
-var hooksUtils = /*#__PURE__*/Object.freeze({
-  __proto__: null,
-  'default': index$1
-});
-
-// console.log(`🚀 ~ utils`, utils);
-
-var index = {
-  api: apiUtils,
-  hooks: hooksUtils,
-};
-
-exports["default"] = index;
-//# sourceMappingURL=index.js.map

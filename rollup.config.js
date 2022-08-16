@@ -18,5 +18,5 @@ export default {
     },
   ],
   plugins: [nodeResolve()],
-  external: [],
+  external: ["react", "react-table"],
 };
