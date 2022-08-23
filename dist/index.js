@@ -1,7 +1,14 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
+var axios = require('axios');
+var qs = require('qs');
 var react = require('react');
 var reactTable = require('react-table');
+
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var axios__default = /*#__PURE__*/_interopDefaultLegacy(axios);
+var qs__default = /*#__PURE__*/_interopDefaultLegacy(qs);
 
 /******************************************************************************
 Copyright (c) Microsoft Corporation.
@@ -39,7 +46,33 @@ function __spreadArray(to, from, pack) {
     return to.concat(ar || Array.prototype.slice.call(from));
 }
 
-// import qs from "qs";
+var BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+var Api = /** @class */ (function () {
+    function Api(url) {
+        this.baseUrl = url || BACKEND_URL;
+    }
+    Api.prototype.request = function (_a) {
+        var model = _a.model, query = _a.query, _b = _a.method, method = _b === void 0 ? "GET" : _b, data = _a.data, withAuth = _a.withAuth, headers = _a.headers, _c = _a.id, id = _c === void 0 ? "" : _c; _a.notifyError;
+        var stringifiedQuery = qs__default["default"].stringify(query, {
+            encodeValuesOnly: true,
+        });
+        var passHeaders = __assign(__assign({}, headers), combineHeaders({ withAuth: withAuth }));
+        return axios__default["default"]({
+            url: "".concat(this.baseUrl, "/api/").concat(model, "/").concat(id, "?").concat(stringifiedQuery),
+            headers: passHeaders,
+            method: method,
+            data: data,
+        })
+            .then(function (res) { return transformResponseItem(res.data); })
+            .catch(function (error) {
+            var _a, _b, _c, _d;
+            ((_c = (_b = (_a = error.response) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.error) === null || _c === void 0 ? void 0 : _c.message) || (error === null || error === void 0 ? void 0 : error.message);
+            console.log("error", method, model, (_d = error.response) === null || _d === void 0 ? void 0 : _d.data);
+        });
+    };
+    return Api;
+}());
+
 var getImageUrl = function (obj, size, BACKEND_URL) {
     var _a, _b;
     if (size === void 0) { size = "medium"; }
@@ -49,6 +82,7 @@ var getImageUrl = function (obj, size, BACKEND_URL) {
     var url = ((_b = (_a = obj.formats) === null || _a === void 0 ? void 0 : _a[size]) === null || _b === void 0 ? void 0 : _b.url) || obj.url;
     return "".concat(BACKEND_URL).concat(url);
 };
+var ApiClient = Api;
 var transformResponseItem = function (resItem) {
     if (isArray(resItem)) {
         return resItem.map(function (item) { return transformResponseItem(item); });
@@ -175,6 +209,7 @@ var appendFilesToFormData = function (formData, files) {
 var apiUtils = /*#__PURE__*/Object.freeze({
     __proto__: null,
     getImageUrl: getImageUrl,
+    ApiClient: ApiClient,
     transformResponseItem: transformResponseItem,
     transformPageBlock: transformPageBlock,
     isObject: isObject,

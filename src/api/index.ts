@@ -1,7 +1,8 @@
 // import qs from "qs";
+import { Api } from "./client";
 
 export const getImageUrl = (
-  obj: { formats: object; url: string },
+  obj: { formats?: object; url: string },
   size: string = `medium`,
   BACKEND_URL: string
 ): string => {
@@ -14,7 +15,9 @@ export const getImageUrl = (
   return `${BACKEND_URL}${url}`;
 };
 
-export const transformResponseItem = (resItem) => {
+export const ApiClient = Api;
+
+export const transformResponseItem = (resItem: any) => {
   if (isArray(resItem)) {
     return resItem.map((item) => transformResponseItem(item));
   }
@@ -63,7 +66,7 @@ export const flatItemAttributes = (data) => {
   };
 };
 
-export const combineHeaders = ({ withAuth }) => {
+export const combineHeaders = ({ withAuth }: { withAuth?: boolean }) => {
   const headers: {
     Authorization?: string;
   } = {};
@@ -76,7 +79,7 @@ export const combineHeaders = ({ withAuth }) => {
   return headers;
 };
 
-export const snakeToCamel = (str) => {
+export const snakeToCamel = (str: string) => {
   return str.replace(/([-_][a-z])/gi, (char) => {
     return char.toUpperCase().replace(`-`, ``).replace(`_`, ``);
   });
