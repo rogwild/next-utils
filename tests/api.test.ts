@@ -1,9 +1,4 @@
-import {
-  transformResponseItem,
-  getImageUrl,
-  snakeToCamel,
-  ApiClient,
-} from "../src/api";
+import { transformResponseItem, getImageUrl, ApiClient } from "../src/api";
 
 describe("API UTILS", () => {
   describe("getImageUrl", () => {
@@ -61,14 +56,6 @@ describe("API UTILS", () => {
         title: "Lupa",
         images: [{ url: "/uploads/image.jpg" }],
       });
-    });
-  });
-
-  describe("snakeToCamel", () => {
-    it("change snake_case to camelCase", () => {
-      const cameled = snakeToCamel("camel_case"); //?
-
-      expect(cameled).toEqual("camelCase");
     });
   });
 
