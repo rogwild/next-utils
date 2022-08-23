@@ -1,5 +1,8 @@
 // import qs from "qs";
-import { Api } from "./client";
+import {
+  Api,
+  transformResponseItem as transformResponseItemFunc,
+} from "./client";
 
 export const getImageUrl = (
   obj: { formats?: object; url: string },
@@ -15,34 +18,6 @@ export const getImageUrl = (
   return `${BACKEND_URL}${url}`;
 };
 
-export const ApiClient = Api;
-
-export const transformResponseItem = (resItem: any) => {
-  if (isArray(resItem)) {
-    return resItem.map((item) => transformResponseItem(item));
-  }
-
-  if (isObject(resItem)) {
-    if (isArray(resItem.data)) {
-      resItem = [...resItem.data];
-    } else if (isObject(resItem.data)) {
-      resItem = transformEntriesInObj(flatItemAttributes(resItem.data));
-    } else if (resItem.data === null) {
-      resItem = null;
-    } else {
-      resItem = transformEntriesInObj(flatItemAttributes(resItem));
-    }
-
-    for (const key in resItem) {
-      resItem[key] = transformResponseItem(resItem[key]);
-    }
-
-    return resItem;
-  }
-
-  return resItem;
-};
-
 export const transformPageBlock = (block, transformers) => {
   const key = block?._Component;
 
@@ -51,60 +26,6 @@ export const transformPageBlock = (block, transformers) => {
   }
 
   return transformers[key](block);
-};
-
-export const isObject = (data) => data && typeof data === `object`;
-
-export const isArray = (data) => data && Array.isArray(data);
-
-export const flatItemAttributes = (data) => {
-  if (!data?.attributes) return data;
-
-  return {
-    id: data?.id,
-    ...data.attributes,
-  };
-};
-
-export const combineHeaders = ({ withAuth }: { withAuth?: boolean }) => {
-  const headers: {
-    Authorization?: string;
-  } = {};
-
-  if (withAuth) {
-    const token = localStorage.getItem(`jwt`);
-    headers.Authorization = `Bearer ${token}`;
-  }
-
-  return headers;
-};
-
-export const snakeToCamel = (str: string) => {
-  return str.replace(/([-_][a-z])/gi, (char) => {
-    return char.toUpperCase().replace(`-`, ``).replace(`_`, ``);
-  });
-};
-
-export const transformEntriesInObj = (item) => {
-  if (isObject(item) && !isArray(item)) {
-    const entries = Object.entries(item).map((entry) => {
-      const key = snakeToCamel(entry[0]);
-
-      let value: any = entry[1];
-
-      if (isObject(value)) {
-        value = transformEntriesInObj(value);
-      } else if (isArray(value)) {
-        value = value.map((elem) => transformEntriesInObj({ item: elem }));
-      }
-
-      return [key, value];
-    });
-
-    return Object.fromEntries(entries);
-  }
-
-  return item;
 };
 
 export const removeEmptyFields = ({ data, passKey, files }) => {
@@ -153,3 +74,6 @@ export const appendFilesToFormData = (formData, files) => {
     }
   }
 };
+
+export const ApiClient = Api;
+export const transformResponseItem = transformResponseItemFunc;

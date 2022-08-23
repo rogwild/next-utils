@@ -73,7 +73,7 @@ describe("API UTILS", () => {
   });
 
   describe("Api client", () => {
-    it("", async () => {
+    it.only("", async () => {
       const backend = new ApiClient("https://markets.zenfuse.io");
 
       const res = await backend.request({
