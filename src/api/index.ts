@@ -1,6 +1,10 @@
 // import qs from "qs";
 
-export const getImageUrl = (obj, size = `medium`, BACKEND_URL) => {
+export const getImageUrl = (
+  obj: { formats: object; url: string },
+  size: string = `medium`,
+  BACKEND_URL: string
+): string => {
   if (!obj) {
     return null;
   }
@@ -60,7 +64,9 @@ export const flatItemAttributes = (data) => {
 };
 
 export const combineHeaders = ({ withAuth }) => {
-  const headers = {};
+  const headers: {
+    Authorization?: string;
+  } = {};
 
   if (withAuth) {
     const token = localStorage.getItem(`jwt`);
@@ -81,7 +87,7 @@ export const transformEntriesInObj = (item) => {
     const entries = Object.entries(item).map((entry) => {
       const key = snakeToCamel(entry[0]);
 
-      let value = entry[1];
+      let value: any = entry[1];
 
       if (isObject(value)) {
         value = transformEntriesInObj(value);

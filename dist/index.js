@@ -3,166 +3,188 @@ Object.defineProperty(exports, '__esModule', { value: true });
 var react = require('react');
 var reactTable = require('react-table');
 
+/******************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
+
+var __assign = function() {
+    __assign = Object.assign || function __assign(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+
+function __spreadArray(to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+}
+
 // import qs from "qs";
-
-const getImageUrl = (obj, size = `medium`, BACKEND_URL) => {
-  if (!obj) {
-    return null;
-  }
-
-  const url = obj.formats?.[size]?.url || obj.url;
-
-  return `${BACKEND_URL}${url}`;
+var getImageUrl = function (obj, size, BACKEND_URL) {
+    var _a, _b;
+    if (size === void 0) { size = "medium"; }
+    if (!obj) {
+        return null;
+    }
+    var url = ((_b = (_a = obj.formats) === null || _a === void 0 ? void 0 : _a[size]) === null || _b === void 0 ? void 0 : _b.url) || obj.url;
+    return "".concat(BACKEND_URL).concat(url);
 };
-
-const transformResponseItem = (resItem) => {
-  if (isArray(resItem)) {
-    return resItem.map((item) => transformResponseItem(item));
-  }
-
-  if (isObject(resItem)) {
-    if (isArray(resItem.data)) {
-      resItem = [...resItem.data];
-    } else if (isObject(resItem.data)) {
-      resItem = transformEntriesInObj(flatItemAttributes(resItem.data));
-    } else if (resItem.data === null) {
-      resItem = null;
-    } else {
-      resItem = transformEntriesInObj(flatItemAttributes(resItem));
+var transformResponseItem = function (resItem) {
+    if (isArray(resItem)) {
+        return resItem.map(function (item) { return transformResponseItem(item); });
     }
-
-    for (const key in resItem) {
-      resItem[key] = transformResponseItem(resItem[key]);
+    if (isObject(resItem)) {
+        if (isArray(resItem.data)) {
+            resItem = __spreadArray([], resItem.data, true);
+        }
+        else if (isObject(resItem.data)) {
+            resItem = transformEntriesInObj(flatItemAttributes(resItem.data));
+        }
+        else if (resItem.data === null) {
+            resItem = null;
+        }
+        else {
+            resItem = transformEntriesInObj(flatItemAttributes(resItem));
+        }
+        for (var key in resItem) {
+            resItem[key] = transformResponseItem(resItem[key]);
+        }
+        return resItem;
     }
-
     return resItem;
-  }
-
-  return resItem;
 };
-
-const transformPageBlock = (block, transformers) => {
-  const key = block?._Component;
-
-  if (!transformers?.[key]) {
-    return null;
-  }
-
-  return transformers[key](block);
+var transformPageBlock = function (block, transformers) {
+    var key = block === null || block === void 0 ? void 0 : block._Component;
+    if (!(transformers === null || transformers === void 0 ? void 0 : transformers[key])) {
+        return null;
+    }
+    return transformers[key](block);
 };
-
-const isObject = (data) => data && typeof data === `object`;
-
-const isArray = (data) => data && Array.isArray(data);
-
-const flatItemAttributes = (data) => {
-  if (!data?.attributes) return data;
-
-  return {
-    id: data?.id,
-    ...data.attributes,
-  };
+var isObject = function (data) { return data && typeof data === "object"; };
+var isArray = function (data) { return data && Array.isArray(data); };
+var flatItemAttributes = function (data) {
+    if (!(data === null || data === void 0 ? void 0 : data.attributes))
+        return data;
+    return __assign({ id: data === null || data === void 0 ? void 0 : data.id }, data.attributes);
 };
-
-const combineHeaders = ({ withAuth }) => {
-  const headers = {};
-
-  if (withAuth) {
-    const token = localStorage.getItem(`jwt`);
-    headers.Authorization = `Bearer ${token}`;
-  }
-
-  return headers;
+var combineHeaders = function (_a) {
+    var withAuth = _a.withAuth;
+    var headers = {};
+    if (withAuth) {
+        var token = localStorage.getItem("jwt");
+        headers.Authorization = "Bearer ".concat(token);
+    }
+    return headers;
 };
-
-const snakeToCamel = (str) => {
-  return str.replace(/([-_][a-z])/gi, (char) => {
-    return char.toUpperCase().replace(`-`, ``).replace(`_`, ``);
-  });
-};
-
-const transformEntriesInObj = (item) => {
-  if (isObject(item) && !isArray(item)) {
-    const entries = Object.entries(item).map((entry) => {
-      const key = snakeToCamel(entry[0]);
-
-      let value = entry[1];
-
-      if (isObject(value)) {
-        value = transformEntriesInObj(value);
-      } else if (isArray(value)) {
-        value = value.map((elem) => transformEntriesInObj({ item: elem }));
-      }
-
-      return [key, value];
+var snakeToCamel = function (str) {
+    return str.replace(/([-_][a-z])/gi, function (char) {
+        return char.toUpperCase().replace("-", "").replace("_", "");
     });
-
-    return Object.fromEntries(entries);
-  }
-
-  return item;
 };
-
-const removeEmptyFields = ({ data, passKey, files }) => {
-  // console.log(`🚀 ~ removeEmptyFields ~ files`, files);
-  let modified;
-  if (typeof data === `object` && data !== null) {
-    modified = {};
-    if (Array.isArray(data)) {
-      modified = [];
-      for (const element of data) {
-        modified.push(removeEmptyFields({ data: element, passKey, files }));
-      }
-    } else {
-      for (const key of Object.keys(data)) {
-        if (data[key] === `` && key !== `publishedAt`) {
-          continue;
-        }
-        modified[key] = removeEmptyFields({
-          data: data[key],
-          passKey: `${passKey ? `${passKey}.` : ``}${key}`,
-          files,
+var transformEntriesInObj = function (item) {
+    if (isObject(item) && !isArray(item)) {
+        var entries = Object.entries(item).map(function (entry) {
+            var key = snakeToCamel(entry[0]);
+            var value = entry[1];
+            if (isObject(value)) {
+                value = transformEntriesInObj(value);
+            }
+            else if (isArray(value)) {
+                value = value.map(function (elem) { return transformEntriesInObj({ item: elem }); });
+            }
+            return [key, value];
         });
-      }
+        return Object.fromEntries(entries);
     }
-  } else {
-    modified = data;
-  }
-  return modified;
+    return item;
 };
-
-const appendFilesToFormData = (formData, files) => {
-  // console.log(`🚀 ~ appendFilesToFormData ~ formData`, formData);
-  if (Object.keys(files).length) {
-    for (const key of Object.keys(files)) {
-      // console.log(`🚀 ~ key`, key);
-      if (Array.isArray(files[key])) {
-        for (const [_, file] of files[key].entries()) {
-          // console.log(`🚀 ~ file`, file, files[key]);
-          formData.append(`files.${key}`, file);
+var removeEmptyFields = function (_a) {
+    var data = _a.data, passKey = _a.passKey, files = _a.files;
+    // console.log(`🚀 ~ removeEmptyFields ~ files`, files);
+    var modified;
+    if (typeof data === "object" && data !== null) {
+        modified = {};
+        if (Array.isArray(data)) {
+            modified = [];
+            for (var _i = 0, data_1 = data; _i < data_1.length; _i++) {
+                var element = data_1[_i];
+                modified.push(removeEmptyFields({ data: element, passKey: passKey, files: files }));
+            }
         }
-      } else {
-        // console.log(`🚀 ~ appendFilesToFormData ~ key`, key);
-        // console.log(`🚀 ~ file`, file, files[key]);
-        formData.append(`files.${key}`, files[key]);
-      }
+        else {
+            for (var _b = 0, _c = Object.keys(data); _b < _c.length; _b++) {
+                var key = _c[_b];
+                if (data[key] === "" && key !== "publishedAt") {
+                    continue;
+                }
+                modified[key] = removeEmptyFields({
+                    data: data[key],
+                    passKey: "".concat(passKey ? "".concat(passKey, ".") : "").concat(key),
+                    files: files,
+                });
+            }
+        }
     }
-  }
+    else {
+        modified = data;
+    }
+    return modified;
+};
+var appendFilesToFormData = function (formData, files) {
+    // console.log(`🚀 ~ appendFilesToFormData ~ formData`, formData);
+    if (Object.keys(files).length) {
+        for (var _i = 0, _a = Object.keys(files); _i < _a.length; _i++) {
+            var key = _a[_i];
+            // console.log(`🚀 ~ key`, key);
+            if (Array.isArray(files[key])) {
+                for (var _b = 0, _c = files[key].entries(); _b < _c.length; _b++) {
+                    var _d = _c[_b]; _d[0]; var file = _d[1];
+                    // console.log(`🚀 ~ file`, file, files[key]);
+                    formData.append("files.".concat(key), file);
+                }
+            }
+            else {
+                // console.log(`🚀 ~ appendFilesToFormData ~ key`, key);
+                // console.log(`🚀 ~ file`, file, files[key]);
+                formData.append("files.".concat(key), files[key]);
+            }
+        }
+    }
 };
 
 var apiUtils = /*#__PURE__*/Object.freeze({
-  __proto__: null,
-  getImageUrl: getImageUrl,
-  transformResponseItem: transformResponseItem,
-  transformPageBlock: transformPageBlock,
-  isObject: isObject,
-  isArray: isArray,
-  flatItemAttributes: flatItemAttributes,
-  combineHeaders: combineHeaders,
-  snakeToCamel: snakeToCamel,
-  transformEntriesInObj: transformEntriesInObj,
-  removeEmptyFields: removeEmptyFields,
-  appendFilesToFormData: appendFilesToFormData
+    __proto__: null,
+    getImageUrl: getImageUrl,
+    transformResponseItem: transformResponseItem,
+    transformPageBlock: transformPageBlock,
+    isObject: isObject,
+    isArray: isArray,
+    flatItemAttributes: flatItemAttributes,
+    combineHeaders: combineHeaders,
+    snakeToCamel: snakeToCamel,
+    transformEntriesInObj: transformEntriesInObj,
+    removeEmptyFields: removeEmptyFields,
+    appendFilesToFormData: appendFilesToFormData
 });
 
 /**
@@ -408,8 +430,8 @@ const hooks = {
 };
 
 var index = {
-  api: apiUtils,
-  hooks,
+    api: apiUtils,
+    hooks: hooks,
 };
 
 exports["default"] = index;
