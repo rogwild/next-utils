@@ -2,11 +2,12 @@ import * as apiUtils from "./api";
 import * as formatters from "./formatters";
 import hooks from "./hooks";
 import * as vanilla from "./vanilla";
-// import * as components from "./components";
+import components from "./components";
 
 export default {
   api: apiUtils,
   formatters,
   vanilla,
   hooks,
+  components,
 };

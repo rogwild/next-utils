@@ -1,3 +1,4 @@
+/// <reference types="react" />
 import * as apiUtils from "./api";
 import * as formatters from "./formatters";
 import * as vanilla from "./vanilla";
@@ -26,6 +27,24 @@ declare const _default: {
             handleDeleteItem: (index: any) => void;
         };
         useStyleRewriter: (baseClassName: any, className: any, cleared?: boolean) => string;
+    };
+    components: {
+        SmartButton: ({ disabled, className, children, variant, tooltipPosition, href, dropdownItems: DropdownItems, dropdownContainerClasses, dropdownProps, tooltipItems: TooltipItems, tooltipContainerClasses, onClick: onClickCb, linkProps, Link, }: {
+            disabled: any;
+            className: any;
+            children: any;
+            variant: any;
+            tooltipPosition: any;
+            href?: string;
+            dropdownItems: any;
+            dropdownContainerClasses?: string;
+            dropdownProps: any;
+            tooltipItems: any;
+            tooltipContainerClasses?: string;
+            onClick: any;
+            linkProps?: any[];
+            Link?: () => void;
+        }) => JSX.Element;
     };
 };
 export default _default;

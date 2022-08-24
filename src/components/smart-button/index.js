@@ -1,5 +1,4 @@
 import React, { Fragment, useRef } from "react";
-import Link from "next/link";
 import hooks from "../../hooks";
 import { Transition } from "transition-component";
 import DropdownContainer from "../dropdown-container";
@@ -21,6 +20,7 @@ const SmartButton = ({
   tooltipContainerClasses = "",
   onClick: onClickCb,
   linkProps = [],
+  Link = () => {},
 }) => {
   const dropdownRef = useRef(null);
   const SmartButtonRef = useRef(null);
@@ -50,7 +50,7 @@ const SmartButton = ({
   const Element = href ? LinkSmartButton : DivSmartButton;
 
   const elementProps = href
-    ? { href, passHref: true, className: srClasses, linkProps }
+    ? { Link, href, passHref: true, className: srClasses, linkProps }
     : { className: srClasses };
 
   return (
@@ -191,7 +191,13 @@ const DivSmartButton = ({ children, SmartButtonRef, ...props }) => (
   </div>
 );
 
-const LinkSmartButton = ({ children, className, linkProps = [], ...props }) => {
+const LinkSmartButton = ({
+  Link = () => {},
+  children,
+  className,
+  linkProps = [],
+  ...props
+}) => {
   let linkAttributes = [];
   if (linkProps.length) {
     linkAttributes = linkProps.map(({ name, value }) => [name, value]);

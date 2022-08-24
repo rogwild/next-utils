@@ -2,12 +2,14 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 var axios = require('axios');
 var qs = require('qs');
-var react = require('react');
+var React = require('react');
 var reactTable = require('react-table');
+var transitionComponent = require('transition-component');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
 var axios__default = /*#__PURE__*/_interopDefaultLegacy(axios);
+var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 
 /******************************************************************************
 Copyright (c) Microsoft Corporation.
@@ -557,6 +559,24 @@ var formatters = /*#__PURE__*/Object.freeze({
     parseMimeType: parseMimeType
 });
 
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$1(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 /**
  * Filter function by text content
  *
@@ -566,15 +586,15 @@ var formatters = /*#__PURE__*/Object.freeze({
  * @returns {array} filtered array of values
  */
 
-const text = (rows, accessor, filterValue) => {
-  return rows.filter(row => {
-    const rowValue = row[prefix][accessor];
+var text = function text(rows, accessor, filterValue) {
+  return rows.filter(function (row) {
+    var rowValue = row[prefix][accessor];
     return rowValue !== undefined ? String(rowValue).toLowerCase().startsWith(String(filterValue).toLowerCase()) : true;
   });
 };
 
-const baseFilters = {
-  text
+var baseFilters = {
+  text: text
 };
 /**
  *
@@ -622,77 +642,93 @@ const baseFilters = {
  * @returns {ReturnObject}
  */
 
-const useLookupTable = ({
-  columns = [],
-  data: passedData = [],
-  getRowId,
-  config = {
+var useLookupTable = function useLookupTable(_ref) {
+  var _ref$columns = _ref.columns,
+      columns = _ref$columns === void 0 ? [] : _ref$columns,
+      _ref$data = _ref.data,
+      passedData = _ref$data === void 0 ? [] : _ref$data,
+      getRowId = _ref.getRowId,
+      _ref$config = _ref.config,
+      config = _ref$config === void 0 ? {
     selectedRowIds: []
-  },
-  initialFiltersState = []
-}) => {
-  const data = react.useMemo(() => {
+  } : _ref$config,
+      _ref$initialFiltersSt = _ref.initialFiltersState,
+      initialFiltersState = _ref$initialFiltersSt === void 0 ? [] : _ref$initialFiltersSt;
+  var data = React.useMemo(function () {
     return passedData;
   }, [passedData.length]);
-  const [sortBy, setSortBy] = react.useState(config.sortBy);
-  const [filters, setFilters] = react.useState(initialFiltersState);
-  const [localGlobalFilter, setLocalGlobalFilter] = react.useState(config.globalFilter || ``);
-  const [localSelectedRowIds, setLocalSelectedRowIds] = react.useState(config.selectedRowIds || undefined);
-  react.useMemo(() => config.useRowSelect ?? false, []);
+
+  var _useState = React.useState(config.sortBy),
+      sortBy = _useState[0],
+      setSortBy = _useState[1];
+
+  var _useState2 = React.useState(initialFiltersState),
+      filters = _useState2[0],
+      setFilters = _useState2[1];
+
+  var _useState3 = React.useState(config.globalFilter || ""),
+      localGlobalFilter = _useState3[0],
+      setLocalGlobalFilter = _useState3[1];
+
+  var _useState4 = React.useState(config.selectedRowIds || undefined),
+      localSelectedRowIds = _useState4[0],
+      setLocalSelectedRowIds = _useState4[1];
+
+  React.useMemo(function () {
+    var _config$useRowSelect;
+
+    return (_config$useRowSelect = config.useRowSelect) !== null && _config$useRowSelect !== void 0 ? _config$useRowSelect : false;
+  }, []);
   /**
    * State memoization to prevent data erasure when `data` changes
    * */
 
-  const initialState = react.useMemo(() => {
-    const state = {};
+  var initialState = React.useMemo(function () {
+    var state = {};
     if (sortBy) state.sortBy = sortBy;
     if (filters) state.filters = filters;
     if (localGlobalFilter) state.globalFilter = localGlobalFilter;
     if (localSelectedRowIds) state.selectedRowIds = localSelectedRowIds;
     return state;
   }, [sortBy, filters, localSelectedRowIds]);
-  const filterTypes = react.useMemo(() => {
-    return { ...baseFilters,
-      ...config.filterTypes
-    };
+  var filterTypes = React.useMemo(function () {
+    return _objectSpread$1(_objectSpread$1({}, baseFilters), config.filterTypes);
   }, []);
-  react.useEffect(() => {
+  React.useEffect(function () {
     if (data.length && config.selectedRowIds) {
       setLocalSelectedRowIds(config.selectedRowIds);
     }
   }, [data]);
-  const tableInstance = reactTable.useTable({
-    columns,
-    data,
-    filterTypes,
-    initialState,
-    getRowId
+  var tableInstance = reactTable.useTable({
+    columns: columns,
+    data: data,
+    filterTypes: filterTypes,
+    initialState: initialState,
+    getRowId: getRowId
   }, reactTable.useGlobalFilter, reactTable.useFilters, reactTable.useSortBy, reactTable.useExpanded, reactTable.useRowSelect);
-  const {
-    headerGroups,
-    rows,
-    setGlobalFilter,
-    prepareRow,
-    toggleRowExpanded,
-    getTableBodyProps,
-    getTableProps,
-    state,
-    toggleAllRowsSelected
-  } = tableInstance;
+  var headerGroups = tableInstance.headerGroups,
+      rows = tableInstance.rows,
+      setGlobalFilter = tableInstance.setGlobalFilter,
+      prepareRow = tableInstance.prepareRow,
+      toggleRowExpanded = tableInstance.toggleRowExpanded,
+      getTableBodyProps = tableInstance.getTableBodyProps,
+      getTableProps = tableInstance.getTableProps,
+      state = tableInstance.state,
+      toggleAllRowsSelected = tableInstance.toggleAllRowsSelected;
   /**
    * Save `isSelected` IDs state for real-data rendering
    */
 
-  react.useEffect(() => {
-    let foundSelected = false;
+  React.useEffect(function () {
+    var foundSelected = false;
 
     if (!rows.length) {
       return;
     }
 
-    const selected = {};
-    rows?.map(row => {
-      selected[row.index] = row?.isSelected;
+    var selected = {};
+    rows === null || rows === void 0 ? void 0 : rows.map(function (row) {
+      selected[row.index] = row === null || row === void 0 ? void 0 : row.isSelected;
       foundSelected = true;
     });
 
@@ -708,15 +744,15 @@ const useLookupTable = ({
    * Save `isSorted` value for real-data rendering
    */
 
-  react.useEffect(() => {
-    let foundSorted = false;
+  React.useEffect(function () {
+    var foundSorted = false;
 
     if (!rows.length) {
       return;
     }
 
-    headerGroups[0].headers.map(header => {
-      if (header?.isSorted) {
+    headerGroups[0].headers.map(function (header) {
+      if (header !== null && header !== void 0 && header.isSorted) {
         setSortBy([{
           id: header.id,
           desc: !!header.isSortedDesc
@@ -733,14 +769,14 @@ const useLookupTable = ({
    * Save `filterValue` for real-data rendering
    */
 
-  react.useEffect(() => {
-    let foundFiltered = false;
+  React.useEffect(function () {
+    var foundFiltered = false;
 
     if (!rows.length) {
       return;
     }
 
-    headerGroups[0].headers.map(header => {
+    headerGroups[0].headers.map(function (header) {
       if (header.filterValue) {
         setFilters([{
           id: header.id,
@@ -751,13 +787,16 @@ const useLookupTable = ({
     });
     if (!foundFiltered) setFilters([]);
   }, [rows]);
-  const [inputValue, setInputValue] = react.useState(state.globalFilter);
 
-  const onGlobalFilterChange = value => {
+  var _useState5 = React.useState(state.globalFilter),
+      inputValue = _useState5[0],
+      setInputValue = _useState5[1];
+
+  var onGlobalFilterChange = function onGlobalFilterChange(value) {
     setGlobalFilter(value || undefined);
   };
 
-  const onInputChange = e => {
+  var onInputChange = function onInputChange(e) {
     if (config.onInputChange) {
       config.onInputChange(e.target.value);
     }
@@ -768,26 +807,143 @@ const useLookupTable = ({
   };
 
   return {
-    inputValue,
-    onInputChange,
-    headerGroups,
-    rows,
-    prepareRow,
-    state,
-    getTableBodyProps,
-    getTableProps,
-    toggleRowExpanded,
-    toggleAllRowsSelected
+    inputValue: inputValue,
+    onInputChange: onInputChange,
+    headerGroups: headerGroups,
+    rows: rows,
+    prepareRow: prepareRow,
+    state: state,
+    getTableBodyProps: getTableBodyProps,
+    getTableProps: getTableProps,
+    toggleRowExpanded: toggleRowExpanded,
+    toggleAllRowsSelected: toggleAllRowsSelected
   };
 };
+/**
+ * A function that creates a valid documentation item structure for using in a `Storybook`, section` ArgsTable`.
+ *
+ * export default {
+ *    component: "NameOfCompOrFunction",
+ *    title: "TitleOfComponent",
+ *    argTypes: {*it will be here*}
+ * }
+ *
+ * @param {String} title - Variable name
+ * @param {String} description - Variable description
+ * @param {String} type - Variable type in string `(Array | Object | String | Boolean)`
+ * @param {String} detail - The structure of the passed argument with a description of the types. Supported by `Markdown`. For example:
+ *    "Header: String,\n
+ *     accessor: String,\n
+ *     [hidden]: Boolean,\n
+ *     [Filter]: Function,\n
+ *     [filter]: String,\n
+ *     [className]: String".
+ * @param {String} defaultValue - The default value will be in the table in the `Default` column
+ * @param {Boolean} isRequired - Required field or not
+ * @returns {Object}
+ */
+
+function createArgDocumentation(_ref2) {
+  var title = _ref2.title,
+      description = _ref2.description,
+      type = _ref2.type,
+      detail = _ref2.detail,
+      defaultValue = _ref2.defaultValue,
+      _ref2$isRequired = _ref2.isRequired,
+      isRequired = _ref2$isRequired === void 0 ? false : _ref2$isRequired;
+
+  var documentation = _defineProperty({}, title, {
+    description: description,
+    table: {
+      type: {
+        summary: type,
+        detail: detail
+      },
+      defaultValue: {
+        summary: defaultValue,
+        detail: undefined
+      }
+    },
+    type: {
+      name: type,
+      required: isRequired
+    }
+  });
+
+  return documentation;
+}
+/**
+ * `columns` documentation for `Storybook`
+ */
+
+
+var columnsDoc = createArgDocumentation({
+  title: "columns",
+  description: "An array of objects `ColumnItemObject` that characterizes the display of columns for sorting and filtering items. It combines rendering, filtering and sorting parameters.",
+  type: "array",
+  detail: "Header: string,\naccessor: string,\n[hidden]: Boolean,\n[Filter]: Function,\n[filter]: string,\n[className]: string",
+  defaultValue: "[]",
+  isRequired: true
+});
+/**
+ * `data` documentation for `Storybook`
+ */
+
+var dataDoc = createArgDocumentation({
+  title: "data",
+  description: "An array of objects",
+  type: "array",
+  detail: "Any type of arrays, where placed objects",
+  defaultValue: "[]",
+  isRequired: true
+});
+/**
+ * `config` documentation for `Storybook`
+ */
+
+var configDoc = createArgDocumentation({
+  title: "config",
+  description: "A hook configuration object and setting the initial value of the data used in the hook functions. Used when working with realtime data. Since if you do not set `initialState`, then when the input data changes, filtering and sorting take an init value",
+  type: "object",
+  detail: "sortBy: [{ id: string }],\nfilters: [{ id: string, value: any }],\nglobalFilter: string,\nselectedRowIds: [{ rowId: string }],\nuseRowSelect: boolean,\nfilterTypes: { string: function }",
+  defaultValue: "{ selectedRowIds: [] }",
+  isRequired: false
+});
+/**
+ * `return` documentation for `Storybook`
+ */
+
+var returnDoc = createArgDocumentation({
+  title: "return",
+  description: "Object returned from the hook. All information on the returned data can be found in the documentation React Table (https://react-table.tanstack.com/docs/api/overview), by entering the corresponding key in the search (`onInputChange`, `headerGroups`).",
+  type: "object",
+  detail: "inputValue: string\nonInputChange: function\nheaderGroups: array\nrows: array\nprepareRow: function\nstate: object\ntoggleRowExpanded: function",
+  isRequired: false
+});
+/**
+ * `Storybook` default export object with documentation for `props` and `return`
+ */
+
+({
+  component: useLookupTable,
+  title: "Hooks/useLookupTable",
+  argTypes: _objectSpread$1(_objectSpread$1(_objectSpread$1(_objectSpread$1({}, columnsDoc), dataDoc), configDoc), returnDoc),
+  parameters: {
+    docs: {
+      description: {
+        component: "Hook that transforms data suitable for display in a table. Adds handlers to work with sorting, filtering and searching."
+      }
+    }
+  }
+});
 
 var useSetParentsInput = function (_a) {
     var passedState = _a.passedState, _b = _a.passedFiles, passedFiles = _b === void 0 ? {} : _b, parentKey = _a.parentKey, _c = _a.setParentInputs, setParentInputs = _c === void 0 ? function () { } : _c, _d = _a.setParentFiles, setParentFiles = _d === void 0 ? function () { } : _d, _e = _a.setParentErrors, setParentErrors = _e === void 0 ? function () { } : _e;
     // console.log(`🚀 ~ passedState`, passedState);
-    var _f = __read(react.useState(passedState), 2), localState = _f[0], setLocalState = _f[1];
-    var _g = __read(react.useState(passedFiles), 2), localFiles = _g[0], setLocalFiles = _g[1];
+    var _f = __read(React.useState(passedState), 2), localState = _f[0], setLocalState = _f[1];
+    var _g = __read(React.useState(passedFiles), 2), localFiles = _g[0], setLocalFiles = _g[1];
     // console.log(`🚀 ~ passedFiles`, passedFiles, localFiles);
-    react.useEffect(function () {
+    React.useEffect(function () {
         // console.log(`🚀 ~ passedState`, passedState);
         if (JSON.stringify(passedState) === JSON.stringify(localState)) {
             return;
@@ -1014,11 +1170,11 @@ var useSetParentsInput = function (_a) {
             // console.log(`🚀 ~ changeFiles ~ toDeleteFilesKeys`, toDeleteFilesKeys);
         }
     };
-    react.useEffect(function () {
+    React.useEffect(function () {
         // console.log(`🚀 ~ useEffect ~ localFiles`, localFiles);
         setParentFiles(localFiles);
     }, [localFiles]);
-    react.useEffect(function () {
+    React.useEffect(function () {
         // console.log(`🚀 ~ useEffect ~ localState`, localState);
         setParentInputs(localState);
     }, [localState]);
@@ -1044,31 +1200,33 @@ function objAreEq(newObj, prevObj) {
     return equals;
 }
 
-const BREAKPOINTS = {
+var _BREAKPOINTS;
+var BREAKPOINTS = (_BREAKPOINTS = {
   sm: 640,
   md: 768,
-  xl: 1024,
-  xl: 1280,
-  "2xl": 1536
-};
+  xl: 1024
+}, _defineProperty(_BREAKPOINTS, "xl", 1280), _defineProperty(_BREAKPOINTS, "2xl", 1536), _BREAKPOINTS);
 
-const useBreakpoint = breakpoint => {
-  const [width, setWidth] = react.useState(undefined);
-  react.useEffect(() => {
-    const handleResize = () => {
+var useBreakpoint = function useBreakpoint(breakpoint) {
+  var _useState = React.useState(undefined),
+      width = _useState[0],
+      setWidth = _useState[1];
+
+  React.useEffect(function () {
+    var handleResize = function handleResize() {
       setWidth(window.innerWidth);
     };
 
-    window.addEventListener(`resize`, handleResize);
+    window.addEventListener("resize", handleResize);
     handleResize();
-    return () => {
-      window.removeEventListener(`resize`, handleResize);
+    return function () {
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
   return !width || width >= BREAKPOINTS[breakpoint];
 };
 
-const fullByShort = {
+var fullByShort = {
   "@prop": "@prop",
   "@base": "@base",
   "@anc": "@alignContent",
@@ -1173,7 +1331,7 @@ const fullByShort = {
   "@wdb": "@wordBreak",
   "@zi": "@zIndex"
 };
-const shortByFull = {
+var shortByFull = {
   "@alignContent": "@anc",
   "@alignItems": "@ani",
   "@alignSelf": "@ans",
@@ -1460,50 +1618,60 @@ const shortByFull = {
 //   }
 // });
 
-const useStyleRewriter = (baseClassName, className, cleared = true) => {
-  return react.useMemo(() => {
-    let styleObj = getStyleObj(`@base ${baseClassName}`, cleared);
-    let styleObjProps = getStyleObj(`@prop ${className}`, cleared);
-    const computedStyleObj = { ...styleObj,
-      ...styleObjProps
-    };
-    const resultClassName = Object.values(computedStyleObj).join(" ").replace(/\n/g, "");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+var useStyleRewriter$3 = function useStyleRewriter(baseClassName, className) {
+  var cleared = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+  return React.useMemo(function () {
+    var styleObj = getStyleObj("@base ".concat(baseClassName), cleared);
+    var styleObjProps = getStyleObj("@prop ".concat(className), cleared);
+
+    var computedStyleObj = _objectSpread(_objectSpread({}, styleObj), styleObjProps);
+
+    var resultClassName = Object.values(computedStyleObj).join(" ").replace(/\n/g, "");
     return resultClassName.replace(/\s+/g, " ");
   }, [baseClassName, className]);
 };
 
-const getStyleObj = (className = "", cleared) => {
+var getStyleObj = function getStyleObj() {
+  var className = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
+  var cleared = arguments.length > 1 ? arguments[1] : undefined;
+
   if (!className || !className.trim()) {
     return {};
   }
 
-  let classesArr = className.replace(/@([a-z:]*)/g, "__@$1__").split("__").filter(str => str);
-  const styleObj = {};
-  classesArr.forEach((item, index) => {
+  var classesArr = className.replace(/@([a-z:]*)/g, "__@$1__").split("__").filter(function (str) {
+    return str;
+  });
+  var styleObj = {};
+  classesArr.forEach(function (item, index) {
     if (item) {
-      const isKey = item.includes("@");
-      const nextValue = classesArr[index + 1];
+      var isKey = item.includes("@");
+      var nextValue = classesArr[index + 1];
 
       if (isKey) {
-        const isKeyNextValue = nextValue && nextValue.includes("@");
+        var isKeyNextValue = nextValue && nextValue.includes("@");
 
         if (!(fullByShort[item] || shortByFull[item])) {
-          throw new Error(`Invalid key ${item} for styleRewriter in className ${className}`);
+          throw new Error("Invalid key ".concat(item, " for styleRewriter in className ").concat(className));
         }
 
         if (!isKeyNextValue) {
           setValue({
-            styleObj,
+            styleObj: styleObj,
             key: item,
             value: nextValue,
-            cleared
+            cleared: cleared
           });
         } else {
           setValue({
-            styleObj,
+            styleObj: styleObj,
             key: item,
             value: "",
-            cleared
+            cleared: cleared
           });
         }
       }
@@ -1512,35 +1680,38 @@ const getStyleObj = (className = "", cleared) => {
   return styleObj;
 };
 
-const setValue = ({
-  styleObj,
-  key,
-  value,
-  cleared
-}) => {
+var setValue = function setValue(_ref) {
+  var styleObj = _ref.styleObj,
+      key = _ref.key,
+      value = _ref.value,
+      cleared = _ref.cleared;
+
   if (cleared) {
     styleObj[key] = value;
   } else {
-    const stringKey = key === "@base" || key === "@prop" ? "" : key;
-    styleObj[key] = `${stringKey} ${value}`;
+    var stringKey = key === "@base" || key === "@prop" ? "" : key;
+    styleObj[key] = "".concat(stringKey, " ").concat(value);
   }
 };
 
-const useDetectMouseover = (el, initialState) => {
-  const [isActive, setIsActive] = react.useState(initialState);
-  const handleOver = react.useCallback(e => {
+var useDetectMouseover$1 = function useDetectMouseover(el, initialState) {
+  var _useState = React.useState(initialState),
+      isActive = _useState[0],
+      setIsActive = _useState[1];
+
+  var handleOver = React.useCallback(function (e) {
     setIsActive(true);
   }, [el.current]);
-  const handleOut = react.useCallback(e => {
+  var handleOut = React.useCallback(function (e) {
     setIsActive(false);
   }, [el.current]);
-  react.useEffect(() => {
+  React.useEffect(function () {
     if (el.current) {
       el.current.addEventListener("mouseenter", handleOver);
       el.current.addEventListener("mouseleave", handleOut);
     }
 
-    return () => {
+    return function () {
       if (el.current) {
         el.current.removeEventListener("mouseenter", handleOver);
         el.current.removeEventListener("mouseleave", handleOut);
@@ -1550,30 +1721,33 @@ const useDetectMouseover = (el, initialState) => {
   return [isActive];
 };
 
-const useDetectOutsideClick = (trigger, initialState) => {
-  const [isActive, setIsActive] = react.useState(initialState);
-  react.useEffect(() => {
-    const pageClickEvent = e => {
-      if (trigger?.current && !trigger.current.contains(e.target)) {
+var useDetectOutsideClick$1 = function useDetectOutsideClick(trigger, initialState) {
+  var _useState = React.useState(initialState),
+      isActive = _useState[0],
+      setIsActive = _useState[1];
+
+  React.useEffect(function () {
+    var pageClickEvent = function pageClickEvent(e) {
+      if (trigger !== null && trigger !== void 0 && trigger.current && !trigger.current.contains(e.target)) {
         setIsActive(false);
       }
     };
 
     window.addEventListener("click", pageClickEvent);
-    return () => {
+    return function () {
       window.removeEventListener("click", pageClickEvent);
     };
   }, []);
   return [isActive, setIsActive];
 };
 
-const hooks = {
-  useDetectMouseover,
-  useDetectOutsideClick,
-  useLookupTable,
-  useBreakpoint,
-  useSetParentsInput,
-  useStyleRewriter
+var hooks = {
+  useDetectMouseover: useDetectMouseover$1,
+  useDetectOutsideClick: useDetectOutsideClick$1,
+  useLookupTable: useLookupTable,
+  useBreakpoint: useBreakpoint,
+  useSetParentsInput: useSetParentsInput,
+  useStyleRewriter: useStyleRewriter$3
 };
 
 var checkIsServer = function () { return typeof window === "undefined"; };
@@ -1614,12 +1788,342 @@ var vanilla = /*#__PURE__*/Object.freeze({
     GTMPageView: GTMPageView
 });
 
-// import * as components from "./components";
+function _objectWithoutPropertiesLoose(source, excluded) {
+  if (source == null) return {};
+  var target = {};
+  var sourceKeys = Object.keys(source);
+  var key, i;
+
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i];
+    if (excluded.indexOf(key) >= 0) continue;
+    target[key] = source[key];
+  }
+
+  return target;
+}
+
+function _objectWithoutProperties(source, excluded) {
+  if (source == null) return {};
+  var target = _objectWithoutPropertiesLoose(source, excluded);
+  var key, i;
+
+  if (Object.getOwnPropertySymbols) {
+    var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
+
+    for (i = 0; i < sourceSymbolKeys.length; i++) {
+      key = sourceSymbolKeys[i];
+      if (excluded.indexOf(key) >= 0) continue;
+      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
+      target[key] = source[key];
+    }
+  }
+
+  return target;
+}
+
+function _extends() {
+  _extends = Object.assign ? Object.assign.bind() : function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+  return _extends.apply(this, arguments);
+}
+
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr;
+}
+
+function _iterableToArrayLimit(arr, i) {
+  var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
+
+  if (_i == null) return;
+  var _arr = [];
+  var _n = true;
+  var _d = false;
+
+  var _s, _e;
+
+  try {
+    for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value);
+
+      if (i && _arr.length === i) break;
+    }
+  } catch (err) {
+    _d = true;
+    _e = err;
+  } finally {
+    try {
+      if (!_n && _i["return"] != null) _i["return"]();
+    } finally {
+      if (_d) throw _e;
+    }
+  }
+
+  return _arr;
+}
+
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+
+  for (var i = 0, arr2 = new Array(len); i < len; i++) {
+    arr2[i] = arr[i];
+  }
+
+  return arr2;
+}
+
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(o);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+
+function _slicedToArray(arr, i) {
+  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
+
+var __jsx$2 = React__default["default"].createElement;
+var useStyleRewriter$2 = hooks.useStyleRewriter;
+
+var DropdownContainer = function DropdownContainer(_ref) {
+  var children = _ref.children,
+      className = _ref.className,
+      dropdownRef = _ref.dropdownRef;
+  var srClasses = useStyleRewriter$2(baseClasses$2, className);
+  return __jsx$2("div", {
+    ref: dropdownRef,
+    className: srClasses
+  }, __jsx$2("div", {
+    className: "flex flex-col relative w-full"
+  }, children));
+};
+var baseClasses$2 = "\n    @pn absolute\n    @mn mt-2\n    @bdc bg-white\n    @brc border-gray-light\n    @brw border-px\n    @brr rounded-8px\n    @wh w-200px\n    @it top-full left-0\n  ";
+
+var __jsx$1 = React__default["default"].createElement;
+var useStyleRewriter$1 = hooks.useStyleRewriter;
+
+var Tooltip = function Tooltip(_ref) {
+  var children = _ref.children,
+      _ref$visible = _ref.visible,
+      visible = _ref$visible === void 0 ? true : _ref$visible,
+      tooltipRef = _ref.tooltipRef,
+      className = _ref.className,
+      tooltipPosition = _ref.tooltipPosition;
+  var srClasses = useStyleRewriter$1(baseClasses$1, className);
+  var tooltipClasses = React.useMemo(function () {
+    switch (tooltipPosition) {
+      case "left-bottom":
+        return "tooltip-left-bottom";
+
+      case "left-top":
+        return;
+
+      case "top-left":
+        return;
+
+      case "top-right":
+        return;
+
+      case "right-top":
+        return;
+
+      case "right-bottom":
+        return;
+
+      case "bottom-right":
+        return;
+
+      case "bottom-left":
+        return;
+    }
+  }, [tooltipPosition]);
+  return __jsx$1("div", {
+    ref: tooltipRef,
+    className: "".concat(visible ? "opacity-100 w-auto" : "opacity-0", " ").concat(srClasses, " ").concat(tooltipClasses)
+  }, children);
+};
+var baseClasses$1 = "\n    @pn absolute\n    @wh w-fit\n    @it left-0 top-0\n    @tta text-center \n    @bxsw shadow-400\n    @brw border\n    @brc border-true-gray-150\n    @bdc bg-white \n    @pg p-1 \n    @brr rounded-8px \n    @ttc text-black\n  ";
+
+var _excluded = ["children", "SmartButtonRef"],
+    _excluded2 = ["Link", "children", "className", "linkProps"];
+var __jsx = React__default["default"].createElement;
+var useStyleRewriter = hooks.useStyleRewriter,
+    useDetectMouseover = hooks.useDetectMouseover,
+    useDetectOutsideClick = hooks.useDetectOutsideClick;
+
+var SmartButton = function SmartButton(_ref) {
+  var disabled = _ref.disabled,
+      className = _ref.className,
+      children = _ref.children,
+      variant = _ref.variant,
+      tooltipPosition = _ref.tooltipPosition,
+      _ref$href = _ref.href,
+      href = _ref$href === void 0 ? "" : _ref$href,
+      DropdownItems = _ref.dropdownItems,
+      _ref$dropdownContaine = _ref.dropdownContainerClasses,
+      dropdownContainerClasses = _ref$dropdownContaine === void 0 ? "" : _ref$dropdownContaine,
+      dropdownProps = _ref.dropdownProps,
+      TooltipItems = _ref.tooltipItems,
+      _ref$tooltipContainer = _ref.tooltipContainerClasses,
+      tooltipContainerClasses = _ref$tooltipContainer === void 0 ? "" : _ref$tooltipContainer,
+      onClickCb = _ref.onClick,
+      _ref$linkProps = _ref.linkProps,
+      linkProps = _ref$linkProps === void 0 ? [] : _ref$linkProps,
+      _ref$Link = _ref.Link,
+      Link = _ref$Link === void 0 ? function () {} : _ref$Link;
+  var dropdownRef = React.useRef(null);
+  var SmartButtonRef = React.useRef(null);
+
+  var _useDetectOutsideClic = useDetectOutsideClick(SmartButtonRef, false),
+      _useDetectOutsideClic2 = _slicedToArray(_useDetectOutsideClic, 2),
+      isDropdownOpen = _useDetectOutsideClic2[0],
+      setIsDropdownOpen = _useDetectOutsideClic2[1];
+
+  var onClick = function onClick(e) {
+    var _dropdownRef$current;
+
+    if (DropdownItems && !((_dropdownRef$current = dropdownRef.current) !== null && _dropdownRef$current !== void 0 && _dropdownRef$current.contains(e.target))) {
+      setIsDropdownOpen(!isDropdownOpen);
+    }
+
+    return onClickCb && onClickCb(e);
+  };
+
+  var _useDetectMouseover = useDetectMouseover(SmartButtonRef, false),
+      _useDetectMouseover2 = _slicedToArray(_useDetectMouseover, 1),
+      isMouseOver = _useDetectMouseover2[0];
+
+  var variantClasses = useVariant(className, variant);
+  var srClasses = useStyleRewriter(variantClasses, "".concat(disabled ? disabledClasses : "", " ").concat(className, " "));
+  var Element = href ? LinkSmartButton : DivSmartButton;
+  var elementProps = href ? {
+    Link: Link,
+    href: href,
+    passHref: true,
+    className: srClasses,
+    linkProps: linkProps
+  } : {
+    className: srClasses
+  };
+  return __jsx(React.Fragment, null, __jsx(Element, _extends({
+    SmartButtonRef: SmartButtonRef,
+    onClick: onClick
+  }, elementProps), typeof children === "function" ? children({
+    isMouseOver: isMouseOver
+  }) : children, DropdownItems && __jsx(transitionComponent.Transition, _extends({
+    show: isDropdownOpen
+  }, contentTransitionProps), __jsx(DropdownContainer, {
+    className: dropdownContainerClasses,
+    dropdownRef: dropdownRef
+  }, __jsx(DropdownItems, _extends({}, dropdownProps, {
+    setIsDropdownOpen: setIsDropdownOpen
+  })))), TooltipItems && __jsx(transitionComponent.Transition, _extends({
+    show: isMouseOver
+  }, tooltipTransitionProps), __jsx(Tooltip, {
+    tooltipPosition: tooltipPosition,
+    className: tooltipContainerClasses,
+    visible: isMouseOver
+  }, __jsx(TooltipItems, null)))));
+};
+var baseClasses = "@pn relative @ftf font-family-rubik @oe focus:outline-none @cr cursor-pointer @tndn duration-200 @tta text-center";
+var disabledClasses = "@pre pointer-events-none @oy opacity-60 @bdc bg-true-gray-100 @ttc text-true-gray-450";
+
+var useVariant = function useVariant(defaultClasses, variant) {
+  return variants[variant] || defaultClasses;
+};
+
+var variants = {
+  primary: "".concat(baseClasses, " \n          @bdc bg-blue-primary dark:bg-blue-600\n          @bdo hover:bg-opacity-60 dark:hover:bg-opacity-80\n          @dy flex \n          @fxd flex-row \n          @ani items-center \n          @pg px-8 py-3 \n          @brr rounded-8px \n          @fts text-15px \n          @ttc text-white"),
+  white: "".concat(baseClasses, " \n          @tnp transition \n          @tntf ease-in-out \n          @bdc bg-white hover:bg-gray-blue \n          @dy flex \n          @fxd flex-row \n          @ani items-center \n          @pg px-8 py-3 \n          @brr rounded-8px \n          @fts text-15px \n          @ttc text-blue-base hover:text-white"),
+  danger: "".concat(baseClasses, " \n          @bdc bg-red-base \n          @bdo hover:bg-opacity-60 \n          @dy flex \n          @fxd flex-row \n          @ani items-center \n          @pg px-8 py-3 \n          @brr rounded-8px \n          @fts text-15px \n          @ttc text-white"),
+  light: "".concat(baseClasses, " \n          @bdc bg-white hover:bg-gray-accent \n          @ttc text-black hover:text-blue-primary \n          @pg px-4 py-2 \n          @brr rounded-16px \n          @tta text-left"),
+  "light-blue": "".concat(baseClasses, " \n          @bdc bg-blue-light \n          @bdc hover:bg-blue-primary \n          @ttc text-blue-primary hover:text-white \n          @pg px-8 py-3 \n          @brr rounded-16px \n          @tta text-left"),
+  text: baseClasses,
+  circleLight: "".concat(baseClasses, " \n          @brc border-gray-light hover:border-blue-primary \n          @brw border-px \n          @dy flex \n          @jyi justify-center\n          @ani items-center\n          @ht h-8 \n          @ow overflow-visible\n          @pn relative \n          @bdc hover:bg-blue-primary \n          @ttc hover:text-white \n          @brr rounded-full \n          @wh w-8\n          @zi z-45"),
+  circlePrimary: "".concat(baseClasses, " \n          @bdc bg-blue-primary \n          @brc border-blue-primary \n          @brw border-px \n          @dy flex \n          @ani items-center\n          @jyi justify-center\n          @ht h-8 \n          @pn relative \n          @brr rounded-full \n          @wh w-8 \n          @ttc text-white"),
+  transparentOutline: "".concat(baseClasses, "\n          @dy flex flex-row\n          @ani items-center\n          @ttc text-blue-650\n          @bdo hover:opacity-70\n          @jyc justify-center\n          @brr rounded-8px \n          @brw border\n          @brc border-blue-650\n          @pg px-8 py-3")
+};
+
+var DivSmartButton = function DivSmartButton(_ref2) {
+  var children = _ref2.children,
+      SmartButtonRef = _ref2.SmartButtonRef,
+      props = _objectWithoutProperties(_ref2, _excluded);
+
+  return __jsx("div", _extends({
+    ref: SmartButtonRef
+  }, props), children);
+};
+
+var LinkSmartButton = function LinkSmartButton(_ref3) {
+  var _ref3$Link = _ref3.Link,
+      Link = _ref3$Link === void 0 ? function () {} : _ref3$Link,
+      children = _ref3.children,
+      className = _ref3.className,
+      _ref3$linkProps = _ref3.linkProps,
+      linkProps = _ref3$linkProps === void 0 ? [] : _ref3$linkProps,
+      props = _objectWithoutProperties(_ref3, _excluded2);
+
+  var linkAttributes = [];
+
+  if (linkProps.length) {
+    linkAttributes = linkProps.map(function (_ref4) {
+      var name = _ref4.name,
+          value = _ref4.value;
+      return [name, value];
+    });
+    linkAttributes = Object.fromEntries(linkAttributes);
+  }
+
+  return __jsx(Link, props, __jsx("a", _extends({}, linkAttributes, {
+    className: className
+  }), children));
+};
+
+var contentTransitionProps = {
+  enter: "ease-out duration-300",
+  enterFrom: "opacity-0",
+  enterTo: "opacity-100",
+  leave: "ease-in duration-200",
+  leaveFrom: "opacity-100",
+  leaveTo: "opacity-0"
+};
+var tooltipTransitionProps = {
+  enter: "ease-out duration-300",
+  enterFrom: "opacity-0 scale-50",
+  enterTo: "opacity-100 scale-100",
+  leave: "ease-in duration-300",
+  leaveFrom: "opacity-100 scale-100",
+  leaveTo: "opacity-0 scale-50"
+};
+
+var components = {
+  SmartButton: SmartButton
+};
+
 var index = {
     api: apiUtils,
     formatters: formatters,
     vanilla: vanilla,
     hooks: hooks,
+    components: components,
 };
 
 exports["default"] = index;
