@@ -108,6 +108,7 @@ export const getPageData = async (params: {
   keys: string[];
   additionalBlocks?: string[];
   transformers?: {};
+  query?: {};
 }) => {
   const {
     url,
@@ -116,6 +117,7 @@ export const getPageData = async (params: {
     page,
     transformers = {},
     additionalBlocks = [],
+    query,
   } = params;
 
   const client = new Api(url ? url : undefined);
@@ -131,7 +133,7 @@ export const getPageData = async (params: {
     }
   }
 
-  const query = {
+  const filledQuery = {
     locale,
     populate: {
       page_blocks: {
@@ -141,13 +143,14 @@ export const getPageData = async (params: {
       },
       ...additionalPopulate,
     },
+    ...query,
   };
 
   // console.log(`🚀 ~ query`, query.populate);
 
   const res = await client.request({
     model: page,
-    query,
+    query: filledQuery,
   }); //?
 
   // console.log(`🚀 ~ res`, res);
@@ -161,7 +164,10 @@ export const getPageData = async (params: {
     block; //?
     if (res[block]) {
       res[block];
-      additionalBlocksData[block] = res[block];
+      additionalBlocksData[block] = transformPageBlock(
+        { ...res[block], _Component: block },
+        transformers
+      );
     }
   }
 

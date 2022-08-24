@@ -3,7 +3,8 @@
  * see https://blog.logrocket.com/the-complete-guide-to-publishing-a-react-package-to-npm/
  */
 
-import { nodeResolve } from "@rollup/plugin-node-resolve";
+import resolve from "@rollup/plugin-node-resolve";
+import commonjs from "@rollup/plugin-commonjs";
 import typescript from "@rollup/plugin-typescript";
 import pkg from "./package.json";
 
@@ -18,6 +19,15 @@ export default {
       strict: false,
     },
   ],
-  plugins: [nodeResolve(), typescript()],
-  external: ["react", "react-table", "axios", "qs"],
+  plugins: [resolve(), commonjs(), typescript()],
+  external: [
+    "react",
+    "react-table",
+    "axios",
+    "qs",
+    "react-use-gesture",
+    "next",
+    "transition-component",
+    "react-spring",
+  ],
 };

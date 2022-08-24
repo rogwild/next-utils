@@ -1,3 +1,5 @@
 {
-  "presets": ["env"]
+  "exclude": "node_modules/**",
+  "include": "./src/components/**/*",
+  "presets": ["@babel/preset-env", "@babel/preset-react"]
 }

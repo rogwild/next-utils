@@ -34,6 +34,7 @@ export declare const getPageData: (params: {
     keys: string[];
     additionalBlocks?: string[];
     transformers?: {};
+    query?: {};
 }) => Promise<{
     pageBlocks: any;
     res: any;
