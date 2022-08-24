@@ -87,7 +87,7 @@ describe("API UTILS", () => {
   });
 
   describe("getPageData", () => {
-    it("should get data and transform it", async () => {
+    it.only("should get data and transform it", async () => {
       const transformers = {
         ["page-blocks.main-block"]: (block) => {
           block; //?
@@ -97,7 +97,7 @@ describe("API UTILS", () => {
             images:
               block?.images?.map((image) =>
                 getImageUrl(image, {
-                  BACKEND_URL: "https://wsapi.subclub.me",
+                  BACKEND_URL: "https://api.dubaipad.space",
                 })
               ) || null,
           };
@@ -105,11 +105,11 @@ describe("API UTILS", () => {
       };
 
       const res = await getPageData({
-        url: "https://wsapi.subclub.me",
+        url: "https://api.dubaipad.space",
         page: "main-page",
         keys: ["images"],
         transformers,
-        additionalBlocks: ["header"],
+        additionalBlocks: ["header", "footer"],
       }); //?
 
       res; //?

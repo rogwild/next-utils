@@ -150,11 +150,24 @@ export const getPageData = async (params: {
     query,
   }); //?
 
+  // console.log(`🚀 ~ res`, res);
+
   const pageBlocks = res?.pageBlocks?.map((block) => {
     return transformPageBlock(block, transformers);
   });
 
-  return { pageBlocks };
+  const additionalBlocksData = {};
+  for (const block of additionalBlocks) {
+    block; //?
+    if (res[block]) {
+      res[block];
+      additionalBlocksData[block] = res[block];
+    }
+  }
+
+  additionalBlocksData; //?
+
+  return { pageBlocks, res, additionalBlocks: additionalBlocksData };
 };
 
 export const ApiClient = Api;
