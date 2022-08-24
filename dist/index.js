@@ -264,10 +264,10 @@ var appendFilesToFormData = function (formData, files) {
  * }
  */
 var getPageData = function (params) { return __awaiter(void 0, void 0, void 0, function () {
-    var url, locale, _a, keys, page, _b, transformers, _c, additionalBlocks, client, additionalPopulate, _i, additionalBlocks_1, block, query, res, pageBlocks;
-    var _d;
-    return __generator(this, function (_e) {
-        switch (_e.label) {
+    var url, locale, _a, keys, page, _b, transformers, _c, additionalBlocks, client, additionalPopulate, _i, additionalBlocks_1, block, query, res, pageBlocks, additionalBlocksData, _d, additionalBlocks_2, block;
+    var _e;
+    return __generator(this, function (_f) {
+        switch (_f.label) {
             case 0:
                 url = params.url, locale = params.locale, _a = params.keys, keys = _a === void 0 ? [] : _a, page = params.page, _b = params.transformers, transformers = _b === void 0 ? {} : _b, _c = params.additionalBlocks, additionalBlocks = _c === void 0 ? [] : _c;
                 client = new Api(url ? url : undefined);
@@ -297,11 +297,19 @@ var getPageData = function (params) { return __awaiter(void 0, void 0, void 0, f
                         query: query,
                     })];
             case 1:
-                res = _e.sent();
-                pageBlocks = (_d = res === null || res === void 0 ? void 0 : res.pageBlocks) === null || _d === void 0 ? void 0 : _d.map(function (block) {
+                res = _f.sent();
+                pageBlocks = (_e = res === null || res === void 0 ? void 0 : res.pageBlocks) === null || _e === void 0 ? void 0 : _e.map(function (block) {
                     return transformPageBlock(block, transformers);
                 });
-                return [2 /*return*/, { pageBlocks: pageBlocks }];
+                additionalBlocksData = {};
+                for (_d = 0, additionalBlocks_2 = additionalBlocks; _d < additionalBlocks_2.length; _d++) {
+                    block = additionalBlocks_2[_d];
+                    if (res[block]) {
+                        res[block];
+                        additionalBlocksData[block] = res[block];
+                    }
+                }
+                return [2 /*return*/, { pageBlocks: pageBlocks, res: res, additionalBlocks: additionalBlocksData }];
         }
     });
 }); };

@@ -36,6 +36,8 @@ export declare const getPageData: (params: {
     transformers?: {};
 }) => Promise<{
     pageBlocks: any;
+    res: any;
+    additionalBlocks: {};
 }>;
 export declare const ApiClient: typeof Api;
 export declare const transformResponseItem: (resItem: any) => any;
