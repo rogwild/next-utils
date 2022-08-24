@@ -1,4 +1,9 @@
-import { transformResponseItem, getImageUrl, ApiClient } from "../src/api";
+import {
+  getPageData,
+  transformResponseItem,
+  getImageUrl,
+  ApiClient,
+} from "../src/api";
 
 describe("API UTILS", () => {
   describe("getImageUrl", () => {
@@ -19,7 +24,10 @@ describe("API UTILS", () => {
     };
 
     it("should return url to medium image", () => {
-      const mediumUrl = getImageUrl(imageFromBackend, "medium", BACKEND_URL); //?
+      const mediumUrl = getImageUrl(imageFromBackend, {
+        size: "medium",
+        BACKEND_URL,
+      }); //?
 
       expect(mediumUrl).toEqual("http://localhost:1337/uploads/medium.jpg");
     });
@@ -27,8 +35,10 @@ describe("API UTILS", () => {
     it("should return url to default image", () => {
       const mediumUrl = getImageUrl(
         { url: "/uploads/default.jpg" },
-        "medium",
-        BACKEND_URL
+        {
+          size: "medium",
+          BACKEND_URL,
+        }
       );
 
       expect(mediumUrl).toEqual("http://localhost:1337/uploads/default.jpg");
@@ -60,7 +70,7 @@ describe("API UTILS", () => {
   });
 
   describe("Api client", () => {
-    it.only("", async () => {
+    it("", async () => {
       const backend = new ApiClient("https://markets.zenfuse.io");
 
       const res = await backend.request({
@@ -73,6 +83,38 @@ describe("API UTILS", () => {
 
       expect(typeof res).toEqual("object");
       expect(res.id).toEqual(2);
+    });
+  });
+
+  describe("getPageData", () => {
+    it("should get data and transform it", async () => {
+      const transformers = {
+        ["page-blocks.main-block"]: (block) => {
+          block; //?
+
+          return {
+            ...block,
+            images:
+              block?.images?.map((image) =>
+                getImageUrl(image, {
+                  BACKEND_URL: "https://wsapi.subclub.me",
+                })
+              ) || null,
+          };
+        },
+      };
+
+      const res = await getPageData({
+        url: "https://wsapi.subclub.me",
+        page: "main-page",
+        keys: ["images"],
+        transformers,
+        additionalBlocks: ["header"],
+      }); //?
+
+      res; //?
+
+      expect(1).toEqual(1);
     });
   });
 });

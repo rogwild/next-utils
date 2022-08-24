@@ -6,23 +6,26 @@ import {
 
 export const getImageUrl = (
   obj: { formats?: object; url: string },
-  size: string = `medium`,
-  BACKEND_URL: string
+  options: {
+    size?: string;
+    BACKEND_URL?: string;
+  } = {}
 ): string => {
+  const { size, BACKEND_URL } = options;
   if (!obj) {
     return null;
   }
 
-  const url = obj.formats?.[size]?.url || obj.url;
+  const url = size ? obj.formats?.[size]?.url || obj.url : obj.url;
 
-  return `${BACKEND_URL}${url}`;
+  return `${BACKEND_URL || ""}${url}`;
 };
 
 export const transformPageBlock = (block, transformers) => {
   const key = block?._Component;
 
   if (!transformers?.[key]) {
-    return null;
+    return block;
   }
 
   return transformers[key](block);
@@ -73,6 +76,85 @@ export const appendFilesToFormData = (formData, files) => {
       }
     }
   }
+};
+
+const mainTransformers = {
+  [`page-blocks.main-block`]: (block) => {
+    return {
+      ...block,
+      images: block?.images?.map(getImageUrl) || null,
+    };
+  },
+};
+
+/**
+ * Get data for Next.js page form Strapi API
+ *
+ * @param additionalBlocks - ex. ['header', 'footer']
+ * @param transformers - ex.
+ * { [`page-blocks.main-block`]: (block) => {
+ *   return {
+ *      ...block,
+ *      images: block?.images?.map((image) =>
+ *              getImageUrl(image, {BACKEND_URL: "http://localhost:1337"})) || null,
+ *            };
+ *    },
+ * }
+ */
+export const getPageData = async (params: {
+  url?: string;
+  page: string;
+  locale?: string;
+  keys: string[];
+  additionalBlocks?: string[];
+  transformers?: {};
+}) => {
+  const {
+    url,
+    locale,
+    keys = [],
+    page,
+    transformers = {},
+    additionalBlocks = [],
+  } = params;
+
+  const client = new Api(url ? url : undefined);
+
+  const additionalPopulate = {};
+  if (additionalBlocks) {
+    for (const block of additionalBlocks) {
+      additionalPopulate[block] = {
+        populate: {
+          ...keys.reduce((a, b) => ({ ...a, [b]: { populate: `*` } }), {}),
+        },
+      };
+    }
+  }
+
+  const query = {
+    locale,
+    populate: {
+      page_blocks: {
+        populate: {
+          ...keys.reduce((a, b) => ({ ...a, [b]: { populate: `*` } }), {}),
+        },
+      },
+      ...additionalPopulate,
+    },
+  };
+
+  // console.log(`🚀 ~ query`, query.populate);
+
+  const res = await client.request({
+    model: page,
+    query,
+  }); //?
+
+  const pageBlocks = res?.pageBlocks?.map((block) => {
+    return transformPageBlock(block, transformers);
+  });
+
+  return { pageBlocks };
 };
 
 export const ApiClient = Api;
