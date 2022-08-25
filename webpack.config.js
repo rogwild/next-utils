@@ -1,3 +1,4 @@
+const webpack = require("webpack");
 const path = require("path");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const htmlPlugin = new HtmlWebPackPlugin({
@@ -24,5 +25,10 @@ module.exports = {
     filename: "bundle.js",
     path: path.resolve(__dirname, "devdist"),
   },
-  plugins: [htmlPlugin],
+  plugins: [
+    htmlPlugin,
+    new webpack.DefinePlugin({
+      process: { env: {} },
+    }),
+  ],
 };
