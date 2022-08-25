@@ -57,6 +57,7 @@ declare const _default: {
             array: any;
             getRenderCardProps: any;
         }) => JSX.Element;
+        Input: import("react").ForwardRefExoticComponent<import("react").RefAttributes<any>>;
     };
 };
 export default _default;

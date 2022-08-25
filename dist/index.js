@@ -2329,10 +2329,122 @@ const Modal = ({
   }, children) : null);
 };
 
+const Input = /*#__PURE__*/React.forwardRef(({
+  children,
+  dropdownItems: DropdownItems,
+  value = "",
+  type = "text",
+  placeholder,
+  onChange = () => null,
+  onPaste = () => null,
+  blocked = 0,
+  Icon,
+  className = "",
+  iconClassName = "",
+  dropdownContainerClasses = "",
+  containerClassName = "",
+  autoComplete = null,
+  id = null,
+  dropdownPosition = "left",
+  maxLength,
+  ...props
+}, ref) => {
+  const dropdownRef = React.useRef(null);
+  const inputContainerRef = React.useRef(null);
+  const [isDropdownOpen, setIsDropdownOpen] = useDetectOutsideClick$1(inputContainerRef, false);
+
+  const onClick = e => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const iconSrClassName = useStyleRewriter$6(iconBaseClassName, iconClassName, false);
+  const typeClasses = classesByType[type];
+  const baseClasses = useStyleRewriter$6(baseClassName, typeClasses, false);
+  const blockedClasses = blocked ? getClassName(baseClasses, baseBlockedClassName, false) : getClassName(baseClasses, unlockedClassName, false);
+  const srClasses = useStyleRewriter$6(blockedClasses, className);
+  const containerClasses = useStyleRewriter$6(baseContainerClassName, containerClassName);
+  const baseDropdownContainerClasses = `@wh w-full @mn mt-1 @ht h-200px @ow overflow-y-scroll ${dropdownPosition === "right" ? "@it left-auto right-0" : "@it inset-x-0"}`;
+  const srDropdownContainerClasses = useStyleRewriter$6(baseDropdownContainerClasses, dropdownContainerClasses, true);
+  return /*#__PURE__*/React__default["default"].createElement("div", {
+    ref: inputContainerRef,
+    className: containerClasses
+  }, /*#__PURE__*/React__default["default"].createElement("input", _extends({
+    placeholder: placeholder,
+    autoComplete: autoComplete,
+    id: id,
+    type: type == "select" ? "button" : type,
+    className: srClasses,
+    disabled: blocked ? true : false,
+    onChange: onChange,
+    onClick: onClick,
+    onPaste: onPaste,
+    value: value,
+    ref: ref,
+    maxLength: maxLength
+  }, props)), Icon && typeof Icon === "function" ? /*#__PURE__*/React__default["default"].createElement("div", {
+    onClick: onClick,
+    className: iconSrClassName
+  }, /*#__PURE__*/React__default["default"].createElement(Icon, null)) : null, children ? /*#__PURE__*/React__default["default"].createElement("div", {
+    className: "absolute h-full right-0 top-0 cursor-pointer"
+  }, children) : null, DropdownItems ? /*#__PURE__*/React__default["default"].createElement("div", {
+    className: `transition duration-200 ${isDropdownOpen ? "opacity-100" : "pointer-events-none opacity-0"}`
+  }, /*#__PURE__*/React__default["default"].createElement(DropdownContainer, {
+    className: srDropdownContainerClasses,
+    dropdownRef: dropdownRef
+  }, /*#__PURE__*/React__default["default"].createElement(DropdownItems, {
+    setIsDropdownOpen: setIsDropdownOpen
+  }))) : null);
+});
+const classesByType = {
+  select: `@cr cursor-pointer`,
+  text: `@cr cursor-text`
+};
+const baseContainerClassName = `w-full relative`;
+const iconBaseClassName = `
+  @pn absolute
+  @ht h-12
+  @it right-2 top-0
+  @cr cursor-pointer
+`;
+const unlockedClassName = `
+  @pn relative
+  @bxsw hover:shadow-blue-outline focus:shadow-blue-outline
+  @ttc text-black dark:text-white
+`;
+const baseBlockedClassName = `
+  @cr cursor-not-allowed
+  @pre pointer-events-none
+  @pn relative
+  @ttc text-gray-primary
+  @bdc bg-pearl
+`;
+const baseClassName = `
+  @wh w-full
+  @bdc bg-white dark:bg-true-gray-750
+  @ftf font-family-inter
+  @fts text-14px
+  @leh leading-20px
+  @brw border-px
+  @brs border-solid
+  @brc border-gray-light dark:border-true-gray-700 hover:border-blue-primary focus:border-blue-primary 
+  @tndn duration-200
+  @oe outline-none focus:outline-none hover:outline-none
+  @brr rounded-8px
+  @bro hover:border-opacity-70
+  @fx flex
+  @pg p-3
+`;
+
+const getClassName = (baseClassName, newClassName, cleared) => {
+  const srClassName = useStyleRewriter$6(baseClassName, newClassName, cleared);
+  return srClassName;
+};
+
 const components = {
   SmartButton,
   Modal,
-  ModalArray
+  ModalArray,
+  Input
 };
 
 var index = {

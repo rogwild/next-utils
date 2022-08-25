@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import * as ReactDOM from "react-dom/client";
 // import Modal from "./src/components/modal";
 import utils from "./dist/index";
-const { Modal: PackageModal } = utils.components;
+const { Modal: PackageModal, Input } = utils.components;
 import SmartButton from "./src/components/smart-button";
 
 const App = () => {
@@ -12,6 +12,7 @@ const App = () => {
   return (
     <div className="main">
       <div className="min-w-screen min-h-screen bg-gray-100 realtive flex flex-col items-center justify-center">
+        <Input value="Input value" />
         <SmartButton
           onClick={() => {
             setShowPopup(true);
