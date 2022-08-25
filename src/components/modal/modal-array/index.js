@@ -1,5 +1,5 @@
 import ModalPortal from "../modal-portal";
-import { useEffect, useMemo, useState } from "react";
+import React, { Fragment, useEffect, useMemo, useState } from "react";
 
 const ModalArray = ({
   showEffect = () => {},

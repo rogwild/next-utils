@@ -45,6 +45,18 @@ declare const _default: {
             linkProps?: any[];
             Link?: () => void;
         }) => JSX.Element;
+        Modal: ({ children, showEffect, ...props }: {
+            [x: string]: any;
+            children: any;
+            showEffect?: () => void;
+        }) => JSX.Element;
+        ModalArray: ({ showEffect, ArrayItem, array, getRenderCardProps, ...props }: {
+            [x: string]: any;
+            showEffect?: () => void;
+            ArrayItem: any;
+            array: any;
+            getRenderCardProps: any;
+        }) => JSX.Element;
     };
 };
 export default _default;

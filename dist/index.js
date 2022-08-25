@@ -5,6 +5,9 @@ var qs = require('qs');
 var React = require('react');
 var reactTable = require('react-table');
 var transitionComponent = require('transition-component');
+var reactDom = require('react-dom');
+var reactSpring = require('react-spring');
+var reactUseGesture = require('react-use-gesture');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -559,24 +562,6 @@ var formatters = /*#__PURE__*/Object.freeze({
     parseMimeType: parseMimeType
 });
 
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$1(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 /**
  * Filter function by text content
  *
@@ -586,15 +571,15 @@ function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { 
  * @returns {array} filtered array of values
  */
 
-var text = function text(rows, accessor, filterValue) {
-  return rows.filter(function (row) {
-    var rowValue = row[prefix][accessor];
+const text = (rows, accessor, filterValue) => {
+  return rows.filter(row => {
+    const rowValue = row[prefix][accessor];
     return rowValue !== undefined ? String(rowValue).toLowerCase().startsWith(String(filterValue).toLowerCase()) : true;
   });
 };
 
-var baseFilters = {
-  text: text
+const baseFilters = {
+  text
 };
 /**
  *
@@ -642,93 +627,77 @@ var baseFilters = {
  * @returns {ReturnObject}
  */
 
-var useLookupTable = function useLookupTable(_ref) {
-  var _ref$columns = _ref.columns,
-      columns = _ref$columns === void 0 ? [] : _ref$columns,
-      _ref$data = _ref.data,
-      passedData = _ref$data === void 0 ? [] : _ref$data,
-      getRowId = _ref.getRowId,
-      _ref$config = _ref.config,
-      config = _ref$config === void 0 ? {
+const useLookupTable = ({
+  columns = [],
+  data: passedData = [],
+  getRowId,
+  config = {
     selectedRowIds: []
-  } : _ref$config,
-      _ref$initialFiltersSt = _ref.initialFiltersState,
-      initialFiltersState = _ref$initialFiltersSt === void 0 ? [] : _ref$initialFiltersSt;
-  var data = React.useMemo(function () {
+  },
+  initialFiltersState = []
+}) => {
+  const data = React.useMemo(() => {
     return passedData;
   }, [passedData.length]);
-
-  var _useState = React.useState(config.sortBy),
-      sortBy = _useState[0],
-      setSortBy = _useState[1];
-
-  var _useState2 = React.useState(initialFiltersState),
-      filters = _useState2[0],
-      setFilters = _useState2[1];
-
-  var _useState3 = React.useState(config.globalFilter || ""),
-      localGlobalFilter = _useState3[0],
-      setLocalGlobalFilter = _useState3[1];
-
-  var _useState4 = React.useState(config.selectedRowIds || undefined),
-      localSelectedRowIds = _useState4[0],
-      setLocalSelectedRowIds = _useState4[1];
-
-  React.useMemo(function () {
-    var _config$useRowSelect;
-
-    return (_config$useRowSelect = config.useRowSelect) !== null && _config$useRowSelect !== void 0 ? _config$useRowSelect : false;
-  }, []);
+  const [sortBy, setSortBy] = React.useState(config.sortBy);
+  const [filters, setFilters] = React.useState(initialFiltersState);
+  const [localGlobalFilter, setLocalGlobalFilter] = React.useState(config.globalFilter || ``);
+  const [localSelectedRowIds, setLocalSelectedRowIds] = React.useState(config.selectedRowIds || undefined);
+  React.useMemo(() => config.useRowSelect ?? false, []);
   /**
    * State memoization to prevent data erasure when `data` changes
    * */
 
-  var initialState = React.useMemo(function () {
-    var state = {};
+  const initialState = React.useMemo(() => {
+    const state = {};
     if (sortBy) state.sortBy = sortBy;
     if (filters) state.filters = filters;
     if (localGlobalFilter) state.globalFilter = localGlobalFilter;
     if (localSelectedRowIds) state.selectedRowIds = localSelectedRowIds;
     return state;
   }, [sortBy, filters, localSelectedRowIds]);
-  var filterTypes = React.useMemo(function () {
-    return _objectSpread$1(_objectSpread$1({}, baseFilters), config.filterTypes);
+  const filterTypes = React.useMemo(() => {
+    return { ...baseFilters,
+      ...config.filterTypes
+    };
   }, []);
-  React.useEffect(function () {
+  React.useEffect(() => {
     if (data.length && config.selectedRowIds) {
       setLocalSelectedRowIds(config.selectedRowIds);
     }
   }, [data]);
-  var tableInstance = reactTable.useTable({
-    columns: columns,
-    data: data,
-    filterTypes: filterTypes,
-    initialState: initialState,
-    getRowId: getRowId
+  const tableInstance = reactTable.useTable({
+    columns,
+    data,
+    filterTypes,
+    initialState,
+    getRowId
   }, reactTable.useGlobalFilter, reactTable.useFilters, reactTable.useSortBy, reactTable.useExpanded, reactTable.useRowSelect);
-  var headerGroups = tableInstance.headerGroups,
-      rows = tableInstance.rows,
-      setGlobalFilter = tableInstance.setGlobalFilter,
-      prepareRow = tableInstance.prepareRow,
-      toggleRowExpanded = tableInstance.toggleRowExpanded,
-      getTableBodyProps = tableInstance.getTableBodyProps,
-      getTableProps = tableInstance.getTableProps,
-      state = tableInstance.state,
-      toggleAllRowsSelected = tableInstance.toggleAllRowsSelected;
+  const {
+    headerGroups,
+    rows,
+    setGlobalFilter,
+    prepareRow,
+    toggleRowExpanded,
+    getTableBodyProps,
+    getTableProps,
+    state,
+    toggleAllRowsSelected
+  } = tableInstance;
   /**
    * Save `isSelected` IDs state for real-data rendering
    */
 
-  React.useEffect(function () {
-    var foundSelected = false;
+  React.useEffect(() => {
+    let foundSelected = false;
 
     if (!rows.length) {
       return;
     }
 
-    var selected = {};
-    rows === null || rows === void 0 ? void 0 : rows.map(function (row) {
-      selected[row.index] = row === null || row === void 0 ? void 0 : row.isSelected;
+    const selected = {};
+    rows?.map(row => {
+      selected[row.index] = row?.isSelected;
       foundSelected = true;
     });
 
@@ -744,15 +713,15 @@ var useLookupTable = function useLookupTable(_ref) {
    * Save `isSorted` value for real-data rendering
    */
 
-  React.useEffect(function () {
-    var foundSorted = false;
+  React.useEffect(() => {
+    let foundSorted = false;
 
     if (!rows.length) {
       return;
     }
 
-    headerGroups[0].headers.map(function (header) {
-      if (header !== null && header !== void 0 && header.isSorted) {
+    headerGroups[0].headers.map(header => {
+      if (header?.isSorted) {
         setSortBy([{
           id: header.id,
           desc: !!header.isSortedDesc
@@ -769,14 +738,14 @@ var useLookupTable = function useLookupTable(_ref) {
    * Save `filterValue` for real-data rendering
    */
 
-  React.useEffect(function () {
-    var foundFiltered = false;
+  React.useEffect(() => {
+    let foundFiltered = false;
 
     if (!rows.length) {
       return;
     }
 
-    headerGroups[0].headers.map(function (header) {
+    headerGroups[0].headers.map(header => {
       if (header.filterValue) {
         setFilters([{
           id: header.id,
@@ -787,16 +756,13 @@ var useLookupTable = function useLookupTable(_ref) {
     });
     if (!foundFiltered) setFilters([]);
   }, [rows]);
+  const [inputValue, setInputValue] = React.useState(state.globalFilter);
 
-  var _useState5 = React.useState(state.globalFilter),
-      inputValue = _useState5[0],
-      setInputValue = _useState5[1];
-
-  var onGlobalFilterChange = function onGlobalFilterChange(value) {
+  const onGlobalFilterChange = value => {
     setGlobalFilter(value || undefined);
   };
 
-  var onInputChange = function onInputChange(e) {
+  const onInputChange = e => {
     if (config.onInputChange) {
       config.onInputChange(e.target.value);
     }
@@ -807,135 +773,18 @@ var useLookupTable = function useLookupTable(_ref) {
   };
 
   return {
-    inputValue: inputValue,
-    onInputChange: onInputChange,
-    headerGroups: headerGroups,
-    rows: rows,
-    prepareRow: prepareRow,
-    state: state,
-    getTableBodyProps: getTableBodyProps,
-    getTableProps: getTableProps,
-    toggleRowExpanded: toggleRowExpanded,
-    toggleAllRowsSelected: toggleAllRowsSelected
+    inputValue,
+    onInputChange,
+    headerGroups,
+    rows,
+    prepareRow,
+    state,
+    getTableBodyProps,
+    getTableProps,
+    toggleRowExpanded,
+    toggleAllRowsSelected
   };
 };
-/**
- * A function that creates a valid documentation item structure for using in a `Storybook`, section` ArgsTable`.
- *
- * export default {
- *    component: "NameOfCompOrFunction",
- *    title: "TitleOfComponent",
- *    argTypes: {*it will be here*}
- * }
- *
- * @param {String} title - Variable name
- * @param {String} description - Variable description
- * @param {String} type - Variable type in string `(Array | Object | String | Boolean)`
- * @param {String} detail - The structure of the passed argument with a description of the types. Supported by `Markdown`. For example:
- *    "Header: String,\n
- *     accessor: String,\n
- *     [hidden]: Boolean,\n
- *     [Filter]: Function,\n
- *     [filter]: String,\n
- *     [className]: String".
- * @param {String} defaultValue - The default value will be in the table in the `Default` column
- * @param {Boolean} isRequired - Required field or not
- * @returns {Object}
- */
-
-function createArgDocumentation(_ref2) {
-  var title = _ref2.title,
-      description = _ref2.description,
-      type = _ref2.type,
-      detail = _ref2.detail,
-      defaultValue = _ref2.defaultValue,
-      _ref2$isRequired = _ref2.isRequired,
-      isRequired = _ref2$isRequired === void 0 ? false : _ref2$isRequired;
-
-  var documentation = _defineProperty({}, title, {
-    description: description,
-    table: {
-      type: {
-        summary: type,
-        detail: detail
-      },
-      defaultValue: {
-        summary: defaultValue,
-        detail: undefined
-      }
-    },
-    type: {
-      name: type,
-      required: isRequired
-    }
-  });
-
-  return documentation;
-}
-/**
- * `columns` documentation for `Storybook`
- */
-
-
-var columnsDoc = createArgDocumentation({
-  title: "columns",
-  description: "An array of objects `ColumnItemObject` that characterizes the display of columns for sorting and filtering items. It combines rendering, filtering and sorting parameters.",
-  type: "array",
-  detail: "Header: string,\naccessor: string,\n[hidden]: Boolean,\n[Filter]: Function,\n[filter]: string,\n[className]: string",
-  defaultValue: "[]",
-  isRequired: true
-});
-/**
- * `data` documentation for `Storybook`
- */
-
-var dataDoc = createArgDocumentation({
-  title: "data",
-  description: "An array of objects",
-  type: "array",
-  detail: "Any type of arrays, where placed objects",
-  defaultValue: "[]",
-  isRequired: true
-});
-/**
- * `config` documentation for `Storybook`
- */
-
-var configDoc = createArgDocumentation({
-  title: "config",
-  description: "A hook configuration object and setting the initial value of the data used in the hook functions. Used when working with realtime data. Since if you do not set `initialState`, then when the input data changes, filtering and sorting take an init value",
-  type: "object",
-  detail: "sortBy: [{ id: string }],\nfilters: [{ id: string, value: any }],\nglobalFilter: string,\nselectedRowIds: [{ rowId: string }],\nuseRowSelect: boolean,\nfilterTypes: { string: function }",
-  defaultValue: "{ selectedRowIds: [] }",
-  isRequired: false
-});
-/**
- * `return` documentation for `Storybook`
- */
-
-var returnDoc = createArgDocumentation({
-  title: "return",
-  description: "Object returned from the hook. All information on the returned data can be found in the documentation React Table (https://react-table.tanstack.com/docs/api/overview), by entering the corresponding key in the search (`onInputChange`, `headerGroups`).",
-  type: "object",
-  detail: "inputValue: string\nonInputChange: function\nheaderGroups: array\nrows: array\nprepareRow: function\nstate: object\ntoggleRowExpanded: function",
-  isRequired: false
-});
-/**
- * `Storybook` default export object with documentation for `props` and `return`
- */
-
-({
-  component: useLookupTable,
-  title: "Hooks/useLookupTable",
-  argTypes: _objectSpread$1(_objectSpread$1(_objectSpread$1(_objectSpread$1({}, columnsDoc), dataDoc), configDoc), returnDoc),
-  parameters: {
-    docs: {
-      description: {
-        component: "Hook that transforms data suitable for display in a table. Adds handlers to work with sorting, filtering and searching."
-      }
-    }
-  }
-});
 
 var useSetParentsInput = function (_a) {
     var passedState = _a.passedState, _b = _a.passedFiles, passedFiles = _b === void 0 ? {} : _b, parentKey = _a.parentKey, _c = _a.setParentInputs, setParentInputs = _c === void 0 ? function () { } : _c, _d = _a.setParentFiles, setParentFiles = _d === void 0 ? function () { } : _d, _e = _a.setParentErrors, setParentErrors = _e === void 0 ? function () { } : _e;
@@ -1200,33 +1049,31 @@ function objAreEq(newObj, prevObj) {
     return equals;
 }
 
-var _BREAKPOINTS;
-var BREAKPOINTS = (_BREAKPOINTS = {
+const BREAKPOINTS = {
   sm: 640,
   md: 768,
-  xl: 1024
-}, _defineProperty(_BREAKPOINTS, "xl", 1280), _defineProperty(_BREAKPOINTS, "2xl", 1536), _BREAKPOINTS);
+  xl: 1024,
+  xl: 1280,
+  "2xl": 1536
+};
 
-var useBreakpoint = function useBreakpoint(breakpoint) {
-  var _useState = React.useState(undefined),
-      width = _useState[0],
-      setWidth = _useState[1];
-
-  React.useEffect(function () {
-    var handleResize = function handleResize() {
+const useBreakpoint$1 = breakpoint => {
+  const [width, setWidth] = React.useState(undefined);
+  React.useEffect(() => {
+    const handleResize = () => {
       setWidth(window.innerWidth);
     };
 
-    window.addEventListener("resize", handleResize);
+    window.addEventListener(`resize`, handleResize);
     handleResize();
-    return function () {
-      window.removeEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener(`resize`, handleResize);
     };
   }, []);
   return !width || width >= BREAKPOINTS[breakpoint];
 };
 
-var fullByShort = {
+const fullByShort = {
   "@prop": "@prop",
   "@base": "@base",
   "@anc": "@alignContent",
@@ -1331,7 +1178,7 @@ var fullByShort = {
   "@wdb": "@wordBreak",
   "@zi": "@zIndex"
 };
-var shortByFull = {
+const shortByFull = {
   "@alignContent": "@anc",
   "@alignItems": "@ani",
   "@alignSelf": "@ans",
@@ -1618,60 +1465,50 @@ var shortByFull = {
 //   }
 // });
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-
-var useStyleRewriter$3 = function useStyleRewriter(baseClassName, className) {
-  var cleared = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
-  return React.useMemo(function () {
-    var styleObj = getStyleObj("@base ".concat(baseClassName), cleared);
-    var styleObjProps = getStyleObj("@prop ".concat(className), cleared);
-
-    var computedStyleObj = _objectSpread(_objectSpread({}, styleObj), styleObjProps);
-
-    var resultClassName = Object.values(computedStyleObj).join(" ").replace(/\n/g, "");
+const useStyleRewriter$6 = (baseClassName, className, cleared = true) => {
+  return React.useMemo(() => {
+    let styleObj = getStyleObj(`@base ${baseClassName}`, cleared);
+    let styleObjProps = getStyleObj(`@prop ${className}`, cleared);
+    const computedStyleObj = { ...styleObj,
+      ...styleObjProps
+    };
+    const resultClassName = Object.values(computedStyleObj).join(" ").replace(/\n/g, "");
     return resultClassName.replace(/\s+/g, " ");
   }, [baseClassName, className]);
 };
 
-var getStyleObj = function getStyleObj() {
-  var className = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
-  var cleared = arguments.length > 1 ? arguments[1] : undefined;
-
+const getStyleObj = (className = "", cleared) => {
   if (!className || !className.trim()) {
     return {};
   }
 
-  var classesArr = className.replace(/@([a-z:]*)/g, "__@$1__").split("__").filter(function (str) {
-    return str;
-  });
-  var styleObj = {};
-  classesArr.forEach(function (item, index) {
+  let classesArr = className.replace(/@([a-z:]*)/g, "__@$1__").split("__").filter(str => str);
+  const styleObj = {};
+  classesArr.forEach((item, index) => {
     if (item) {
-      var isKey = item.includes("@");
-      var nextValue = classesArr[index + 1];
+      const isKey = item.includes("@");
+      const nextValue = classesArr[index + 1];
 
       if (isKey) {
-        var isKeyNextValue = nextValue && nextValue.includes("@");
+        const isKeyNextValue = nextValue && nextValue.includes("@");
 
         if (!(fullByShort[item] || shortByFull[item])) {
-          throw new Error("Invalid key ".concat(item, " for styleRewriter in className ").concat(className));
+          throw new Error(`Invalid key ${item} for styleRewriter in className ${className}`);
         }
 
         if (!isKeyNextValue) {
           setValue({
-            styleObj: styleObj,
+            styleObj,
             key: item,
             value: nextValue,
-            cleared: cleared
+            cleared
           });
         } else {
           setValue({
-            styleObj: styleObj,
+            styleObj,
             key: item,
             value: "",
-            cleared: cleared
+            cleared
           });
         }
       }
@@ -1680,38 +1517,35 @@ var getStyleObj = function getStyleObj() {
   return styleObj;
 };
 
-var setValue = function setValue(_ref) {
-  var styleObj = _ref.styleObj,
-      key = _ref.key,
-      value = _ref.value,
-      cleared = _ref.cleared;
-
+const setValue = ({
+  styleObj,
+  key,
+  value,
+  cleared
+}) => {
   if (cleared) {
     styleObj[key] = value;
   } else {
-    var stringKey = key === "@base" || key === "@prop" ? "" : key;
-    styleObj[key] = "".concat(stringKey, " ").concat(value);
+    const stringKey = key === "@base" || key === "@prop" ? "" : key;
+    styleObj[key] = `${stringKey} ${value}`;
   }
 };
 
-var useDetectMouseover$1 = function useDetectMouseover(el, initialState) {
-  var _useState = React.useState(initialState),
-      isActive = _useState[0],
-      setIsActive = _useState[1];
-
-  var handleOver = React.useCallback(function (e) {
+const useDetectMouseover$1 = (el, initialState) => {
+  const [isActive, setIsActive] = React.useState(initialState);
+  const handleOver = React.useCallback(e => {
     setIsActive(true);
   }, [el.current]);
-  var handleOut = React.useCallback(function (e) {
+  const handleOut = React.useCallback(e => {
     setIsActive(false);
   }, [el.current]);
-  React.useEffect(function () {
+  React.useEffect(() => {
     if (el.current) {
       el.current.addEventListener("mouseenter", handleOver);
       el.current.addEventListener("mouseleave", handleOut);
     }
 
-    return function () {
+    return () => {
       if (el.current) {
         el.current.removeEventListener("mouseenter", handleOver);
         el.current.removeEventListener("mouseleave", handleOut);
@@ -1721,33 +1555,30 @@ var useDetectMouseover$1 = function useDetectMouseover(el, initialState) {
   return [isActive];
 };
 
-var useDetectOutsideClick$1 = function useDetectOutsideClick(trigger, initialState) {
-  var _useState = React.useState(initialState),
-      isActive = _useState[0],
-      setIsActive = _useState[1];
-
-  React.useEffect(function () {
-    var pageClickEvent = function pageClickEvent(e) {
-      if (trigger !== null && trigger !== void 0 && trigger.current && !trigger.current.contains(e.target)) {
+const useDetectOutsideClick$1 = (trigger, initialState) => {
+  const [isActive, setIsActive] = React.useState(initialState);
+  React.useEffect(() => {
+    const pageClickEvent = e => {
+      if (trigger?.current && !trigger.current.contains(e.target)) {
         setIsActive(false);
       }
     };
 
     window.addEventListener("click", pageClickEvent);
-    return function () {
+    return () => {
       window.removeEventListener("click", pageClickEvent);
     };
   }, []);
   return [isActive, setIsActive];
 };
 
-var hooks = {
+const hooks = {
   useDetectMouseover: useDetectMouseover$1,
   useDetectOutsideClick: useDetectOutsideClick$1,
-  useLookupTable: useLookupTable,
-  useBreakpoint: useBreakpoint,
-  useSetParentsInput: useSetParentsInput,
-  useStyleRewriter: useStyleRewriter$3
+  useLookupTable,
+  useBreakpoint: useBreakpoint$1,
+  useSetParentsInput,
+  useStyleRewriter: useStyleRewriter$6
 };
 
 var checkIsServer = function () { return typeof window === "undefined"; };
@@ -1788,40 +1619,6 @@ var vanilla = /*#__PURE__*/Object.freeze({
     GTMPageView: GTMPageView
 });
 
-function _objectWithoutPropertiesLoose(source, excluded) {
-  if (source == null) return {};
-  var target = {};
-  var sourceKeys = Object.keys(source);
-  var key, i;
-
-  for (i = 0; i < sourceKeys.length; i++) {
-    key = sourceKeys[i];
-    if (excluded.indexOf(key) >= 0) continue;
-    target[key] = source[key];
-  }
-
-  return target;
-}
-
-function _objectWithoutProperties(source, excluded) {
-  if (source == null) return {};
-  var target = _objectWithoutPropertiesLoose(source, excluded);
-  var key, i;
-
-  if (Object.getOwnPropertySymbols) {
-    var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
-
-    for (i = 0; i < sourceSymbolKeys.length; i++) {
-      key = sourceSymbolKeys[i];
-      if (excluded.indexOf(key) >= 0) continue;
-      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
-      target[key] = source[key];
-    }
-  }
-
-  return target;
-}
-
 function _extends() {
   _extends = Object.assign ? Object.assign.bind() : function (target) {
     for (var i = 1; i < arguments.length; i++) {
@@ -1839,99 +1636,50 @@ function _extends() {
   return _extends.apply(this, arguments);
 }
 
-function _arrayWithHoles(arr) {
-  if (Array.isArray(arr)) return arr;
-}
+const {
+  useStyleRewriter: useStyleRewriter$5
+} = hooks;
 
-function _iterableToArrayLimit(arr, i) {
-  var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
-
-  if (_i == null) return;
-  var _arr = [];
-  var _n = true;
-  var _d = false;
-
-  var _s, _e;
-
-  try {
-    for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
-      _arr.push(_s.value);
-
-      if (i && _arr.length === i) break;
-    }
-  } catch (err) {
-    _d = true;
-    _e = err;
-  } finally {
-    try {
-      if (!_n && _i["return"] != null) _i["return"]();
-    } finally {
-      if (_d) throw _e;
-    }
-  }
-
-  return _arr;
-}
-
-function _arrayLikeToArray(arr, len) {
-  if (len == null || len > arr.length) len = arr.length;
-
-  for (var i = 0, arr2 = new Array(len); i < len; i++) {
-    arr2[i] = arr[i];
-  }
-
-  return arr2;
-}
-
-function _unsupportedIterableToArray(o, minLen) {
-  if (!o) return;
-  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-  var n = Object.prototype.toString.call(o).slice(8, -1);
-  if (n === "Object" && o.constructor) n = o.constructor.name;
-  if (n === "Map" || n === "Set") return Array.from(o);
-  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
-}
-
-function _nonIterableRest() {
-  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-
-function _slicedToArray(arr, i) {
-  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
-}
-
-var __jsx$2 = React__default["default"].createElement;
-var useStyleRewriter$2 = hooks.useStyleRewriter;
-
-var DropdownContainer = function DropdownContainer(_ref) {
-  var children = _ref.children,
-      className = _ref.className,
-      dropdownRef = _ref.dropdownRef;
-  var srClasses = useStyleRewriter$2(baseClasses$2, className);
-  return __jsx$2("div", {
+const DropdownContainer = ({
+  children,
+  className,
+  dropdownRef
+}) => {
+  const srClasses = useStyleRewriter$5(baseClasses$2, className);
+  return /*#__PURE__*/React__default["default"].createElement("div", {
     ref: dropdownRef,
     className: srClasses
-  }, __jsx$2("div", {
+  }, /*#__PURE__*/React__default["default"].createElement("div", {
     className: "flex flex-col relative w-full"
   }, children));
 };
-var baseClasses$2 = "\n    @pn absolute\n    @mn mt-2\n    @bdc bg-white\n    @brc border-gray-light\n    @brw border-px\n    @brr rounded-8px\n    @wh w-200px\n    @it top-full left-0\n  ";
+const baseClasses$2 = `
+    @pn absolute
+    @mn mt-2
+    @bdc bg-white
+    @brc border-gray-light
+    @brw border-px
+    @brr rounded-8px
+    @wh w-200px
+    @it top-full left-0
+  `;
 
-var __jsx$1 = React__default["default"].createElement;
-var useStyleRewriter$1 = hooks.useStyleRewriter;
+const {
+  useStyleRewriter: useStyleRewriter$4
+} = hooks;
 
-var Tooltip = function Tooltip(_ref) {
-  var children = _ref.children,
-      _ref$visible = _ref.visible,
-      visible = _ref$visible === void 0 ? true : _ref$visible,
-      tooltipRef = _ref.tooltipRef,
-      className = _ref.className,
-      tooltipPosition = _ref.tooltipPosition;
-  var srClasses = useStyleRewriter$1(baseClasses$1, className);
-  var tooltipClasses = React.useMemo(function () {
+const Tooltip = ({
+  children,
+  visible = true,
+  tooltipRef,
+  className,
+  tooltipPosition
+}) => {
+  const srClasses = useStyleRewriter$4(baseClasses$1, className);
+  const tooltipClasses = React.useMemo(() => {
     switch (tooltipPosition) {
       case "left-bottom":
-        return "tooltip-left-bottom";
+        return `tooltip-left-bottom`;
 
       case "left-top":
         return;
@@ -1955,149 +1703,214 @@ var Tooltip = function Tooltip(_ref) {
         return;
     }
   }, [tooltipPosition]);
-  return __jsx$1("div", {
+  return /*#__PURE__*/React__default["default"].createElement("div", {
     ref: tooltipRef,
-    className: "".concat(visible ? "opacity-100 w-auto" : "opacity-0", " ").concat(srClasses, " ").concat(tooltipClasses)
+    className: `${visible ? "opacity-100 w-auto" : "opacity-0"} ${srClasses} ${tooltipClasses}`
   }, children);
 };
-var baseClasses$1 = "\n    @pn absolute\n    @wh w-fit\n    @it left-0 top-0\n    @tta text-center \n    @bxsw shadow-400\n    @brw border\n    @brc border-true-gray-150\n    @bdc bg-white \n    @pg p-1 \n    @brr rounded-8px \n    @ttc text-black\n  ";
+const baseClasses$1 = `
+    @pn absolute
+    @wh w-fit
+    @it left-0 top-0
+    @tta text-center 
+    @bxsw shadow-400
+    @brw border
+    @brc border-true-gray-150
+    @bdc bg-white 
+    @pg p-1 
+    @brr rounded-8px 
+    @ttc text-black
+  `;
 
-var _excluded = ["children", "SmartButtonRef"],
-    _excluded2 = ["Link", "children", "className", "linkProps"];
-var __jsx = React__default["default"].createElement;
-var useStyleRewriter = hooks.useStyleRewriter,
-    useDetectMouseover = hooks.useDetectMouseover,
-    useDetectOutsideClick = hooks.useDetectOutsideClick;
+const {
+  useStyleRewriter: useStyleRewriter$3,
+  useDetectMouseover,
+  useDetectOutsideClick
+} = hooks;
 
-var SmartButton = function SmartButton(_ref) {
-  var disabled = _ref.disabled,
-      className = _ref.className,
-      children = _ref.children,
-      variant = _ref.variant,
-      tooltipPosition = _ref.tooltipPosition,
-      _ref$href = _ref.href,
-      href = _ref$href === void 0 ? "" : _ref$href,
-      DropdownItems = _ref.dropdownItems,
-      _ref$dropdownContaine = _ref.dropdownContainerClasses,
-      dropdownContainerClasses = _ref$dropdownContaine === void 0 ? "" : _ref$dropdownContaine,
-      dropdownProps = _ref.dropdownProps,
-      TooltipItems = _ref.tooltipItems,
-      _ref$tooltipContainer = _ref.tooltipContainerClasses,
-      tooltipContainerClasses = _ref$tooltipContainer === void 0 ? "" : _ref$tooltipContainer,
-      onClickCb = _ref.onClick,
-      _ref$linkProps = _ref.linkProps,
-      linkProps = _ref$linkProps === void 0 ? [] : _ref$linkProps,
-      _ref$Link = _ref.Link,
-      Link = _ref$Link === void 0 ? function () {} : _ref$Link;
-  var dropdownRef = React.useRef(null);
-  var SmartButtonRef = React.useRef(null);
+const SmartButton = ({
+  disabled,
+  className,
+  children,
+  variant,
+  tooltipPosition,
+  href = "",
+  dropdownItems: DropdownItems,
+  dropdownContainerClasses = "",
+  dropdownProps,
+  tooltipItems: TooltipItems,
+  tooltipContainerClasses = "",
+  onClick: onClickCb,
+  linkProps = [],
+  Link = () => {}
+}) => {
+  const dropdownRef = React.useRef(null);
+  const SmartButtonRef = React.useRef(null);
+  const [isDropdownOpen, setIsDropdownOpen] = useDetectOutsideClick(SmartButtonRef, false);
 
-  var _useDetectOutsideClic = useDetectOutsideClick(SmartButtonRef, false),
-      _useDetectOutsideClic2 = _slicedToArray(_useDetectOutsideClic, 2),
-      isDropdownOpen = _useDetectOutsideClic2[0],
-      setIsDropdownOpen = _useDetectOutsideClic2[1];
-
-  var onClick = function onClick(e) {
-    var _dropdownRef$current;
-
-    if (DropdownItems && !((_dropdownRef$current = dropdownRef.current) !== null && _dropdownRef$current !== void 0 && _dropdownRef$current.contains(e.target))) {
+  const onClick = e => {
+    if (DropdownItems && !dropdownRef.current?.contains(e.target)) {
       setIsDropdownOpen(!isDropdownOpen);
     }
 
     return onClickCb && onClickCb(e);
   };
 
-  var _useDetectMouseover = useDetectMouseover(SmartButtonRef, false),
-      _useDetectMouseover2 = _slicedToArray(_useDetectMouseover, 1),
-      isMouseOver = _useDetectMouseover2[0];
-
-  var variantClasses = useVariant(className, variant);
-  var srClasses = useStyleRewriter(variantClasses, "".concat(disabled ? disabledClasses : "", " ").concat(className, " "));
-  var Element = href ? LinkSmartButton : DivSmartButton;
-  var elementProps = href ? {
-    Link: Link,
-    href: href,
+  const [isMouseOver] = useDetectMouseover(SmartButtonRef, false);
+  const variantClasses = useVariant(className, variant);
+  const srClasses = useStyleRewriter$3(variantClasses, `${disabled ? disabledClasses : ""} ${className} `);
+  const Element = href ? LinkSmartButton : DivSmartButton;
+  const elementProps = href ? {
+    Link,
+    href,
     passHref: true,
     className: srClasses,
-    linkProps: linkProps
+    linkProps
   } : {
     className: srClasses
   };
-  return __jsx(React.Fragment, null, __jsx(Element, _extends({
+  return /*#__PURE__*/React__default["default"].createElement(React.Fragment, null, /*#__PURE__*/React__default["default"].createElement(Element, _extends({
     SmartButtonRef: SmartButtonRef,
     onClick: onClick
   }, elementProps), typeof children === "function" ? children({
-    isMouseOver: isMouseOver
-  }) : children, DropdownItems && __jsx(transitionComponent.Transition, _extends({
+    isMouseOver
+  }) : children, DropdownItems && /*#__PURE__*/React__default["default"].createElement(transitionComponent.Transition, _extends({
     show: isDropdownOpen
-  }, contentTransitionProps), __jsx(DropdownContainer, {
+  }, contentTransitionProps$1), /*#__PURE__*/React__default["default"].createElement(DropdownContainer, {
     className: dropdownContainerClasses,
     dropdownRef: dropdownRef
-  }, __jsx(DropdownItems, _extends({}, dropdownProps, {
+  }, /*#__PURE__*/React__default["default"].createElement(DropdownItems, _extends({}, dropdownProps, {
     setIsDropdownOpen: setIsDropdownOpen
-  })))), TooltipItems && __jsx(transitionComponent.Transition, _extends({
+  })))), TooltipItems && /*#__PURE__*/React__default["default"].createElement(transitionComponent.Transition, _extends({
     show: isMouseOver
-  }, tooltipTransitionProps), __jsx(Tooltip, {
+  }, tooltipTransitionProps), /*#__PURE__*/React__default["default"].createElement(Tooltip, {
     tooltipPosition: tooltipPosition,
     className: tooltipContainerClasses,
     visible: isMouseOver
-  }, __jsx(TooltipItems, null)))));
+  }, /*#__PURE__*/React__default["default"].createElement(TooltipItems, null)))));
 };
-var baseClasses = "@pn relative @ftf font-family-rubik @oe focus:outline-none @cr cursor-pointer @tndn duration-200 @tta text-center";
-var disabledClasses = "@pre pointer-events-none @oy opacity-60 @bdc bg-true-gray-100 @ttc text-true-gray-450";
+const baseClasses = "@pn relative @ftf font-family-rubik @oe focus:outline-none @cr cursor-pointer @tndn duration-200 @tta text-center";
+const disabledClasses = "@pre pointer-events-none @oy opacity-60 @bdc bg-true-gray-100 @ttc text-true-gray-450";
 
-var useVariant = function useVariant(defaultClasses, variant) {
+const useVariant = (defaultClasses, variant) => {
   return variants[variant] || defaultClasses;
 };
 
-var variants = {
-  primary: "".concat(baseClasses, " \n          @bdc bg-blue-primary dark:bg-blue-600\n          @bdo hover:bg-opacity-60 dark:hover:bg-opacity-80\n          @dy flex \n          @fxd flex-row \n          @ani items-center \n          @pg px-8 py-3 \n          @brr rounded-8px \n          @fts text-15px \n          @ttc text-white"),
-  white: "".concat(baseClasses, " \n          @tnp transition \n          @tntf ease-in-out \n          @bdc bg-white hover:bg-gray-blue \n          @dy flex \n          @fxd flex-row \n          @ani items-center \n          @pg px-8 py-3 \n          @brr rounded-8px \n          @fts text-15px \n          @ttc text-blue-base hover:text-white"),
-  danger: "".concat(baseClasses, " \n          @bdc bg-red-base \n          @bdo hover:bg-opacity-60 \n          @dy flex \n          @fxd flex-row \n          @ani items-center \n          @pg px-8 py-3 \n          @brr rounded-8px \n          @fts text-15px \n          @ttc text-white"),
-  light: "".concat(baseClasses, " \n          @bdc bg-white hover:bg-gray-accent \n          @ttc text-black hover:text-blue-primary \n          @pg px-4 py-2 \n          @brr rounded-16px \n          @tta text-left"),
-  "light-blue": "".concat(baseClasses, " \n          @bdc bg-blue-light \n          @bdc hover:bg-blue-primary \n          @ttc text-blue-primary hover:text-white \n          @pg px-8 py-3 \n          @brr rounded-16px \n          @tta text-left"),
+const variants = {
+  primary: `${baseClasses} 
+          @bdc bg-blue-primary dark:bg-blue-600
+          @bdo hover:bg-opacity-60 dark:hover:bg-opacity-80
+          @dy flex 
+          @fxd flex-row 
+          @ani items-center 
+          @pg px-8 py-3 
+          @brr rounded-8px 
+          @fts text-15px 
+          @ttc text-white`,
+  white: `${baseClasses} 
+          @tnp transition 
+          @tntf ease-in-out 
+          @bdc bg-white hover:bg-gray-blue 
+          @dy flex 
+          @fxd flex-row 
+          @ani items-center 
+          @pg px-8 py-3 
+          @brr rounded-8px 
+          @fts text-15px 
+          @ttc text-blue-base hover:text-white`,
+  danger: `${baseClasses} 
+          @bdc bg-red-base 
+          @bdo hover:bg-opacity-60 
+          @dy flex 
+          @fxd flex-row 
+          @ani items-center 
+          @pg px-8 py-3 
+          @brr rounded-8px 
+          @fts text-15px 
+          @ttc text-white`,
+  light: `${baseClasses} 
+          @bdc bg-white hover:bg-gray-accent 
+          @ttc text-black hover:text-blue-primary 
+          @pg px-4 py-2 
+          @brr rounded-16px 
+          @tta text-left`,
+  "light-blue": `${baseClasses} 
+          @bdc bg-blue-light 
+          @bdc hover:bg-blue-primary 
+          @ttc text-blue-primary hover:text-white 
+          @pg px-8 py-3 
+          @brr rounded-16px 
+          @tta text-left`,
   text: baseClasses,
-  circleLight: "".concat(baseClasses, " \n          @brc border-gray-light hover:border-blue-primary \n          @brw border-px \n          @dy flex \n          @jyi justify-center\n          @ani items-center\n          @ht h-8 \n          @ow overflow-visible\n          @pn relative \n          @bdc hover:bg-blue-primary \n          @ttc hover:text-white \n          @brr rounded-full \n          @wh w-8\n          @zi z-45"),
-  circlePrimary: "".concat(baseClasses, " \n          @bdc bg-blue-primary \n          @brc border-blue-primary \n          @brw border-px \n          @dy flex \n          @ani items-center\n          @jyi justify-center\n          @ht h-8 \n          @pn relative \n          @brr rounded-full \n          @wh w-8 \n          @ttc text-white"),
-  transparentOutline: "".concat(baseClasses, "\n          @dy flex flex-row\n          @ani items-center\n          @ttc text-blue-650\n          @bdo hover:opacity-70\n          @jyc justify-center\n          @brr rounded-8px \n          @brw border\n          @brc border-blue-650\n          @pg px-8 py-3")
+  circleLight: `${baseClasses} 
+          @brc border-gray-light hover:border-blue-primary 
+          @brw border-px 
+          @dy flex 
+          @jyi justify-center
+          @ani items-center
+          @ht h-8 
+          @ow overflow-visible
+          @pn relative 
+          @bdc hover:bg-blue-primary 
+          @ttc hover:text-white 
+          @brr rounded-full 
+          @wh w-8
+          @zi z-45`,
+  circlePrimary: `${baseClasses} 
+          @bdc bg-blue-primary 
+          @brc border-blue-primary 
+          @brw border-px 
+          @dy flex 
+          @ani items-center
+          @jyi justify-center
+          @ht h-8 
+          @pn relative 
+          @brr rounded-full 
+          @wh w-8 
+          @ttc text-white`,
+  transparentOutline: `${baseClasses}
+          @dy flex flex-row
+          @ani items-center
+          @ttc text-blue-650
+          @bdo hover:opacity-70
+          @jyc justify-center
+          @brr rounded-8px 
+          @brw border
+          @brc border-blue-650
+          @pg px-8 py-3`
 };
 
-var DivSmartButton = function DivSmartButton(_ref2) {
-  var children = _ref2.children,
-      SmartButtonRef = _ref2.SmartButtonRef,
-      props = _objectWithoutProperties(_ref2, _excluded);
+const DivSmartButton = ({
+  children,
+  SmartButtonRef,
+  ...props
+}) => /*#__PURE__*/React__default["default"].createElement("div", _extends({
+  ref: SmartButtonRef
+}, props), children);
 
-  return __jsx("div", _extends({
-    ref: SmartButtonRef
-  }, props), children);
-};
-
-var LinkSmartButton = function LinkSmartButton(_ref3) {
-  var _ref3$Link = _ref3.Link,
-      Link = _ref3$Link === void 0 ? function () {} : _ref3$Link,
-      children = _ref3.children,
-      className = _ref3.className,
-      _ref3$linkProps = _ref3.linkProps,
-      linkProps = _ref3$linkProps === void 0 ? [] : _ref3$linkProps,
-      props = _objectWithoutProperties(_ref3, _excluded2);
-
-  var linkAttributes = [];
+const LinkSmartButton = ({
+  Link = () => {},
+  children,
+  className,
+  linkProps = [],
+  ...props
+}) => {
+  let linkAttributes = [];
 
   if (linkProps.length) {
-    linkAttributes = linkProps.map(function (_ref4) {
-      var name = _ref4.name,
-          value = _ref4.value;
-      return [name, value];
-    });
+    linkAttributes = linkProps.map(({
+      name,
+      value
+    }) => [name, value]);
     linkAttributes = Object.fromEntries(linkAttributes);
   }
 
-  return __jsx(Link, props, __jsx("a", _extends({}, linkAttributes, {
+  return /*#__PURE__*/React__default["default"].createElement(Link, props, /*#__PURE__*/React__default["default"].createElement("a", _extends({}, linkAttributes, {
     className: className
   }), children));
 };
 
-var contentTransitionProps = {
+const contentTransitionProps$1 = {
   enter: "ease-out duration-300",
   enterFrom: "opacity-0",
   enterTo: "opacity-100",
@@ -2105,7 +1918,7 @@ var contentTransitionProps = {
   leaveFrom: "opacity-100",
   leaveTo: "opacity-0"
 };
-var tooltipTransitionProps = {
+const tooltipTransitionProps = {
   enter: "ease-out duration-300",
   enterFrom: "opacity-0 scale-50",
   enterTo: "opacity-100 scale-100",
@@ -2114,8 +1927,412 @@ var tooltipTransitionProps = {
   leaveTo: "opacity-0 scale-50"
 };
 
-var components = {
-  SmartButton: SmartButton
+const {
+  useStyleRewriter: useStyleRewriter$2
+} = hooks;
+
+const ModalComponent$1 = ({
+  show = false,
+  //required
+  setShow = () => {},
+  //required
+  RenderCard = () => /*#__PURE__*/React__default["default"].createElement(React__default["default"].Fragment, null),
+  //required
+  CloseButton = DefaultCloseButton,
+  popupWindowClasses = ``,
+  closeButtonClasses = ``,
+  layoutClasses = ``,
+  containerClasses = ``,
+  removeFromDom = true,
+  transitionDuration: duration = 300,
+  renderCardProps = {},
+  hideDocumentOverflow = true,
+  hideCloseButton = false
+}) => {
+  const [showLayout, setShowLayout] = React.useState(show);
+  const srLayoutClasses = useStyleRewriter$2(baseLayoutClasses, layoutClasses);
+  const srPopupWindowClasses = useStyleRewriter$2(`@pre pointer-events-auto @tnp transition @tm transform z-40 @pn relative`, popupWindowClasses);
+  const srContainerClasses = useStyleRewriter$2(baseContainerClasses, containerClasses);
+
+  const changePopup = bool => {
+    if (bool) {
+      if (hideDocumentOverflow) {
+        document.body.style.overflow = `hidden`;
+      }
+
+      setShowLayout(true);
+    } else {
+      if (hideDocumentOverflow) {
+        document.body.style.overflow = `auto`;
+      }
+
+      setTimeout(() => {
+        setShowLayout(false);
+      }, duration - 50);
+    }
+  };
+
+  React.useEffect(() => {
+    if (showLayout || show) changePopup(show);
+  }, [show]); // close popup on 'escape' key
+
+  React.useEffect(() => {
+    const changePopupListener = e => {
+      if (e.code === `Escape`) {
+        setShow(false);
+        changePopup(false);
+      }
+    };
+
+    window.addEventListener(`keydown`, changePopupListener);
+    return () => {
+      window.removeEventListener(`keydown`, changePopupListener);
+      document.body.style.overflow = null;
+    };
+  }, []);
+  const TransitionElement = removeFromDom ? TransitionComponent : PlainDiv;
+  return /*#__PURE__*/React__default["default"].createElement(React__default["default"].Fragment, null, /*#__PURE__*/React__default["default"].createElement("div", {
+    // onClick={(e) => e.stopPropagation()}
+    className: `${showLayout ? `z-30 block` : `-z-1`} ${srContainerClasses} `
+  }, /*#__PURE__*/React__default["default"].createElement(TransitionElement, {
+    baseClasses: `fixed inset-0 pointer-events-auto duration-${duration} transition z-10`,
+    show: show,
+    transitionProps: layoutTransitionProps
+  }, /*#__PURE__*/React__default["default"].createElement("div", {
+    className: "transition fixed inset-0"
+  }, /*#__PURE__*/React__default["default"].createElement("div", {
+    onClick: () => setShow(false),
+    className: srLayoutClasses
+  }))), /*#__PURE__*/React__default["default"].createElement(TransitionElement, {
+    baseClasses: `pointer-events-auto transition duration-${duration} transform z-40 relative`,
+    show: show,
+    id: `modal`,
+    changePopup: setShow,
+    transitionProps: contentTransitionProps
+  }, /*#__PURE__*/React__default["default"].createElement("div", {
+    className: srPopupWindowClasses
+  }, /*#__PURE__*/React__default["default"].createElement(RenderCard, _extends({}, renderCardProps, {
+    show: show,
+    setShow: setShow
+  })))), !hideCloseButton && show ? /*#__PURE__*/React__default["default"].createElement(CloseButton, {
+    setShow: bool => setShow(bool),
+    closeButtonClasses: closeButtonClasses
+  }) : null));
+};
+
+const DefaultCloseButton = ({
+  setShow,
+  closeButtonClasses
+}) => {
+  return /*#__PURE__*/React__default["default"].createElement(SmartButton, {
+    onClick: () => setShow(false),
+    className: "@pn absolute @it right-[20px] top-[20px] @ttc text-white hover:text-neutral-550 @wh w-12 @zi z-50 @cr cursor-pointer"
+  }, /*#__PURE__*/React__default["default"].createElement("svg", {
+    className: `fill-current w-12 h-12`,
+    viewBox: "0 0 20 20",
+    fill: "none",
+    xmlns: "http://www.w3.org/2000/svg"
+  }, /*#__PURE__*/React__default["default"].createElement("path", {
+    fillRule: "evenodd",
+    clipRule: "evenodd",
+    d: "M13.5659 5.24616C13.8936 4.91762 14.4257 4.91762 14.7542 5.24616C15.0827 5.57391 15.0827 6.10671 14.7542 6.43442L11.1711 10.0175L14.7042 13.5506C15.0302 13.8758 15.0302 14.4037 14.7042 14.7297C14.379 15.0558 13.8511 15.0558 13.5251 14.7297L9.99199 11.1966L6.43466 14.7539C6.10696 15.0817 5.57493 15.0817 5.2464 14.7539C4.91787 14.4262 4.91787 13.8942 5.2464 13.5656L8.80368 10.0084L5.27056 6.47527C4.94451 6.1501 4.94451 5.62226 5.27056 5.29621C5.59573 4.97016 6.12357 4.97016 6.44962 5.29621L9.98275 8.8293L13.5659 5.24616Z"
+  })));
+};
+
+const baseLayoutClasses = `@pn fixed @it inset-0 @pre pointer-events-auto @zi z-10 @bdc bg-black @bdo bg-opacity-60`;
+const baseContainerClasses = `@pre pointer-events-none @dy flex @pn fixed @ow overflow-hidden @it bottom-0 inset-0 @pg px-5 py-10 @ani items-center @jyc justify-center`;
+const layoutTransitionProps = {
+  enter: `ease-out duration-300`,
+  enterFrom: `opacity-0`,
+  enterTo: `opacity-100`,
+  leave: `ease-in duration-200`,
+  leaveFrom: `opacity-100`,
+  leaveTo: `opacity-0`
+};
+const contentTransitionProps = {
+  enter: `ease-out duration-300`,
+  enterFrom: `opacity-0 translate-y-4 sm:translate-y-0 sm:scale -95`,
+  enterTo: `opacity-100 translate-y-0 sm:scale-100`,
+  leave: `ease-in duration-300`,
+  leaveFrom: `opacity-100 translate-y-0 sm:scale-100`,
+  leaveTo: `opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95`
+};
+
+const TransitionComponent = ({
+  children,
+  show,
+  transitionProps
+}) => /*#__PURE__*/React__default["default"].createElement(transitionComponent.Transition, _extends({
+  show: show
+}, transitionProps), children);
+
+const PlainDiv = ({
+  children,
+  show,
+  transitionProps,
+  baseClasses,
+  changePopup = () => {},
+  id
+}) => /*#__PURE__*/React__default["default"].createElement("div", {
+  id: id,
+  onClick: e => e.target.id === id ? changePopup(false) : null,
+  className: `${baseClasses} ${show ? transitionProps.enterTo : transitionProps.leaveTo}`
+}, children);
+
+const ModalPortal$1 = ({
+  targetId = `modal`,
+  ...props
+}) => {
+  return document.querySelector(`#${targetId}`) ? /*#__PURE__*/reactDom.createPortal( /*#__PURE__*/React__default["default"].createElement(ModalComponent$1, props), document.querySelector(`#${targetId}`)) : null;
+};
+
+const ModalArray = ({
+  showEffect = () => {},
+  ArrayItem,
+  array,
+  getRenderCardProps,
+  ...props
+}) => {
+  const [show, setShow] = React.useState(false);
+  const [currentItem, setCurrentItem] = React.useState(0);
+  const modalComponentId = React.useMemo(() => {
+    if (props.modalComponentId) {
+      return props.modalComponentId;
+    }
+
+    const name = props.RenderCard.name;
+
+    if (!name || name === `anonymous`) {
+      return `component${Math.round(Math.random() * 10e5)}`;
+    }
+
+    return name;
+  }, []);
+  React.useEffect(() => {
+    showEffect({
+      show,
+      setShow
+    });
+  }, [ArrayItem ? show : props.show, props]);
+
+  const showCurrentItem = index => {
+    setCurrentItem(index);
+    setShow(true);
+  };
+
+  const renderCardProps = getRenderCardProps(array[currentItem], currentItem);
+  return /*#__PURE__*/React__default["default"].createElement(React__default["default"].Fragment, null, /*#__PURE__*/React__default["default"].createElement(ModalPortal$1, _extends({
+    modalComponentId: modalComponentId,
+    renderCardProps: renderCardProps,
+    setShow: setShow,
+    show: show
+  }, props)), array.map((item, index) => /*#__PURE__*/React__default["default"].createElement(ArrayItem, {
+    key: index,
+    item: item,
+    index: index,
+    showCurrentItem: showCurrentItem
+  })));
+};
+
+const {
+  useStyleRewriter: useStyleRewriter$1
+} = hooks;
+
+const ModalComponent = ({
+  show = false,
+  //required
+  setShow = () => {},
+  //required
+  RenderCard = () => /*#__PURE__*/React__default["default"].createElement(React__default["default"].Fragment, null),
+  //required
+  popupWindowClasses = ``,
+  renderCardContainerClasses = ``,
+  renderCardProps = {},
+  onCloseModalCb = () => {},
+  zIndex = 50
+}) => {
+  const [isOpen, setIsOpen] = React.useState(false);
+  const [screenHeight, setScreenHeight] = React.useState(window.innerHeight);
+  const [scrollActive, setScrollActive] = React.useState(false);
+  const srPopupWindowClasses = useStyleRewriter$1(`fixed z-40 w-full h-95vh bg-white`, popupWindowClasses);
+  const srRenderCardContainerClasses = useStyleRewriter$1(`w-full h-full mt-1 overflow-visible`, renderCardContainerClasses);
+  const modalHeight = screenHeight ? screenHeight * 0.9 : 0;
+  const [{
+    y
+  }, set] = reactSpring.useSpring(() => ({
+    y: modalHeight
+  }));
+
+  const open = ({
+    canceled
+  }) => {
+    if (!isOpen) setIsOpen(true);
+    set({
+      y: 0,
+      immediate: false,
+      config: canceled ? reactSpring.config.wobbly : reactSpring.config.stiff
+    });
+    document.querySelector(`body`).style.overflow = `hidden`;
+  };
+
+  const close = (velocity = 0) => {
+    document.querySelector(`body`).style.overflow = `auto`;
+    onCloseModalCb();
+    setShow(false);
+    set({
+      y: modalHeight,
+      immediate: false,
+      config: { ...reactSpring.config.stiff,
+        velocity
+      }
+    });
+    setIsOpen(false);
+  };
+
+  const bind = reactUseGesture.useDrag(({
+    last,
+    vxvy: [, vy],
+    movement: [, my],
+    cancel,
+    canceled
+  }) => {
+    if (scrollActive) return;
+    if (my < -50) cancel();
+
+    if (last) {
+      my > modalHeight * 0.5 || vy > 0.35 ? close(vy) : open({
+        canceled
+      });
+    } else {
+      set({
+        y: my,
+        immediate: true
+      });
+    }
+  }, {
+    initial: () => [0, y.get()],
+    filterTaps: true,
+    bounds: {
+      top: 0
+    },
+    rubberband: true
+  });
+  const bgStyle = {
+    opacity: y.to([0, modalHeight], [0.5, 0], `clamp`),
+    zIndex: y.to([0, modalHeight], [zIndex, -1], `clamp`)
+  };
+  React.useEffect(() => {
+    setRect({
+      setScreenHeight
+    });
+
+    const setRectListener = () => setRect({
+      setScreenHeight
+    });
+
+    window.addEventListener(`resize`, setRectListener);
+    return () => {
+      window.removeEventListener(`resize`, setRectListener);
+      document.querySelector(`body`).style.overflow = `auto`;
+    };
+  }, []);
+  React.useEffect(() => {
+    if (!show && !isOpen) return;
+    if (show) setIsOpen(true);
+    show ? open({}) : close();
+  }, [show]);
+  if (!isOpen) return null;
+  return /*#__PURE__*/React__default["default"].createElement("div", {
+    className: "relative"
+  }, /*#__PURE__*/React__default["default"].createElement(reactSpring.a.div, {
+    onClick: close,
+    className: "fixed inset-0 bg-zinc-900 opacity-50",
+    style: bgStyle
+  }), /*#__PURE__*/React__default["default"].createElement(reactSpring.a.div, _extends({
+    className: srPopupWindowClasses
+  }, bind(), {
+    style: {
+      display: show ? `block` : `none`,
+      bottom: `calc(-100vh + ${modalHeight}px)`,
+      touchAction: `none`,
+      height: `100vh`,
+      zIndex: `110`,
+      y
+    }
+  }), /*#__PURE__*/React__default["default"].createElement("div", {
+    className: `relative w-screen h-90vh bg-white  rounded-t-2xl pt-5`
+  }, /*#__PURE__*/React__default["default"].createElement("div", {
+    className: "absolute bg-white w-12 h-2 -top-4 left-1/2 transform -translate-x-1/2 rounded-full"
+  }), /*#__PURE__*/React__default["default"].createElement("div", {
+    className: srRenderCardContainerClasses,
+    onTouchStart: () => setScrollActive(true),
+    onTouchEnd: () => setScrollActive(false),
+    onMouseDown: () => setScrollActive(true),
+    onMouseLeave: () => setScrollActive(false)
+  }, /*#__PURE__*/React__default["default"].createElement(RenderCard, _extends({
+    setShow: setShow,
+    show: show
+  }, renderCardProps))))));
+};
+
+const setRect = ({
+  setScreenHeight
+}) => {
+  const height = window.innerHeight;
+  setScreenHeight(height);
+};
+// const baseContainerClasses = `@pre pointer-events-none @dy flex @pn fixed @ow overflow-hidden @it bottom-0 inset-0 @ani items-end @jyc justify-end`;
+
+const ModalPortal = ({
+  targetId = `modal`,
+  ...props
+}) => {
+  return document.querySelector(`#${targetId}`) ? /*#__PURE__*/reactDom.createPortal( /*#__PURE__*/React__default["default"].createElement(ModalComponent, props), document.querySelector(`#${targetId}`)) : null;
+};
+
+const {
+  useStyleRewriter,
+  useBreakpoint
+} = hooks;
+
+const Modal = ({
+  children,
+  showEffect = () => {},
+  ...props
+}) => {
+  const [show, setShow] = React.useState(false);
+  const srChildContainerClasses = useStyleRewriter(`@cr cursor-pointer @wh w-full @ht h-full`, props.childContainerClasses);
+  const modalComponentId = React.useMemo(() => {
+    const name = props.RenderCard.name;
+
+    if (!name || name === `anonymous`) {
+      return `component${Math.round(Math.random() * 10e5)}`;
+    }
+
+    return name;
+  }, []);
+  React.useEffect(() => {
+    showEffect({
+      show,
+      setShow
+    });
+  }, [children ? show : props.show, props]);
+  const useDesktopModal = useBreakpoint(`md`);
+  const Component = useDesktopModal ? ModalPortal$1 : ModalPortal;
+  return /*#__PURE__*/React__default["default"].createElement(React.Fragment, null, /*#__PURE__*/React__default["default"].createElement(Component, _extends({
+    modalComponentId: props.modalComponentId ? props.modalComponentId : modalComponentId,
+    setShow: children ? setShow : props.setShow,
+    show: children ? show : props.show
+  }, props)), children ? /*#__PURE__*/React__default["default"].createElement("div", {
+    className: srChildContainerClasses,
+    onClick: () => setShow(true)
+  }, children) : null);
+};
+
+const components = {
+  SmartButton,
+  Modal,
+  ModalArray
 };
 
 var index = {

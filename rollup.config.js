@@ -35,8 +35,8 @@ export default {
     "axios",
     "qs",
     "react-use-gesture",
-    "next",
     "transition-component",
     "react-spring",
+    "react-dom",
   ],
 };

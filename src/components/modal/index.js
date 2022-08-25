@@ -1,14 +1,10 @@
-import { Fragment, useEffect, useMemo, useState } from "react";
+import React, { Fragment, useEffect, useMemo, useState } from "react";
 import ModalArray from "./modal-array";
 import hooks from "../../hooks";
-const { useStyleRewriter, useBreakpoint } = hooks;
-import dynamic from "next/dynamic";
+import ModalPortal from "./modal-portal";
+import MobileModalPortal from "./mobile-modal/mobile-modal-portal";
 
-const ModalPortal = dynamic(() => import(`./modal-portal`), { ssr: false });
-const MobileModalPortal = dynamic(
-  () => import(`./mobile-modal/mobile-modal-portal`),
-  { ssr: false }
-);
+const { useStyleRewriter, useBreakpoint } = hooks;
 
 const Modal = ({ children, showEffect = () => {}, ...props }) => {
   const [show, setShow] = useState(false);

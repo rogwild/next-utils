@@ -1,4 +1,5 @@
 import { createPortal } from "react-dom";
+import React from "react";
 import ModalComponent from "../mobile-modal-component";
 
 const ModalPortal = ({ targetId = `modal`, ...props }) => {

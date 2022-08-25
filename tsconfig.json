@@ -6,7 +6,8 @@
     "jsx": "react",
     "allowSyntheticDefaultImports": true,
     "declaration": true,
-    "downlevelIteration": true
+    "downlevelIteration": true,
+    "esModuleInterop": true
   },
   "exclude": ["node_modules"],
   "include": ["./src/**/*"]
