@@ -2,16 +2,17 @@ import * as ReactDOM from "react-dom";
 import * as React from "react";
 import ToastManager from "./ToastManager";
 
+/**
+ * Remove to Spring Alert Notification
+ * @see https://github.com/GfxKai/react-spring-alerts
+ */
+
 const isBrowser =
   typeof window !== "undefined" && typeof window.document !== "undefined";
 
 const PORTAL_ID = "notification-portal";
 
 class Toaster {
-  createNotification;
-  removeAll;
-  closeToast;
-
   constructor() {
     if (!isBrowser) return;
 
