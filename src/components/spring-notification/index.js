@@ -1,44 +1,52 @@
-import React, { useState, useContext } from "react";
-import AnimatedAlertsOverlay from "./components/AnimatedAlertsOverlay";
+import React, { useState, useContext, useEffect } from "react";
+import Overlay from "./components/Overlay";
 
-const AlertContext = React.createContext({ showAlert: () => null });
-const useAlerts = () => useContext(AlertContext);
+const NotificationsContext = React.createContext({ showAlert: () => null });
+const useNotifications = () => useContext(NotificationsContext);
 
-const AlertsWrapper = ({ children }) => {
-  const [alerts, setAlerts] = useState([]);
-  console.log(`🚀 ~ AlertsWrapper ~ alerts`, alerts);
+const NotificationsWrapper = ({ children }) => {
+  const [notifications, setNotifications] = useState([]);
 
   // use state fns to avoid passing stale alerts array to showAlert and removeAlert functions
-  const removeAlert = (timestampId) => {
-    setAlerts((alertArray) =>
-      alertArray.filter((alertInfo) => alertInfo?.id !== timestampId)
+  const remove = (timestampId) => {
+    setNotifications((alertNotifications) =>
+      alertNotifications.filter((alertInfo) => alertInfo?.id !== timestampId)
     );
   };
 
-  const showAlert = ({ type, title, message, duration = 8000 }) => {
+  const add = ({ type, title, message, duration = 8000 }) => {
     // use creation timestamp as psuedo-unique alert object ID
-    const newAlertId = new Date().getTime();
-    const newAlert = {
-      id: newAlertId,
+    const newNotificationId = new Date().getTime();
+    const newNotification = {
+      id: newNotificationId,
       type,
       title,
       message,
     };
-    setAlerts((alertArray) => [...alertArray, newAlert]);
+    setNotifications((alertNotifications) => [
+      ...alertNotifications,
+      newNotification,
+    ]);
 
     if (duration !== 0) {
-      setTimeout(() => removeAlert(newAlertId), duration);
+      setTimeout(() => remove(newNotificationId), duration);
     }
   };
 
+  // on first render ref is undefined
+  // create empty alert helps to fix height error
+  useEffect(() => {
+    add({
+      duration: 1,
+    });
+  }, []);
+
   return (
-    <AlertContext.Provider value={{ showAlert }}>
+    <NotificationsContext.Provider value={{ add }}>
       {children}
-      {alerts.length ? (
-        <AnimatedAlertsOverlay alerts={alerts} removeAlert={removeAlert} />
-      ) : null}
-    </AlertContext.Provider>
+      <Overlay notifications={notifications} remove={remove} />
+    </NotificationsContext.Provider>
   );
 };
 
-export { AlertsWrapper, useAlerts };
+export { NotificationsWrapper, useNotifications };

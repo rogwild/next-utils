@@ -1,10 +1,13 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useRef } from "react";
 import { animated } from "react-spring";
 
 // use forwardRef here to access alert *content* div height
 // used to animate *container* div height from 0 <-> auto during enter / leave transition
-const Alert = React.forwardRef(
-  ({ type = "info", title, message, removeAlert = () => {}, styles }, ref) => {
+const Notification = React.forwardRef(
+  (
+    { type = "info", title = "", message = "", remove = () => {}, styles },
+    ref
+  ) => {
     const typeClassName = useMemo(() => {
       if (type === "success") {
         return `bg-green-600`;
@@ -12,7 +15,7 @@ const Alert = React.forwardRef(
         return `bg-red-600`;
       }
 
-      return ``;
+      return `bg-white`;
     }, [type]);
 
     return (
@@ -35,7 +38,7 @@ const Alert = React.forwardRef(
   }
 );
 
-export default Alert;
+export default Notification;
 
 const alertContainerClassName = `relative overflow-hidden rounded-sm drop-shadow-md`;
 const alertContentWrapperClassName = `flex flex-col max-w-full`;

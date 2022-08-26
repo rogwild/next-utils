@@ -3,14 +3,17 @@ import * as ReactDOM from "react-dom/client";
 // import Modal from "./src/components/modal";
 // import utils from "./dist/index";
 // const { Modal: PackageModal, Input } = utils.components;
-import { AlertsWrapper, useAlerts } from "./src/components/spring-notification";
+import {
+  NotificationsWrapper,
+  useNotifications,
+} from "./src/components/spring-notification";
 import SmartButton from "./src/components/smart-button";
 
 const App = () => {
   return (
-    <AlertsWrapper>
+    <NotificationsWrapper>
       <Page />
-    </AlertsWrapper>
+    </NotificationsWrapper>
   );
 };
 
@@ -27,7 +30,7 @@ root.render(<App />);
 
 const Page = () => {
   const [showPopup, setShowPopup] = useState(false);
-  const alert = useAlerts();
+  const notificationsContext = useNotifications();
 
   return (
     <div className="main">
@@ -35,7 +38,7 @@ const Page = () => {
         {/* <Input value="Input value" /> */}
         <SmartButton
           onClick={() => {
-            alert.showAlert({
+            notificationsContext.add({
               title: "Test alert",
               message: "Test message alert notification",
               duration: 5000,
