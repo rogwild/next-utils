@@ -39,9 +39,11 @@ const Page = () => {
         <SmartButton
           onClick={() => {
             notificationsContext.add({
-              title: "Test alert",
-              message: "Test message alert notification",
-              duration: 5000,
+              title: "**Test** alert",
+              message: "Test message **alert** notification",
+              containerClassName: "@mn mb-2",
+              Child: ChildComp,
+              duration: 105000,
             });
           }}
         >
@@ -71,4 +73,8 @@ const Page = () => {
       <div id="modal"></div>
     </div>
   );
+};
+
+const ChildComp = () => {
+  return <div className="w-4 h-4 bg-red-500 rounded-full mt-1 ml-2"></div>;
 };

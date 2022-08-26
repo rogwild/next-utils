@@ -14,11 +14,6 @@ const Overlay = ({ notifications = [], remove = () => {} }) => {
       height: 0,
     },
     enter: (item) => async (next) => {
-      // console.log(
-      //   `🚀 ~ enter: ~ item`,
-      //   refMap.get(item).offsetHeight,
-      //   refMap.get(item).clientHeight
-      // );
       await next({
         height: refMap.get(item)?.offsetHeight,
       });
@@ -43,8 +38,7 @@ const Overlay = ({ notifications = [], remove = () => {} }) => {
   return (
     <div className={notificationsContainerClassName}>
       {transitions((styles, item) => {
-        // const ref = createRef();
-        console.log(`🚀 ~ {transitions ~ styles`, styles);
+        console.log(`🚀 ~ {transitions ~ item`, item);
         return (
           <Notification
             key={item.id}
@@ -52,6 +46,7 @@ const Overlay = ({ notifications = [], remove = () => {} }) => {
             ref={(ref) => {
               return ref && refMap.set(item, ref);
             }}
+            remove={() => remove(item.id)}
             {...item}
           />
         );

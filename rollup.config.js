@@ -39,5 +39,6 @@ export default {
     "react-spring",
     "react-dom",
     "prop-types",
+    "react-markdown",
   ],
 };

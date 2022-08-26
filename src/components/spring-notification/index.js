@@ -14,14 +14,12 @@ const NotificationsWrapper = ({ children }) => {
     );
   };
 
-  const add = ({ type, title, message, duration = 8000 }) => {
+  const add = ({ duration = 8000, ...props }) => {
     // use creation timestamp as psuedo-unique alert object ID
     const newNotificationId = new Date().getTime();
     const newNotification = {
       id: newNotificationId,
-      type,
-      title,
-      message,
+      ...props,
     };
     setNotifications((alertNotifications) => [
       ...alertNotifications,
