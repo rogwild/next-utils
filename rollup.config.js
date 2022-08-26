@@ -38,5 +38,6 @@ export default {
     "transition-component",
     "react-spring",
     "react-dom",
+    "prop-types",
   ],
 };
