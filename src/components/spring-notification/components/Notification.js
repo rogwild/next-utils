@@ -74,8 +74,10 @@ const alertContainerClassName = `
   @ow overflow-hidden`;
 
 const contentWrapperClassName = `
+  @pn relative
   @dy flex
   @fxd flex-row
+  @ani items-start
   @brr rounded-sm
   @bxsw drop-shadow-md
   @pg pr-8 py-2
@@ -93,7 +95,7 @@ const CloseButton = ({ remove = () => {} }) => {
   return (
     <SmartButton
       onClick={remove}
-      className="@pn absolute @it right-2 top-2 @ttc text-black @wh w-3 @zi z-50 @cr cursor-pointer"
+      className="@pn absolute @it right-1 top-1 @ttc text-black @wh w-3 @zi z-50 @cr cursor-pointer"
     >
       <svg
         className={`fill-current w-3`}

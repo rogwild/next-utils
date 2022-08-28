@@ -176,5 +176,12 @@ export const getPageData = async (params: {
   return { pageBlocks, res, additionalBlocks: additionalBlocksData };
 };
 
+export const handleApiError = (error: any) => ({
+  event: `error`,
+  title: error
+    ? error.data?.error.message || error.message
+    : `Something went wrong :(`,
+});
+
 export const ApiClient = Api;
 export const transformResponseItem = transformResponseItemFunc;

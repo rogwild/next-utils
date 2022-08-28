@@ -2,7 +2,7 @@ import React, { createRef, useEffect, useState } from "react";
 import { useTransition } from "react-spring";
 import Notification from "./Notification";
 
-const notificationsContainerClassName = `fixed bottom-0 right-0 flex items-end flex-col mx-4`;
+const notificationsContainerClassName = `z-50 fixed bottom-0 right-0 flex items-end flex-col mx-4`;
 
 const Overlay = ({ notifications = [], remove = () => {} }) => {
   // use weakmap to get div height for alert items

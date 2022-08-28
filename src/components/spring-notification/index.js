@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import Overlay from "./components/Overlay";
 
-const NotificationsContext = React.createContext({ showAlert: () => null });
+const NotificationsContext = React.createContext({ add: () => null });
 const useNotifications = () => useContext(NotificationsContext);
 
 const NotificationsWrapper = ({ children }) => {

@@ -40,5 +40,9 @@ export declare const getPageData: (params: {
     res: any;
     additionalBlocks: {};
 }>;
+export declare const handleApiError: (error: any) => {
+    event: string;
+    title: any;
+};
 export declare const ApiClient: typeof Api;
 export declare const transformResponseItem: (resItem: any) => any;

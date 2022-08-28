@@ -63,7 +63,7 @@ declare const _default: {
                 children: any;
             }) => JSX.Element;
             useNotifications: () => {
-                showAlert: () => any;
+                add: () => any;
             };
         };
     };

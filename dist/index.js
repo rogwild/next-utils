@@ -517,6 +517,15 @@ var getPageData = function (params) { return __awaiter(void 0, void 0, void 0, f
         }
     });
 }); };
+var handleApiError = function (error) {
+    var _a;
+    return ({
+        event: "error",
+        title: error
+            ? ((_a = error.data) === null || _a === void 0 ? void 0 : _a.error.message) || error.message
+            : "Something went wrong :(",
+    });
+};
 var ApiClient = Api;
 var transformResponseItem = transformResponseItem$1;
 
@@ -527,6 +536,7 @@ var apiUtils = /*#__PURE__*/Object.freeze({
     removeEmptyFields: removeEmptyFields,
     appendFilesToFormData: appendFilesToFormData,
     getPageData: getPageData,
+    handleApiError: handleApiError,
     ApiClient: ApiClient,
     transformResponseItem: transformResponseItem
 });
@@ -2484,8 +2494,10 @@ const alertContainerClassName = `
   @pn relative
   @ow overflow-hidden`;
 const contentWrapperClassName = `
+  @pn relative
   @dy flex
   @fxd flex-row
+  @ani items-start
   @brr rounded-sm
   @bxsw drop-shadow-md
   @pg pr-8 py-2
@@ -2502,7 +2514,7 @@ const CloseButton = ({
 }) => {
   return /*#__PURE__*/React__default["default"].createElement(SmartButton, {
     onClick: remove,
-    className: "@pn absolute @it right-2 top-2 @ttc text-black @wh w-3 @zi z-50 @cr cursor-pointer"
+    className: "@pn absolute @it right-1 top-1 @ttc text-black @wh w-3 @zi z-50 @cr cursor-pointer"
   }, /*#__PURE__*/React__default["default"].createElement("svg", {
     className: `fill-current w-3`,
     viewBox: "0 0 20 20",
@@ -2515,7 +2527,7 @@ const CloseButton = ({
   })));
 };
 
-const notificationsContainerClassName = `fixed bottom-0 right-0 flex items-end flex-col mx-4`;
+const notificationsContainerClassName = `z-50 fixed bottom-0 right-0 flex items-end flex-col mx-4`;
 
 const Overlay = ({
   notifications = [],
@@ -2560,7 +2572,7 @@ const Overlay = ({
 };
 
 const NotificationsContext = /*#__PURE__*/React__default["default"].createContext({
-  showAlert: () => null
+  add: () => null
 });
 
 const useNotifications = () => React.useContext(NotificationsContext);
