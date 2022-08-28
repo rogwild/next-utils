@@ -47,4 +47,4 @@ const NotificationsWrapper = ({ children }) => {
   );
 };
 
-export { NotificationsWrapper, useNotifications };
+export default { NotificationsWrapper, useNotifications };

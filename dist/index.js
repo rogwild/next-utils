@@ -8,11 +8,13 @@ var transitionComponent = require('transition-component');
 var reactDom = require('react-dom');
 var reactSpring = require('react-spring');
 var reactUseGesture = require('react-use-gesture');
+var ReactMarkdown = require('react-markdown');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
 var axios__default = /*#__PURE__*/_interopDefaultLegacy(axios);
 var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
+var ReactMarkdown__default = /*#__PURE__*/_interopDefaultLegacy(ReactMarkdown);
 
 /******************************************************************************
 Copyright (c) Microsoft Corporation.
@@ -2440,11 +2442,183 @@ const getClassName = (baseClassName, newClassName, cleared) => {
   return srClassName;
 };
 
+// used to animate *container* div height from 0 <-> auto during enter / leave transition
+
+const Notification = /*#__PURE__*/React__default["default"].forwardRef((props, ref) => {
+  const {
+    title = "",
+    message = "",
+    remove = () => {},
+    containerClassName = "",
+    contentContainerClassName = "",
+    headerClassName = "",
+    bodyClassName = "",
+    styles,
+    Child,
+    CloseIcon,
+    showDefault = true
+  } = props;
+  const srContainerClassName = useStyleRewriter$6(alertContainerClassName, containerClassName);
+  const srContentContainerClassName = useStyleRewriter$6(contentWrapperClassName, contentContainerClassName);
+  const srHeaderClassName = useStyleRewriter$6(alertHeaderClassName, headerClassName);
+  const srBodyClassName = useStyleRewriter$6(alertBodyClassName, bodyClassName);
+  const CloseIconComp = CloseIcon ? props => /*#__PURE__*/React__default["default"].createElement(CloseIcon, props) : props => /*#__PURE__*/React__default["default"].createElement(CloseButton, props);
+  return /*#__PURE__*/React__default["default"].createElement(reactSpring.animated.div, {
+    className: srContainerClassName,
+    style: { ...styles
+    }
+  }, /*#__PURE__*/React__default["default"].createElement("div", {
+    className: srContentContainerClassName,
+    ref: ref
+  }, Child ? /*#__PURE__*/React__default["default"].createElement(Child, props) : null, showDefault ? /*#__PURE__*/React__default["default"].createElement("div", {
+    className: "flex flex-col items-start gap-2"
+  }, /*#__PURE__*/React__default["default"].createElement("div", {
+    className: `markdown ${srHeaderClassName}`
+  }, /*#__PURE__*/React__default["default"].createElement(ReactMarkdown__default["default"], null, title)), /*#__PURE__*/React__default["default"].createElement("div", {
+    className: `markdown ${srBodyClassName}`
+  }, /*#__PURE__*/React__default["default"].createElement(ReactMarkdown__default["default"], null, message))) : null, /*#__PURE__*/React__default["default"].createElement(CloseIconComp, {
+    remove: remove
+  })));
+});
+const alertContainerClassName = `
+  @pn relative
+  @ow overflow-hidden`;
+const contentWrapperClassName = `
+  @dy flex
+  @fxd flex-row
+  @brr rounded-sm
+  @bxsw drop-shadow-md
+  @pg pr-8 py-2
+  @bdc bg-white`;
+const alertHeaderClassName = `
+  @pg pl-2
+  @fts font-sm`;
+const alertBodyClassName = `
+  @pg pl-2
+  @fts text-xs`;
+
+const CloseButton = ({
+  remove = () => {}
+}) => {
+  return /*#__PURE__*/React__default["default"].createElement(SmartButton, {
+    onClick: remove,
+    className: "@pn absolute @it right-2 top-2 @ttc text-black @wh w-3 @zi z-50 @cr cursor-pointer"
+  }, /*#__PURE__*/React__default["default"].createElement("svg", {
+    className: `fill-current w-3`,
+    viewBox: "0 0 20 20",
+    fill: "none",
+    xmlns: "http://www.w3.org/2000/svg"
+  }, /*#__PURE__*/React__default["default"].createElement("path", {
+    fillRule: "evenodd",
+    clipRule: "evenodd",
+    d: "M13.5659 5.24616C13.8936 4.91762 14.4257 4.91762 14.7542 5.24616C15.0827 5.57391 15.0827 6.10671 14.7542 6.43442L11.1711 10.0175L14.7042 13.5506C15.0302 13.8758 15.0302 14.4037 14.7042 14.7297C14.379 15.0558 13.8511 15.0558 13.5251 14.7297L9.99199 11.1966L6.43466 14.7539C6.10696 15.0817 5.57493 15.0817 5.2464 14.7539C4.91787 14.4262 4.91787 13.8942 5.2464 13.5656L8.80368 10.0084L5.27056 6.47527C4.94451 6.1501 4.94451 5.62226 5.27056 5.29621C5.59573 4.97016 6.12357 4.97016 6.44962 5.29621L9.98275 8.8293L13.5659 5.24616Z"
+  })));
+};
+
+const notificationsContainerClassName = `fixed bottom-0 right-0 flex items-end flex-col mx-4`;
+
+const Overlay = ({
+  notifications = [],
+  remove = () => {}
+}) => {
+  // use weakmap to get div height for alert items
+  // prevents memory leaks by garbage collecting removed items
+  const [refMap] = React.useState(() => new WeakMap());
+  const transitionConfigWithHeightAnimation = {
+    from: {
+      height: 0
+    },
+    enter: item => async next => {
+      await next({
+        height: refMap.get(item)?.offsetHeight
+      });
+    },
+    update: item => async next => {
+      await next({
+        height: refMap.get(item)?.offsetHeight
+      });
+    },
+    leave: () => async next => {
+      await next({
+        height: 0
+      });
+    }
+  };
+  const transitions = reactSpring.useTransition(notifications, transitionConfigWithHeightAnimation);
+  return /*#__PURE__*/React__default["default"].createElement("div", {
+    className: notificationsContainerClassName
+  }, transitions((styles, item) => {
+    return /*#__PURE__*/React__default["default"].createElement(Notification, _extends({
+      key: item.id,
+      styles: styles,
+      ref: ref => {
+        return ref && refMap.set(item, ref);
+      },
+      remove: () => remove(item.id)
+    }, item));
+  }));
+};
+
+const NotificationsContext = /*#__PURE__*/React__default["default"].createContext({
+  showAlert: () => null
+});
+
+const useNotifications = () => React.useContext(NotificationsContext);
+
+const NotificationsWrapper = ({
+  children
+}) => {
+  const [notifications, setNotifications] = React.useState([]); // use state fns to avoid passing stale alerts array to showAlert and removeAlert functions
+
+  const remove = timestampId => {
+    setNotifications(alertNotifications => alertNotifications.filter(alertInfo => alertInfo?.id !== timestampId));
+  };
+
+  const add = ({
+    duration = 8000,
+    ...props
+  }) => {
+    // use creation timestamp as psuedo-unique alert object ID
+    const newNotificationId = new Date().getTime();
+    const newNotification = {
+      id: newNotificationId,
+      ...props
+    };
+    setNotifications(alertNotifications => [...alertNotifications, newNotification]);
+
+    if (duration !== 0) {
+      setTimeout(() => remove(newNotificationId), duration);
+    }
+  }; // on first render ref is undefined
+  // create empty alert helps to fix height error
+
+
+  React.useEffect(() => {
+    add({
+      duration: 1
+    });
+  }, []);
+  return /*#__PURE__*/React__default["default"].createElement(NotificationsContext.Provider, {
+    value: {
+      add
+    }
+  }, children, /*#__PURE__*/React__default["default"].createElement(Overlay, {
+    notifications: notifications,
+    remove: remove
+  }));
+};
+
+var SpringNotification = {
+  NotificationsWrapper,
+  useNotifications
+};
+
 const components = {
   SmartButton,
   Modal,
   ModalArray,
-  Input
+  Input,
+  SpringNotification
 };
 
 var index = {

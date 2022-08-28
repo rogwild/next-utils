@@ -58,6 +58,14 @@ declare const _default: {
             getRenderCardProps: any;
         }) => JSX.Element;
         Input: import("react").ForwardRefExoticComponent<import("react").RefAttributes<any>>;
+        SpringNotification: {
+            NotificationsWrapper: ({ children }: {
+                children: any;
+            }) => JSX.Element;
+            useNotifications: () => {
+                showAlert: () => any;
+            };
+        };
     };
 };
 export default _default;

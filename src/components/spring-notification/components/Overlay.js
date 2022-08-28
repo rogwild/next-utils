@@ -38,7 +38,6 @@ const Overlay = ({ notifications = [], remove = () => {} }) => {
   return (
     <div className={notificationsContainerClassName}>
       {transitions((styles, item) => {
-        console.log(`🚀 ~ {transitions ~ item`, item);
         return (
           <Notification
             key={item.id}

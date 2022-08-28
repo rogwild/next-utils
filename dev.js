@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import * as ReactDOM from "react-dom/client";
 // import Modal from "./src/components/modal";
-// import utils from "./dist/index";
-// const { Modal: PackageModal, Input } = utils.components;
+import utils from "./dist/index";
+// const { SpringNotification } = utils.components;
+
+// const { NotificationsWrapper, useNotifications } = SpringNotification;
 import {
   NotificationsWrapper,
   useNotifications,
@@ -32,6 +34,17 @@ const Page = () => {
   const [showPopup, setShowPopup] = useState(false);
   const notificationsContext = useNotifications();
 
+  useEffect(() => {
+    notificationsContext.add({
+      title: "**Test** alert",
+      message: "Test message **alert** notification",
+      containerClassName: "@mn mb-2",
+      Child: ChildComp,
+      showDefault: false,
+      duration: 1,
+    });
+  }, []);
+
   return (
     <div className="main">
       <div className="min-w-screen min-h-screen bg-gray-100 realtive flex flex-col items-center justify-center">
@@ -43,6 +56,7 @@ const Page = () => {
               message: "Test message **alert** notification",
               containerClassName: "@mn mb-2",
               Child: ChildComp,
+              showDefault: false,
               duration: 105000,
             });
           }}
@@ -75,6 +89,8 @@ const Page = () => {
   );
 };
 
-const ChildComp = () => {
+const ChildComp = (item) => {
+  console.log(`🚀 ~ ChildComp ~ props`, item);
+
   return <div className="w-4 h-4 bg-red-500 rounded-full mt-1 ml-2"></div>;
 };
