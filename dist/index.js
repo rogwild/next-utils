@@ -2623,7 +2623,8 @@ const NotificationsWrapper = ({
 
 var SpringNotification = {
   NotificationsWrapper,
-  useNotifications
+  useNotifications,
+  tt: () => {}
 };
 
 const components = {
