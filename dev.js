@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from "react";
 import * as ReactDOM from "react-dom/client";
 // import Modal from "./src/components/modal";
-import utils from "./dist/index";
 // const { SpringNotification } = utils.components;
 
 // const { NotificationsWrapper, useNotifications } = SpringNotification;
-import {
-  NotificationsWrapper,
-  useNotifications,
-} from "./src/components/spring-notification";
+import springNotification from "./src/components/spring-notification";
+const { NotificationsWrapper, useNotifications } = springNotification;
 import SmartButton from "./src/components/smart-button";
 
 const App = () => {
   return (
-    <NotificationsWrapper>
-      <Page />
-    </NotificationsWrapper>
+    <div>
+      <NotificationsWrapper>
+        <Page />
+      </NotificationsWrapper>
+    </div>
   );
 };
 

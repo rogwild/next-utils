@@ -65,7 +65,6 @@ declare const _default: {
             useNotifications: () => {
                 add: () => any;
             };
-            tt: () => void;
         };
     };
 };

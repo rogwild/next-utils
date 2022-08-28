@@ -1,5 +1,5 @@
 import React, { useMemo, useRef } from "react";
-import { animated } from "react-spring";
+import { animated } from "@react-spring/web";
 import useStyleRewriter from "../../../hooks/use-style-rewriter";
 import ReactMarkdown from "react-markdown";
 import SmartButton from "../../smart-button";

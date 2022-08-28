@@ -1,7 +1,7 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, createContext, useContext, useEffect } from "react";
 import Overlay from "./components/Overlay";
 
-const NotificationsContext = React.createContext({ add: () => null });
+const NotificationsContext = createContext({ add: () => null });
 const useNotifications = () => useContext(NotificationsContext);
 
 const NotificationsWrapper = ({ children }) => {
@@ -47,4 +47,4 @@ const NotificationsWrapper = ({ children }) => {
   );
 };
 
-export default { NotificationsWrapper, useNotifications, tt: () => {} };
+export default { NotificationsWrapper, useNotifications };

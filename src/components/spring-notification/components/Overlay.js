@@ -1,5 +1,5 @@
 import React, { createRef, useEffect, useState } from "react";
-import { useTransition } from "react-spring";
+import { useTransition } from "@react-spring/web";
 import Notification from "./Notification";
 
 const notificationsContainerClassName = `z-50 fixed bottom-0 right-0 flex items-end flex-col mx-4`;
