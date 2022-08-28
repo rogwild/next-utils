@@ -6,6 +6,7 @@ const notificationsContainerClassName = `z-50 fixed bottom-0 right-0 flex items-
 
 const Overlay = ({ notifications = [], remove = () => {} }) => {
   // use weakmap to get div height for alert items
+  //
   // prevents memory leaks by garbage collecting removed items
   const [refMap] = useState(() => new Map());
 

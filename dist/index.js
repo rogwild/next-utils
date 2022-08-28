@@ -2534,6 +2534,7 @@ const Overlay = ({
   remove = () => {}
 }) => {
   // use weakmap to get div height for alert items
+  //
   // prevents memory leaks by garbage collecting removed items
   const [refMap] = React.useState(() => new Map());
   const transitionConfigWithHeightAnimation = {
