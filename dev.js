@@ -76,6 +76,19 @@ const FormPage = () => {
         inputContainerClassName: ``,
         inputClassName: `@wh w-10 @ht h-10`,
       },
+      {
+        field: `amount`,
+        defaultValue: 3,
+        maxValue: 10,
+        step: 1,
+        label: "Amount to sell",
+        inputClassName: `@bdc bg-white @wh w-10 @ht h-10`,
+        rangeClassName: `@ht h-8 @bdc bg-gray-400`,
+        containerClassName: `@ht h-8`,
+        activeRangeClassName: `@ht h-8 @bdc bg-black`,
+        checkerFuncs: [],
+        type: `range`,
+      },
     ];
   }, []);
 
@@ -96,6 +109,7 @@ const FormPage = () => {
         <Input {...inputs.title} />
         <Input {...inputs.status} />
         <Input {...inputs.privacy} />
+        <Input {...inputs.amount} />
       </div>
     </div>
   );

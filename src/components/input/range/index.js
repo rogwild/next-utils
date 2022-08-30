@@ -1,19 +1,24 @@
-import React, { useRef } from "react";
+import React, { useMemo, useRef } from "react";
+import useStyleRewriter from "../../../hooks/use-style-rewriter";
 
 const RangeInput = ({
   id = Math.random(),
   value = 0,
   onChange = () => {},
-  minLimit = minValue,
+  minValue = 0,
   maxValue = 100,
+  minLimit = minValue,
   maxLimit = maxValue,
   range = [0, maxValue * 0.25, maxValue * 0.5, maxValue * 0.75, maxValue],
-  minValue = 0,
   tooltip = false,
   disabled,
   onMouseUp = () => {},
+  inputClassName,
+  rangeClassName,
+  activeRangeClassName,
+  Comp,
   step = 0.01,
-  className = ``,
+  containerClassName,
 }) => {
   const rangeRef = useRef(null);
   const onMouseUpHandler = (e) => {
@@ -26,83 +31,124 @@ const RangeInput = ({
     onChange(e, value);
   };
 
-  const srClasses = `w-full flex items-center justify-center ${className}`;
+  const srContainerClassName = useStyleRewriter(
+    baseContainerClassName,
+    containerClassName
+  );
 
   const valueDividedByMaxValue = (value / maxValue) * 100 || 0;
 
+  const srRangeClassName = useStyleRewriter(baseRangeClassName, rangeClassName);
+  const srActiveRangeClassName = useStyleRewriter(
+    baseActiveRangeClassName,
+    activeRangeClassName
+  );
+  const srInputClassName = useStyleRewriter(baseInputClassName, inputClassName);
+
+  const draggedItemStyle = useMemo(() => {
+    return {
+      left: `${
+        (value / maxValue) * 100 <= (maxLimit / maxValue) * 100
+          ? (value / maxValue) * 100
+          : (maxLimit / maxValue) * 100
+      }%`,
+    };
+  }, [value]);
+
   return (
-    <div className={srClasses}>
-      <div
-        className={`${
-          disabled ? `opacity-60 pointer-events-none` : ``
-        }  group w-full h-[8px] flex flex-col items-center justify-center relative`}
-      >
+    <div className={srContainerClassName}>
+      <div style={circleStyle} className={srRangeClassName}>
         <div
-          style={circleStyle}
-          className="bg-primary-200 w-full left-0 h-[8px] rounded-full absolute z-10"
-        >
+          style={{
+            width: `${
+              (value / maxValue) * 100 <= (maxLimit / maxValue) * 100
+                ? (value / maxValue) * 100
+                : (maxLimit / maxValue) * 100
+            }%`,
+          }}
+          className={srActiveRangeClassName}
+        />
+        {typeof Comp === "function" ? (
+          <Comp style={draggedItemStyle} />
+        ) : (
+          <div style={draggedItemStyle} className={srInputClassName} />
+        )}
+      </div>
+      {tooltip && (
+        <div className="absolute left-0 z-50" style={circleStyle}>
           <div
             style={{
-              width: `${
-                (value / maxValue) * 100 <= (maxLimit / maxValue) * 100
-                  ? (value / maxValue) * 100
-                  : (maxLimit / maxValue) * 100
-              }%`,
+              left: `${valueDividedByMaxValue}%`,
             }}
-            className="bg-primary-700 h-[8px] rounded-full absolute z-40"
-          />
-          <div
-            style={{
-              left: `${
-                (value / maxValue) * 100 <= (maxLimit / maxValue) * 100
-                  ? (value / maxValue) * 100
-                  : (maxLimit / maxValue) * 100
-              }%`,
-            }}
-            className="h-6 w-6 rounded-full bg-white absolute top-1/2 -translate-y-1/2 -translate-x-1/2 z-50 drop-shadow-md"
+            className="opacity-0 group-hover:opacity-100 absolute -top-10 bg-primary-700 text-white text-xs left-1/2 -translate-x-1/2 p-1 rounded-4px pointer-events-none"
           >
-            <div className="absolute h-4 w-4 rounded-full bg-primary-700 left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2" />
+            <div className="absolute -bottom-1 bg-primary-700 left-1/2 -translate-x-1/2 rotate-45 w-2 h-2 rounded-1px" />
+            {valueDividedByMaxValue || 0}%
           </div>
         </div>
-        {tooltip && (
-          <div className="absolute left-0 z-50" style={circleStyle}>
-            <div
-              style={{
-                left: `${valueDividedByMaxValue}%`,
-              }}
-              className="opacity-0 group-hover:opacity-100 absolute -top-10 bg-primary-700 text-white text-xs left-1/2 -translate-x-1/2 p-1 rounded-4px pointer-events-none"
-            >
-              <div className="absolute -bottom-1 bg-primary-700 left-1/2 -translate-x-1/2 rotate-45 w-2 h-2 rounded-1px" />
-              {valueDividedByMaxValue || 0}%
-            </div>
-          </div>
-        )}
-        <input
-          disabled={disabled}
-          list={id}
-          ref={rangeRef}
-          min={minValue}
-          max={maxValue}
-          step={step}
-          onMouseDown={() => (rangeRef.current.style.cursor = `grabbing`)}
-          onMouseUp={(e) => onMouseUpHandler(e)}
-          onInput={(e) => onChangeHandler(e)}
-          type="range"
-          className="w-full absolute opacity-0 z-20"
-          id={id}
-          style={{
-            width: `${((maxLimit - minLimit) / maxValue) * 100}%`,
-            left: `calc(${(minLimit / maxValue) * 100}% )`,
-            cursor: `grab`,
-            minWidth: `2%`,
-          }}
-          value={value}
-        />
-        {range && <Datalist id={id} value={value} range={range} />}
-      </div>
+      )}
+      <input
+        disabled={disabled}
+        list={id}
+        ref={rangeRef}
+        min={minValue}
+        max={maxValue}
+        step={step}
+        onMouseDown={() => (rangeRef.current.style.cursor = `grabbing`)}
+        onMouseUp={(e) => onMouseUpHandler(e)}
+        onInput={(e) => onChangeHandler(e)}
+        type="range"
+        className="w-full absolute h-full opacity-0 z-20"
+        id={id}
+        style={{
+          width: `${((maxLimit - minLimit) / maxValue) * 100}%`,
+          left: `calc(${(minLimit / maxValue) * 100}% )`,
+          cursor: `grab`,
+          minWidth: `2%`,
+        }}
+        value={value}
+      />
+      {range && <Datalist id={id} value={value} range={range} />}
     </div>
   );
 };
+
+const baseContainerClassName = `
+  @wh w-full
+  @dy flex
+  @ani items-center
+  @jyc justify-center
+  @gp group
+  @ht h-[8px] 
+  @fxd flex-col
+  @pn relative
+`;
+
+const baseInputClassName = `
+  @ht h-6
+  @wh w-6
+  @brr rounded-full
+  @bdc bg-white
+  @pn absolute
+  @it top-1/2
+  @tndn -translate-y-1/2 -translate-x-1/2
+  @zi z-50
+  @bxsw shadow-md
+`;
+
+const baseRangeClassName = `
+  @ht h-[8px]
+  @wh w-full
+  @it left-0
+  @brr rounded-full
+  @pn absolute
+  @zi z-10`;
+
+const baseActiveRangeClassName = `
+  @ht h-[8px]
+  @brr rounded-full
+  @pn absolute
+  @zi z-40`;
 
 const circleStyle = {
   width: `calc(100% - 12px)`,
