@@ -1,5 +1,6 @@
 import InputOverlay from "../input-overlay";
 import React, { useMemo, useEffect, useState } from "react";
+import useStyleRewriter from "../../../hooks/use-style-rewriter";
 
 const CheckboxInput = (props) => {
   const {
@@ -8,12 +9,29 @@ const CheckboxInput = (props) => {
     error,
     onChange,
     id = Math.floor(Math.random() * 10000),
+    inputContainerClassName,
+    labelClassName,
+    inputClassName,
+    activeInputClassName = `@bdc bg-gray-800`,
     Icon,
   } = props;
-
   const [localValue, setLocalValue] = useState(value);
-  // console.log(`🚀 ~ CheckboxInput ~ value`, value, localValue);
-  // console.log(`🚀 ~ CheckboxInput ~ error`, error);
+
+  const srInputContainerClassName = useStyleRewriter(
+    baseInputContainerClassName,
+    inputContainerClassName
+  );
+  const srLabelClassName = useStyleRewriter(baseLabelClassName, labelClassName);
+  const srInputClassName = useStyleRewriter(
+    baseInputClassName,
+    inputClassName,
+    false
+  );
+
+  const resInputlassName = useStyleRewriter(
+    srInputClassName,
+    value ? activeInputClassName : ""
+  );
 
   useEffect(() => {
     if (value !== localValue) {
@@ -38,14 +56,9 @@ const CheckboxInput = (props) => {
 
   return (
     <InputOverlay {...props} label={null} error={error}>
-      <div className="flex gap-2 items-center align-items-center">
-        <label
-          htmlFor={id}
-          className={` w-5 h-5 flex items-center justify-center duration-200 outline-none border-2 border-primary-900 border rounded-sm cursor-pointer shrink-0 ${
-            localValue ? `bg-primary-900` : `bg-white`
-          }`}
-        >
-          {localValue && typeof Icon === "functions" ? <Icon /> : null}
+      <div className={srInputContainerClassName}>
+        <label htmlFor={id} className={resInputlassName}>
+          {localValue && typeof Icon === "function" ? <Icon /> : null}
           <input
             type="checkbox"
             id={id}
@@ -57,7 +70,7 @@ const CheckboxInput = (props) => {
         </label>
         <p
           onClick={() => setLocalValue(!localValue)}
-          className="cursor-pointer font-normal text-16px text-black-500 mb-0"
+          className={srLabelClassName}
         >
           {label}
         </p>
@@ -67,3 +80,29 @@ const CheckboxInput = (props) => {
 };
 
 export default CheckboxInput;
+
+const baseInputContainerClassName = `
+  @dy flex gap-2
+  @ani items-center
+`;
+
+const baseInputClassName = `
+  @wh w-5
+  @ht h-5
+  @dy flex shrink-0
+  @ani items-center
+  @jyc justify-center
+  @tndn duration-200
+  @oe outline-none
+  @brc border-primary-900
+  @brw border
+  @brr rounded-sm
+  @cr cursor-pointer
+  @bdc bg-transparent
+`;
+
+const baseLabelClassName = `
+  @cr cursor-pointer
+  @ttc text-black
+  @mn mb-0
+`;

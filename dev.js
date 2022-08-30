@@ -66,6 +66,16 @@ const FormPage = () => {
         setter: (item) => item.slug,
         type: `select-row`,
       },
+      {
+        field: `privacy`,
+        defaultValue: false,
+        label: "Accept privacy policy",
+        checkerFuncs: [],
+        Icon: CheckIcon,
+        type: `checkbox`,
+        inputContainerClassName: ``,
+        inputClassName: `@wh w-10 @ht h-10`,
+      },
     ];
   }, []);
 
@@ -85,6 +95,7 @@ const FormPage = () => {
       <div className="w-4/12 flex flex-col gap-4 p-8 bg-gray-200">
         <Input {...inputs.title} />
         <Input {...inputs.status} />
+        <Input {...inputs.privacy} />
       </div>
     </div>
   );
@@ -153,4 +164,10 @@ const ChildComp = (item) => {
   console.log(`🚀 ~ ChildComp ~ props`, item);
 
   return <div className="w-4 h-4 bg-red-500 rounded-full mt-1 ml-2"></div>;
+};
+
+const CheckIcon = () => {
+  return (
+    <div className="w-6 h-6 bg-white rounded-full flex flex-shrink-0"></div>
+  );
 };
