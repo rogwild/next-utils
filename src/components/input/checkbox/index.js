@@ -1,7 +1,7 @@
 import InputOverlay from "../input-overlay";
 import React, { useMemo, useEffect, useState } from "react";
 
-export const CheckboxInput = (props) => {
+const CheckboxInput = (props) => {
   const {
     value = false,
     label,
@@ -65,3 +65,5 @@ export const CheckboxInput = (props) => {
     </InputOverlay>
   );
 };
+
+export default CheckboxInput;

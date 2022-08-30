@@ -1,4 +1,5 @@
-import React, { InputOverlay } from "../input-overlay";
+import React from "react";
+import InputOverlay from "../input-overlay";
 import SmartButton from "../../smart-button";
 
 const SelectImageInput = (props) => {

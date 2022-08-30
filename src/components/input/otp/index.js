@@ -2,7 +2,7 @@ import React, { useState, useCallback } from "react";
 import SingleInput from "./SingleInput";
 import InputOverlay from "../input-overlay";
 
-export const OtpInput = (props) => {
+const OtpInput = (props) => {
   const {
     length = 6,
     isNumberInput = true,
@@ -204,3 +204,5 @@ export const OtpInput = (props) => {
     </InputOverlay>
   );
 };
+
+export default OtpInput;

@@ -2,7 +2,7 @@ import React, { forwardRef } from "react";
 import Input from "./Input";
 import InputOverlay from "../input-overlay";
 
-export const TextInput = forwardRef((props, ref) => {
+const TextInput = forwardRef((props, ref) => {
   const {
     value,
     id,
@@ -43,3 +43,5 @@ export const TextInput = forwardRef((props, ref) => {
     </InputOverlay>
   );
 });
+
+export default TextInput;

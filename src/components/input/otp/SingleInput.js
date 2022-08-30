@@ -13,7 +13,7 @@ function usePrevious(value) {
   return ref.current;
 }
 
-export function SingleOTPInputComponent(props) {
+function SingleOTPInputComponent(props) {
   const { focus, autoFocus, ...rest } = props;
   const inputRef = useRef(null);
   const prevFocus = usePrevious(!!focus);

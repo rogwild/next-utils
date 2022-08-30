@@ -7,6 +7,7 @@ var reactTable = require('react-table');
 var transitionComponent = require('transition-component');
 var reactDom = require('react-dom');
 var reactUseGesture = require('react-use-gesture');
+var Calendar = require('react-calendar');
 var ReactMarkdown = require('react-markdown');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
@@ -32,6 +33,7 @@ function _interopNamespace(e) {
 var axios__default = /*#__PURE__*/_interopDefaultLegacy(axios);
 var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 var React__namespace = /*#__PURE__*/_interopNamespace(React);
+var Calendar__default = /*#__PURE__*/_interopDefaultLegacy(Calendar);
 var ReactMarkdown__default = /*#__PURE__*/_interopDefaultLegacy(ReactMarkdown);
 
 /******************************************************************************
@@ -250,7 +252,7 @@ function __spreadArray(to, from, pack) {
   return to.concat(ar || Array.prototype.slice.call(from));
 }
 
-var BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+var BACKEND_URL$1 = process.env.NEXT_PUBLIC_BACKEND_URL;
 var combineHeaders = function (_a) {
     var withAuth = _a.withAuth;
     var headers = {};
@@ -315,7 +317,7 @@ var transformResponseItem$1 = function (resItem) {
 };
 var Api = /** @class */ (function () {
     function Api(url) {
-        this.baseUrl = url || BACKEND_URL;
+        this.baseUrl = url || BACKEND_URL$1;
     }
     Api.prototype.request = function (_a) {
         var model = _a.model, query = _a.query, _b = _a.method, method = _b === void 0 ? "GET" : _b, data = _a.data, withAuth = _a.withAuth, headers = _a.headers, _c = _a.id, id = _c === void 0 ? "" : _c; _a.notifyError;
@@ -568,7 +570,7 @@ var formatPercent = function (number) {
     return number ? "".concat(number.toFixed(2)) : "0";
 };
 var allowedImageExtensions = ["png", "jpeg", "webp", "tiff"];
-var parseMimeType = function (mime) {
+var parseMimeType$1 = function (mime) {
     if (!mime)
         return {};
     var splittedMime = mime === null || mime === void 0 ? void 0 : mime.split("/");
@@ -589,7 +591,7 @@ var formatters = /*#__PURE__*/Object.freeze({
     hasZeroAfterDot: hasZeroAfterDot,
     getCountAfterDot: getCountAfterDot,
     formatPercent: formatPercent,
-    parseMimeType: parseMimeType
+    parseMimeType: parseMimeType$1
 });
 
 /**
@@ -1602,13 +1604,292 @@ const useDetectOutsideClick$1 = (trigger, initialState) => {
   return [isActive, setIsActive];
 };
 
-const hooks = {
-  useDetectMouseover: useDetectMouseover$1,
-  useDetectOutsideClick: useDetectOutsideClick$1,
-  useLookupTable,
-  useBreakpoint: useBreakpoint$1,
-  useSetParentsInput,
-  useStyleRewriter: useStyleRewriter$6
+const changeInput = (e, {
+  inputs,
+  errors,
+  files,
+  setErrors = () => {},
+  setInputs,
+  setFiles
+}) => {
+  let localInputs = { ...inputs
+  };
+  let localErrors = { ...errors
+  };
+  let localFiles = { ...files
+  };
+  localErrors[e.target.id] = []; // console.log(`🚀 ~ localFiles`, e.target.id);
+
+  if (!e.target.files) {
+    if (!Object.keys(files).includes(e.target.id)) {
+      localInputs[e.target.id] = e.target.value;
+    }
+  } else {
+    const loadedFiles = { ...e.target.files
+    }; // console.log(`🚀 ~ loadedFiles`, loadedFiles);
+
+    for (const [index] of new Array(e.target.files.length).entries()) {
+      if (e.target.multiple) {
+        // console.log(
+        //   `🚀 ~ localFiles[e.target.id]`,
+        //   loadedFiles,
+        //   localFiles[e.target.id]
+        // );
+        if (localFiles && Array.isArray(localFiles[e.target.id])) {
+          localFiles = { ...localFiles,
+            [e.target.id]: [...localFiles[e.target.id], loadedFiles[index]]
+          };
+        } else {
+          localFiles = { ...localFiles,
+            [e.target.id]: [loadedFiles[index]]
+          };
+        }
+      } else {
+        localFiles = { ...localFiles,
+          [e.target.id]: loadedFiles[index]
+        };
+      }
+    }
+  }
+
+  if (e.target.type == `checkbox`) {
+    localInputs[e.target.id] = e.target.checked;
+  }
+
+  setFiles({ ...localFiles
+  });
+  setInputs({ ...localInputs
+  });
+  setErrors({ ...localErrors
+  });
+};
+const checkUsernameMask = ({
+  field,
+  value,
+  errors
+}) => {
+  if (!/^[A-z0-9_]{5,25}$/.test(value)) {
+    addError({
+      errors,
+      field,
+      id: `usernameMask`,
+      message: `Username must contain only characters, numbers and "_". Min 5 symbols`
+    });
+  }
+};
+const regexes = {
+  email: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+  phone: /^[+][0-9]{11,15}$/
+};
+const checkEmailMask = ({
+  field,
+  value,
+  errors
+}) => {
+  if (!regexes.email.test(value.trim())) {
+    addError({
+      errors,
+      field,
+      id: `mask`,
+      message: `Допустимый формат`
+    });
+  }
+};
+
+const checkPhoneMask = ({
+  field,
+  value,
+  errors
+}) => {
+  value = value?.replace(/[ \( \)-]*/g, ``);
+
+  if (!regexes.phone.test(value.trim())) {
+    addError({
+      errors,
+      field,
+      id: `mask`,
+      message: `Правильный формат: +79991234567`
+    });
+  }
+};
+
+const checkPassword = ({
+  field,
+  value,
+  errors,
+  title
+}) => {
+  const min = 8;
+
+  if (value.length < min || value.includes(` `)) {
+    addError({
+      errors,
+      field,
+      id: `length`,
+      message: `Пароль слишком короткий (мин. 8 символов)`
+    });
+  }
+};
+const checkRequiredField = ({
+  field,
+  value,
+  errors
+}) => {
+  // Reset old required errors if exists
+  // Add new require errors
+  if (value === undefined || value === null || typeof value == `string` && value.trim() == ``) {
+    addError({
+      errors,
+      field,
+      id: `required`,
+      message: `Обязательное поле`
+    });
+  }
+};
+const checkEqualTo = ({
+  field,
+  value,
+  errors,
+  config,
+  inputs
+}) => {
+  const equalTo = config.equalTo;
+
+  if (value !== inputs[equalTo]) {
+    // const fieldTitle = title || label || field;
+    // const equalToConfig = inputsConfig?.find((a) => a?.field === equalTo);
+    // const equalToTitle = equalToConfig.title || equalToConfig.label || equalTo;
+    addError({
+      errors,
+      field,
+      id: `equal`,
+      message: `Поля не совпадают`
+    });
+  }
+};
+const checkFields = ({
+  setErrors,
+  errors,
+  inputsConfig,
+  inputs,
+  files
+}) => {
+  const localErrors = { ...errors
+  };
+  inputsConfig.forEach(({
+    field,
+    checkerFuncs,
+    config,
+    title,
+    label,
+    type,
+    multiple
+  }) => {
+    let value = inputs[field];
+
+    if (files && type === `file` && files[field]) {
+      if (multiple) {
+        if (files[field]?.length > 0) {
+          value = `uploaded`;
+        }
+      } else {
+        value = `uploaded`;
+      }
+    }
+
+    checkerFuncs.forEach(checker => {
+      if (!localErrors[field]) {
+        const checkerProps = {
+          value,
+          field,
+          errors: localErrors,
+          label,
+          title,
+          inputs,
+          config,
+          inputsConfig
+        };
+
+        if (typeof checker === `function`) {
+          checker(checkerProps);
+        } else if (typeof checker === `string`) {
+          if (defualtCheckerFuncs[checker]) {
+            defualtCheckerFuncs[checker](checkerProps);
+          } else {
+            throw new Error(`There is no function ${checker} in default chekers function. List of available functions ${Object.keys(defualtCheckerFuncs)}`);
+          }
+        } else {
+          throw new Error(`${checker} is not a valid function`);
+        }
+      }
+    });
+  });
+  setErrors(localErrors);
+  const hasErrors = [];
+
+  for (const [, value] of Object.entries(localErrors)) {
+    if (value) {
+      // Во вложенных формах своя проверка
+      if (Object.values(value).every(message => typeof message === `string`)) {
+        hasErrors.push({ ...value
+        });
+      }
+    }
+  } // console.log(`🚀 ~ hasErrors`, hasErrors, localErrors);
+
+
+  const isValid = hasErrors.length ? false : true;
+  return isValid;
+};
+
+const addError = ({
+  errors,
+  field,
+  id,
+  message
+}) => {
+  errors[field] = {
+    id,
+    message
+  };
+};
+
+const defualtCheckerFuncs = {
+  checkEmailMask,
+  checkPhoneMask,
+  checkUsernameMask,
+  checkPassword,
+  checkRequiredField,
+  checkEqualTo
+};
+const changeTypeFunc = ({
+  types,
+  setTypes,
+  field
+}) => {
+  const type = types[field];
+
+  if (types[field]) {
+    const localTypes = { ...types
+    };
+
+    if (type === `password`) {
+      localTypes[field] = `text`;
+    } else if (type === `text`) {
+      localTypes[field] = `password`;
+    }
+
+    setTypes(localTypes);
+  }
+};
+const changeBlockedInputsFunc = ({
+  setBlockedInputs,
+  blockedInputs,
+  newBlockedInputs
+}) => {
+  setBlockedInputs({ ...blockedInputs,
+    ...newBlockedInputs
+  });
 };
 
 var checkIsServer = function () { return typeof window === "undefined"; };
@@ -1641,13 +1922,348 @@ var GTMPageView = function (url) {
         window.dataLayer.push(pageEvent);
     return pageEvent;
 };
+var isNil = function (value) { return value === null || value === undefined; };
+var urlRegex = /\b(?<![@.,%&#-])(?<protocol>\w{2,10}:\/\/)?((?:\w|\&\#\d{1,5};)[.-]?)+(\.([a-z]{2,15})|((protocol)(?:\:\d{1,6})|(?!)))\b(?![@])(\/)?(?:([\w\d\?\-=#:%@&.;])+(?:\/(?:([\w\d\?\--=#:%@&;.])+))*)?(?<![.,?!-])/gim;
+var shortenAddress = function (address, symbols) {
+    if (symbols === void 0) { symbols = [6, 4]; }
+    var firstPart = address.slice(0, symbols[0]);
+    var secondPart = address.slice(-symbols[1]);
+    return "".concat(firstPart, "...").concat(secondPart);
+};
+var addProtocolToUrl = function (url) {
+    var splittedString = url.split("://");
+    var urlWithProtocol = "";
+    if (splittedString.length > 1) {
+        urlWithProtocol =
+            splittedString[0][-1] === "s" ? url : "https://".concat(splittedString[1]);
+    }
+    else {
+        urlWithProtocol = "https://".concat(url);
+    }
+    return urlWithProtocol;
+};
+var getURLsFromText = function (text) {
+    var displayUrl = "";
+    var textWithMarkup = text.replace(urlRegex, function (replacement) {
+        if (!displayUrl) {
+            displayUrl = replacement;
+        }
+        var urlWithProtocol = addProtocolToUrl(replacement);
+        return "[".concat(replacement, "](").concat(urlWithProtocol, ")");
+    });
+    return {
+        textWithMarkup: textWithMarkup,
+        displayUrl: displayUrl,
+    };
+};
+var parseMimeType = function (mime) {
+    if (!mime)
+        return {};
+    var splittedMime = mime === null || mime === void 0 ? void 0 : mime.split("/");
+    return { type: splittedMime[0], ext: splittedMime[1] };
+};
+var getPastDay = function (days) {
+    var date = new Date();
+    date.setDate(date.getDate() - days);
+    return date;
+};
+var getMonthRange = function (_a) {
+    var date = _a.date, firstDayQuantity = _a.firstDayQuantity, lastDayQuantity = _a.lastDayQuantity;
+    var firstDay = new Date(date.getFullYear(), date.getMonth() - (firstDayQuantity || 0), 1);
+    var lastDay = new Date(date.getFullYear(), date.getMonth() + (lastDayQuantity || 0), 0);
+    return [firstDay, lastDay];
+};
 
 var vanilla = /*#__PURE__*/Object.freeze({
     __proto__: null,
     checkIsServer: checkIsServer,
     loadScripts: loadScripts,
-    GTMPageView: GTMPageView
+    GTMPageView: GTMPageView,
+    isNil: isNil,
+    urlRegex: urlRegex,
+    shortenAddress: shortenAddress,
+    addProtocolToUrl: addProtocolToUrl,
+    getURLsFromText: getURLsFromText,
+    parseMimeType: parseMimeType,
+    getPastDay: getPastDay,
+    getMonthRange: getMonthRange
 });
+
+const useForm = ({
+  inputsConfig,
+  submitFunc = submitFuncProps => {
+    return true;
+  },
+  afterPassed = ({
+    setInputs,
+    clearInputs
+  }) => {},
+  inputPropsType = `array`
+}) => {
+  const {
+    initialInputs,
+    initialErrors,
+    initialTypes,
+    initialBlocked,
+    initialFiles
+  } = React.useMemo(() => {
+    const inputs = {};
+    const errors = {};
+    const types = {};
+    const blockedInputs = {};
+    const files = {};
+    inputsConfig.forEach(({
+      field,
+      defaultValue,
+      type = `text`,
+      config = {},
+      blocked
+    }) => {
+      defaultValue = defaultValue !== undefined ? defaultValue : ``; // console.log(`🚀 ~ defaultValue`, defaultValue);
+
+      if (type === `file`) {
+        if (defaultValue !== ``) {
+          files[field] = defaultValue;
+        }
+      } else {
+        inputs[field] = defaultValue;
+      }
+
+      errors[field] = null;
+
+      if (config?.enableTypeChanging) {
+        types[field] = type;
+      }
+
+      if (!isNil(blocked)) {
+        blockedInputs[field] = blocked;
+      }
+    });
+    return {
+      initialInputs: inputs,
+      initialErrors: errors,
+      initialTypes: types,
+      initialBlocked: blockedInputs,
+      initialFiles: files
+    };
+  }, [inputsConfig]);
+  const [inputs, setInputs] = React.useState(initialInputs);
+  const [files, setFiles] = React.useState(initialFiles);
+  const [errors, setErrors] = React.useState(initialErrors);
+  const [types, setTypes] = React.useState(initialTypes);
+  const [blockedInputs, setBlockedInputs] = React.useState(initialBlocked);
+  const [requestId, setRequestId] = React.useState(``);
+  React.useEffect(() => {
+    setInputs(initialInputs);
+    setErrors(initialErrors);
+    setTypes(initialTypes);
+    setFiles(initialFiles);
+    setBlockedInputs(initialBlocked);
+  }, [inputsConfig]);
+  const [passed, setPassed] = React.useState(false);
+  React.useEffect(() => {
+    setErrors(initialErrors);
+  }, [inputs]);
+
+  const clearInputs = () => setInputs(initialInputs); // call afterPassed function after passed
+
+
+  React.useEffect(() => {
+    if (passed) {
+      const unmountCallback = afterPassed({
+        setInputs,
+        clearInputs,
+        passed,
+        setPassed
+      });
+      return unmountCallback;
+    }
+  }, [passed]);
+  const onSubmitFunc = React.useMemo(() => {
+    return (e, submitProps = {}) => onSubmit(e, {
+      inputsConfig,
+      inputs,
+      errors,
+      setErrors,
+      submitFunc,
+      setRequestId,
+      files,
+      evt: e,
+      ...submitProps
+    });
+  }, [inputsConfig, inputs, errors, files]);
+
+  const changeType = (e, {
+    field
+  }) => changeTypeFunc({
+    types,
+    setTypes,
+    field
+  });
+
+  const changeBlockedInputs = inputs => changeBlockedInputsFunc({
+    setBlockedInputs,
+    blockedInputs,
+    newBlockedInputs: inputs
+  });
+
+  const onChange = e => {
+    changeInput(e, {
+      inputs,
+      errors,
+      files,
+      setFiles,
+      setErrors,
+      setInputs
+    });
+  };
+
+  const inputsProps = React.useMemo(() => {
+    let props;
+
+    if (inputPropsType === `array`) {
+      props = [];
+    } else {
+      props = {};
+    }
+
+    inputsConfig.forEach(({
+      field,
+      blocked,
+      placeholder = ``,
+      title = ``,
+      label = ``,
+      config = {},
+      type: defaultType = `text`,
+      PairComponent,
+      ...params
+    }) => {
+      if (defaultType !== `hidden`) {
+        const prop = {
+          id: field,
+          error: errors[field],
+          changeType,
+          blocked: isNil(blocked) ? false : blockedInputs[field],
+          title,
+          label,
+          placeholder,
+          onChange,
+          type: types[field] || defaultType,
+          enableTypeChanging: config && config.enableTypeChanging,
+          headingProps: config?.headingProps,
+          changeBlockedInputs,
+          setFiles,
+          PairComponent,
+          ...params
+        };
+
+        if (prop.type === `file`) {
+          // console.log(`🚀 ~ inputsProps ~ files`, files);
+          prop.files = files;
+          prop.value = undefined;
+        } else {
+          prop.value = inputs[field];
+        }
+
+        if (inputPropsType === `array`) {
+          props.push(prop);
+        } else {
+          props[field] = prop;
+        }
+      }
+    }); // console.log(`🚀 ~ inputsProps ~ props`, props, files);
+
+    return props;
+  }, [inputs, files, errors, types, blockedInputs]);
+  return {
+    setRequestId,
+    requestId,
+    inputs: inputsProps,
+    onSubmit: onSubmitFunc,
+    inputsValues: inputs,
+    setInputsValues: setInputs,
+    errors,
+    files,
+    setErrors,
+    passed,
+    setPassed,
+    changeBlockedInputs,
+    clearInputs,
+    setInitialErrors: () => setErrors(initialErrors)
+  };
+};
+const onSubmit = (e, props) => {
+  e && e.preventDefault();
+  const {
+    inputsConfig,
+    inputs,
+    errors,
+    setErrors,
+    submitFunc,
+    files
+  } = props;
+  const isValid = checkFields({
+    setErrors,
+    errors,
+    inputsConfig,
+    inputs,
+    files
+  });
+
+  if (isValid) {
+    // console.log(`🚀 ~ if (isValid) onSubmit ~ isValid`, isValid);
+    if (files) {
+      selectFilesForDelete({
+        files,
+        inputsConfig
+      });
+    } // console.log(`🚀 ~ submitFunc props`, props);
+
+
+    return submitFunc(props);
+  } else {
+    console.log(`🚀 ~ onSubmit ~ errors`, errors);
+  }
+};
+
+const selectFilesForDelete = ({
+  files,
+  inputsConfig
+}) => {
+  const filesInputsConfigs = inputsConfig.filter(config => config.type === `file`);
+
+  for (const config of filesInputsConfigs) {
+    const filesKey = config.field;
+    const passedFiles = files[filesKey];
+
+    if (Array.isArray(config.defaultValue)) {
+      for (const defaultFile of config.defaultValue) {
+        if (!passedFiles.filter(passedFile => passedFile.url === defaultFile.url).length) {
+          config?.deleteFile(defaultFile);
+        }
+      }
+    } else if (typeof config.defaultValue === `object`) {
+      const passedFile = passedFiles;
+      const defaultFile = config?.defaultValue;
+
+      if (defaultFile?.url) {
+        if (!passedFile || passedFile.url !== defaultFile?.url) {
+          config?.deleteFile(defaultFile);
+        }
+      }
+    }
+  }
+};
+
+const hooks = {
+  useDetectMouseover: useDetectMouseover$1,
+  useDetectOutsideClick: useDetectOutsideClick$1,
+  useLookupTable,
+  useBreakpoint: useBreakpoint$1,
+  useSetParentsInput,
+  useStyleRewriter: useStyleRewriter$6,
+  useForm
+};
 
 function _extends$3() {
   _extends$3 = Object.assign ? Object.assign.bind() : function (target) {
@@ -1675,7 +2291,7 @@ const DropdownContainer = ({
   className,
   dropdownRef
 }) => {
-  const srClasses = useStyleRewriter$5(baseClasses$2, className);
+  const srClasses = useStyleRewriter$5(baseClasses$6, className);
   return /*#__PURE__*/React__default["default"].createElement("div", {
     ref: dropdownRef,
     className: srClasses
@@ -1683,7 +2299,7 @@ const DropdownContainer = ({
     className: "flex flex-col relative w-full"
   }, children));
 };
-const baseClasses$2 = `
+const baseClasses$6 = `
     @pn absolute
     @mn mt-2
     @bdc bg-white
@@ -1705,7 +2321,7 @@ const Tooltip = ({
   className,
   tooltipPosition
 }) => {
-  const srClasses = useStyleRewriter$4(baseClasses$1, className);
+  const srClasses = useStyleRewriter$4(baseClasses$5, className);
   const tooltipClasses = React.useMemo(() => {
     switch (tooltipPosition) {
       case "left-bottom":
@@ -1738,7 +2354,7 @@ const Tooltip = ({
     className: `${visible ? "opacity-100 w-auto" : "opacity-0"} ${srClasses} ${tooltipClasses}`
   }, children);
 };
-const baseClasses$1 = `
+const baseClasses$5 = `
     @pn absolute
     @wh w-fit
     @it left-0 top-0
@@ -1806,7 +2422,7 @@ const SmartButton = ({
     isMouseOver
   }) : children, DropdownItems && /*#__PURE__*/React__default["default"].createElement(transitionComponent.Transition, _extends$3({
     show: isDropdownOpen
-  }, contentTransitionProps$1), /*#__PURE__*/React__default["default"].createElement(DropdownContainer, {
+  }, contentTransitionProps$2), /*#__PURE__*/React__default["default"].createElement(DropdownContainer, {
     className: dropdownContainerClasses,
     dropdownRef: dropdownRef
   }, /*#__PURE__*/React__default["default"].createElement(DropdownItems, _extends$3({}, dropdownProps, {
@@ -1819,15 +2435,15 @@ const SmartButton = ({
     visible: isMouseOver
   }, /*#__PURE__*/React__default["default"].createElement(TooltipItems, null)))));
 };
-const baseClasses = "@pn relative @ftf font-family-rubik @oe focus:outline-none @cr cursor-pointer @tndn duration-200 @tta text-center";
+const baseClasses$4 = "@pn relative @ftf font-family-rubik @oe focus:outline-none @cr cursor-pointer @tndn duration-200 @tta text-center";
 const disabledClasses = "@pre pointer-events-none @oy opacity-60 @bdc bg-true-gray-100 @ttc text-true-gray-450";
 
 const useVariant = (defaultClasses, variant) => {
-  return variants[variant] || defaultClasses;
+  return variants$1[variant] || defaultClasses;
 };
 
-const variants = {
-  primary: `${baseClasses} 
+const variants$1 = {
+  primary: `${baseClasses$4} 
           @bdc bg-blue-primary dark:bg-blue-600
           @bdo hover:bg-opacity-60 dark:hover:bg-opacity-80
           @dy flex 
@@ -1837,7 +2453,7 @@ const variants = {
           @brr rounded-8px 
           @fts text-15px 
           @ttc text-white`,
-  white: `${baseClasses} 
+  white: `${baseClasses$4} 
           @tnp transition 
           @tntf ease-in-out 
           @bdc bg-white hover:bg-gray-blue 
@@ -1848,7 +2464,7 @@ const variants = {
           @brr rounded-8px 
           @fts text-15px 
           @ttc text-blue-base hover:text-white`,
-  danger: `${baseClasses} 
+  danger: `${baseClasses$4} 
           @bdc bg-red-base 
           @bdo hover:bg-opacity-60 
           @dy flex 
@@ -1858,21 +2474,21 @@ const variants = {
           @brr rounded-8px 
           @fts text-15px 
           @ttc text-white`,
-  light: `${baseClasses} 
+  light: `${baseClasses$4} 
           @bdc bg-white hover:bg-gray-accent 
           @ttc text-black hover:text-blue-primary 
           @pg px-4 py-2 
           @brr rounded-16px 
           @tta text-left`,
-  "light-blue": `${baseClasses} 
+  "light-blue": `${baseClasses$4} 
           @bdc bg-blue-light 
           @bdc hover:bg-blue-primary 
           @ttc text-blue-primary hover:text-white 
           @pg px-8 py-3 
           @brr rounded-16px 
           @tta text-left`,
-  text: baseClasses,
-  circleLight: `${baseClasses} 
+  text: baseClasses$4,
+  circleLight: `${baseClasses$4} 
           @brc border-gray-light hover:border-blue-primary 
           @brw border-px 
           @dy flex 
@@ -1886,7 +2502,7 @@ const variants = {
           @brr rounded-full 
           @wh w-8
           @zi z-45`,
-  circlePrimary: `${baseClasses} 
+  circlePrimary: `${baseClasses$4} 
           @bdc bg-blue-primary 
           @brc border-blue-primary 
           @brw border-px 
@@ -1898,7 +2514,7 @@ const variants = {
           @brr rounded-full 
           @wh w-8 
           @ttc text-white`,
-  transparentOutline: `${baseClasses}
+  transparentOutline: `${baseClasses$4}
           @dy flex flex-row
           @ani items-center
           @ttc text-blue-650
@@ -1940,7 +2556,7 @@ const LinkSmartButton = ({
   }), children));
 };
 
-const contentTransitionProps$1 = {
+const contentTransitionProps$2 = {
   enter: "ease-out duration-300",
   enterFrom: "opacity-0",
   enterTo: "opacity-100",
@@ -2038,7 +2654,7 @@ const ModalComponent$1 = ({
     show: show,
     id: `modal`,
     changePopup: setShow,
-    transitionProps: contentTransitionProps
+    transitionProps: contentTransitionProps$1
   }, /*#__PURE__*/React__default["default"].createElement("div", {
     className: srPopupWindowClasses
   }, /*#__PURE__*/React__default["default"].createElement(RenderCard, _extends$3({}, renderCardProps, {
@@ -2079,7 +2695,7 @@ const layoutTransitionProps = {
   leaveFrom: `opacity-100`,
   leaveTo: `opacity-0`
 };
-const contentTransitionProps = {
+const contentTransitionProps$1 = {
   enter: `ease-out duration-300`,
   enterFrom: `opacity-0 translate-y-4 sm:translate-y-0 sm:scale -95`,
   enterTo: `opacity-100 translate-y-0 sm:scale-100`,
@@ -6423,25 +7039,117 @@ const Modal = ({
   }, children) : null);
 };
 
+const InputError = ({
+  error
+}) => {
+  return error.message ? /*#__PURE__*/React__default["default"].createElement("p", {
+    className: baseClasses$3
+  }, error.message) : null;
+};
+const baseClasses$3 = `@ttc text-red-500 @fts text-[12px] @ttt normal-case @wh w-fit @leh leading-none text-left`;
+
+const InputOverlay = ({
+  children,
+  label,
+  inputContainerClasses = ``,
+  error,
+  PairComponent = () => /*#__PURE__*/React__default["default"].createElement(React__default["default"].Fragment, null),
+  ...props
+}) => {
+  const srClasses = useStyleRewriter$6(baseClasses$2, inputContainerClasses);
+  return /*#__PURE__*/React__default["default"].createElement("div", {
+    className: srClasses
+  }, label ? /*#__PURE__*/React__default["default"].createElement("p", {
+    className: "mb-0"
+  }, label) : null, /*#__PURE__*/React__default["default"].createElement("div", {
+    className: "flex justify-start gap-2 relative w-full"
+  }, children, PairComponent ? /*#__PURE__*/React__default["default"].createElement(PairComponent, _extends$3({
+    error: error
+  }, props)) : null), error ? /*#__PURE__*/React__default["default"].createElement(InputError, {
+    error: error
+  }) : null);
+};
+const baseClasses$2 = `
+@dy flex gap-2
+@wh w-full
+@fxd flex-col
+@pn relative
+@ttc text-neutral-350
+`;
+
+const CheckboxInput = props => {
+  const {
+    value = false,
+    label,
+    error,
+    onChange,
+    id = Math.floor(Math.random() * 10000),
+    Icon
+  } = props;
+  const [localValue, setLocalValue] = React.useState(value); // console.log(`🚀 ~ CheckboxInput ~ value`, value, localValue);
+  // console.log(`🚀 ~ CheckboxInput ~ error`, error);
+
+  React.useEffect(() => {
+    if (value !== localValue) {
+      setLocalValue(value);
+    }
+
+    if (value == ``) {
+      setLocalValue(false);
+    }
+  }, [value]);
+  React.useEffect(() => {
+    const e = {
+      target: {}
+    };
+    handleChange(e);
+  }, [localValue]);
+
+  const handleChange = e => {
+    e.target.type = `checkbox`;
+    e.target.checked = localValue;
+    e.target.id = id;
+    onChange(e);
+  };
+
+  return /*#__PURE__*/React__default["default"].createElement(InputOverlay, _extends$3({}, props, {
+    label: null,
+    error: error
+  }), /*#__PURE__*/React__default["default"].createElement("div", {
+    className: "flex gap-2 items-center align-items-center"
+  }, /*#__PURE__*/React__default["default"].createElement("label", {
+    htmlFor: id,
+    className: ` w-5 h-5 flex items-center justify-center duration-200 outline-none border-2 border-primary-900 border rounded-sm cursor-pointer shrink-0 ${localValue ? `bg-primary-900` : `bg-white`}`
+  }, localValue && typeof Icon === "functions" ? /*#__PURE__*/React__default["default"].createElement(Icon, null) : null, /*#__PURE__*/React__default["default"].createElement("input", {
+    type: "checkbox",
+    id: id,
+    className: "hidden",
+    onChange: () => {},
+    onClick: () => setLocalValue(!localValue),
+    checked: localValue
+  })), /*#__PURE__*/React__default["default"].createElement("p", {
+    onClick: () => setLocalValue(!localValue),
+    className: "cursor-pointer font-normal text-16px text-black-500 mb-0"
+  }, label)));
+};
+
 const Input = /*#__PURE__*/React.forwardRef(({
   children,
   dropdownItems: DropdownItems,
-  value = "",
-  type = "text",
+  value = ``,
+  type = `text`,
   placeholder,
   onChange = () => null,
-  onPaste = () => null,
-  blocked = 0,
+  disabled = false,
   Icon,
-  className = "",
-  iconClassName = "",
-  dropdownContainerClasses = "",
-  containerClassName = "",
+  className = ``,
+  dropdownContainerClasses = ``,
+  containerClassName = ``,
   autoComplete = null,
   id = null,
-  dropdownPosition = "left",
+  dropdownPosition = `left`,
   maxLength,
-  ...props
+  name
 }, ref) => {
   const dropdownRef = React.useRef(null);
   const inputContainerRef = React.useRef(null);
@@ -6451,37 +7159,35 @@ const Input = /*#__PURE__*/React.forwardRef(({
     setIsDropdownOpen(!isDropdownOpen);
   };
 
-  const iconSrClassName = useStyleRewriter$6(iconBaseClassName, iconClassName, false);
   const typeClasses = classesByType[type];
   const baseClasses = useStyleRewriter$6(baseClassName, typeClasses, false);
-  const blockedClasses = blocked ? getClassName(baseClasses, baseBlockedClassName, false) : getClassName(baseClasses, unlockedClassName, false);
-  const srClasses = useStyleRewriter$6(blockedClasses, className);
+  const statusClasses = disabled ? getClassName(baseClasses, baseBlockedClassName, false) : baseClasses;
+  const srClasses = useStyleRewriter$6(statusClasses, className);
   const containerClasses = useStyleRewriter$6(baseContainerClassName, containerClassName);
-  const baseDropdownContainerClasses = `@wh w-full @mn mt-1 @ht h-200px @ow overflow-y-scroll ${dropdownPosition === "right" ? "@it left-auto right-0" : "@it inset-x-0"}`;
+  const baseDropdownContainerClasses = `@wh w-full @mn mt-1 @ht h-200px @ow overflow-y-scroll ${dropdownPosition === `right` ? `@it left-auto right-0` : `@it inset-x-0`}`;
   const srDropdownContainerClasses = useStyleRewriter$6(baseDropdownContainerClasses, dropdownContainerClasses, true);
   return /*#__PURE__*/React__default["default"].createElement("div", {
     ref: inputContainerRef,
     className: containerClasses
-  }, /*#__PURE__*/React__default["default"].createElement("input", _extends$3({
+  }, /*#__PURE__*/React__default["default"].createElement("input", {
     placeholder: placeholder,
     autoComplete: autoComplete,
     id: id,
-    type: type == "select" ? "button" : type,
+    type: type == `select` ? `button` : type,
     className: srClasses,
-    disabled: blocked ? true : false,
+    disabled: disabled ? true : false,
     onChange: onChange,
     onClick: onClick,
-    onPaste: onPaste,
     value: value,
     ref: ref,
-    maxLength: maxLength
-  }, props)), Icon && typeof Icon === "function" ? /*#__PURE__*/React__default["default"].createElement("div", {
-    onClick: onClick,
-    className: iconSrClassName
-  }, /*#__PURE__*/React__default["default"].createElement(Icon, null)) : null, children ? /*#__PURE__*/React__default["default"].createElement("div", {
+    maxLength: maxLength,
+    name: name
+  }), typeof Icon === `function` ? /*#__PURE__*/React__default["default"].createElement(Icon, {
+    onClick: onClick
+  }) : null, children ? /*#__PURE__*/React__default["default"].createElement("div", {
     className: "absolute h-full right-0 top-0 cursor-pointer"
   }, children) : null, DropdownItems ? /*#__PURE__*/React__default["default"].createElement("div", {
-    className: `transition duration-200 ${isDropdownOpen ? "opacity-100" : "pointer-events-none opacity-0"}`
+    className: `transition duration-200 ${isDropdownOpen ? `opacity-100` : `pointer-events-none opacity-0`}`
   }, /*#__PURE__*/React__default["default"].createElement(DropdownContainer, {
     className: srDropdownContainerClasses,
     dropdownRef: dropdownRef
@@ -6494,44 +7200,1120 @@ const classesByType = {
   text: `@cr cursor-text`
 };
 const baseContainerClassName = `w-full relative`;
-const iconBaseClassName = `
-  @pn absolute
-  @ht h-12
-  @it right-2 top-0
-  @cr cursor-pointer
-`;
-const unlockedClassName = `
-  @pn relative
-  @bxsw hover:shadow-blue-outline focus:shadow-blue-outline
-  @ttc text-black dark:text-white
-`;
 const baseBlockedClassName = `
   @cr cursor-not-allowed
   @pre pointer-events-none
-  @pn relative
-  @ttc text-gray-primary
-  @bdc bg-pearl
+  @ttc text-gray-600
+  @bdc bg-gray-100
 `;
 const baseClassName = `
+  @ttc text-black
+  @pn relative
   @wh w-full
-  @bdc bg-white dark:bg-true-gray-750
-  @ftf font-family-inter
-  @fts text-14px
-  @leh leading-20px
-  @brw border-px
+  @brw border
   @brs border-solid
-  @brc border-gray-light dark:border-true-gray-700 hover:border-blue-primary focus:border-blue-primary 
+  @brc border-transparent
   @tndn duration-200
   @oe outline-none focus:outline-none hover:outline-none
-  @brr rounded-8px
-  @bro hover:border-opacity-70
-  @fx flex
+  @dy flex
   @pg p-3
 `;
 
 const getClassName = (baseClassName, newClassName, cleared) => {
   const srClassName = useStyleRewriter$6(baseClassName, newClassName, cleared);
   return srClassName;
+};
+
+const TextInput = /*#__PURE__*/React.forwardRef((props, ref) => {
+  const {
+    value,
+    id,
+    onChange,
+    placeholder,
+    type,
+    disabled,
+    enableTypeChanging = false,
+    inputsClassName,
+    Icon,
+    error,
+    name,
+    ChangeInputTypeButton,
+    errorClassName = `@brc border-red-500`
+  } = props;
+  return /*#__PURE__*/React__default["default"].createElement(InputOverlay, _extends$3({}, props, {
+    PairComponent: enableTypeChanging && ChangeInputTypeButton ? ChangeInputTypeButton : null
+  }), /*#__PURE__*/React__default["default"].createElement(Input, {
+    ref: ref,
+    value: value,
+    id: id,
+    onChange: onChange,
+    placeholder: placeholder,
+    type: type,
+    disabled: disabled,
+    Icon: Icon,
+    className: `${inputsClassName} ${error ? errorClassName : ``}`,
+    name: name
+  }));
+});
+
+const RangeInput = ({
+  id = Math.random(),
+  value = 0,
+  onChange = () => {},
+  minLimit = minValue,
+  maxValue = 100,
+  maxLimit = maxValue,
+  range = [0, maxValue * 0.25, maxValue * 0.5, maxValue * 0.75, maxValue],
+  minValue = 0,
+  tooltip = false,
+  disabled,
+  onMouseUp = () => {},
+  step = 0.01,
+  className = ``
+}) => {
+  const rangeRef = React.useRef(null);
+
+  const onMouseUpHandler = e => {
+    let value = +e.target.value;
+    rangeRef.current.style.cursor = `grab`;
+    onMouseUp(e, value);
+  };
+
+  const onChangeHandler = e => {
+    const value = +e.target.value;
+    onChange(e, value);
+  };
+
+  const srClasses = `w-full flex items-center justify-center ${className}`;
+  const valueDividedByMaxValue = value / maxValue * 100 || 0;
+  return /*#__PURE__*/React__default["default"].createElement("div", {
+    className: srClasses
+  }, /*#__PURE__*/React__default["default"].createElement("div", {
+    className: `${disabled ? `opacity-60 pointer-events-none` : ``}  group w-full h-[8px] flex flex-col items-center justify-center relative`
+  }, /*#__PURE__*/React__default["default"].createElement("div", {
+    style: circleStyle,
+    className: "bg-primary-200 w-full left-0 h-[8px] rounded-full absolute z-10"
+  }, /*#__PURE__*/React__default["default"].createElement("div", {
+    style: {
+      width: `${value / maxValue * 100 <= maxLimit / maxValue * 100 ? value / maxValue * 100 : maxLimit / maxValue * 100}%`
+    },
+    className: "bg-primary-700 h-[8px] rounded-full absolute z-40"
+  }), /*#__PURE__*/React__default["default"].createElement("div", {
+    style: {
+      left: `${value / maxValue * 100 <= maxLimit / maxValue * 100 ? value / maxValue * 100 : maxLimit / maxValue * 100}%`
+    },
+    className: "h-6 w-6 rounded-full bg-white absolute top-1/2 -translate-y-1/2 -translate-x-1/2 z-50 drop-shadow-md"
+  }, /*#__PURE__*/React__default["default"].createElement("div", {
+    className: "absolute h-4 w-4 rounded-full bg-primary-700 left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2"
+  }))), tooltip && /*#__PURE__*/React__default["default"].createElement("div", {
+    className: "absolute left-0 z-50",
+    style: circleStyle
+  }, /*#__PURE__*/React__default["default"].createElement("div", {
+    style: {
+      left: `${valueDividedByMaxValue}%`
+    },
+    className: "opacity-0 group-hover:opacity-100 absolute -top-10 bg-primary-700 text-white text-xs left-1/2 -translate-x-1/2 p-1 rounded-4px pointer-events-none"
+  }, /*#__PURE__*/React__default["default"].createElement("div", {
+    className: "absolute -bottom-1 bg-primary-700 left-1/2 -translate-x-1/2 rotate-45 w-2 h-2 rounded-1px"
+  }), valueDividedByMaxValue || 0, "%")), /*#__PURE__*/React__default["default"].createElement("input", {
+    disabled: disabled,
+    list: id,
+    ref: rangeRef,
+    min: minValue,
+    max: maxValue,
+    step: step,
+    onMouseDown: () => rangeRef.current.style.cursor = `grabbing`,
+    onMouseUp: e => onMouseUpHandler(e),
+    onInput: e => onChangeHandler(e),
+    type: "range",
+    className: "w-full absolute opacity-0 z-20",
+    id: id,
+    style: {
+      width: `${(maxLimit - minLimit) / maxValue * 100}%`,
+      left: `calc(${minLimit / maxValue * 100}% )`,
+      cursor: `grab`,
+      minWidth: `2%`
+    },
+    value: value
+  }), range && /*#__PURE__*/React__default["default"].createElement(Datalist, {
+    id: id,
+    value: value,
+    range: range
+  })));
+};
+
+const circleStyle = {
+  width: `calc(100% - 12px)`,
+  left: `6px`
+};
+const datalistStyle = {
+  borderRadius: `50%`,
+  minHeight: `12px`,
+  minWidth: `12px`
+};
+
+const Datalist = ({
+  id,
+  range,
+  value
+}) => /*#__PURE__*/React__default["default"].createElement("div", {
+  className: "absolute flex justify-between left-0 w-full h-full top-0 z-0",
+  id: id
+}, range.map((item, index) => {
+  const isAchived = value >= item;
+  return /*#__PURE__*/React__default["default"].createElement("div", {
+    style: datalistStyle,
+    className: `relative top-1/2 -translate-y-1/2 flex-shrink-0 ${isAchived ? `bg-primary-700` : `bg-primary-200`} ${isAchived ? `border-primary-700` : `border-primary-200`}`,
+    key: index
+  });
+}));
+
+function usePrevious(value) {
+  const ref = React.useRef(); // Store current value in ref
+
+  React.useEffect(() => {
+    ref.current = value;
+  }, [value]); // Only re-run if value changes
+  // Return previous value (happens before update in useEffect above)
+
+  return ref.current;
+}
+
+function SingleOTPInputComponent(props) {
+  const {
+    focus,
+    autoFocus,
+    ...rest
+  } = props;
+  const inputRef = React.useRef(null);
+  const prevFocus = usePrevious(!!focus);
+  React.useEffect(() => {
+    if (inputRef.current) {
+      if (focus) {
+        inputRef.current.focus();
+      }
+
+      if (focus && focus !== prevFocus) {
+        inputRef.current.focus();
+        inputRef.current.select();
+      }
+    }
+  }, [autoFocus, focus, prevFocus]);
+  return /*#__PURE__*/React__default["default"].createElement("input", _extends$3({
+    ref: inputRef
+  }, rest));
+}
+
+const SingleOTPInput = /*#__PURE__*/React.memo(SingleOTPInputComponent);
+
+const OtpInput = props => {
+  const {
+    length = 6,
+    isNumberInput = true,
+    autoFocus,
+    disabled,
+    onChange: onChangeOTP,
+    inputStyle,
+    error,
+    id
+  } = props;
+  const [activeInput, setActiveInput] = React.useState(0);
+  const [otpValues, setOTPValues] = React.useState(Array(length).fill(``)); // Helper to return OTP from inputs
+
+  const handleOtpChange = (e, otp) => {
+    const otpValue = otp.join(``);
+    e.target.id = id;
+    e.target.value = otpValue;
+    onChangeOTP(e);
+  }; // Helper to return value with the right type: 'text' or 'number'
+
+
+  const getRightValue = React.useCallback(str => {
+    let changedValue = str;
+
+    if (!isNumberInput) {
+      return changedValue;
+    }
+
+    return !changedValue || /\d/.test(changedValue) ? changedValue : ``;
+  }, [isNumberInput]); // Change OTP value at focussing input
+
+  const changeCodeAtFocus = React.useCallback((e, str) => {
+    const updatedOTPValues = [...otpValues];
+    updatedOTPValues[activeInput] = str[0] || ``;
+    setOTPValues(updatedOTPValues);
+    handleOtpChange(e, updatedOTPValues);
+  }, [activeInput, handleOtpChange, otpValues]); // Focus `inputIndex` input
+
+  const focusInput = React.useCallback(inputIndex => {
+    const selectedIndex = Math.max(Math.min(length - 1, inputIndex), 0);
+    setActiveInput(selectedIndex);
+  }, [length]);
+  const focusPrevInput = React.useCallback((clean = false) => {
+    if (activeInput <= 0) return;
+    focusInput(activeInput - 1);
+
+    if (clean) {
+      const updatedOTPValues = [...otpValues];
+      updatedOTPValues[activeInput - 1] = ``;
+      setOTPValues(updatedOTPValues);
+    }
+  }, [activeInput, focusInput, otpValues]);
+  const focusNextInput = React.useCallback(() => {
+    if (activeInput === length - 1) return;
+    focusInput(activeInput + 1);
+  }, [activeInput, focusInput]); // Handle onFocus input
+
+  const handleOnFocus = React.useCallback(index => () => {
+    focusInput(index);
+  }, [focusInput]); // Handle onChange value for each input
+
+  const handleOnChange = React.useCallback(e => {
+    const val = getRightValue(e.currentTarget.value);
+
+    if (!val) {
+      e.preventDefault();
+      return;
+    }
+
+    changeCodeAtFocus(e, val);
+    focusNextInput();
+  }, [changeCodeAtFocus, focusNextInput, getRightValue]); // Hanlde onBlur input
+
+  const onBlur = React.useCallback(() => {
+    setActiveInput(-1);
+  }, []); // Handle onKeyDown input
+
+  const handleOnKeyDown = React.useCallback(e => {
+    switch (e.key) {
+      case `Backspace`:
+      case `Delete`:
+        {
+          e.preventDefault();
+
+          if (otpValues[activeInput]) {
+            changeCodeAtFocus(e, ``);
+          } else {
+            focusPrevInput(true);
+          }
+
+          break;
+        }
+
+      case `ArrowLeft`:
+        {
+          e.preventDefault();
+          focusPrevInput();
+          break;
+        }
+
+      case `ArrowRight`:
+        {
+          e.preventDefault();
+          focusNextInput();
+          break;
+        }
+
+      case ` `:
+        {
+          e.preventDefault();
+          break;
+        }
+
+      default:
+        return e;
+    }
+  }, [activeInput, changeCodeAtFocus, focusNextInput, focusPrevInput, otpValues]);
+  const handleOnPaste = React.useCallback(e => {
+    e.preventDefault();
+    const pastedData = e.clipboardData.getData(`text/plain`).trim().slice(0, length - activeInput).split(``);
+
+    if (pastedData) {
+      let nextFocusIndex = 0;
+      const updatedOTPValues = [...otpValues];
+      updatedOTPValues.forEach((val, index) => {
+        if (index >= activeInput) {
+          const changedValue = getRightValue(pastedData.shift() || val);
+
+          if (changedValue) {
+            updatedOTPValues[index] = changedValue;
+            nextFocusIndex = index;
+          }
+        }
+      });
+      setOTPValues(updatedOTPValues);
+      e.target.id = id;
+      e.target.value = updatedOTPValues.join(``);
+      onChangeOTP(e);
+      setActiveInput(Math.min(nextFocusIndex + 1, length - 1));
+    }
+  }, [activeInput, getRightValue, length, otpValues]);
+  const allInputs = Array(length).fill(``);
+  return /*#__PURE__*/React__default["default"].createElement(InputOverlay, props, /*#__PURE__*/React__default["default"].createElement("div", {
+    className: "flex justify-center items-center w-auto"
+  }, /*#__PURE__*/React__default["default"].createElement("div", {
+    className: `flex w-full  hover:shadow-blue-outline focus-within:shadow-blue-outline`
+  }, allInputs.map((_, index) => /*#__PURE__*/React__default["default"].createElement(SingleOTPInput, {
+    key: `SingleInput-${index}`,
+    focus: activeInput === index,
+    value: otpValues && otpValues[index],
+    autoFocus: autoFocus,
+    onFocus: handleOnFocus(index),
+    onChange: handleOnChange,
+    onKeyDown: handleOnKeyDown,
+    onBlur: onBlur,
+    onPaste: handleOnPaste,
+    style: inputStyle,
+    type: "number",
+    className: `w-4/12 p-2 mx-1.5 ${index === 0 && `ml-0`} ${index === length - 1 && `mr-0`} text-center text-base border-gray-300 text-black rounded-8px border font-normal max-w-11 h-11 text-black bg-primary-200`,
+    disabled: disabled // maxlength={1}
+
+  })))));
+};
+
+const TextArea = /*#__PURE__*/React.forwardRef(({
+  value = "",
+  placeholder,
+  onChange = () => null,
+  className = "",
+  disabled,
+  id = null,
+  ...props
+}, ref) => {
+  const srClasses = useStyleRewriter$6(baseClasses$1, className);
+  return /*#__PURE__*/React__default["default"].createElement("textarea", _extends$3({}, props, {
+    value: value,
+    placeholder: placeholder,
+    onChange: onChange,
+    className: srClasses,
+    disabled: disabled,
+    ref: ref,
+    id: id
+  }));
+});
+const baseClasses$1 = `
+    @wh w-full
+    @ht h-100px @mxh max-h-200px @mnh min-h-100px
+    @bdc bg-white dark:bg-true-gray-750
+    @ftf font-family-inter
+    @fts text-14px
+    @leh leading-20px
+    @ttc text-black dark:text-white
+    @brw border-px
+    @brs border-solid
+    @brc border-gray-light dark:border-true-gray-700 hover:border-blue-primary focus:border-blue-primary
+    @tndn duration-200
+    @oe outline-none focus:outline-none hover:outline-none
+    @brr rounded-8px
+    @dy flex
+    @pg p-3
+    @pn relative
+    @bxsw hover:shadow-blue-outline focus:shadow-blue-outline
+    @bro hover:border-opacity-70
+`;
+
+const TextAreaInput = /*#__PURE__*/React.forwardRef((props, ref) => {
+  const {
+    value,
+    id,
+    onChange,
+    placeholder,
+    disabled,
+    variant = `primary`,
+    error
+  } = props;
+  const className = variant === `primary` ? `@bdc bg-primary-200 ${baseClasses}` : `@bdc bg-white ${baseClasses}`;
+  return /*#__PURE__*/React__default["default"].createElement(InputOverlay, props, /*#__PURE__*/React__default["default"].createElement(TextArea, {
+    disabled: disabled,
+    ref: ref,
+    value: value,
+    id: id,
+    rows: 3,
+    onChange: onChange,
+    placeholder: placeholder,
+    className: `${className} ${error ? `@brc border-red-500 hover:border-red-500 @bxsw shadow-red-outline` : ``}`
+  }));
+});
+const baseClasses = `@brr rounded-4px @brw border @brc border-transparent @fts text-13 @pn pl-3 pr-6 @ftw font-normal @ttc text-black`;
+
+const UploadFileInput = props => {
+  const {
+    uploaderTitle = `Выберите или перетащите файлы`,
+    multiple = false,
+    onChange,
+    id,
+    files = {},
+    setFiles,
+    error,
+    accept = `*/*`,
+    BeforeUploadFileIcon,
+    DeleteFileIcon,
+    FileIcon,
+    BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:1337"
+  } = props; // console.log(`🚀 ~ UploadFileInput ~ files`, files);
+  // console.log(`🚀 ~ UploadFileInput ~ defaultValue`, defaultValue);
+  // useEffect(() => {
+  //   console.log(`🚀 ~ UploadFileInput ~ files`, files);
+  // }, [files]);
+  // useEffect(() => {
+  //   console.log(`🚀 ~ useEffect ~ error`, error);
+  // }, [error]);
+  // const [error, setError] = useState(null);
+
+  const handleUploadImage = e => {
+    preventDefaultEvent(e); // setError(null);
+    // if (files?.length >= 4) return setError({ message: `Maximum files: 4` });
+    // let file;
+    // if (e?.dataTransfer) {
+    //   file = e.dataTransfer.files[0];
+    // } else {
+    //   file = e.target.files[0];
+    // }
+    // console.log(`🚀 ~ handleUploadImage ~ file`, file);
+
+    e.target.multiple = multiple;
+    onChange(e); // if (file) {
+    //   const sizeInMB = file?.size / (1024 * 1024);
+    //   if (sizeInMB > 2.3) return setError({ message: `File too large` });
+    //   // setFiles([...files, file]);
+    //   onChange(e);
+    // }
+  };
+
+  const handleDelete = (e, params) => {
+    setFiles(prev => {
+      const newFiles = { ...prev
+      };
+      let toDeleteFile;
+
+      if (multiple) {
+        toDeleteFile = newFiles[params.id][params.index];
+      } else {
+        toDeleteFile = newFiles[params.id];
+      }
+
+      if (toDeleteFile?.url) ;
+
+      if (multiple) {
+        newFiles[params.id] = newFiles[params.id].filter((file, index) => index !== params.index);
+      } else {
+        delete newFiles[params.id];
+      } // console.log(`🚀 ~ setFiles ~ newFiles`, newFiles);
+
+
+      return newFiles;
+    }); // console.log(`🚀 ~ handleDelete ~ e`, e, deleteFile);
+  };
+
+  return /*#__PURE__*/React__default["default"].createElement(InputOverlay, _extends$3({}, props, {
+    error: error
+  }), files[id] && !multiple ? null : /*#__PURE__*/React__default["default"].createElement("div", {
+    className: "relative w-[160px] h-[130px] flex flex-col items-center justify-center rounded-8px border-[2px] border-dashed border-primary-700 duration-200 bg-primary-200 hover:bg-primary hover:bg-opacity-50 text-center flex-shrink-0",
+    onDrop: handleUploadImage,
+    onDragOver: preventDefaultEvent,
+    onDragEnter: preventDefaultEvent
+  }, /*#__PURE__*/React__default["default"].createElement("label", {
+    htmlFor: id,
+    className: "absolute w-full h-full z-90 cursor-pointer flex flex-col items-center justify-center p-3"
+  }, multiple ? /*#__PURE__*/React__default["default"].createElement("input", {
+    type: "file" // name="file"
+    ,
+    id: id,
+    accept: accept,
+    onChange: handleUploadImage,
+    className: "hidden",
+    multiple: true
+  }) : /*#__PURE__*/React__default["default"].createElement("input", {
+    type: "file" // name="file"
+    ,
+    id: id,
+    accept: accept,
+    onChange: handleUploadImage,
+    className: "hidden"
+  }), typeof BeforeUploadFileIcon === "function" ? /*#__PURE__*/React__default["default"].createElement(BeforeUploadFileIcon, null) : null, uploaderTitle ? /*#__PURE__*/React__default["default"].createElement("p", {
+    className: "mb-1 !font-medium !text-black"
+  }, uploaderTitle) : null)), /*#__PURE__*/React__default["default"].createElement(FilesRow, {
+    handleDelete: (e, params) => handleDelete(e, { ...params,
+      id
+    }),
+    files: files[id],
+    multiple: multiple,
+    DeleteFileIcon: DeleteFileIcon,
+    FileIcon: FileIcon,
+    BACKEND_URL: BACKEND_URL
+  }));
+};
+
+const FilesRow = ({
+  files,
+  multiple,
+  handleDelete = () => {},
+  DeleteFileIcon,
+  FileIcon
+}) => {
+  // console.log(`🚀 ~ FilesRow ~ files`, files);
+  const localFiles = React.useMemo(() => {
+    if (!files) {
+      return;
+    }
+
+    if (multiple) {
+      return files;
+    } else {
+      return [files];
+    }
+  }, [files]);
+  return /*#__PURE__*/React__default["default"].createElement("div", {
+    className: "flex flex-row gap-2 flex-wrap"
+  }, localFiles?.length > 0 ? localFiles?.map((file, index) => {
+    return /*#__PURE__*/React__default["default"].createElement(FileCard, {
+      handleDelete: e => handleDelete(e, {
+        index
+      }),
+      key: index,
+      file: file,
+      DeleteFileIcon: DeleteFileIcon,
+      FileIcon: FileIcon,
+      BACKEND_URL: BACKEND_URL
+    });
+  }) : null);
+};
+
+const FileCard = ({
+  file,
+  handleDelete = () => {},
+  BACKEND_URL,
+  DeleteFileIcon,
+  FileIcon
+}) => {
+  const src = React.useMemo(() => {
+    if (file.url) {
+      return `${BACKEND_URL}${file.url}`;
+    }
+
+    return URL.createObjectURL(file);
+  }, [file]);
+  return /*#__PURE__*/React__default["default"].createElement("div", {
+    className: "relative w-[160px] h-[130px] flex flex-col items-center justify-center rounded-8px border-[2px] border-primary duration-200 text-center overflow-hidden"
+  }, file?.type?.includes(`image/`) || file?.mime?.includes(`image/`) ? /*#__PURE__*/React__default["default"].createElement("img", {
+    src: src,
+    className: "w-full h-full absolute inset-0 object-cover opacity-80"
+  }) : /*#__PURE__*/React__default["default"].createElement("div", {
+    className: "absolute inset-0 flex items-center justify-center flex-col"
+  }, typeof FileIcon === "function" ? /*#__PURE__*/React__default["default"].createElement(FileIcon, null) : null, /*#__PURE__*/React__default["default"].createElement("p", {
+    className: "text-black"
+  }, getShortFileName(file.name))), /*#__PURE__*/React__default["default"].createElement("div", {
+    className: "w-full h-full absolute flex items-center justify-center inset-0 bg-primary-900/30 opacity-0 hover:opacity-100 duration-200"
+  }, /*#__PURE__*/React__default["default"].createElement("button", {
+    onClick: handleDelete
+  }, typeof DeleteFileIcon === "function" ? /*#__PURE__*/React__default["default"].createElement(DeleteFileIcon, null) : null)));
+};
+
+const preventDefaultEvent = e => e.preventDefault();
+
+const extensionReg = /(?:\.([^.]+))?$/;
+
+const getShortFileName = string => {
+  if (string?.length > 15) {
+    const currentExtension = extensionReg.exec(string)[1];
+    const nameWithoutExtension = string.replace(currentExtension, ``);
+    return nameWithoutExtension.substring(0, 15) + `...` + currentExtension;
+  }
+
+  return string;
+};
+
+const SelectInput = props => {
+  const {
+    items,
+    onChange,
+    value,
+    id,
+    activeMatcher = () => {},
+    setter = () => {},
+    label,
+    error,
+    buttonClassName,
+    inputsClassName
+  } = props;
+  const passedClasses = React.useMemo(() => {
+    if (buttonClassName) {
+      return buttonClassName;
+    } else {
+      return `@pg px-2 py-1 @brw border @bdc bg-primary-100 @brr rounded-[4px] @cr cursor-pointer`;
+    }
+  }, [buttonClassName]);
+  return /*#__PURE__*/React__default["default"].createElement(InputOverlay, {
+    label: label,
+    error: error
+  }, /*#__PURE__*/React__default["default"].createElement("div", {
+    className: `flex flex-wrap gap-2`
+  }, items.map((item, index) => {
+    const statusClassName = `${activeMatcher(item, value) ? `@brc border-blue-700` : `@brc border-transparent`}`;
+    return /*#__PURE__*/React__default["default"].createElement(SmartButton, {
+      className: `${statusClassName} ${passedClasses}`,
+      key: index,
+      onClick: e => {
+        e.target.value = setter(item);
+        e.target.id = id;
+        onChange(e);
+      }
+    }, item.title);
+  })));
+};
+
+const SelectImageInput = props => {
+  const {
+    items,
+    onChange,
+    value,
+    id,
+    activeMatcher = () => {},
+    setter = () => {},
+    label,
+    error,
+    buttonClassName,
+    inputsClassName,
+    imageSelector = () => {},
+    BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || `http://localhost:1337`
+  } = props;
+  return /*#__PURE__*/React__default["default"].createElement(InputOverlay, {
+    label: label,
+    error: error
+  }, /*#__PURE__*/React__default["default"].createElement("div", {
+    className: `flex flex-wrap gap-2`
+  }, items.map((item, index) => {
+    const statusClassName = `${activeMatcher(item, value) ? `@brc border-[#3A5AB7]` : `@brc border-[#F1F5F9]`}`;
+    return /*#__PURE__*/React__default["default"].createElement(SmartButton, {
+      className: `${statusClassName} @pg px-2 py-2 @brw border @bdc bg-[#F1F5F9] @brr rounded-[4px] @cr cursor-pointer`,
+      key: index,
+      onClick: e => {
+        e.target.value = setter(item);
+        e.target.id = id;
+        onChange(e);
+      }
+    }, /*#__PURE__*/React__default["default"].createElement("img", {
+      src: `${BACKEND_URL}${imageSelector(item)}`,
+      className: "w-6"
+    }));
+  })));
+};
+
+const DropdownInput = props => {
+  const {
+    label,
+    error,
+    setter,
+    id,
+    value,
+    onChange = () => {},
+    onDropdownOpenChange = () => {},
+    items,
+    activeMatcher,
+    placeholder = ``,
+    buttonClassName,
+    variant,
+    Icon
+  } = props;
+  const [isDropdownOpen, setDropdownOpen] = React.useState(false);
+  const [activeItem, setActiveItem] = React.useState();
+  React.useEffect(() => {
+    const active = items?.find(item => activeMatcher(item, value));
+    setActiveItem(active);
+  }, [items?.length, value]);
+  const className = React.useMemo(() => {
+    if (buttonClassName) {
+      return buttonClassName;
+    } else {
+      if (variant === `white`) {
+        return `@brr rounded-[4px] @cr cursor-pointer @fx flex @ani items-center @jyc justify-between  @ttc text-black @fts text-[13px] @pg px-3 py-2 @ht h-11 @bdc bg-white`;
+      }
+
+      return `@brr rounded-[4px] @cr cursor-pointer @fx flex @ani items-center @jyc justify-between  @ttc text-black @fts text-[13px] @pg px-3 py-2 @ht h-11 @bdc bg-primary-200`;
+    }
+  }, [buttonClassName]);
+  React.useEffect(() => {
+    onDropdownOpenChange(isDropdownOpen);
+  }, [isDropdownOpen]);
+  return /*#__PURE__*/React__default["default"].createElement(InputOverlay, {
+    label: label,
+    error: error
+  }, /*#__PURE__*/React__default["default"].createElement("div", {
+    className: `relative w-full`
+  }, /*#__PURE__*/React__default["default"].createElement(SmartButton, {
+    onClick: () => setDropdownOpen(!isDropdownOpen),
+    dropdownItems: items?.length ? () => items.map((item, index) => {
+      const statusClassName = activeMatcher(item, value) ? `@ttc text-primary-900 @brc border-primary-900` : `@ttc text-black hover:text-primary-900 @brc border-transparent hover:border-primary-900`;
+      return /*#__PURE__*/React__default["default"].createElement(SmartButton, {
+        key: index,
+        onClick: e => {
+          e.target.value = setter(item, index);
+          e.target.id = id;
+          onChange(e);
+        },
+        className: `@pg px-4 py-2 @fts text-14px @brr rounded-[4px] @brw border @mn my-px  ${statusClassName}`,
+        variant: "light"
+      }, item?.title);
+    }) : null,
+    dropdownContainerClasses: "@wh w-full p-1 @bdc bg-white @zi z-20 @brw border @brr rounded-4px @brc border-transparent @bxsw drop-shadow-lg",
+    className: className
+  }, activeItem?.title || placeholder, typeof Icon === "function" ? /*#__PURE__*/React__default["default"].createElement(Icon, {
+    isDropdownOpen: isDropdownOpen
+  }) : null)));
+};
+
+const PopupCalendar = ({
+  setOpen,
+  onClick,
+  value,
+  setValue,
+  setActiveTimeframe,
+  LeftArrowIcon = () => {},
+  RightArrowIcon = () => {}
+}) => {
+  return /*#__PURE__*/React__default["default"].createElement("div", {
+    className: "@dy flex flex-col md:flex-row @bdc bg-white overflow-hidden @pg p-0 divide-x divide-true-gray-150 @bxsw shadow-none rounded-[8px]"
+  }, /*#__PURE__*/React__default["default"].createElement("div", {
+    className: "px-2 flex flex-col items-center text-black"
+  }, /*#__PURE__*/React__default["default"].createElement(Calendar__default["default"], _extends$3({}, calendarSettings, {
+    nextLabel: RightArrowIcon,
+    prevLabel: LeftArrowIcon,
+    value: new Date(value),
+    onChange: setValue,
+    onClickDay: value => {
+      setActiveTimeframe(`Custom`);
+      setValue(value);
+    }
+  })), /*#__PURE__*/React__default["default"].createElement("div", {
+    className: "flex flex-row items-center justify-end w-full mb-4 md:mb-7"
+  }, /*#__PURE__*/React__default["default"].createElement(SmartButton, {
+    className: "@ftf font-roboto @ftw font-medium @bdc bg-primary-900 hover:bg-primary-700 @ttc text-white @brr rounded-[4px] @mn mr-3 @pg px-5 py-1 @cr cursor-pointer @tndn duration-200",
+    onClick: () => {
+      onClick(value);
+      setOpen(false);
+    }
+  }, /*#__PURE__*/React__default["default"].createElement("h5", {
+    className: "@ttc text-current"
+  }, "\u041F\u0440\u0438\u043C\u0435\u043D\u0438\u0442\u044C")), /*#__PURE__*/React__default["default"].createElement(SmartButton, {
+    className: "@ftf font-roboto @ftw font-medium @bdc bg-primary-200 hover:bg-primary-700 @ttc text-primary hover:text-white @brr rounded-[4px] @pg px-5 py-1 @cr cursor-pointer @tndn duration-200",
+    onClick: () => {
+      setValue();
+      setOpen(false);
+    }
+  }, /*#__PURE__*/React__default["default"].createElement("h5", {
+    className: "@ttc text-current"
+  }, "\u0421\u0431\u0440\u043E\u0441\u0438\u0442\u044C")))));
+};
+
+const calendarSettings = {
+  locale: `en`,
+  className: `border-none p-3 md:p-6`,
+  selectRange: false,
+  showNavigation: true,
+  returnValue: `start`
+};
+
+const DateCalendar = /*#__PURE__*/React.forwardRef((props, ref) => {
+  const {
+    value,
+    id,
+    onChange,
+    error,
+    LeftArrowIcon,
+    RightArrowIcon
+  } = props;
+  const buttonRef = React.useRef();
+  const [localValue, setLocalValue] = React.useState(null);
+  const [inputValues, setInputValues] = React.useState();
+  const [localError, setLocalError] = React.useState(error);
+  const [isDropdownOpen, setIsDropdownOpen] = React.useState(false);
+  const [activeTimeframe, setActiveTimeframe] = React.useState(`Custom`);
+  useOutsideClick(buttonRef, setIsDropdownOpen);
+  React.useEffect(() => {
+    if (value && value.length !== 0 && (!localValue || typeof localValue === `string`)) {
+      const parsedDate = new Date(value).toISOString();
+      setLocalValue(new Date(parsedDate));
+    }
+  }, [value]);
+  React.useEffect(() => {
+    if (!inputValues) return;
+    let couldBeParsed = true;
+
+    if (inputValues.every(value => value === ``)) {
+      setLocalValue(null);
+      return;
+    }
+
+    if (inputValues.every(value => !isNaN(value))) {
+      for (const [index, value] of inputValues.entries()) {
+        if (!value) {
+          couldBeParsed = false;
+        }
+
+        if (index === 0 && (+value > 30 || +value < 1)) {
+          couldBeParsed = false;
+        }
+
+        if (index === 1 && (+value > 11 || +value < 1)) {
+          couldBeParsed = false;
+        }
+
+        if (index === 2 && (+value < 1900 || +value > 3000)) {
+          couldBeParsed = false;
+        }
+      }
+
+      if (!couldBeParsed) return;
+      const newDate = new Date(Date.UTC(inputValues[2], inputValues[1] - 1, inputValues[0]));
+
+      if (!localValue || newDate?.getTime() !== localValue?.getTime()) {
+        setLocalValue(newDate);
+      }
+    }
+  }, [inputValues]);
+  React.useEffect(() => {
+    if (localValue || localValue === null) {
+      setLocalError();
+      const e = {
+        target: {
+          id,
+          value: localValue ? localValue.toISOString() : null
+        }
+      };
+      onChange(e);
+    }
+  }, [localValue]);
+  React.useEffect(() => {
+    if (localValue && typeof localValue === `object`) {
+      const date = new Date(localValue).getDate();
+      const month = new Date(localValue).getMonth() + 1;
+      const year = new Date(localValue).getFullYear();
+
+      if (inputValues?.length === 3) {
+        if (inputValues[0] !== date || inputValues[1] !== month || inputValues[2] !== year) {
+          setInputValues([date, month, year]);
+        }
+      } else {
+        setInputValues([date, month, year]);
+      }
+    }
+  }, [localValue]);
+  return /*#__PURE__*/React__default["default"].createElement(InputOverlay, _extends$3({}, props, {
+    error: localError
+  }), /*#__PURE__*/React__default["default"].createElement("div", {
+    className: "flex items-center relative z-70 ",
+    ref: buttonRef
+  }, /*#__PURE__*/React__default["default"].createElement(DateInput, {
+    error: localError,
+    value: inputValues,
+    onChange: setInputValues,
+    onClick: () => setIsDropdownOpen(!isDropdownOpen)
+  }), /*#__PURE__*/React__default["default"].createElement(transitionComponent.Transition, _extends$3({
+    show: isDropdownOpen
+  }, contentTransitionProps, {
+    className: "absolute top-12 w-fit md:left-0 z-20 overflow-hidden drop-shadow-xl"
+  }), /*#__PURE__*/React__default["default"].createElement(PopupCalendar, {
+    value: localValue || new Date(),
+    setValue: setLocalValue,
+    open: isDropdownOpen,
+    setOpen: setIsDropdownOpen,
+    activeTimeframe: activeTimeframe,
+    setActiveTimeframe: setActiveTimeframe,
+    onClick: localValue => {
+      setIsDropdownOpen(false);
+    },
+    LeftArrowIcon: LeftArrowIcon,
+    RightArrowIcon: RightArrowIcon
+  }))));
+});
+const inputClassName = `@ttc text-black @bdc bg-primary-200 @pg px-0 py-0 @brr rounded-0 @tta text-center @brc border-transparent`;
+const containerClassName = `@wh w-fit @tta text-center`;
+
+const DateInput = ({
+  value = [],
+  onChange = () => {},
+  onClick = () => {},
+  error
+}) => {
+  const [date, setDate] = React.useState(value[0]);
+  const [month, setMonth] = React.useState(value[1]);
+  const [year, setYear] = React.useState(value[2]);
+  React.useEffect(() => {
+    setDate(value[0]);
+    setMonth(value[1]);
+    setYear(value[2]);
+  }, [value]);
+  React.useEffect(() => {
+    onChange(() => {
+      return [date, month, year];
+    });
+  }, [date, month, year]);
+  return /*#__PURE__*/React__default["default"].createElement("div", {
+    onClick: onClick,
+    className: `w-fit pl-[8px] pr-[10px] py-[12px] bg-primary-200 flex justify-start rounded-4px text-black text-base border-[1px] ${error ? `border-red-500 hover:border-red-500 shadow-red-outline` : `border-transparent`}`
+  }, /*#__PURE__*/React__default["default"].createElement(Input, {
+    type: "number",
+    value: date || ``,
+    onChange: e => {
+      let {
+        value
+      } = e.target;
+      value = +value || ``;
+      if (value && value < 0) value = ``;
+      if (value > 31) return;
+      setDate(`${value}`);
+    },
+    className: `@wh w-[32px] ${inputClassName}`,
+    containerClassName: containerClassName
+  }), /*#__PURE__*/React__default["default"].createElement("div", null, "."), /*#__PURE__*/React__default["default"].createElement(Input, {
+    type: "number",
+    value: month || ``,
+    onChange: e => {
+      let {
+        value
+      } = e.target;
+      value = +value || ``;
+      if (value && value < 0) value = 0;
+      if (value > 12) return;
+      setMonth(value);
+    },
+    className: `@wh w-[32px] ${inputClassName}`,
+    containerClassName: containerClassName
+  }), /*#__PURE__*/React__default["default"].createElement("div", null, "."), /*#__PURE__*/React__default["default"].createElement(Input, {
+    type: "number",
+    value: year || ``,
+    onChange: e => {
+      let {
+        value
+      } = e.target;
+      value = +value || ``;
+      if (value && value < 0) value = 0;
+      if (value > 2100) return;
+      setYear(value);
+    },
+    className: `@wh w-[46px] ${inputClassName}`,
+    containerClassName: containerClassName
+  }));
+};
+
+const contentTransitionProps = {
+  enter: `ease-out duration-300`,
+  enterFrom: `opacity-0`,
+  enterTo: `opacity-100`,
+  leave: `ease-in duration-200`,
+  leaveFrom: `opacity-100`,
+  leaveTo: `opacity-0`
+};
+
+const useOutsideClick = (ref, action) => {
+  React.useEffect(() => {
+    const handleClickOutside = event => {
+      if (ref.current && !ref.current.contains(event.target)) action(false);
+    };
+
+    document.addEventListener(`mousedown`, handleClickOutside);
+    return () => {
+      document.removeEventListener(`mousedown`, handleClickOutside);
+    };
+  }, [ref]);
+};
+
+const Primary = ({
+  placeholder,
+  id,
+  onClick,
+  active,
+  buttonClasses
+}) => {
+  return /*#__PURE__*/React__default["default"].createElement(React__default["default"].Fragment, null, /*#__PURE__*/React__default["default"].createElement("label", {
+    key: id,
+    className: `${buttonClasses} ${active ? `border border-primary-700` : `border border-transparent`}`,
+    htmlFor: "radio-1",
+    id: id,
+    onClick: onClick
+  }, placeholder), /*#__PURE__*/React__default["default"].createElement("input", {
+    type: "radio",
+    id: "radio-1",
+    className: "hidden"
+  }));
+};
+
+const Picture = ({
+  src,
+  id,
+  onClick,
+  active,
+  buttonClasses
+}) => {
+  return /*#__PURE__*/React__default["default"].createElement(React__default["default"].Fragment, null, /*#__PURE__*/React__default["default"].createElement("label", {
+    key: id,
+    className: `${buttonClasses} ${active ? `border border-[#3A5AB7]` : `border border-transparent`} ${`py-3 px-3`}`,
+    htmlFor: "radio-1",
+    id: id,
+    onClick: onClick
+  }, /*#__PURE__*/React__default["default"].createElement("img", {
+    src: src,
+    alt: "link"
+  })), /*#__PURE__*/React__default["default"].createElement("input", {
+    type: "radio",
+    id: "radio-1",
+    className: "hidden"
+  }));
+};
+
+const variants = {
+  primary: Primary,
+  picture: Picture
+};
+
+function RadioButton({
+  placeholder,
+  id,
+  onClick,
+  active,
+  type = `primary`,
+  src,
+  buttonVariant = `primary`
+}) {
+  const ButtonVariant = variants[buttonVariant];
+  const buttonClasses = buttonTypeClasses[type];
+  return /*#__PURE__*/React__default["default"].createElement(ButtonVariant, {
+    placeholder: placeholder,
+    id: id,
+    onClick: onClick,
+    active: active,
+    src: src,
+    buttonClasses: buttonClasses
+  });
+}
+
+const buttonTypeClasses = {
+  primary: `rounded bg-[#F1F5F9] text-[13px] font-normal px-2 py-1 text-black-500 checked:ring-1 checked:ring-[#3A5AB7]`,
+  white: `rounded bg-white text-[13px] font-normal px-2 py-1 text-black-500 checked:ring-1 checked:ring-white `
+};
+
+const FormInput = /*#__PURE__*/React.forwardRef((props, ref) => {
+  const {
+    type,
+    Comp
+  } = props;
+  const InputType = Comp || inputComponents[type] || TextInput;
+  return /*#__PURE__*/React__default["default"].createElement(InputType, _extends$3({}, props, {
+    ref: ref
+  }));
+});
+const inputComponents = {
+  text: TextInput,
+  checkbox: CheckboxInput,
+  range: RangeInput,
+  radio: RadioButton,
+  otp: OtpInput,
+  "text-area": TextAreaInput,
+  file: UploadFileInput,
+  "select-row": SelectInput,
+  "select-image-row": SelectImageInput,
+  dropdown: DropdownInput,
+  date: DateCalendar
 };
 
 // used to animate *container* div height from 0 <-> auto during enter / leave transition
@@ -6712,7 +8494,7 @@ const components = {
   SmartButton,
   Modal,
   ModalArray,
-  Input,
+  Input: FormInput,
   SpringNotification
 };
 

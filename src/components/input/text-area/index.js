@@ -2,7 +2,7 @@ import React, { forwardRef } from "react";
 import TextArea from "./TextArea";
 import InputOverlay from "../input-overlay";
 
-export const TextAreaInput = forwardRef((props, ref) => {
+const TextAreaInput = forwardRef((props, ref) => {
   const {
     value,
     id,
@@ -37,5 +37,7 @@ export const TextAreaInput = forwardRef((props, ref) => {
     </InputOverlay>
   );
 });
+
+export default TextAreaInput;
 
 const baseClasses = `@brr rounded-4px @brw border @brc border-transparent @fts text-13 @pn pl-3 pr-6 @ftw font-normal @ttc text-black`;

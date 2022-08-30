@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 
-export const RangeInput = ({
+const RangeInput = ({
   id = Math.random(),
   value = 0,
   onChange = () => {},
@@ -134,3 +134,5 @@ const Datalist = ({ id, range, value }) => (
     })}
   </div>
 );
+
+export default RangeInput;

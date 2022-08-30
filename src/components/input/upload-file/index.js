@@ -1,7 +1,7 @@
 import React, { useMemo, useEffect, useState } from "react";
 import InputOverlay from "../input-overlay";
 
-export const UploadFileInput = (props) => {
+const UploadFileInput = (props) => {
   const {
     uploaderTitle = `Выберите или перетащите файлы`,
     multiple = false,
@@ -231,3 +231,5 @@ const getShortFileName = (string) => {
 
   return string;
 };
+
+export default UploadFileInput;

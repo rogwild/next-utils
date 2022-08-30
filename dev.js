@@ -50,9 +50,9 @@ const FormPage = () => {
     inputPropsType: `object`,
   });
 
-  useEffect(() => {
-    setErrors({ title: { id: "wrong", message: "wrong password" } });
-  }, [inputsValues]);
+  // useEffect(() => {
+  //   setErrors({ title: { id: "wrong", message: "wrong password" } });
+  // }, [inputsValues]);
 
   console.log(`🚀 ~ FormPage ~ inputs`, inputs);
 
