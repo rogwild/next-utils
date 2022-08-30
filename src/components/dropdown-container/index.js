@@ -15,12 +15,7 @@ const DropdownContainer = ({ children, className, dropdownRef }) => {
 export default DropdownContainer;
 
 const baseClasses = `
-    @pn absolute
-    @mn mt-2
-    @bdc bg-white
-    @brc border-gray-light
-    @brw border-px
-    @brr rounded-8px
-    @wh w-200px
-    @it top-full left-0
-  `;
+  @pn absolute
+  @mn mt-2
+  @it top-full left-0
+`;

@@ -64,6 +64,8 @@ const FormPage = () => {
         ],
         activeMatcher: (item, value) => item.slug === value,
         setter: (item) => item.slug,
+        baseItemClassName: `@brw border @brc border-transparent hover:border-black`,
+        activeItemClassName: `@brw border @brc border-black`,
         type: `select-row`,
       },
       {
@@ -89,6 +91,35 @@ const FormPage = () => {
         checkerFuncs: [],
         type: `range`,
       },
+      {
+        field: `version`,
+        label: "Select version",
+        defaultValue: `base`,
+        checkerFuncs: [`checkRequiredField`],
+        placeholder: `Project version`,
+        inputContainerClassName: ``,
+        items: [
+          {
+            title: `Base`,
+            slug: `base`,
+          },
+          {
+            title: `Primary`,
+            slug: `primary`,
+          },
+          {
+            title: `VIP`,
+            slug: `vip`,
+          },
+        ],
+        inputClassName: ``,
+        inputContainerClassName: `@bdc bg-white @bxsw shadow-lg`,
+        baseItemClassName: `@brw border @brc border-transparent hover:border-black`,
+        activeItemClassName: `@brw border @brc border-black`,
+        activeMatcher: (item, value) => item.slug === value,
+        setter: (item) => item.slug,
+        type: `dropdown`,
+      },
     ];
   }, []);
 
@@ -110,6 +141,7 @@ const FormPage = () => {
         <Input {...inputs.status} />
         <Input {...inputs.privacy} />
         <Input {...inputs.amount} />
+        <Input {...inputs.version} />
       </div>
     </div>
   );

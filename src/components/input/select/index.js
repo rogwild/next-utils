@@ -13,10 +13,9 @@ const SelectInput = (props) => {
     setter = () => {},
     label,
     error,
-    inputClassName,
     inputContainerClassName,
-    activeItemClassName = `@brc border-blue-700`,
-    baseItemClassName = `@brc border-transparent`,
+    activeItemClassName,
+    baseItemClassName,
   } = props;
 
   const srInputContainerClassName = useStyleRewriter(
@@ -24,23 +23,17 @@ const SelectInput = (props) => {
     baseInputContainerClassName
   );
 
-  const srButtonClassName = useStyleRewriter(
-    baseButtonClassName,
-    inputClassName,
-    false
-  );
-
   return (
     <InputOverlay label={label} error={error}>
       <div className={srInputContainerClassName}>
         {items.map((item, index) => {
-          const statusClassName = `${
-            activeMatcher(item, value) ? activeItemClassName : baseItemClassName
-          }`;
-
           return (
             <SmartButton
-              className={`${srButtonClassName} ${statusClassName}`}
+              className={
+                activeMatcher(item, value)
+                  ? activeItemClassName
+                  : baseItemClassName
+              }
               key={index}
               onClick={(e) => {
                 e.target.value = setter(item);
@@ -61,11 +54,3 @@ export default SelectInput;
 
 const baseInputContainerClassName = `
   @dy flex flex-wrap gap-2`;
-
-const baseButtonClassName = `
-    @pg px-2 py-1
-    @brw border
-    @bdc bg-primary-100
-    @brr rounded-[4px]
-    @cr cursor-pointer
-  `;
