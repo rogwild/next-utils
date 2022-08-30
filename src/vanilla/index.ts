@@ -28,3 +28,70 @@ export const GTMPageView = (url) => {
 
   return pageEvent;
 };
+
+export const isNil = (value) => value === null || value === undefined;
+
+export const urlRegex =
+  /\b(?<![@.,%&#-])(?<protocol>\w{2,10}:\/\/)?((?:\w|\&\#\d{1,5};)[.-]?)+(\.([a-z]{2,15})|((protocol)(?:\:\d{1,6})|(?!)))\b(?![@])(\/)?(?:([\w\d\?\-=#:%@&.;])+(?:\/(?:([\w\d\?\--=#:%@&;.])+))*)?(?<![.,?!-])/gim;
+
+export const shortenAddress = (address, symbols = [6, 4]) => {
+  const firstPart = address.slice(0, symbols[0]);
+  const secondPart = address.slice(-symbols[1]);
+
+  return `${firstPart}...${secondPart}`;
+};
+
+export const addProtocolToUrl = (url) => {
+  const splittedString = url.split(`://`);
+  let urlWithProtocol = ``;
+  if (splittedString.length > 1) {
+    urlWithProtocol =
+      splittedString[0][-1] === `s` ? url : `https://${splittedString[1]}`;
+  } else {
+    urlWithProtocol = `https://${url}`;
+  }
+  return urlWithProtocol;
+};
+
+export const getURLsFromText = (text) => {
+  let displayUrl = ``;
+  const textWithMarkup = text.replace(urlRegex, (replacement) => {
+    if (!displayUrl) {
+      displayUrl = replacement;
+    }
+    const urlWithProtocol = addProtocolToUrl(replacement);
+    return `[${replacement}](${urlWithProtocol})`;
+  });
+  return {
+    textWithMarkup,
+    displayUrl,
+  };
+};
+
+export const parseMimeType = (mime) => {
+  if (!mime) return {};
+  const splittedMime = mime?.split(`/`);
+
+  return { type: splittedMime[0], ext: splittedMime[1] };
+};
+
+export const getPastDay = (days) => {
+  const date = new Date();
+  date.setDate(date.getDate() - days);
+  return date;
+};
+
+export const getMonthRange = ({ date, firstDayQuantity, lastDayQuantity }) => {
+  const firstDay = new Date(
+    date.getFullYear(),
+    date.getMonth() - (firstDayQuantity || 0),
+    1
+  );
+  const lastDay = new Date(
+    date.getFullYear(),
+    date.getMonth() + (lastDayQuantity || 0),
+    0
+  );
+
+  return [firstDay, lastDay];
+};

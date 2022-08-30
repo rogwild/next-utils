@@ -4,6 +4,7 @@ import useBreakpoint from "./use-breakpoint";
 import useStyleRewriter from "./use-style-rewriter";
 import useDetectMouseover from "./use-detect-mouseover";
 import useDetectOutsideClick from "./use-detect-outsideclick";
+import useForm from "./use-form";
 
 const hooks = {
   useDetectMouseover,
@@ -12,6 +13,7 @@ const hooks = {
   useBreakpoint,
   useSetParentsInput,
   useStyleRewriter,
+  useForm,
 };
 
 export default hooks;

@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import * as ReactDOM from "react-dom/client";
+import Input from "./src/components/input";
 // import Modal from "./src/components/modal";
 // const { SpringNotification } = utils.components;
 
@@ -7,12 +8,13 @@ import * as ReactDOM from "react-dom/client";
 import springNotification from "./src/components/spring-notification";
 const { NotificationsWrapper, useNotifications } = springNotification;
 import SmartButton from "./src/components/smart-button";
+import useForm from "./src/hooks/use-form";
 
 const App = () => {
   return (
     <div>
       <NotificationsWrapper>
-        <Page />
+        <FormPage />
       </NotificationsWrapper>
     </div>
   );
@@ -29,7 +31,34 @@ const Popup = () => {
 const root = ReactDOM.createRoot(document.getElementById("app"));
 root.render(<App />);
 
-const Page = () => {
+const FormPage = () => {
+  const inputsConfig = useMemo(() => {
+    return [
+      {
+        field: `title`,
+        placeholder: `Project title*`,
+        defaultValue: ``,
+        checkerFuncs: [`checkRequiredField`],
+        type: `text`,
+      },
+    ];
+  }, []);
+
+  const { inputs, inputsValues, files } = useForm({
+    inputsConfig,
+    inputPropsType: `object`,
+  });
+
+  console.log(`🚀 ~ FormPage ~ inputs`, inputs);
+
+  return (
+    <div className="flex w-screen h-screen justify-center items-center">
+      <Input {...inputs.title} />
+    </div>
+  );
+};
+
+const NotificationPage = () => {
   const [showPopup, setShowPopup] = useState(false);
   const notificationsContext = useNotifications();
 

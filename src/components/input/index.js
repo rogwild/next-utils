@@ -1,172 +1,36 @@
-import React, { useRef, forwardRef } from "react";
-import DropdownContainer from "../dropdown-container";
-import useDetectOutsideClick from "../../hooks/use-detect-outsideclick";
-import useStyleRewriter from "../../hooks/use-style-rewriter";
+import React, { forwardRef } from "react";
+import { CheckboxInput } from "./checkbox";
+import { TextInput } from "./text";
+import { RangeInput } from "./range";
+import { OtpInput } from "./otp";
+import { TextAreaInput } from "./text-area";
+import { UploadFileInput } from "./upload-file";
+import SelectInput from "./select";
+import { SelectImageInput } from "./select-image";
+import DropdownInput from "./dropdown";
+import DateCalendar from "./date-calendar";
+import RadioButton from "./radio-button";
 
-const Input = forwardRef(
-  (
-    {
-      children,
-      dropdownItems: DropdownItems,
-      value = "",
-      type = "text",
-      placeholder,
-      onChange = () => null,
-      onPaste = () => null,
-      blocked = 0,
-      Icon,
-      className = "",
-      iconClassName = "",
-      dropdownContainerClasses = "",
-      containerClassName = "",
-      autoComplete = null,
-      id = null,
-      dropdownPosition = "left",
-      maxLength,
-      ...props
-    },
-    ref
-  ) => {
-    const dropdownRef = useRef(null);
-    const inputContainerRef = useRef(null);
+const FormInput = forwardRef((props, ref) => {
+  const { type, Comp } = props;
 
-    const [isDropdownOpen, setIsDropdownOpen] = useDetectOutsideClick(
-      inputContainerRef,
-      false
-    );
+  const InputType = Comp || inputComponents[type] || TextInput;
 
-    const onClick = (e) => {
-      setIsDropdownOpen(!isDropdownOpen);
-    };
+  return <InputType {...props} ref={ref} />;
+});
 
-    const iconSrClassName = useStyleRewriter(
-      iconBaseClassName,
-      iconClassName,
-      false
-    );
+export default FormInput;
 
-    const typeClasses = classesByType[type];
-
-    const baseClasses = useStyleRewriter(baseClassName, typeClasses, false);
-
-    const blockedClasses = blocked
-      ? getClassName(baseClasses, baseBlockedClassName, false)
-      : getClassName(baseClasses, unlockedClassName, false);
-
-    const srClasses = useStyleRewriter(blockedClasses, className);
-    const containerClasses = useStyleRewriter(
-      baseContainerClassName,
-      containerClassName
-    );
-
-    const baseDropdownContainerClasses = `@wh w-full @mn mt-1 @ht h-200px @ow overflow-y-scroll ${
-      dropdownPosition === "right" ? "@it left-auto right-0" : "@it inset-x-0"
-    }`;
-
-    const srDropdownContainerClasses = useStyleRewriter(
-      baseDropdownContainerClasses,
-      dropdownContainerClasses,
-      true
-    );
-
-    return (
-      <div ref={inputContainerRef} className={containerClasses}>
-        <input
-          placeholder={placeholder}
-          autoComplete={autoComplete}
-          id={id}
-          type={type == "select" ? "button" : type}
-          className={srClasses}
-          disabled={blocked ? true : false}
-          onChange={onChange}
-          onClick={onClick}
-          onPaste={onPaste}
-          value={value}
-          ref={ref}
-          maxLength={maxLength}
-          {...props}
-        />
-
-        {Icon && typeof Icon === "function" ? (
-          <div onClick={onClick} className={iconSrClassName}>
-            <Icon />
-          </div>
-        ) : null}
-
-        {children ? (
-          <div className="absolute h-full right-0 top-0 cursor-pointer">
-            {children}
-          </div>
-        ) : null}
-
-        {DropdownItems ? (
-          <div
-            className={`transition duration-200 ${
-              isDropdownOpen ? "opacity-100" : "pointer-events-none opacity-0"
-            }`}
-          >
-            <DropdownContainer
-              className={srDropdownContainerClasses}
-              dropdownRef={dropdownRef}
-            >
-              <DropdownItems setIsDropdownOpen={setIsDropdownOpen} />
-            </DropdownContainer>
-          </div>
-        ) : null}
-      </div>
-    );
-  }
-);
-
-export default Input;
-
-const classesByType = {
-  select: `@cr cursor-pointer`,
-  text: `@cr cursor-text`,
-};
-
-const baseContainerClassName = `w-full relative`;
-
-const iconBaseClassName = `
-  @pn absolute
-  @ht h-12
-  @it right-2 top-0
-  @cr cursor-pointer
-`;
-
-const unlockedClassName = `
-  @pn relative
-  @bxsw hover:shadow-blue-outline focus:shadow-blue-outline
-  @ttc text-black dark:text-white
-`;
-
-const baseBlockedClassName = `
-  @cr cursor-not-allowed
-  @pre pointer-events-none
-  @pn relative
-  @ttc text-gray-primary
-  @bdc bg-pearl
-`;
-
-const baseClassName = `
-  @wh w-full
-  @bdc bg-white dark:bg-true-gray-750
-  @ftf font-family-inter
-  @fts text-14px
-  @leh leading-20px
-  @brw border-px
-  @brs border-solid
-  @brc border-gray-light dark:border-true-gray-700 hover:border-blue-primary focus:border-blue-primary 
-  @tndn duration-200
-  @oe outline-none focus:outline-none hover:outline-none
-  @brr rounded-8px
-  @bro hover:border-opacity-70
-  @fx flex
-  @pg p-3
-`;
-
-const getClassName = (baseClassName, newClassName, cleared) => {
-  const srClassName = useStyleRewriter(baseClassName, newClassName, cleared);
-
-  return srClassName;
+const inputComponents = {
+  text: TextInput,
+  checkbox: CheckboxInput,
+  range: RangeInput,
+  radio: RadioButton,
+  otp: OtpInput,
+  "text-area": TextAreaInput,
+  file: UploadFileInput,
+  "select-row": SelectInput,
+  "select-image-row": SelectImageInput,
+  dropdown: DropdownInput,
+  date: DateCalendar,
 };

@@ -40,5 +40,6 @@ export default {
     "react-dom",
     "prop-types",
     "react-markdown",
+    "react-calendar",
   ],
 };
