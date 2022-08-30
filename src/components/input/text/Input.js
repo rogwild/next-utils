@@ -12,7 +12,7 @@ const Input = forwardRef(
       type = `text`,
       placeholder,
       onChange = () => null,
-      blocked = 0,
+      disabled = false,
       Icon,
       className = ``,
       dropdownContainerClasses = ``,
@@ -41,11 +41,11 @@ const Input = forwardRef(
 
     const baseClasses = useStyleRewriter(baseClassName, typeClasses, false);
 
-    const blockedClasses = blocked
+    const statusClasses = disabled
       ? getClassName(baseClasses, baseBlockedClassName, false)
-      : getClassName(baseClasses, unlockedClassName, false);
+      : baseClasses;
 
-    const srClasses = useStyleRewriter(blockedClasses, className);
+    const srClasses = useStyleRewriter(statusClasses, className);
     const containerClasses = useStyleRewriter(
       baseContainerClassName,
       containerClassName
@@ -69,7 +69,7 @@ const Input = forwardRef(
           id={id}
           type={type == `select` ? `button` : type}
           className={srClasses}
-          disabled={blocked ? true : false}
+          disabled={disabled ? true : false}
           onChange={onChange}
           onClick={onClick}
           value={value}
@@ -114,32 +114,23 @@ const classesByType = {
 
 const baseContainerClassName = `w-full relative`;
 
-const unlockedClassName = `
-  @pn relative
-  @bxsw hover:shadow-blue-outline focus:shadow-blue-outline
-  @ttc text-black dark:text-white
-`;
-
 const baseBlockedClassName = `
   @cr cursor-not-allowed
   @pre pointer-events-none
-  @pn relative
-  @ttc text-gray-primary
-  @bdc bg-pearl
+  @ttc text-gray-600
+  @bdc bg-gray-100
 `;
 
 const baseClassName = `
+  @ttc text-black
+  @pn relative
   @wh w-full
-  @ftf font-family-inter
-  @fts text-14px
-  @leh leading-20px
-  @brw border-px
+  @brw border
   @brs border-solid
+  @brc border-transparent
   @tndn duration-200
   @oe outline-none focus:outline-none hover:outline-none
-  @brr rounded-8px
-  @bro hover:border-opacity-70
-  @fx flex
+  @dy flex
   @pg p-3
 `;
 

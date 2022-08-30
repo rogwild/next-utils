@@ -9,14 +9,14 @@ export const TextInput = forwardRef((props, ref) => {
     onChange,
     placeholder,
     type,
-    blocked,
+    disabled,
     enableTypeChanging = false,
     inputsClassName,
     Icon,
     error,
-    variant = `primary`,
     name,
     ChangeInputTypeButton,
+    errorClassName = `@brc border-red-500`,
   } = props;
 
   return (
@@ -35,21 +35,11 @@ export const TextInput = forwardRef((props, ref) => {
         onChange={onChange}
         placeholder={placeholder}
         type={type}
-        blocked={blocked}
+        disabled={disabled}
         Icon={Icon}
-        className={`${baseClasses} ${variants[variant]} ${inputsClassName} ${
-          error
-            ? `@brc border-red-500 hover:border-red-500 @bxsw shadow-red-outline`
-            : ``
-        }`}
+        className={`${inputsClassName} ${error ? errorClassName : ``}`}
         name={name}
       />
     </InputOverlay>
   );
 });
-
-const variants = {
-  white: `@bdc bg-white`,
-  primary: `@bdc bg-primary-200`,
-};
-const baseClasses = `@brw border @brr rounded-4px @fts text-13 @pn pl-3 pr-6 @ftw font-normal @ht h-11 @ttc text-black @brc border-transparent`;

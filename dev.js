@@ -36,6 +36,7 @@ const FormPage = () => {
     return [
       {
         field: `title`,
+        label: "Text input",
         placeholder: `Project title*`,
         defaultValue: ``,
         checkerFuncs: [`checkRequiredField`],
@@ -44,16 +45,22 @@ const FormPage = () => {
     ];
   }, []);
 
-  const { inputs, inputsValues, files } = useForm({
+  const { inputs, inputsValues, files, setErrors } = useForm({
     inputsConfig,
     inputPropsType: `object`,
   });
+
+  useEffect(() => {
+    setErrors({ title: { id: "wrong", message: "wrong password" } });
+  }, [inputsValues]);
 
   console.log(`🚀 ~ FormPage ~ inputs`, inputs);
 
   return (
     <div className="flex w-screen h-screen justify-center items-center">
-      <Input {...inputs.title} />
+      <div className="w-4/12 p-8 bg-gray-200">
+        <Input {...inputs.title} />
+      </div>
     </div>
   );
 };
