@@ -38,8 +38,8 @@ const TextInput = forwardRef((props, ref) => {
         type={type}
         disabled={disabled}
         Icon={Icon}
-        className={`${inputClassName} ${error ? errorClassName : ``}`}
-        containerClassName={inputContainerClassName}
+        inputClassName={`${inputClassName} ${error ? errorClassName : ``}`}
+        inputContainerClassName={inputContainerClassName}
         name={name}
       />
     </InputOverlay>

@@ -40,6 +40,8 @@ const FormPage = () => {
         placeholder: `Project title*`,
         defaultValue: ``,
         checkerFuncs: [`checkRequiredField`],
+        inputContainerClassName: ``,
+        inputClassName: ``,
         type: `text`,
       },
       {
@@ -49,7 +51,7 @@ const FormPage = () => {
         checkerFuncs: [`checkRequiredField`],
         placeholder: `Project status`,
         // checkerFuncs: [],
-        inputsContainerClassName: `@bdc bg-white`,
+        inputContainerClassName: ``,
         items: [
           {
             title: `Seed`,

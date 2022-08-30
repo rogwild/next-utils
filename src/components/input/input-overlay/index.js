@@ -27,9 +27,8 @@ const InputOverlay = ({
 export default InputOverlay;
 
 const baseClasses = `
-@dy flex gap-2
-@wh w-full
-@fxd flex-col
-@pn relative
-@ttc text-neutral-350
+  @dy flex gap-2
+  @wh w-full
+  @fxd flex-col
+  @pn relative
 `;

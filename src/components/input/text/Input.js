@@ -14,9 +14,9 @@ const Input = forwardRef(
       onChange = () => null,
       disabled = false,
       Icon,
-      className = ``,
+      inputClassName = ``,
       dropdownContainerClasses = ``,
-      containerClassName = ``,
+      inputContainerClassName = ``,
       autoComplete = null,
       id = null,
       dropdownPosition = `left`,
@@ -45,10 +45,10 @@ const Input = forwardRef(
       ? getClassName(baseClasses, baseBlockedClassName, false)
       : baseClasses;
 
-    const srClasses = useStyleRewriter(statusClasses, className);
-    const containerClasses = useStyleRewriter(
+    const srClasses = useStyleRewriter(statusClasses, inputClassName);
+    const srInputContainerClassName = useStyleRewriter(
       baseContainerClassName,
-      containerClassName
+      inputContainerClassName
     );
 
     const baseDropdownContainerClasses = `@wh w-full @mn mt-1 @ht h-200px @ow overflow-y-scroll ${
@@ -62,7 +62,7 @@ const Input = forwardRef(
     );
 
     return (
-      <div ref={inputContainerRef} className={containerClasses}>
+      <div ref={inputContainerRef} className={srInputContainerClassName}>
         <input
           placeholder={placeholder}
           autoComplete={autoComplete}
@@ -122,6 +122,7 @@ const baseBlockedClassName = `
 `;
 
 const baseClassName = `
+  @bdc bg-transparent
   @ttc text-black
   @pn relative
   @wh w-full

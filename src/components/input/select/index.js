@@ -13,26 +13,26 @@ const SelectInput = (props) => {
     setter = () => {},
     label,
     error,
-    buttonClassName,
-    inputsContainerClassName,
+    inputClassName,
+    inputContainerClassName,
     activeItemClassName = `@brc border-blue-700`,
     baseItemClassName = `@brc border-transparent`,
   } = props;
 
-  const srContainerClassName = useStyleRewriter(
-    inputsContainerClassName,
+  const srInputContainerClassName = useStyleRewriter(
+    inputContainerClassName,
     baseInputContainerClassName
   );
 
   const srButtonClassName = useStyleRewriter(
     baseButtonClassName,
-    buttonClassName,
+    inputClassName,
     false
   );
 
   return (
     <InputOverlay label={label} error={error}>
-      <div className={srContainerClassName}>
+      <div className={srInputContainerClassName}>
         {items.map((item, index) => {
           const statusClassName = `${
             activeMatcher(item, value) ? activeItemClassName : baseItemClassName
