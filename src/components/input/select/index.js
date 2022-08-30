@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from "react";
 import InputOverlay from "../input-overlay";
 import SmartButton from "../../smart-button";
+import useStyleRewriter from "../../../hooks/use-style-rewriter";
 
 const SelectInput = (props) => {
   const {
@@ -13,29 +14,33 @@ const SelectInput = (props) => {
     label,
     error,
     buttonClassName,
-    inputsClassName,
+    inputsContainerClassName,
+    activeItemClassName = `@brc border-blue-700`,
+    baseItemClassName = `@brc border-transparent`,
   } = props;
 
-  const passedClasses = useMemo(() => {
-    if (buttonClassName) {
-      return buttonClassName;
-    } else {
-      return `@pg px-2 py-1 @brw border @bdc bg-primary-100 @brr rounded-[4px] @cr cursor-pointer`;
-    }
-  }, [buttonClassName]);
+  const srContainerClassName = useStyleRewriter(
+    inputsContainerClassName,
+    baseInputContainerClassName
+  );
+
+  const srButtonClassName = useStyleRewriter(
+    baseButtonClassName,
+    buttonClassName,
+    false
+  );
 
   return (
     <InputOverlay label={label} error={error}>
-      <div className={`flex flex-wrap gap-2`}>
+      <div className={srContainerClassName}>
         {items.map((item, index) => {
           const statusClassName = `${
-            activeMatcher(item, value)
-              ? `@brc border-blue-700`
-              : `@brc border-transparent`
+            activeMatcher(item, value) ? activeItemClassName : baseItemClassName
           }`;
+
           return (
             <SmartButton
-              className={`${statusClassName} ${passedClasses}`}
+              className={`${srButtonClassName} ${statusClassName}`}
               key={index}
               onClick={(e) => {
                 e.target.value = setter(item);
@@ -53,3 +58,14 @@ const SelectInput = (props) => {
 };
 
 export default SelectInput;
+
+const baseInputContainerClassName = `
+  @dy flex flex-wrap gap-2`;
+
+const baseButtonClassName = `
+    @pg px-2 py-1
+    @brw border
+    @bdc bg-primary-100
+    @brr rounded-[4px]
+    @cr cursor-pointer
+  `;

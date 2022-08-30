@@ -11,12 +11,13 @@ const TextInput = forwardRef((props, ref) => {
     type,
     disabled,
     enableTypeChanging = false,
-    inputsClassName,
+    inputClassName,
     Icon,
     error,
     name,
     ChangeInputTypeButton,
     errorClassName = `@brc border-red-500`,
+    inputContainerClassName,
   } = props;
 
   return (
@@ -37,7 +38,8 @@ const TextInput = forwardRef((props, ref) => {
         type={type}
         disabled={disabled}
         Icon={Icon}
-        className={`${inputsClassName} ${error ? errorClassName : ``}`}
+        className={`${inputClassName} ${error ? errorClassName : ``}`}
+        containerClassName={inputContainerClassName}
         name={name}
       />
     </InputOverlay>

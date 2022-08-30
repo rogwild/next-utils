@@ -1,4 +1,4 @@
-import React, { Fragment, useRef } from "react";
+import React, { Fragment, useRef, useMemo } from "react";
 import hooks from "../../hooks";
 import { Transition } from "transition-component";
 import DropdownContainer from "../dropdown-container";
@@ -9,8 +9,8 @@ const { useStyleRewriter, useDetectMouseover, useDetectOutsideClick } = hooks;
 const SmartButton = ({
   disabled,
   className,
+  disabledClassName,
   children,
-  variant,
   tooltipPosition,
   href = "",
   dropdownItems: DropdownItems,
@@ -40,12 +40,14 @@ const SmartButton = ({
 
   const [isMouseOver] = useDetectMouseover(SmartButtonRef, false);
 
-  const variantClasses = useVariant(className, variant);
+  const statusClassName = useMemo(() => {
+    if (disabled) {
+      return disabledClassName ? disabledClassName : "@pre pointer-events-none";
+    }
+    return className;
+  }, [disabled, className]);
 
-  const srClasses = useStyleRewriter(
-    variantClasses,
-    `${disabled ? disabledClasses : ""} ${className} `
-  );
+  const srClasses = useStyleRewriter(baseButtonClassName, statusClassName);
 
   const Element = href ? LinkSmartButton : DivSmartButton;
 
@@ -92,99 +94,12 @@ const SmartButton = ({
 };
 export default SmartButton;
 
-const baseClasses =
-  "@pn relative @ftf font-family-rubik @oe focus:outline-none @cr cursor-pointer @tndn duration-200 @tta text-center";
+const baseButtonClassName = `
+  @pn relative
+  @cr cursor-pointer
+  @tndn duration-200
+  @tta text-center`;
 
-const disabledClasses =
-  "@pre pointer-events-none @oy opacity-60 @bdc bg-true-gray-100 @ttc text-true-gray-450";
-
-const useVariant = (defaultClasses, variant) => {
-  return variants[variant] || defaultClasses;
-};
-
-const variants = {
-  primary: `${baseClasses} 
-          @bdc bg-blue-primary dark:bg-blue-600
-          @bdo hover:bg-opacity-60 dark:hover:bg-opacity-80
-          @dy flex 
-          @fxd flex-row 
-          @ani items-center 
-          @pg px-8 py-3 
-          @brr rounded-8px 
-          @fts text-15px 
-          @ttc text-white`,
-  white: `${baseClasses} 
-          @tnp transition 
-          @tntf ease-in-out 
-          @bdc bg-white hover:bg-gray-blue 
-          @dy flex 
-          @fxd flex-row 
-          @ani items-center 
-          @pg px-8 py-3 
-          @brr rounded-8px 
-          @fts text-15px 
-          @ttc text-blue-base hover:text-white`,
-  danger: `${baseClasses} 
-          @bdc bg-red-base 
-          @bdo hover:bg-opacity-60 
-          @dy flex 
-          @fxd flex-row 
-          @ani items-center 
-          @pg px-8 py-3 
-          @brr rounded-8px 
-          @fts text-15px 
-          @ttc text-white`,
-  light: `${baseClasses} 
-          @bdc bg-white hover:bg-gray-accent 
-          @ttc text-black hover:text-blue-primary 
-          @pg px-4 py-2 
-          @brr rounded-16px 
-          @tta text-left`,
-  "light-blue": `${baseClasses} 
-          @bdc bg-blue-light 
-          @bdc hover:bg-blue-primary 
-          @ttc text-blue-primary hover:text-white 
-          @pg px-8 py-3 
-          @brr rounded-16px 
-          @tta text-left`,
-  text: baseClasses,
-  circleLight: `${baseClasses} 
-          @brc border-gray-light hover:border-blue-primary 
-          @brw border-px 
-          @dy flex 
-          @jyi justify-center
-          @ani items-center
-          @ht h-8 
-          @ow overflow-visible
-          @pn relative 
-          @bdc hover:bg-blue-primary 
-          @ttc hover:text-white 
-          @brr rounded-full 
-          @wh w-8
-          @zi z-45`,
-  circlePrimary: `${baseClasses} 
-          @bdc bg-blue-primary 
-          @brc border-blue-primary 
-          @brw border-px 
-          @dy flex 
-          @ani items-center
-          @jyi justify-center
-          @ht h-8 
-          @pn relative 
-          @brr rounded-full 
-          @wh w-8 
-          @ttc text-white`,
-  transparentOutline: `${baseClasses}
-          @dy flex flex-row
-          @ani items-center
-          @ttc text-blue-650
-          @bdo hover:opacity-70
-          @jyc justify-center
-          @brr rounded-8px 
-          @brw border
-          @brc border-blue-650
-          @pg px-8 py-3`,
-};
 const DivSmartButton = ({ children, SmartButtonRef, ...props }) => (
   <div ref={SmartButtonRef} {...props}>
     {children}

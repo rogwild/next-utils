@@ -42,6 +42,28 @@ const FormPage = () => {
         checkerFuncs: [`checkRequiredField`],
         type: `text`,
       },
+      {
+        field: `status`,
+        label: "Select input",
+        defaultValue: `seed`,
+        checkerFuncs: [`checkRequiredField`],
+        placeholder: `Project status`,
+        // checkerFuncs: [],
+        inputsContainerClassName: `@bdc bg-white`,
+        items: [
+          {
+            title: `Seed`,
+            slug: `seed`,
+          },
+          {
+            title: `Private`,
+            slug: `private`,
+          },
+        ],
+        activeMatcher: (item, value) => item.slug === value,
+        setter: (item) => item.slug,
+        type: `select-row`,
+      },
     ];
   }, []);
 
@@ -58,8 +80,9 @@ const FormPage = () => {
 
   return (
     <div className="flex w-screen h-screen justify-center items-center">
-      <div className="w-4/12 p-8 bg-gray-200">
+      <div className="w-4/12 flex flex-col gap-4 p-8 bg-gray-200">
         <Input {...inputs.title} />
+        <Input {...inputs.status} />
       </div>
     </div>
   );
