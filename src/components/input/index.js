@@ -9,7 +9,6 @@ import SelectInput from "./select";
 import SelectImageInput from "./select-image";
 import DropdownInput from "./dropdown";
 import DateCalendar from "./date-calendar";
-import RadioButton from "./radio-button";
 
 const FormInput = forwardRef((props, ref) => {
   const { type, Comp } = props;
@@ -32,5 +31,4 @@ const inputComponents = {
   "select-row": SelectInput,
   "select-image-row": SelectImageInput,
   date: DateCalendar,
-  radio: RadioButton,
 };
