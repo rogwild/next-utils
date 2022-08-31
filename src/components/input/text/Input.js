@@ -15,10 +15,13 @@ const Input = forwardRef(
       disabled = false,
       Icon,
       inputClassName = ``,
+      inputDisabledClassName = ``,
+      inputErrorClassName = ``,
       dropdownContainerClasses = ``,
       inputContainerClassName = ``,
       autoComplete = null,
       id = null,
+      error,
       dropdownPosition = `left`,
       maxLength,
       name,
@@ -42,7 +45,9 @@ const Input = forwardRef(
     const baseClasses = useStyleRewriter(baseClassName, typeClasses, false);
 
     const statusClasses = disabled
-      ? getClassName(baseClasses, baseBlockedClassName, false)
+      ? useStyleRewriter(baseClasses, inputDisabledClassName, false)
+      : error
+      ? useStyleRewriter(baseClasses, inputErrorClassName, false)
       : baseClasses;
 
     const srClasses = useStyleRewriter(statusClasses, inputClassName);

@@ -16,7 +16,8 @@ const TextInput = forwardRef((props, ref) => {
     error,
     name,
     ChangeInputTypeButton,
-    errorClassName = `@brc border-red-500`,
+    inputErrorClassName = `@brc border-red-500`,
+    inputDisabledClassName,
     inputContainerClassName,
   } = props;
 
@@ -38,7 +39,9 @@ const TextInput = forwardRef((props, ref) => {
         type={type}
         disabled={disabled}
         Icon={Icon}
-        inputClassName={`${inputClassName} ${error ? errorClassName : ``}`}
+        inputClassName={inputClassName}
+        inputDisabledClassName={inputDisabledClassName}
+        inputErrorClassName={inputErrorClassName}
         inputContainerClassName={inputContainerClassName}
         name={name}
       />

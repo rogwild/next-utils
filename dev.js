@@ -41,7 +41,7 @@ const FormPage = () => {
         defaultValue: ``,
         checkerFuncs: [`checkRequiredField`],
         inputContainerClassName: ``,
-        inputClassName: ``,
+        inputClassName: `@bdc bg-white @pg p-3`,
         type: `text`,
       },
       {
@@ -128,6 +128,29 @@ const FormPage = () => {
         checkerFuncs: [`checkRequiredField`],
         type: `otp`,
       },
+      {
+        field: `message`,
+        label: "Your message",
+        inputClassName: `@bdc bg-white @pg p-3`,
+        checkerFuncs: [`checkRequiredField`],
+        type: `text-area`,
+      },
+      {
+        field: `cover`,
+        label: "Your cover",
+        checkerFuncs: [`checkRequiredField`],
+        accept: `*/*`,
+        multiple: true,
+        inputClassName: `@bdc bg-white @wh w-1/4 @ht h-[100px] @pg p-4 @dy flex @ani items-center @jyc justify-center @tta text-center @fxd flex-col gap-3`,
+        uploadTitleClassName: `text-gray-500 text-xs`,
+        fileCardClassName: `@wh w-1/4 @ht h-[100px]`,
+        containerClassName: `@gp gap-2`,
+        BeforeUploadFileIcon: BeforeUploadFileIcon,
+        DeleteFileButton: DeleteFileButton,
+        FileComp: FileComp,
+        BACKEND_URL: "http://localhost:1337",
+        type: `file`,
+      },
     ];
   }, []);
 
@@ -151,6 +174,8 @@ const FormPage = () => {
         <Input {...inputs.amount} />
         <Input {...inputs.version} />
         <Input {...inputs.otp} />
+        <Input {...inputs.message} />
+        <Input {...inputs.cover} />
       </div>
     </div>
   );
@@ -225,4 +250,34 @@ const CheckIcon = () => {
   return (
     <div className="w-6 h-6 bg-white rounded-full flex flex-shrink-0"></div>
   );
+};
+
+const BeforeUploadFileIcon = () => {
+  return <div className="w-5 h-5 bg-green-500 rounded-full"></div>;
+};
+
+const DeleteFileButton = ({ onClick }) => {
+  return (
+    <div onClick={onClick} className="w-8 h-8 bg-red-500 rounded-full"></div>
+  );
+};
+
+const FileComp = ({ file }) => {
+  return (
+    <div className="absolute inset-0 flex items-center justify-center flex-col">
+      <p className="text-black">{getShortFileName(file.name)}</p>
+    </div>
+  );
+};
+
+const getShortFileName = (string) => {
+  const extensionReg = /(?:\.([^.]+))?$/;
+
+  if (string?.length > 15) {
+    const currentExtension = extensionReg.exec(string)[1];
+    const nameWithoutExtension = string.replace(currentExtension, ``);
+    return nameWithoutExtension.substring(0, 15) + `...` + currentExtension;
+  }
+
+  return string;
 };

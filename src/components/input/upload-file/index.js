@@ -1,9 +1,11 @@
 import React, { useMemo, useEffect, useState } from "react";
+import useStyleRewriter from "../../../hooks/use-style-rewriter";
 import InputOverlay from "../input-overlay";
 
 const UploadFileInput = (props) => {
   const {
-    uploaderTitle = `Выберите или перетащите файлы`,
+    uploadTitle = `Выберите или перетащите файлы`,
+    uploadTitleClassName,
     multiple = false,
     onChange,
     id,
@@ -12,23 +14,15 @@ const UploadFileInput = (props) => {
     error,
     accept = `*/*`,
     BeforeUploadFileIcon,
-    DeleteFileIcon,
-    FileIcon,
-    BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL ||
-      "http://localhost:1337",
+    DeleteFileButton,
+    inputClassName,
+    containerClassName,
+    BACKEND_URL = "",
+    fileCardClassName,
+    FileComp,
+    fileCardImageClassName,
+    deleteFileButtonCointainerClassName,
   } = props;
-
-  // console.log(`🚀 ~ UploadFileInput ~ files`, files);
-  // console.log(`🚀 ~ UploadFileInput ~ defaultValue`, defaultValue);
-
-  // useEffect(() => {
-  //   console.log(`🚀 ~ UploadFileInput ~ files`, files);
-  // }, [files]);
-  // useEffect(() => {
-  //   console.log(`🚀 ~ useEffect ~ error`, error);
-  // }, [error]);
-
-  // const [error, setError] = useState(null);
 
   const handleUploadImage = (e) => {
     preventDefaultEvent(e);
@@ -87,18 +81,22 @@ const UploadFileInput = (props) => {
     // console.log(`🚀 ~ handleDelete ~ e`, e, deleteFile);
   };
 
+  const srInputClassName = useStyleRewriter(baseInputClassName, inputClassName);
+  const srInputContainerClassName = useStyleRewriter(
+    baseInputContainerClassName,
+    containerClassName
+  );
+
   return (
     <InputOverlay {...props} error={error}>
-      {files[id] && !multiple ? null : (
-        <div
-          className="relative w-[160px] h-[130px] flex flex-col items-center justify-center rounded-8px border-[2px] border-dashed border-primary-700 duration-200 bg-primary-200 hover:bg-primary hover:bg-opacity-50 text-center flex-shrink-0"
-          onDrop={handleUploadImage}
-          onDragOver={preventDefaultEvent}
-          onDragEnter={preventDefaultEvent}
-        >
+      <div className={srInputContainerClassName}>
+        {files[id] && !multiple ? null : (
           <label
             htmlFor={id}
-            className="absolute w-full h-full z-90 cursor-pointer flex flex-col items-center justify-center p-3"
+            className={srInputClassName}
+            onDrop={handleUploadImage}
+            onDragOver={preventDefaultEvent}
+            onDragEnter={preventDefaultEvent}
           >
             {multiple ? (
               <input
@@ -124,21 +122,26 @@ const UploadFileInput = (props) => {
             {typeof BeforeUploadFileIcon === "function" ? (
               <BeforeUploadFileIcon />
             ) : null}
-            {uploaderTitle ? (
-              <p className="mb-1 !font-medium !text-black">{uploaderTitle}</p>
+            {uploadTitle ? (
+              <p className={uploadTitleClassName}>{uploadTitle}</p>
             ) : null}
           </label>
-        </div>
-      )}
+        )}
 
-      <FilesRow
-        handleDelete={(e, params) => handleDelete(e, { ...params, id })}
-        files={files[id]}
-        multiple={multiple}
-        DeleteFileIcon={DeleteFileIcon}
-        FileIcon={FileIcon}
-        BACKEND_URL={BACKEND_URL}
-      />
+        <FilesRow
+          handleDelete={(e, params) => handleDelete(e, { ...params, id })}
+          files={files[id]}
+          multiple={multiple}
+          DeleteFileButton={DeleteFileButton}
+          fileCardClassName={fileCardClassName}
+          fileCardImageClassName={fileCardImageClassName}
+          deleteFileButtonCointainerClassName={
+            deleteFileButtonCointainerClassName
+          }
+          FileComp={FileComp}
+          BACKEND_URL={BACKEND_URL}
+        />
+      </div>
     </InputOverlay>
   );
 };
@@ -147,8 +150,12 @@ const FilesRow = ({
   files,
   multiple,
   handleDelete = () => {},
-  DeleteFileIcon,
-  FileIcon,
+  DeleteFileButton,
+  fileCardClassName,
+  fileCardImageClassName,
+  deleteFileButtonCointainerClassName,
+  FileComp,
+  BACKEND_URL,
 }) => {
   // console.log(`🚀 ~ FilesRow ~ files`, files);
   const localFiles = useMemo(() => {
@@ -162,32 +169,36 @@ const FilesRow = ({
     }
   }, [files]);
 
-  return (
-    <div className="flex flex-row gap-2 flex-wrap">
-      {localFiles?.length > 0
-        ? localFiles?.map((file, index) => {
-            return (
-              <FileCard
-                handleDelete={(e) => handleDelete(e, { index })}
-                key={index}
-                file={file}
-                DeleteFileIcon={DeleteFileIcon}
-                FileIcon={FileIcon}
-                BACKEND_URL={BACKEND_URL}
-              />
-            );
-          })
-        : null}
-    </div>
-  );
+  return localFiles?.length > 0
+    ? localFiles?.map((file, index) => {
+        return (
+          <FileCard
+            handleDelete={(e) => handleDelete(e, { index })}
+            key={index}
+            file={file}
+            fileCardClassName={fileCardClassName}
+            DeleteFileButton={DeleteFileButton}
+            fileCardImageClassName={fileCardImageClassName}
+            deleteFileButtonCointainerClassName={
+              deleteFileButtonCointainerClassName
+            }
+            FileComp={FileComp}
+            BACKEND_URL={BACKEND_URL}
+          />
+        );
+      })
+    : null;
 };
 
 const FileCard = ({
   file,
   handleDelete = () => {},
   BACKEND_URL,
-  DeleteFileIcon,
-  FileIcon,
+  DeleteFileButton,
+  fileCardClassName,
+  fileCardImageClassName,
+  deleteFileButtonCointainerClassName,
+  FileComp,
 }) => {
   const src = useMemo(() => {
     if (file.url) {
@@ -196,23 +207,32 @@ const FileCard = ({
     return URL.createObjectURL(file);
   }, [file]);
 
+  const srFileCardClassName = useStyleRewriter(
+    baseFileCardClassName,
+    fileCardClassName
+  );
+
+  const srFileCardImageClassName = useStyleRewriter(
+    baseFileCardImageClassName,
+    fileCardImageClassName
+  );
+
+  const srDeleteFileButtonCointainerClassName = useStyleRewriter(
+    baseDeleteFileButtonCointainerClassName,
+    deleteFileButtonCointainerClassName
+  );
+
   return (
-    <div className="relative w-[160px] h-[130px] flex flex-col items-center justify-center rounded-8px border-[2px] border-primary duration-200 text-center overflow-hidden">
+    <div className={srFileCardClassName}>
       {file?.type?.includes(`image/`) || file?.mime?.includes(`image/`) ? (
-        <img
-          src={src}
-          className="w-full h-full absolute inset-0 object-cover opacity-80"
-        />
-      ) : (
-        <div className="absolute inset-0 flex items-center justify-center flex-col">
-          {typeof FileIcon === "function" ? <FileIcon /> : null}
-          <p className="text-black">{getShortFileName(file.name)}</p>
-        </div>
-      )}
-      <div className="w-full h-full absolute flex items-center justify-center inset-0 bg-primary-900/30 opacity-0 hover:opacity-100 duration-200">
-        <button onClick={handleDelete}>
-          {typeof DeleteFileIcon === "function" ? <DeleteFileIcon /> : null}
-        </button>
+        <img src={src} className={srFileCardImageClassName} />
+      ) : typeof FileComp === "function" ? (
+        <FileComp file={file} />
+      ) : null}
+      <div className={srDeleteFileButtonCointainerClassName}>
+        {typeof DeleteFileButton === "function" ? (
+          <DeleteFileButton onClick={handleDelete} />
+        ) : null}
       </div>
     </div>
   );
@@ -220,16 +240,42 @@ const FileCard = ({
 
 const preventDefaultEvent = (e) => e.preventDefault();
 
-const extensionReg = /(?:\.([^.]+))?$/;
-
-const getShortFileName = (string) => {
-  if (string?.length > 15) {
-    const currentExtension = extensionReg.exec(string)[1];
-    const nameWithoutExtension = string.replace(currentExtension, ``);
-    return nameWithoutExtension.substring(0, 15) + `...` + currentExtension;
-  }
-
-  return string;
-};
-
 export default UploadFileInput;
+
+const baseInputContainerClassName = `
+  @dy flex
+  @fxw flex-wrap
+  @wh w-full
+`;
+
+const baseInputClassName = `
+  @cr cursor-pointer
+  @pn relative
+  @tndn duration-200
+`;
+
+const baseFileCardClassName = `
+  @pn relative
+  @tndn duration-200
+  @ow overflow-hidden
+`;
+
+const baseFileCardImageClassName = `
+  @wh w-full
+  @ht h-full
+  @pn absolute
+  @it inset-0
+  @otf object-cover
+`;
+
+const baseDeleteFileButtonCointainerClassName = `
+  @wh w-full
+  @ht h-full
+  @pn absolute
+  @dy flex
+  @ani items-center
+  @jyc justify-center
+  @it inset-0 
+  @oy opacity-0 hover:opacity-100
+  @tndn duration-200
+`;
