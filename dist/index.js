@@ -252,7 +252,7 @@ function __spreadArray(to, from, pack) {
   return to.concat(ar || Array.prototype.slice.call(from));
 }
 
-var BACKEND_URL$1 = process.env.NEXT_PUBLIC_BACKEND_URL;
+var BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 var combineHeaders = function (_a) {
     var withAuth = _a.withAuth;
     var headers = {};
@@ -317,7 +317,7 @@ var transformResponseItem$1 = function (resItem) {
 };
 var Api = /** @class */ (function () {
     function Api(url) {
-        this.baseUrl = url || BACKEND_URL$1;
+        this.baseUrl = url || BACKEND_URL;
     }
     Api.prototype.request = function (_a) {
         var model = _a.model, query = _a.query, _b = _a.method, method = _b === void 0 ? "GET" : _b, data = _a.data, withAuth = _a.withAuth, headers = _a.headers, _c = _a.id, id = _c === void 0 ? "" : _c; _a.notifyError;
@@ -2288,27 +2288,32 @@ const {
 
 const DropdownContainer = ({
   children,
+  containerClassName,
   className,
   dropdownRef
 }) => {
-  const srClasses = useStyleRewriter$5(baseClasses$6, className);
+  const srClassName = useStyleRewriter$5(baseClasses$3, className);
+  const srContainerClassName = useStyleRewriter$5(baseContainerClassName$3, containerClassName);
   return /*#__PURE__*/React__default["default"].createElement("div", {
     ref: dropdownRef,
-    className: srClasses
+    className: srContainerClassName
   }, /*#__PURE__*/React__default["default"].createElement("div", {
-    className: "flex flex-col relative w-full"
+    className: srClassName
   }, children));
 };
-const baseClasses$6 = `
-    @pn absolute
-    @mn mt-2
-    @bdc bg-white
-    @brc border-gray-light
-    @brw border-px
-    @brr rounded-8px
-    @wh w-200px
-    @it top-full left-0
-  `;
+const baseContainerClassName$3 = `
+  @pn absolute
+  @wh w-full
+  @mn mt-2
+  @zi z-50
+  @it top-full left-0
+`;
+const baseClasses$3 = `
+  @dy flex
+  @fxd flex-col
+  @pn relative
+  @wh w-full
+`;
 
 const {
   useStyleRewriter: useStyleRewriter$4
@@ -2321,7 +2326,7 @@ const Tooltip = ({
   className,
   tooltipPosition
 }) => {
-  const srClasses = useStyleRewriter$4(baseClasses$5, className);
+  const srClasses = useStyleRewriter$4(baseClasses$2, className);
   const tooltipClasses = React.useMemo(() => {
     switch (tooltipPosition) {
       case "left-bottom":
@@ -2354,7 +2359,7 @@ const Tooltip = ({
     className: `${visible ? "opacity-100 w-auto" : "opacity-0"} ${srClasses} ${tooltipClasses}`
   }, children);
 };
-const baseClasses$5 = `
+const baseClasses$2 = `
     @pn absolute
     @wh w-fit
     @it left-0 top-0
@@ -2377,12 +2382,13 @@ const {
 const SmartButton = ({
   disabled,
   className,
+  disabledClassName,
   children,
-  variant,
   tooltipPosition,
   href = "",
   dropdownItems: DropdownItems,
-  dropdownContainerClasses = "",
+  dropdownContainerClassName = "",
+  dropdownClassName = "",
   dropdownProps,
   tooltipItems: TooltipItems,
   tooltipContainerClasses = "",
@@ -2403,8 +2409,14 @@ const SmartButton = ({
   };
 
   const [isMouseOver] = useDetectMouseover(SmartButtonRef, false);
-  const variantClasses = useVariant(className, variant);
-  const srClasses = useStyleRewriter$3(variantClasses, `${disabled ? disabledClasses : ""} ${className} `);
+  const statusClassName = React.useMemo(() => {
+    if (disabled) {
+      return disabledClassName ? disabledClassName : "@pre pointer-events-none";
+    }
+
+    return className;
+  }, [disabled, className]);
+  const srClasses = useStyleRewriter$3(baseButtonClassName, statusClassName);
   const Element = href ? LinkSmartButton : DivSmartButton;
   const elementProps = href ? {
     Link,
@@ -2423,7 +2435,8 @@ const SmartButton = ({
   }) : children, DropdownItems && /*#__PURE__*/React__default["default"].createElement(transitionComponent.Transition, _extends$3({
     show: isDropdownOpen
   }, contentTransitionProps$2), /*#__PURE__*/React__default["default"].createElement(DropdownContainer, {
-    className: dropdownContainerClasses,
+    containerClassName: dropdownContainerClassName,
+    className: dropdownClassName,
     dropdownRef: dropdownRef
   }, /*#__PURE__*/React__default["default"].createElement(DropdownItems, _extends$3({}, dropdownProps, {
     setIsDropdownOpen: setIsDropdownOpen
@@ -2435,96 +2448,10 @@ const SmartButton = ({
     visible: isMouseOver
   }, /*#__PURE__*/React__default["default"].createElement(TooltipItems, null)))));
 };
-const baseClasses$4 = "@pn relative @ftf font-family-rubik @oe focus:outline-none @cr cursor-pointer @tndn duration-200 @tta text-center";
-const disabledClasses = "@pre pointer-events-none @oy opacity-60 @bdc bg-true-gray-100 @ttc text-true-gray-450";
-
-const useVariant = (defaultClasses, variant) => {
-  return variants$1[variant] || defaultClasses;
-};
-
-const variants$1 = {
-  primary: `${baseClasses$4} 
-          @bdc bg-blue-primary dark:bg-blue-600
-          @bdo hover:bg-opacity-60 dark:hover:bg-opacity-80
-          @dy flex 
-          @fxd flex-row 
-          @ani items-center 
-          @pg px-8 py-3 
-          @brr rounded-8px 
-          @fts text-15px 
-          @ttc text-white`,
-  white: `${baseClasses$4} 
-          @tnp transition 
-          @tntf ease-in-out 
-          @bdc bg-white hover:bg-gray-blue 
-          @dy flex 
-          @fxd flex-row 
-          @ani items-center 
-          @pg px-8 py-3 
-          @brr rounded-8px 
-          @fts text-15px 
-          @ttc text-blue-base hover:text-white`,
-  danger: `${baseClasses$4} 
-          @bdc bg-red-base 
-          @bdo hover:bg-opacity-60 
-          @dy flex 
-          @fxd flex-row 
-          @ani items-center 
-          @pg px-8 py-3 
-          @brr rounded-8px 
-          @fts text-15px 
-          @ttc text-white`,
-  light: `${baseClasses$4} 
-          @bdc bg-white hover:bg-gray-accent 
-          @ttc text-black hover:text-blue-primary 
-          @pg px-4 py-2 
-          @brr rounded-16px 
-          @tta text-left`,
-  "light-blue": `${baseClasses$4} 
-          @bdc bg-blue-light 
-          @bdc hover:bg-blue-primary 
-          @ttc text-blue-primary hover:text-white 
-          @pg px-8 py-3 
-          @brr rounded-16px 
-          @tta text-left`,
-  text: baseClasses$4,
-  circleLight: `${baseClasses$4} 
-          @brc border-gray-light hover:border-blue-primary 
-          @brw border-px 
-          @dy flex 
-          @jyi justify-center
-          @ani items-center
-          @ht h-8 
-          @ow overflow-visible
-          @pn relative 
-          @bdc hover:bg-blue-primary 
-          @ttc hover:text-white 
-          @brr rounded-full 
-          @wh w-8
-          @zi z-45`,
-  circlePrimary: `${baseClasses$4} 
-          @bdc bg-blue-primary 
-          @brc border-blue-primary 
-          @brw border-px 
-          @dy flex 
-          @ani items-center
-          @jyi justify-center
-          @ht h-8 
-          @pn relative 
-          @brr rounded-full 
-          @wh w-8 
-          @ttc text-white`,
-  transparentOutline: `${baseClasses$4}
-          @dy flex flex-row
-          @ani items-center
-          @ttc text-blue-650
-          @bdo hover:opacity-70
-          @jyc justify-center
-          @brr rounded-8px 
-          @brw border
-          @brc border-blue-650
-          @pg px-8 py-3`
-};
+const baseButtonClassName = `
+  @pn relative
+  @cr cursor-pointer
+  @tndn duration-200`;
 
 const DivSmartButton = ({
   children,
@@ -7043,10 +6970,10 @@ const InputError = ({
   error
 }) => {
   return error.message ? /*#__PURE__*/React__default["default"].createElement("p", {
-    className: baseClasses$3
+    className: baseClasses$1
   }, error.message) : null;
 };
-const baseClasses$3 = `@ttc text-red-500 @fts text-[12px] @ttt normal-case @wh w-fit @leh leading-none text-left`;
+const baseClasses$1 = `@ttc text-red-500 @fts text-[12px] @ttt normal-case @wh w-fit @leh leading-none text-left`;
 
 const InputOverlay = ({
   children,
@@ -7056,7 +6983,7 @@ const InputOverlay = ({
   PairComponent = () => /*#__PURE__*/React__default["default"].createElement(React__default["default"].Fragment, null),
   ...props
 }) => {
-  const srClasses = useStyleRewriter$6(baseClasses$2, inputContainerClasses);
+  const srClasses = useStyleRewriter$6(baseClasses, inputContainerClasses);
   return /*#__PURE__*/React__default["default"].createElement("div", {
     className: srClasses
   }, label ? /*#__PURE__*/React__default["default"].createElement("p", {
@@ -7069,12 +6996,11 @@ const InputOverlay = ({
     error: error
   }) : null);
 };
-const baseClasses$2 = `
-@dy flex gap-2
-@wh w-full
-@fxd flex-col
-@pn relative
-@ttc text-neutral-350
+const baseClasses = `
+  @dy flex gap-2
+  @wh w-full
+  @fxd flex-col
+  @pn relative
 `;
 
 const CheckboxInput = props => {
@@ -7084,11 +7010,17 @@ const CheckboxInput = props => {
     error,
     onChange,
     id = Math.floor(Math.random() * 10000),
+    inputContainerClassName,
+    labelClassName,
+    inputClassName,
+    activeInputClassName = `@bdc bg-gray-800`,
     Icon
   } = props;
-  const [localValue, setLocalValue] = React.useState(value); // console.log(`🚀 ~ CheckboxInput ~ value`, value, localValue);
-  // console.log(`🚀 ~ CheckboxInput ~ error`, error);
-
+  const [localValue, setLocalValue] = React.useState(value);
+  const srInputContainerClassName = useStyleRewriter$6(baseInputContainerClassName$2, inputContainerClassName);
+  const srLabelClassName = useStyleRewriter$6(baseLabelClassName, labelClassName);
+  const srInputClassName = useStyleRewriter$6(baseInputClassName$5, inputClassName, false);
+  const resInputlassName = useStyleRewriter$6(srInputClassName, value ? activeInputClassName : "");
   React.useEffect(() => {
     if (value !== localValue) {
       setLocalValue(value);
@@ -7116,11 +7048,11 @@ const CheckboxInput = props => {
     label: null,
     error: error
   }), /*#__PURE__*/React__default["default"].createElement("div", {
-    className: "flex gap-2 items-center align-items-center"
+    className: srInputContainerClassName
   }, /*#__PURE__*/React__default["default"].createElement("label", {
     htmlFor: id,
-    className: ` w-5 h-5 flex items-center justify-center duration-200 outline-none border-2 border-primary-900 border rounded-sm cursor-pointer shrink-0 ${localValue ? `bg-primary-900` : `bg-white`}`
-  }, localValue && typeof Icon === "functions" ? /*#__PURE__*/React__default["default"].createElement(Icon, null) : null, /*#__PURE__*/React__default["default"].createElement("input", {
+    className: resInputlassName
+  }, localValue && typeof Icon === "function" ? /*#__PURE__*/React__default["default"].createElement(Icon, null) : null, /*#__PURE__*/React__default["default"].createElement("input", {
     type: "checkbox",
     id: id,
     className: "hidden",
@@ -7129,9 +7061,32 @@ const CheckboxInput = props => {
     checked: localValue
   })), /*#__PURE__*/React__default["default"].createElement("p", {
     onClick: () => setLocalValue(!localValue),
-    className: "cursor-pointer font-normal text-16px text-black-500 mb-0"
+    className: srLabelClassName
   }, label)));
 };
+const baseInputContainerClassName$2 = `
+  @dy flex gap-2
+  @ani items-center
+`;
+const baseInputClassName$5 = `
+  @wh w-5
+  @ht h-5
+  @dy flex shrink-0
+  @ani items-center
+  @jyc justify-center
+  @tndn duration-200
+  @oe outline-none
+  @brc border-primary-900
+  @brw border
+  @brr rounded-sm
+  @cr cursor-pointer
+  @bdc bg-transparent
+`;
+const baseLabelClassName = `
+  @cr cursor-pointer
+  @ttc text-black
+  @mn mb-0
+`;
 
 const Input = /*#__PURE__*/React.forwardRef(({
   children,
@@ -7142,11 +7097,14 @@ const Input = /*#__PURE__*/React.forwardRef(({
   onChange = () => null,
   disabled = false,
   Icon,
-  className = ``,
+  inputClassName = ``,
+  inputDisabledClassName = ``,
+  inputErrorClassName = ``,
   dropdownContainerClasses = ``,
-  containerClassName = ``,
+  inputContainerClassName = ``,
   autoComplete = null,
   id = null,
+  error,
   dropdownPosition = `left`,
   maxLength,
   name
@@ -7161,14 +7119,14 @@ const Input = /*#__PURE__*/React.forwardRef(({
 
   const typeClasses = classesByType[type];
   const baseClasses = useStyleRewriter$6(baseClassName, typeClasses, false);
-  const statusClasses = disabled ? getClassName(baseClasses, baseBlockedClassName, false) : baseClasses;
-  const srClasses = useStyleRewriter$6(statusClasses, className);
-  const containerClasses = useStyleRewriter$6(baseContainerClassName, containerClassName);
+  const statusClasses = disabled ? useStyleRewriter$6(baseClasses, inputDisabledClassName, false) : error ? useStyleRewriter$6(baseClasses, inputErrorClassName, false) : baseClasses;
+  const srClasses = useStyleRewriter$6(statusClasses, inputClassName);
+  const srInputContainerClassName = useStyleRewriter$6(baseContainerClassName$2, inputContainerClassName);
   const baseDropdownContainerClasses = `@wh w-full @mn mt-1 @ht h-200px @ow overflow-y-scroll ${dropdownPosition === `right` ? `@it left-auto right-0` : `@it inset-x-0`}`;
   const srDropdownContainerClasses = useStyleRewriter$6(baseDropdownContainerClasses, dropdownContainerClasses, true);
   return /*#__PURE__*/React__default["default"].createElement("div", {
     ref: inputContainerRef,
-    className: containerClasses
+    className: srInputContainerClassName
   }, /*#__PURE__*/React__default["default"].createElement("input", {
     placeholder: placeholder,
     autoComplete: autoComplete,
@@ -7199,14 +7157,9 @@ const classesByType = {
   select: `@cr cursor-pointer`,
   text: `@cr cursor-text`
 };
-const baseContainerClassName = `w-full relative`;
-const baseBlockedClassName = `
-  @cr cursor-not-allowed
-  @pre pointer-events-none
-  @ttc text-gray-600
-  @bdc bg-gray-100
-`;
+const baseContainerClassName$2 = `w-full relative`;
 const baseClassName = `
+  @bdc bg-transparent
   @ttc text-black
   @pn relative
   @wh w-full
@@ -7219,11 +7172,6 @@ const baseClassName = `
   @pg p-3
 `;
 
-const getClassName = (baseClassName, newClassName, cleared) => {
-  const srClassName = useStyleRewriter$6(baseClassName, newClassName, cleared);
-  return srClassName;
-};
-
 const TextInput = /*#__PURE__*/React.forwardRef((props, ref) => {
   const {
     value,
@@ -7233,12 +7181,14 @@ const TextInput = /*#__PURE__*/React.forwardRef((props, ref) => {
     type,
     disabled,
     enableTypeChanging = false,
-    inputsClassName,
+    inputClassName,
     Icon,
     error,
     name,
     ChangeInputTypeButton,
-    errorClassName = `@brc border-red-500`
+    inputErrorClassName = `@brc border-red-500`,
+    inputDisabledClassName,
+    inputContainerClassName
   } = props;
   return /*#__PURE__*/React__default["default"].createElement(InputOverlay, _extends$3({}, props, {
     PairComponent: enableTypeChanging && ChangeInputTypeButton ? ChangeInputTypeButton : null
@@ -7251,7 +7201,10 @@ const TextInput = /*#__PURE__*/React.forwardRef((props, ref) => {
     type: type,
     disabled: disabled,
     Icon: Icon,
-    className: `${inputsClassName} ${error ? errorClassName : ``}`,
+    inputClassName: inputClassName,
+    inputDisabledClassName: inputDisabledClassName,
+    inputErrorClassName: inputErrorClassName,
+    inputContainerClassName: inputContainerClassName,
     name: name
   }));
 });
@@ -7260,16 +7213,20 @@ const RangeInput = ({
   id = Math.random(),
   value = 0,
   onChange = () => {},
-  minLimit = minValue,
+  minValue = 0,
   maxValue = 100,
+  minLimit = minValue,
   maxLimit = maxValue,
   range = [0, maxValue * 0.25, maxValue * 0.5, maxValue * 0.75, maxValue],
-  minValue = 0,
   tooltip = false,
   disabled,
   onMouseUp = () => {},
+  inputClassName,
+  rangeClassName,
+  activeRangeClassName,
+  Comp,
   step = 0.01,
-  className = ``
+  containerClassName
 }) => {
   const rangeRef = React.useRef(null);
 
@@ -7284,28 +7241,32 @@ const RangeInput = ({
     onChange(e, value);
   };
 
-  const srClasses = `w-full flex items-center justify-center ${className}`;
+  const srContainerClassName = useStyleRewriter$6(baseContainerClassName$1, containerClassName);
   const valueDividedByMaxValue = value / maxValue * 100 || 0;
+  const srRangeClassName = useStyleRewriter$6(baseRangeClassName, rangeClassName);
+  const srActiveRangeClassName = useStyleRewriter$6(baseActiveRangeClassName, activeRangeClassName);
+  const srInputClassName = useStyleRewriter$6(baseInputClassName$4, inputClassName);
+  const draggedItemStyle = React.useMemo(() => {
+    return {
+      left: `${value / maxValue * 100 <= maxLimit / maxValue * 100 ? value / maxValue * 100 : maxLimit / maxValue * 100}%`
+    };
+  }, [value]);
   return /*#__PURE__*/React__default["default"].createElement("div", {
-    className: srClasses
-  }, /*#__PURE__*/React__default["default"].createElement("div", {
-    className: `${disabled ? `opacity-60 pointer-events-none` : ``}  group w-full h-[8px] flex flex-col items-center justify-center relative`
+    className: srContainerClassName
   }, /*#__PURE__*/React__default["default"].createElement("div", {
     style: circleStyle,
-    className: "bg-primary-200 w-full left-0 h-[8px] rounded-full absolute z-10"
+    className: srRangeClassName
   }, /*#__PURE__*/React__default["default"].createElement("div", {
     style: {
       width: `${value / maxValue * 100 <= maxLimit / maxValue * 100 ? value / maxValue * 100 : maxLimit / maxValue * 100}%`
     },
-    className: "bg-primary-700 h-[8px] rounded-full absolute z-40"
-  }), /*#__PURE__*/React__default["default"].createElement("div", {
-    style: {
-      left: `${value / maxValue * 100 <= maxLimit / maxValue * 100 ? value / maxValue * 100 : maxLimit / maxValue * 100}%`
-    },
-    className: "h-6 w-6 rounded-full bg-white absolute top-1/2 -translate-y-1/2 -translate-x-1/2 z-50 drop-shadow-md"
-  }, /*#__PURE__*/React__default["default"].createElement("div", {
-    className: "absolute h-4 w-4 rounded-full bg-primary-700 left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2"
-  }))), tooltip && /*#__PURE__*/React__default["default"].createElement("div", {
+    className: srActiveRangeClassName
+  }), typeof Comp === "function" ? /*#__PURE__*/React__default["default"].createElement(Comp, {
+    style: draggedItemStyle
+  }) : /*#__PURE__*/React__default["default"].createElement("div", {
+    style: draggedItemStyle,
+    className: srInputClassName
+  })), tooltip && /*#__PURE__*/React__default["default"].createElement("div", {
     className: "absolute left-0 z-50",
     style: circleStyle
   }, /*#__PURE__*/React__default["default"].createElement("div", {
@@ -7326,7 +7287,7 @@ const RangeInput = ({
     onMouseUp: e => onMouseUpHandler(e),
     onInput: e => onChangeHandler(e),
     type: "range",
-    className: "w-full absolute opacity-0 z-20",
+    className: "w-full absolute h-full opacity-0 z-20",
     id: id,
     style: {
       width: `${(maxLimit - minLimit) / maxValue * 100}%`,
@@ -7339,9 +7300,42 @@ const RangeInput = ({
     id: id,
     value: value,
     range: range
-  })));
+  }));
 };
 
+const baseContainerClassName$1 = `
+  @wh w-full
+  @dy flex
+  @ani items-center
+  @jyc justify-center
+  @gp group
+  @ht h-[8px] 
+  @fxd flex-col
+  @pn relative
+`;
+const baseInputClassName$4 = `
+  @ht h-6
+  @wh w-6
+  @brr rounded-full
+  @bdc bg-white
+  @pn absolute
+  @it top-1/2
+  @tndn -translate-y-1/2 -translate-x-1/2
+  @zi z-50
+  @bxsw shadow-md
+`;
+const baseRangeClassName = `
+  @ht h-[8px]
+  @wh w-full
+  @it left-0
+  @brr rounded-full
+  @pn absolute
+  @zi z-10`;
+const baseActiveRangeClassName = `
+  @ht h-[8px]
+  @brr rounded-full
+  @pn absolute
+  @zi z-40`;
 const circleStyle = {
   width: `calc(100% - 12px)`,
   left: `6px`
@@ -7415,6 +7409,8 @@ const OtpInput = props => {
     onChange: onChangeOTP,
     inputStyle,
     error,
+    containerClassName,
+    inputClassName,
     id
   } = props;
   const [activeInput, setActiveInput] = React.useState(0);
@@ -7549,12 +7545,12 @@ const OtpInput = props => {
     }
   }, [activeInput, getRightValue, length, otpValues]);
   const allInputs = Array(length).fill(``);
+  const srContainerClassName = useStyleRewriter$6(baseContainerClassName, containerClassName);
+  const srInputClassName = useStyleRewriter$6(baseInputClassName$3, inputClassName);
   return /*#__PURE__*/React__default["default"].createElement(InputOverlay, props, /*#__PURE__*/React__default["default"].createElement("div", {
-    className: "flex justify-center items-center w-auto"
-  }, /*#__PURE__*/React__default["default"].createElement("div", {
-    className: `flex w-full  hover:shadow-blue-outline focus-within:shadow-blue-outline`
+    className: srContainerClassName
   }, allInputs.map((_, index) => /*#__PURE__*/React__default["default"].createElement(SingleOTPInput, {
-    key: `SingleInput-${index}`,
+    key: index,
     focus: activeInput === index,
     value: otpValues && otpValues[index],
     autoFocus: autoFocus,
@@ -7563,13 +7559,28 @@ const OtpInput = props => {
     onKeyDown: handleOnKeyDown,
     onBlur: onBlur,
     onPaste: handleOnPaste,
-    style: inputStyle,
-    type: "number",
-    className: `w-4/12 p-2 mx-1.5 ${index === 0 && `ml-0`} ${index === length - 1 && `mr-0`} text-center text-base border-gray-300 text-black rounded-8px border font-normal max-w-11 h-11 text-black bg-primary-200`,
-    disabled: disabled // maxlength={1}
+    type: "text",
+    className: srInputClassName,
+    disabled: disabled,
+    style: {
+      appearance: "textfield",
+      MozAppearance: "textfield",
+      WebkitAppearance: "textfield"
+    } // maxlength={1}
 
-  })))));
+  }))));
 };
+const baseContainerClassName = `
+  @dy flex gap-2
+  @jyc justify-center
+  @ani items-center
+`;
+const baseInputClassName$3 = `
+  @wh w-4/12
+  @tta text-center
+  @oe outline-none
+  @bdc bg-transparent
+`;
 
 const TextArea = /*#__PURE__*/React.forwardRef(({
   value = "",
@@ -7580,37 +7591,16 @@ const TextArea = /*#__PURE__*/React.forwardRef(({
   id = null,
   ...props
 }, ref) => {
-  const srClasses = useStyleRewriter$6(baseClasses$1, className);
   return /*#__PURE__*/React__default["default"].createElement("textarea", _extends$3({}, props, {
     value: value,
     placeholder: placeholder,
     onChange: onChange,
-    className: srClasses,
+    className: className,
     disabled: disabled,
     ref: ref,
     id: id
   }));
 });
-const baseClasses$1 = `
-    @wh w-full
-    @ht h-100px @mxh max-h-200px @mnh min-h-100px
-    @bdc bg-white dark:bg-true-gray-750
-    @ftf font-family-inter
-    @fts text-14px
-    @leh leading-20px
-    @ttc text-black dark:text-white
-    @brw border-px
-    @brs border-solid
-    @brc border-gray-light dark:border-true-gray-700 hover:border-blue-primary focus:border-blue-primary
-    @tndn duration-200
-    @oe outline-none focus:outline-none hover:outline-none
-    @brr rounded-8px
-    @dy flex
-    @pg p-3
-    @pn relative
-    @bxsw hover:shadow-blue-outline focus:shadow-blue-outline
-    @bro hover:border-opacity-70
-`;
 
 const TextAreaInput = /*#__PURE__*/React.forwardRef((props, ref) => {
   const {
@@ -7619,26 +7609,37 @@ const TextAreaInput = /*#__PURE__*/React.forwardRef((props, ref) => {
     onChange,
     placeholder,
     disabled,
-    variant = `primary`,
-    error
+    error,
+    inputClassName = "",
+    inputErrorClassName = "",
+    rows = 3
   } = props;
-  const className = variant === `primary` ? `@bdc bg-primary-200 ${baseClasses}` : `@bdc bg-white ${baseClasses}`;
+  const srInputClassName = useStyleRewriter$6(baseInputClassName$2, inputClassName, false);
+  const srStatusClassName = useStyleRewriter$6(srInputClassName, error ? inputErrorClassName : "");
   return /*#__PURE__*/React__default["default"].createElement(InputOverlay, props, /*#__PURE__*/React__default["default"].createElement(TextArea, {
     disabled: disabled,
     ref: ref,
     value: value,
     id: id,
-    rows: 3,
+    rows: rows,
     onChange: onChange,
     placeholder: placeholder,
-    className: `${className} ${error ? `@brc border-red-500 hover:border-red-500 @bxsw shadow-red-outline` : ``}`
+    className: srStatusClassName
   }));
 });
-const baseClasses = `@brr rounded-4px @brw border @brc border-transparent @fts text-13 @pn pl-3 pr-6 @ftw font-normal @ttc text-black`;
+const baseInputClassName$2 = `
+  @wh w-full
+  @bdc bg-transparent
+  @tndn duration-200
+  @oe outline-none focus:outline-none hover:outline-none
+  @dy flex
+  @pn relative
+`;
 
 const UploadFileInput = props => {
   const {
-    uploaderTitle = `Выберите или перетащите файлы`,
+    uploadTitle = `Выберите или перетащите файлы`,
+    uploadTitleClassName,
     multiple = false,
     onChange,
     id,
@@ -7647,18 +7648,15 @@ const UploadFileInput = props => {
     error,
     accept = `*/*`,
     BeforeUploadFileIcon,
-    DeleteFileIcon,
-    FileIcon,
-    BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:1337"
-  } = props; // console.log(`🚀 ~ UploadFileInput ~ files`, files);
-  // console.log(`🚀 ~ UploadFileInput ~ defaultValue`, defaultValue);
-  // useEffect(() => {
-  //   console.log(`🚀 ~ UploadFileInput ~ files`, files);
-  // }, [files]);
-  // useEffect(() => {
-  //   console.log(`🚀 ~ useEffect ~ error`, error);
-  // }, [error]);
-  // const [error, setError] = useState(null);
+    DeleteFileButton,
+    inputClassName,
+    containerClassName,
+    BACKEND_URL = "",
+    fileCardClassName,
+    FileComp,
+    fileCardImageClassName,
+    deleteFileButtonCointainerClassName
+  } = props;
 
   const handleUploadImage = e => {
     preventDefaultEvent(e); // setError(null);
@@ -7705,16 +7703,18 @@ const UploadFileInput = props => {
     }); // console.log(`🚀 ~ handleDelete ~ e`, e, deleteFile);
   };
 
+  const srInputClassName = useStyleRewriter$6(baseInputClassName$1, inputClassName);
+  const srInputContainerClassName = useStyleRewriter$6(baseInputContainerClassName$1, containerClassName);
   return /*#__PURE__*/React__default["default"].createElement(InputOverlay, _extends$3({}, props, {
     error: error
-  }), files[id] && !multiple ? null : /*#__PURE__*/React__default["default"].createElement("div", {
-    className: "relative w-[160px] h-[130px] flex flex-col items-center justify-center rounded-8px border-[2px] border-dashed border-primary-700 duration-200 bg-primary-200 hover:bg-primary hover:bg-opacity-50 text-center flex-shrink-0",
+  }), /*#__PURE__*/React__default["default"].createElement("div", {
+    className: srInputContainerClassName
+  }, files[id] && !multiple ? null : /*#__PURE__*/React__default["default"].createElement("label", {
+    htmlFor: id,
+    className: srInputClassName,
     onDrop: handleUploadImage,
     onDragOver: preventDefaultEvent,
     onDragEnter: preventDefaultEvent
-  }, /*#__PURE__*/React__default["default"].createElement("label", {
-    htmlFor: id,
-    className: "absolute w-full h-full z-90 cursor-pointer flex flex-col items-center justify-center p-3"
   }, multiple ? /*#__PURE__*/React__default["default"].createElement("input", {
     type: "file" // name="file"
     ,
@@ -7730,26 +7730,33 @@ const UploadFileInput = props => {
     accept: accept,
     onChange: handleUploadImage,
     className: "hidden"
-  }), typeof BeforeUploadFileIcon === "function" ? /*#__PURE__*/React__default["default"].createElement(BeforeUploadFileIcon, null) : null, uploaderTitle ? /*#__PURE__*/React__default["default"].createElement("p", {
-    className: "mb-1 !font-medium !text-black"
-  }, uploaderTitle) : null)), /*#__PURE__*/React__default["default"].createElement(FilesRow, {
+  }), typeof BeforeUploadFileIcon === "function" ? /*#__PURE__*/React__default["default"].createElement(BeforeUploadFileIcon, null) : null, uploadTitle ? /*#__PURE__*/React__default["default"].createElement("p", {
+    className: uploadTitleClassName
+  }, uploadTitle) : null), /*#__PURE__*/React__default["default"].createElement(FilesRow, {
     handleDelete: (e, params) => handleDelete(e, { ...params,
       id
     }),
     files: files[id],
     multiple: multiple,
-    DeleteFileIcon: DeleteFileIcon,
-    FileIcon: FileIcon,
+    DeleteFileButton: DeleteFileButton,
+    fileCardClassName: fileCardClassName,
+    fileCardImageClassName: fileCardImageClassName,
+    deleteFileButtonCointainerClassName: deleteFileButtonCointainerClassName,
+    FileComp: FileComp,
     BACKEND_URL: BACKEND_URL
-  }));
+  })));
 };
 
 const FilesRow = ({
   files,
   multiple,
   handleDelete = () => {},
-  DeleteFileIcon,
-  FileIcon
+  DeleteFileButton,
+  fileCardClassName,
+  fileCardImageClassName,
+  deleteFileButtonCointainerClassName,
+  FileComp,
+  BACKEND_URL
 }) => {
   // console.log(`🚀 ~ FilesRow ~ files`, files);
   const localFiles = React.useMemo(() => {
@@ -7763,28 +7770,32 @@ const FilesRow = ({
       return [files];
     }
   }, [files]);
-  return /*#__PURE__*/React__default["default"].createElement("div", {
-    className: "flex flex-row gap-2 flex-wrap"
-  }, localFiles?.length > 0 ? localFiles?.map((file, index) => {
+  return localFiles?.length > 0 ? localFiles?.map((file, index) => {
     return /*#__PURE__*/React__default["default"].createElement(FileCard, {
       handleDelete: e => handleDelete(e, {
         index
       }),
       key: index,
       file: file,
-      DeleteFileIcon: DeleteFileIcon,
-      FileIcon: FileIcon,
+      fileCardClassName: fileCardClassName,
+      DeleteFileButton: DeleteFileButton,
+      fileCardImageClassName: fileCardImageClassName,
+      deleteFileButtonCointainerClassName: deleteFileButtonCointainerClassName,
+      FileComp: FileComp,
       BACKEND_URL: BACKEND_URL
     });
-  }) : null);
+  }) : null;
 };
 
 const FileCard = ({
   file,
   handleDelete = () => {},
   BACKEND_URL,
-  DeleteFileIcon,
-  FileIcon
+  DeleteFileButton,
+  fileCardClassName,
+  fileCardImageClassName,
+  deleteFileButtonCointainerClassName,
+  FileComp
 }) => {
   const src = React.useMemo(() => {
     if (file.url) {
@@ -7793,35 +7804,57 @@ const FileCard = ({
 
     return URL.createObjectURL(file);
   }, [file]);
+  const srFileCardClassName = useStyleRewriter$6(baseFileCardClassName, fileCardClassName);
+  const srFileCardImageClassName = useStyleRewriter$6(baseFileCardImageClassName, fileCardImageClassName);
+  const srDeleteFileButtonCointainerClassName = useStyleRewriter$6(baseDeleteFileButtonCointainerClassName, deleteFileButtonCointainerClassName);
   return /*#__PURE__*/React__default["default"].createElement("div", {
-    className: "relative w-[160px] h-[130px] flex flex-col items-center justify-center rounded-8px border-[2px] border-primary duration-200 text-center overflow-hidden"
+    className: srFileCardClassName
   }, file?.type?.includes(`image/`) || file?.mime?.includes(`image/`) ? /*#__PURE__*/React__default["default"].createElement("img", {
     src: src,
-    className: "w-full h-full absolute inset-0 object-cover opacity-80"
-  }) : /*#__PURE__*/React__default["default"].createElement("div", {
-    className: "absolute inset-0 flex items-center justify-center flex-col"
-  }, typeof FileIcon === "function" ? /*#__PURE__*/React__default["default"].createElement(FileIcon, null) : null, /*#__PURE__*/React__default["default"].createElement("p", {
-    className: "text-black"
-  }, getShortFileName(file.name))), /*#__PURE__*/React__default["default"].createElement("div", {
-    className: "w-full h-full absolute flex items-center justify-center inset-0 bg-primary-900/30 opacity-0 hover:opacity-100 duration-200"
-  }, /*#__PURE__*/React__default["default"].createElement("button", {
+    className: srFileCardImageClassName
+  }) : typeof FileComp === "function" ? /*#__PURE__*/React__default["default"].createElement(FileComp, {
+    file: file
+  }) : null, /*#__PURE__*/React__default["default"].createElement("div", {
+    className: srDeleteFileButtonCointainerClassName
+  }, typeof DeleteFileButton === "function" ? /*#__PURE__*/React__default["default"].createElement(DeleteFileButton, {
     onClick: handleDelete
-  }, typeof DeleteFileIcon === "function" ? /*#__PURE__*/React__default["default"].createElement(DeleteFileIcon, null) : null)));
+  }) : null));
 };
 
 const preventDefaultEvent = e => e.preventDefault();
-
-const extensionReg = /(?:\.([^.]+))?$/;
-
-const getShortFileName = string => {
-  if (string?.length > 15) {
-    const currentExtension = extensionReg.exec(string)[1];
-    const nameWithoutExtension = string.replace(currentExtension, ``);
-    return nameWithoutExtension.substring(0, 15) + `...` + currentExtension;
-  }
-
-  return string;
-};
+const baseInputContainerClassName$1 = `
+  @dy flex
+  @fxw flex-wrap
+  @wh w-full
+`;
+const baseInputClassName$1 = `
+  @cr cursor-pointer
+  @pn relative
+  @tndn duration-200
+`;
+const baseFileCardClassName = `
+  @pn relative
+  @tndn duration-200
+  @ow overflow-hidden
+`;
+const baseFileCardImageClassName = `
+  @wh w-full
+  @ht h-full
+  @pn absolute
+  @it inset-0
+  @otf object-cover
+`;
+const baseDeleteFileButtonCointainerClassName = `
+  @wh w-full
+  @ht h-full
+  @pn absolute
+  @dy flex
+  @ani items-center
+  @jyc justify-center
+  @it inset-0 
+  @oy opacity-0 hover:opacity-100
+  @tndn duration-200
+`;
 
 const SelectInput = props => {
   const {
@@ -7833,71 +7866,33 @@ const SelectInput = props => {
     setter = () => {},
     label,
     error,
-    buttonClassName,
-    inputsClassName
+    inputContainerClassName,
+    activeItemClassName,
+    baseItemClassName,
+    InnerComp
   } = props;
-  const passedClasses = React.useMemo(() => {
-    if (buttonClassName) {
-      return buttonClassName;
-    } else {
-      return `@pg px-2 py-1 @brw border @bdc bg-primary-100 @brr rounded-[4px] @cr cursor-pointer`;
-    }
-  }, [buttonClassName]);
+  const srInputContainerClassName = useStyleRewriter$6(inputContainerClassName, baseInputContainerClassName);
   return /*#__PURE__*/React__default["default"].createElement(InputOverlay, {
     label: label,
     error: error
   }, /*#__PURE__*/React__default["default"].createElement("div", {
-    className: `flex flex-wrap gap-2`
+    className: srInputContainerClassName
   }, items.map((item, index) => {
-    const statusClassName = `${activeMatcher(item, value) ? `@brc border-blue-700` : `@brc border-transparent`}`;
     return /*#__PURE__*/React__default["default"].createElement(SmartButton, {
-      className: `${statusClassName} ${passedClasses}`,
+      className: activeMatcher(item, value) ? activeItemClassName : baseItemClassName,
       key: index,
       onClick: e => {
         e.target.value = setter(item);
         e.target.id = id;
         onChange(e);
       }
-    }, item.title);
+    }, typeof InnerComp === "function" ? /*#__PURE__*/React__default["default"].createElement(InnerComp, {
+      item: item
+    }) : item.title);
   })));
 };
-
-const SelectImageInput = props => {
-  const {
-    items,
-    onChange,
-    value,
-    id,
-    activeMatcher = () => {},
-    setter = () => {},
-    label,
-    error,
-    buttonClassName,
-    inputsClassName,
-    imageSelector = () => {},
-    BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || `http://localhost:1337`
-  } = props;
-  return /*#__PURE__*/React__default["default"].createElement(InputOverlay, {
-    label: label,
-    error: error
-  }, /*#__PURE__*/React__default["default"].createElement("div", {
-    className: `flex flex-wrap gap-2`
-  }, items.map((item, index) => {
-    const statusClassName = `${activeMatcher(item, value) ? `@brc border-[#3A5AB7]` : `@brc border-[#F1F5F9]`}`;
-    return /*#__PURE__*/React__default["default"].createElement(SmartButton, {
-      className: `${statusClassName} @pg px-2 py-2 @brw border @bdc bg-[#F1F5F9] @brr rounded-[4px] @cr cursor-pointer`,
-      key: index,
-      onClick: e => {
-        e.target.value = setter(item);
-        e.target.id = id;
-        onChange(e);
-      }
-    }, /*#__PURE__*/React__default["default"].createElement("img", {
-      src: `${BACKEND_URL}${imageSelector(item)}`,
-      className: "w-6"
-    }));
-  })));
-};
+const baseInputContainerClassName = `
+  @dy flex flex-wrap gap-2`;
 
 const DropdownInput = props => {
   const {
@@ -7911,39 +7906,30 @@ const DropdownInput = props => {
     items,
     activeMatcher,
     placeholder = ``,
-    buttonClassName,
-    variant,
-    Icon
+    inputContainerClassName,
+    inputClassName,
+    activeItemClassName,
+    dropdownClassName = "",
+    baseItemClassName,
+    Icon,
+    InnerComp
   } = props;
   const [isDropdownOpen, setDropdownOpen] = React.useState(false);
+  const srInputClassName = useStyleRewriter$6(baseInputClassName, inputClassName, false);
   const [activeItem, setActiveItem] = React.useState();
   React.useEffect(() => {
     const active = items?.find(item => activeMatcher(item, value));
     setActiveItem(active);
   }, [items?.length, value]);
-  const className = React.useMemo(() => {
-    if (buttonClassName) {
-      return buttonClassName;
-    } else {
-      if (variant === `white`) {
-        return `@brr rounded-[4px] @cr cursor-pointer @fx flex @ani items-center @jyc justify-between  @ttc text-black @fts text-[13px] @pg px-3 py-2 @ht h-11 @bdc bg-white`;
-      }
-
-      return `@brr rounded-[4px] @cr cursor-pointer @fx flex @ani items-center @jyc justify-between  @ttc text-black @fts text-[13px] @pg px-3 py-2 @ht h-11 @bdc bg-primary-200`;
-    }
-  }, [buttonClassName]);
   React.useEffect(() => {
     onDropdownOpenChange(isDropdownOpen);
   }, [isDropdownOpen]);
   return /*#__PURE__*/React__default["default"].createElement(InputOverlay, {
     label: label,
     error: error
-  }, /*#__PURE__*/React__default["default"].createElement("div", {
-    className: `relative w-full`
   }, /*#__PURE__*/React__default["default"].createElement(SmartButton, {
     onClick: () => setDropdownOpen(!isDropdownOpen),
     dropdownItems: items?.length ? () => items.map((item, index) => {
-      const statusClassName = activeMatcher(item, value) ? `@ttc text-primary-900 @brc border-primary-900` : `@ttc text-black hover:text-primary-900 @brc border-transparent hover:border-primary-900`;
       return /*#__PURE__*/React__default["default"].createElement(SmartButton, {
         key: index,
         onClick: e => {
@@ -7951,16 +7937,25 @@ const DropdownInput = props => {
           e.target.id = id;
           onChange(e);
         },
-        className: `@pg px-4 py-2 @fts text-14px @brr rounded-[4px] @brw border @mn my-px  ${statusClassName}`,
-        variant: "light"
-      }, item?.title);
+        className: activeMatcher(item, value) ? activeItemClassName : baseItemClassName
+      }, typeof InnerComp === "function" ? /*#__PURE__*/React__default["default"].createElement(InnerComp, {
+        item: item
+      }) : item?.title);
     }) : null,
-    dropdownContainerClasses: "@wh w-full p-1 @bdc bg-white @zi z-20 @brw border @brr rounded-4px @brc border-transparent @bxsw drop-shadow-lg",
-    className: className
-  }, activeItem?.title || placeholder, typeof Icon === "function" ? /*#__PURE__*/React__default["default"].createElement(Icon, {
+    dropdownClassName: dropdownClassName,
+    dropdownContainerClassName: inputContainerClassName,
+    className: srInputClassName
+  }, typeof InnerComp === "function" && activeItem ? /*#__PURE__*/React__default["default"].createElement(InnerComp, {
+    item: activeItem
+  }) : activeItem?.title ? activeItem?.title : placeholder, typeof Icon === "function" ? /*#__PURE__*/React__default["default"].createElement(Icon, {
     isDropdownOpen: isDropdownOpen
-  }) : null)));
+  }) : null));
 };
+const baseInputClassName = `
+  @cr cursor-pointer
+  @fx flex
+  @wh w-full
+`;
 
 const PopupCalendar = ({
   setOpen,
@@ -8218,80 +8213,6 @@ const useOutsideClick = (ref, action) => {
   }, [ref]);
 };
 
-const Primary = ({
-  placeholder,
-  id,
-  onClick,
-  active,
-  buttonClasses
-}) => {
-  return /*#__PURE__*/React__default["default"].createElement(React__default["default"].Fragment, null, /*#__PURE__*/React__default["default"].createElement("label", {
-    key: id,
-    className: `${buttonClasses} ${active ? `border border-primary-700` : `border border-transparent`}`,
-    htmlFor: "radio-1",
-    id: id,
-    onClick: onClick
-  }, placeholder), /*#__PURE__*/React__default["default"].createElement("input", {
-    type: "radio",
-    id: "radio-1",
-    className: "hidden"
-  }));
-};
-
-const Picture = ({
-  src,
-  id,
-  onClick,
-  active,
-  buttonClasses
-}) => {
-  return /*#__PURE__*/React__default["default"].createElement(React__default["default"].Fragment, null, /*#__PURE__*/React__default["default"].createElement("label", {
-    key: id,
-    className: `${buttonClasses} ${active ? `border border-[#3A5AB7]` : `border border-transparent`} ${`py-3 px-3`}`,
-    htmlFor: "radio-1",
-    id: id,
-    onClick: onClick
-  }, /*#__PURE__*/React__default["default"].createElement("img", {
-    src: src,
-    alt: "link"
-  })), /*#__PURE__*/React__default["default"].createElement("input", {
-    type: "radio",
-    id: "radio-1",
-    className: "hidden"
-  }));
-};
-
-const variants = {
-  primary: Primary,
-  picture: Picture
-};
-
-function RadioButton({
-  placeholder,
-  id,
-  onClick,
-  active,
-  type = `primary`,
-  src,
-  buttonVariant = `primary`
-}) {
-  const ButtonVariant = variants[buttonVariant];
-  const buttonClasses = buttonTypeClasses[type];
-  return /*#__PURE__*/React__default["default"].createElement(ButtonVariant, {
-    placeholder: placeholder,
-    id: id,
-    onClick: onClick,
-    active: active,
-    src: src,
-    buttonClasses: buttonClasses
-  });
-}
-
-const buttonTypeClasses = {
-  primary: `rounded bg-[#F1F5F9] text-[13px] font-normal px-2 py-1 text-black-500 checked:ring-1 checked:ring-[#3A5AB7]`,
-  white: `rounded bg-white text-[13px] font-normal px-2 py-1 text-black-500 checked:ring-1 checked:ring-white `
-};
-
 const FormInput = /*#__PURE__*/React.forwardRef((props, ref) => {
   const {
     type,
@@ -8304,15 +8225,13 @@ const FormInput = /*#__PURE__*/React.forwardRef((props, ref) => {
 });
 const inputComponents = {
   text: TextInput,
+  "select-row": SelectInput,
   checkbox: CheckboxInput,
   range: RangeInput,
-  radio: RadioButton,
+  dropdown: DropdownInput,
   otp: OtpInput,
   "text-area": TextAreaInput,
   file: UploadFileInput,
-  "select-row": SelectInput,
-  "select-image-row": SelectImageInput,
-  dropdown: DropdownInput,
   date: DateCalendar
 };
 

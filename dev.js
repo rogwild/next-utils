@@ -114,6 +114,7 @@ const FormPage = () => {
         ],
         inputClassName: ``,
         inputContainerClassName: `@bdc bg-white @bxsw shadow-lg`,
+        dropdownClassName: `@pg p-2 @dy flex @fxd flex-col @gp gap-1`,
         baseItemClassName: `@brw border @brc border-transparent hover:border-black`,
         activeItemClassName: `@brw border @brc border-black`,
         activeMatcher: (item, value) => item.slug === value,

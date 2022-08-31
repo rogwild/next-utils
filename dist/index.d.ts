@@ -53,15 +53,16 @@ declare const _default: {
         };
     };
     components: {
-        SmartButton: ({ disabled, className, children, variant, tooltipPosition, href, dropdownItems: DropdownItems, dropdownContainerClasses, dropdownProps, tooltipItems: TooltipItems, tooltipContainerClasses, onClick: onClickCb, linkProps, Link, }: {
+        SmartButton: ({ disabled, className, disabledClassName, children, tooltipPosition, href, dropdownItems: DropdownItems, dropdownContainerClassName, dropdownClassName, dropdownProps, tooltipItems: TooltipItems, tooltipContainerClasses, onClick: onClickCb, linkProps, Link, }: {
             disabled: any;
             className: any;
+            disabledClassName: any;
             children: any;
-            variant: any;
             tooltipPosition: any;
             href?: string;
             dropdownItems: any;
-            dropdownContainerClasses?: string;
+            dropdownContainerClassName?: string;
+            dropdownClassName?: string;
             dropdownProps: any;
             tooltipItems: any;
             tooltipContainerClasses?: string;

@@ -14,7 +14,8 @@ const SmartButton = ({
   tooltipPosition,
   href = "",
   dropdownItems: DropdownItems,
-  dropdownContainerClasses = "",
+  dropdownContainerClassName = "",
+  dropdownClassName = "",
   dropdownProps,
   tooltipItems: TooltipItems,
   tooltipContainerClasses = "",
@@ -67,7 +68,8 @@ const SmartButton = ({
         {DropdownItems && (
           <Transition show={isDropdownOpen} {...contentTransitionProps}>
             <DropdownContainer
-              className={dropdownContainerClasses}
+              containerClassName={dropdownContainerClassName}
+              className={dropdownClassName}
               dropdownRef={dropdownRef}
             >
               <DropdownItems
@@ -97,8 +99,7 @@ export default SmartButton;
 const baseButtonClassName = `
   @pn relative
   @cr cursor-pointer
-  @tndn duration-200
-  @tta text-center`;
+  @tndn duration-200`;
 
 const DivSmartButton = ({ children, SmartButtonRef, ...props }) => (
   <div ref={SmartButtonRef} {...props}>

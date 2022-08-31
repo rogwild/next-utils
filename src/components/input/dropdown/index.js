@@ -18,17 +18,13 @@ const DropdownInput = (props) => {
     inputContainerClassName,
     inputClassName,
     activeItemClassName,
+    dropdownClassName = "",
     baseItemClassName,
     Icon,
+    InnerComp,
   } = props;
 
   const [isDropdownOpen, setDropdownOpen] = useState(false);
-
-  const srCointainerClassName = useStyleRewriter(
-    baseInputContainerClassName,
-    inputContainerClassName,
-    false
-  );
 
   const srInputClassName = useStyleRewriter(
     baseInputClassName,
@@ -71,16 +67,27 @@ const DropdownInput = (props) => {
                           : baseItemClassName
                       }
                     >
-                      {item?.title}
+                      {typeof InnerComp === "function" ? (
+                        <InnerComp item={item} />
+                      ) : (
+                        item?.title
+                      )}
                     </SmartButton>
                   );
                 })
             : null
         }
-        dropdownContainerClasses={srCointainerClassName}
+        dropdownClassName={dropdownClassName}
+        dropdownContainerClassName={inputContainerClassName}
         className={srInputClassName}
       >
-        {activeItem?.title || placeholder}
+        {typeof InnerComp === "function" && activeItem ? (
+          <InnerComp item={activeItem} />
+        ) : activeItem?.title ? (
+          activeItem?.title
+        ) : (
+          placeholder
+        )}
         {typeof Icon === "function" ? (
           <Icon isDropdownOpen={isDropdownOpen} />
         ) : null}
@@ -95,9 +102,4 @@ const baseInputClassName = `
   @cr cursor-pointer
   @fx flex
   @wh w-full
-`;
-
-const baseInputContainerClassName = `
-  @wh w-full
-  @zi z-20
 `;
