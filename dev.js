@@ -120,6 +120,14 @@ const FormPage = () => {
         setter: (item) => item.slug,
         type: `dropdown`,
       },
+      {
+        field: `otp`,
+        label: "One time password",
+        containerClassName: `@brw border @brc border-black @pg p-1`,
+        inputClassName: `@bdc bg-white @pn py-4`,
+        checkerFuncs: [`checkRequiredField`],
+        type: `otp`,
+      },
     ];
   }, []);
 
@@ -142,6 +150,7 @@ const FormPage = () => {
         <Input {...inputs.privacy} />
         <Input {...inputs.amount} />
         <Input {...inputs.version} />
+        <Input {...inputs.otp} />
       </div>
     </div>
   );

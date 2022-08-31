@@ -22,13 +22,13 @@ export default FormInput;
 
 const inputComponents = {
   text: TextInput,
+  "select-row": SelectInput,
   checkbox: CheckboxInput,
   range: RangeInput,
   dropdown: DropdownInput,
   otp: OtpInput,
   "text-area": TextAreaInput,
   file: UploadFileInput,
-  "select-row": SelectInput,
   "select-image-row": SelectImageInput,
   date: DateCalendar,
 };

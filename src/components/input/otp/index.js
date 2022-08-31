@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from "react";
 import SingleInput from "./SingleInput";
 import InputOverlay from "../input-overlay";
+import useStyleRewriter from "../../../hooks/use-style-rewriter";
 
 const OtpInput = (props) => {
   const {
@@ -11,6 +12,8 @@ const OtpInput = (props) => {
     onChange: onChangeOTP,
     inputStyle,
     error,
+    containerClassName,
+    inputClassName,
     id,
   } = props;
 
@@ -173,36 +176,54 @@ const OtpInput = (props) => {
 
   const allInputs = Array(length).fill(``);
 
+  const srContainerClassName = useStyleRewriter(
+    baseContainerClassName,
+    containerClassName
+  );
+
+  const srInputClassName = useStyleRewriter(baseInputClassName, inputClassName);
+
   return (
     <InputOverlay {...props}>
-      <div className="flex justify-center items-center w-auto">
-        <div
-          className={`flex w-full  hover:shadow-blue-outline focus-within:shadow-blue-outline`}
-        >
-          {allInputs.map((_, index) => (
-            <SingleInput
-              key={`SingleInput-${index}`}
-              focus={activeInput === index}
-              value={otpValues && otpValues[index]}
-              autoFocus={autoFocus}
-              onFocus={handleOnFocus(index)}
-              onChange={handleOnChange}
-              onKeyDown={handleOnKeyDown}
-              onBlur={onBlur}
-              onPaste={handleOnPaste}
-              style={inputStyle}
-              type="number"
-              className={`w-4/12 p-2 mx-1.5 ${index === 0 && `ml-0`} ${
-                index === length - 1 && `mr-0`
-              } text-center text-base border-gray-300 text-black rounded-8px border font-normal max-w-11 h-11 text-black bg-primary-200`}
-              disabled={disabled}
-              // maxlength={1}
-            />
-          ))}
-        </div>
+      <div className={srContainerClassName}>
+        {allInputs.map((_, index) => (
+          <SingleInput
+            key={index}
+            focus={activeInput === index}
+            value={otpValues && otpValues[index]}
+            autoFocus={autoFocus}
+            onFocus={handleOnFocus(index)}
+            onChange={handleOnChange}
+            onKeyDown={handleOnKeyDown}
+            onBlur={onBlur}
+            onPaste={handleOnPaste}
+            type="text"
+            className={srInputClassName}
+            disabled={disabled}
+            style={{
+              appearance: "textfield",
+              MozAppearance: "textfield",
+              WebkitAppearance: "textfield",
+            }}
+            // maxlength={1}
+          />
+        ))}
       </div>
     </InputOverlay>
   );
 };
 
 export default OtpInput;
+
+const baseContainerClassName = `
+  @dy flex gap-2
+  @jyc justify-center
+  @ani items-center
+`;
+
+const baseInputClassName = `
+  @wh w-4/12
+  @tta text-center
+  @oe outline-none
+  @bdc bg-transparent
+`;
