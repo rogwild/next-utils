@@ -16,6 +16,7 @@ const SelectInput = (props) => {
     inputContainerClassName,
     activeItemClassName,
     baseItemClassName,
+    InnerComp,
   } = props;
 
   const srInputContainerClassName = useStyleRewriter(
@@ -41,7 +42,11 @@ const SelectInput = (props) => {
                 onChange(e);
               }}
             >
-              {item.title}
+              {typeof InnerComp === "function" ? (
+                <InnerComp item={item} />
+              ) : (
+                item.title
+              )}
             </SmartButton>
           );
         })}

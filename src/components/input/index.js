@@ -29,6 +29,5 @@ const inputComponents = {
   otp: OtpInput,
   "text-area": TextAreaInput,
   file: UploadFileInput,
-  "select-image-row": SelectImageInput,
   date: DateCalendar,
 };
