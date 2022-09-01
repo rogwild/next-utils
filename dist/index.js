@@ -2429,7 +2429,7 @@ const SmartButton = ({
   };
   return /*#__PURE__*/React__default["default"].createElement(React.Fragment, null, /*#__PURE__*/React__default["default"].createElement(Element, _extends$3({
     SmartButtonRef: SmartButtonRef,
-    onClick: onClick
+    onClick: disabled ? () => {} : onClick
   }, elementProps), typeof children === "function" ? children({
     isMouseOver
   }) : children, DropdownItems && /*#__PURE__*/React__default["default"].createElement(transitionComponent.Transition, _extends$3({
@@ -7880,7 +7880,7 @@ const SelectInput = props => {
     inputContainerClassName,
     activeItemClassName,
     baseItemClassName,
-    InnerComp
+    InnerComponent
   } = props;
   const srInputContainerClassName = useStyleRewriter$6(inputContainerClassName, baseInputContainerClassName);
   return /*#__PURE__*/React__default["default"].createElement(InputOverlay, {
@@ -7897,13 +7897,17 @@ const SelectInput = props => {
         e.target.id = id;
         onChange(e);
       }
-    }, typeof InnerComp === "function" ? /*#__PURE__*/React__default["default"].createElement(InnerComp, {
+    }, typeof InnerComponent === "function" ? /*#__PURE__*/React__default["default"].createElement(InnerComponent, _extends$3({
+      isSelected: activeMatcher(item, value)
+    }, props, {
       item: item
-    }) : item.title);
+    })) : item.title);
   })));
 };
 const baseInputContainerClassName = `
-  @dy flex flex-wrap gap-2`;
+  @dy flex
+  @fxw flex-wrap
+  @gp gap-2`;
 
 const DropdownInput = props => {
   const {
@@ -7923,7 +7927,7 @@ const DropdownInput = props => {
     dropdownClassName = "",
     baseItemClassName,
     Icon,
-    InnerComp
+    InnerComponent
   } = props;
   const [isDropdownOpen, setDropdownOpen] = React.useState(false);
   const srInputClassName = useStyleRewriter$6(baseInputClassName, inputClassName, false);
@@ -7949,14 +7953,15 @@ const DropdownInput = props => {
           onChange(e);
         },
         className: activeMatcher(item, value) ? activeItemClassName : baseItemClassName
-      }, typeof InnerComp === "function" ? /*#__PURE__*/React__default["default"].createElement(InnerComp, _extends$3({}, props, {
+      }, typeof InnerComponent === "function" ? /*#__PURE__*/React__default["default"].createElement(InnerComponent, _extends$3({}, props, {
+        isSelected: activeMatcher(item, value),
         item: item
       })) : item?.title);
     }) : null,
     dropdownClassName: dropdownClassName,
     dropdownContainerClassName: inputContainerClassName,
     className: srInputClassName
-  }, typeof InnerComp === "function" && activeItem ? /*#__PURE__*/React__default["default"].createElement(InnerComp, _extends$3({}, props, {
+  }, typeof InnerComponent === "function" && activeItem ? /*#__PURE__*/React__default["default"].createElement(InnerComponent, _extends$3({}, props, {
     item: activeItem
   })) : activeItem?.title ? activeItem?.title : placeholder, typeof Icon === "function" ? /*#__PURE__*/React__default["default"].createElement(Icon, _extends$3({}, props, {
     isDropdownOpen: isDropdownOpen
@@ -8236,7 +8241,7 @@ const FormInput = /*#__PURE__*/React.forwardRef((props, ref) => {
 });
 const inputComponents = {
   text: TextInput,
-  "select-row": SelectInput,
+  select: SelectInput,
   checkbox: CheckboxInput,
   range: RangeInput,
   dropdown: DropdownInput,

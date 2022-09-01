@@ -21,7 +21,7 @@ export default FormInput;
 
 const inputComponents = {
   text: TextInput,
-  "select-row": SelectInput,
+  select: SelectInput,
   checkbox: CheckboxInput,
   range: RangeInput,
   dropdown: DropdownInput,

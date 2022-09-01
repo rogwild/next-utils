@@ -21,7 +21,7 @@ const DropdownInput = (props) => {
     dropdownClassName = "",
     baseItemClassName,
     Icon,
-    InnerComp,
+    InnerComponent,
   } = props;
 
   const [isDropdownOpen, setDropdownOpen] = useState(false);
@@ -67,8 +67,12 @@ const DropdownInput = (props) => {
                           : baseItemClassName
                       }
                     >
-                      {typeof InnerComp === "function" ? (
-                        <InnerComp {...props} item={item} />
+                      {typeof InnerComponent === "function" ? (
+                        <InnerComponent
+                          {...props}
+                          isSelected={activeMatcher(item, value)}
+                          item={item}
+                        />
                       ) : (
                         item?.title
                       )}
@@ -81,8 +85,8 @@ const DropdownInput = (props) => {
         dropdownContainerClassName={inputContainerClassName}
         className={srInputClassName}
       >
-        {typeof InnerComp === "function" && activeItem ? (
-          <InnerComp {...props} item={activeItem} />
+        {typeof InnerComponent === "function" && activeItem ? (
+          <InnerComponent {...props} item={activeItem} />
         ) : activeItem?.title ? (
           activeItem?.title
         ) : (

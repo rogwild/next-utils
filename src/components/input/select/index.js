@@ -16,7 +16,7 @@ const SelectInput = (props) => {
     inputContainerClassName,
     activeItemClassName,
     baseItemClassName,
-    InnerComp,
+    InnerComponent,
   } = props;
 
   const srInputContainerClassName = useStyleRewriter(
@@ -42,8 +42,12 @@ const SelectInput = (props) => {
                 onChange(e);
               }}
             >
-              {typeof InnerComp === "function" ? (
-                <InnerComp item={item} />
+              {typeof InnerComponent === "function" ? (
+                <InnerComponent
+                  isSelected={activeMatcher(item, value)}
+                  {...props}
+                  item={item}
+                />
               ) : (
                 item.title
               )}
@@ -58,4 +62,6 @@ const SelectInput = (props) => {
 export default SelectInput;
 
 const baseInputContainerClassName = `
-  @dy flex flex-wrap gap-2`;
+  @dy flex
+  @fxw flex-wrap
+  @gp gap-2`;

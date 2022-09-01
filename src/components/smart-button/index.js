@@ -60,7 +60,7 @@ const SmartButton = ({
     <Fragment>
       <Element
         SmartButtonRef={SmartButtonRef}
-        onClick={onClick}
+        onClick={disabled ? () => {} : onClick}
         {...elementProps}
       >
         {typeof children === "function" ? children({ isMouseOver }) : children}

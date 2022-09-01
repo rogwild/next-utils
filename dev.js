@@ -67,9 +67,11 @@ const FormPage = () => {
         ],
         activeMatcher: (item, value) => item.slug === value,
         setter: (item) => item.slug,
-        baseItemClassName: `@brw border @brc border-transparent hover:border-black`,
-        activeItemClassName: `@brw border @brc border-black`,
-        type: `select-row`,
+        inputContainerClassName: `@fxd flex-col @wh w-fit`,
+        InnerComponent,
+        baseItemClassName: `@wh w-fit @brw border @brc border-transparent hover:border-black`,
+        activeItemClassName: `@wh w-fit @brw border @brc border-black`,
+        type: `select`,
       },
       {
         field: `privacy`,
@@ -291,7 +293,7 @@ const getShortFileName = (string) => {
 
 const LabelComponent = (props) => {
   const { label } = props;
-  console.log(`🚀 ~ LabelComponent ~ props`, props);
+  // console.log(`🚀 ~ LabelComponent ~ props`, props);
 
   return (
     <div className="w-full">
@@ -301,7 +303,7 @@ const LabelComponent = (props) => {
 };
 
 const DropdownIcon = (props) => {
-  console.log(`🚀 ~ DropdownIcon ~ props`, props);
+  // console.log(`🚀 ~ DropdownIcon ~ props`, props);
 
   return (
     <div
@@ -313,13 +315,30 @@ const DropdownIcon = (props) => {
 };
 
 const ErrorComponent = (props) => {
-  console.log(`🚀 ~ ErrorComponent ~ props`, props);
+  // console.log(`🚀 ~ ErrorComponent ~ props`, props);
 
   return (
     <div className="w-full">
       <p className="text-xl text-orange-500 capitalize">
         {props.error?.message}
       </p>
+    </div>
+  );
+};
+
+const InnerComponent = (props) => {
+  const { item, isSelected } = props;
+
+  console.log(`🚀 ~ InnerComponent ~ props`, props);
+
+  return (
+    <div className="flex items-center gap-2 px-2">
+      <div
+        className={`w-2 h-2 rounded-full border border-black ${
+          isSelected ? "bg-black" : ""
+        }`}
+      ></div>
+      <p>{item.title}</p>
     </div>
   );
 };
