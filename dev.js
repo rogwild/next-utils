@@ -152,7 +152,7 @@ const FormPage = () => {
         uploadTitleClassName: `text-gray-500 text-xs`,
         fileCardClassName: `@wh w-1/4 @ht h-[100px]`,
         containerClassName: `@gp gap-2`,
-        BeforeUploadFileIcon: BeforeUploadFileIcon,
+        InnerComponent: BeforeUploadFileIcon,
         DeleteFileButton: DeleteFileButton,
         FileComponent: FileComponent,
         BACKEND_URL: "http://localhost:1337",

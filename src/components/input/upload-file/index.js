@@ -4,7 +4,7 @@ import InputOverlay from "../input-overlay";
 
 const UploadFileInput = (props) => {
   const {
-    uploadTitle = `Выберите или перетащите файлы`,
+    uploadTitle = `Click here to upload a file`,
     uploadTitleClassName,
     multiple = false,
     onChange,
@@ -13,13 +13,13 @@ const UploadFileInput = (props) => {
     setFiles,
     error,
     accept = `*/*`,
-    BeforeUploadFileIcon,
     DeleteFileButton,
     inputClassName,
     containerClassName,
     BACKEND_URL = "",
     fileCardClassName,
     FileComponent,
+    InnerComponent,
     fileCardImageClassName,
     deleteFileButtonCointainerClassName,
   } = props;
@@ -119,10 +119,9 @@ const UploadFileInput = (props) => {
               />
             )}
 
-            {typeof BeforeUploadFileIcon === "function" ? (
-              <BeforeUploadFileIcon />
-            ) : null}
-            {uploadTitle ? (
+            {typeof InnerComponent === "function" ? (
+              <InnerComponent {...props} />
+            ) : uploadTitle ? (
               <p className={uploadTitleClassName}>{uploadTitle}</p>
             ) : null}
           </label>

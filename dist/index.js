@@ -7649,7 +7649,7 @@ const baseInputClassName$2 = `
 
 const UploadFileInput = props => {
   const {
-    uploadTitle = `Выберите или перетащите файлы`,
+    uploadTitle = `Click here to upload a file`,
     uploadTitleClassName,
     multiple = false,
     onChange,
@@ -7658,13 +7658,13 @@ const UploadFileInput = props => {
     setFiles,
     error,
     accept = `*/*`,
-    BeforeUploadFileIcon,
     DeleteFileButton,
     inputClassName,
     containerClassName,
     BACKEND_URL = "",
     fileCardClassName,
     FileComponent,
+    InnerComponent,
     fileCardImageClassName,
     deleteFileButtonCointainerClassName
   } = props;
@@ -7741,7 +7741,7 @@ const UploadFileInput = props => {
     accept: accept,
     onChange: handleUploadImage,
     className: "hidden"
-  }), typeof BeforeUploadFileIcon === "function" ? /*#__PURE__*/React__default["default"].createElement(BeforeUploadFileIcon, null) : null, uploadTitle ? /*#__PURE__*/React__default["default"].createElement("p", {
+  }), typeof InnerComponent === "function" ? /*#__PURE__*/React__default["default"].createElement(InnerComponent, props) : uploadTitle ? /*#__PURE__*/React__default["default"].createElement("p", {
     className: uploadTitleClassName
   }, uploadTitle) : null), /*#__PURE__*/React__default["default"].createElement(FilesRow, {
     handleDelete: (e, params) => handleDelete(e, { ...params,
