@@ -6,7 +6,6 @@ import OtpInput from "./otp";
 import TextAreaInput from "./text-area";
 import UploadFileInput from "./upload-file";
 import SelectInput from "./select";
-import SelectImageInput from "./select-image";
 import DropdownInput from "./dropdown";
 import DateCalendar from "./date-calendar";
 

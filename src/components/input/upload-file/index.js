@@ -19,7 +19,7 @@ const UploadFileInput = (props) => {
     containerClassName,
     BACKEND_URL = "",
     fileCardClassName,
-    FileComp,
+    FileComponent,
     fileCardImageClassName,
     deleteFileButtonCointainerClassName,
   } = props;
@@ -138,7 +138,7 @@ const UploadFileInput = (props) => {
           deleteFileButtonCointainerClassName={
             deleteFileButtonCointainerClassName
           }
-          FileComp={FileComp}
+          FileComponent={FileComponent}
           BACKEND_URL={BACKEND_URL}
         />
       </div>
@@ -154,7 +154,7 @@ const FilesRow = ({
   fileCardClassName,
   fileCardImageClassName,
   deleteFileButtonCointainerClassName,
-  FileComp,
+  FileComponent,
   BACKEND_URL,
 }) => {
   // console.log(`🚀 ~ FilesRow ~ files`, files);
@@ -182,7 +182,7 @@ const FilesRow = ({
             deleteFileButtonCointainerClassName={
               deleteFileButtonCointainerClassName
             }
-            FileComp={FileComp}
+            FileComponent={FileComponent}
             BACKEND_URL={BACKEND_URL}
           />
         );
@@ -198,7 +198,7 @@ const FileCard = ({
   fileCardClassName,
   fileCardImageClassName,
   deleteFileButtonCointainerClassName,
-  FileComp,
+  FileComponent,
 }) => {
   const src = useMemo(() => {
     if (file.url) {
@@ -226,8 +226,8 @@ const FileCard = ({
     <div className={srFileCardClassName}>
       {file?.type?.includes(`image/`) || file?.mime?.includes(`image/`) ? (
         <img src={src} className={srFileCardImageClassName} />
-      ) : typeof FileComp === "function" ? (
-        <FileComp file={file} />
+      ) : typeof FileComponent === "function" ? (
+        <FileComponent file={file} />
       ) : null}
       <div className={srDeleteFileButtonCointainerClassName}>
         {typeof DeleteFileButton === "function" ? (

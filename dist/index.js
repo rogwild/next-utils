@@ -6975,31 +6975,43 @@ const InputError = ({
 };
 const baseClasses$1 = `@ttc text-red-500 @fts text-[12px] @ttt normal-case @wh w-fit @leh leading-none text-left`;
 
-const InputOverlay = ({
-  children,
-  label,
-  inputContainerClasses = ``,
-  error,
-  PairComponent = () => /*#__PURE__*/React__default["default"].createElement(React__default["default"].Fragment, null),
-  ...props
-}) => {
-  const srClasses = useStyleRewriter$6(baseClasses, inputContainerClasses);
+const InputOverlay = props => {
+  const {
+    children,
+    label,
+    labelContainerClassName = ``,
+    labelClassName = ``,
+    labelInputContainerClassName = ``,
+    error,
+    ErrorComponent,
+    PairComponent,
+    LabelComponent
+  } = props;
+  const srLabelContainerClassName = useStyleRewriter$6(baseClasses, labelContainerClassName);
+  const srLabelClassName = useStyleRewriter$6(baseLabelClassName$1, labelClassName);
+  const srLabelInputContainerClassName = useStyleRewriter$6(baseInputContainerClassName$3, labelInputContainerClassName);
   return /*#__PURE__*/React__default["default"].createElement("div", {
-    className: srClasses
-  }, label ? /*#__PURE__*/React__default["default"].createElement("p", {
-    className: "mb-0"
+    className: srLabelContainerClassName
+  }, typeof LabelComponent === "function" && label ? /*#__PURE__*/React__default["default"].createElement(LabelComponent, props) : label ? /*#__PURE__*/React__default["default"].createElement("p", {
+    className: srLabelClassName
   }, label) : null, /*#__PURE__*/React__default["default"].createElement("div", {
-    className: "flex justify-start gap-2 relative w-full"
-  }, children, PairComponent ? /*#__PURE__*/React__default["default"].createElement(PairComponent, _extends$3({
-    error: error
-  }, props)) : null), error ? /*#__PURE__*/React__default["default"].createElement(InputError, {
-    error: error
-  }) : null);
+    className: srLabelInputContainerClassName
+  }, children, typeof PairComponent === "function" ? /*#__PURE__*/React__default["default"].createElement(PairComponent, props) : null), typeof ErrorComponent === "function" && error ? /*#__PURE__*/React__default["default"].createElement(ErrorComponent, props) : error ? /*#__PURE__*/React__default["default"].createElement(InputError, props) : null);
 };
 const baseClasses = `
-  @dy flex gap-2
-  @wh w-full
+  @pn relative
+  @dy flex
+  @gp gap-2
   @fxd flex-col
+  @wh w-full
+`;
+const baseLabelClassName$1 = `
+  @mn mb-0`;
+const baseInputContainerClassName$3 = `
+  @wh w-full
+  @dy flex
+  @jyc justify-start
+  @ani items-center
   @pn relative
 `;
 
@@ -7183,7 +7195,6 @@ const TextInput = /*#__PURE__*/React.forwardRef((props, ref) => {
     enableTypeChanging = false,
     inputClassName,
     Icon,
-    error,
     name,
     ChangeInputTypeButton,
     inputErrorClassName = `@brc border-red-500`,
@@ -7653,7 +7664,7 @@ const UploadFileInput = props => {
     containerClassName,
     BACKEND_URL = "",
     fileCardClassName,
-    FileComp,
+    FileComponent,
     fileCardImageClassName,
     deleteFileButtonCointainerClassName
   } = props;
@@ -7742,7 +7753,7 @@ const UploadFileInput = props => {
     fileCardClassName: fileCardClassName,
     fileCardImageClassName: fileCardImageClassName,
     deleteFileButtonCointainerClassName: deleteFileButtonCointainerClassName,
-    FileComp: FileComp,
+    FileComponent: FileComponent,
     BACKEND_URL: BACKEND_URL
   })));
 };
@@ -7755,7 +7766,7 @@ const FilesRow = ({
   fileCardClassName,
   fileCardImageClassName,
   deleteFileButtonCointainerClassName,
-  FileComp,
+  FileComponent,
   BACKEND_URL
 }) => {
   // console.log(`🚀 ~ FilesRow ~ files`, files);
@@ -7781,7 +7792,7 @@ const FilesRow = ({
       DeleteFileButton: DeleteFileButton,
       fileCardImageClassName: fileCardImageClassName,
       deleteFileButtonCointainerClassName: deleteFileButtonCointainerClassName,
-      FileComp: FileComp,
+      FileComponent: FileComponent,
       BACKEND_URL: BACKEND_URL
     });
   }) : null;
@@ -7795,7 +7806,7 @@ const FileCard = ({
   fileCardClassName,
   fileCardImageClassName,
   deleteFileButtonCointainerClassName,
-  FileComp
+  FileComponent
 }) => {
   const src = React.useMemo(() => {
     if (file.url) {
@@ -7812,7 +7823,7 @@ const FileCard = ({
   }, file?.type?.includes(`image/`) || file?.mime?.includes(`image/`) ? /*#__PURE__*/React__default["default"].createElement("img", {
     src: src,
     className: srFileCardImageClassName
-  }) : typeof FileComp === "function" ? /*#__PURE__*/React__default["default"].createElement(FileComp, {
+  }) : typeof FileComponent === "function" ? /*#__PURE__*/React__default["default"].createElement(FileComponent, {
     file: file
   }) : null, /*#__PURE__*/React__default["default"].createElement("div", {
     className: srDeleteFileButtonCointainerClassName
@@ -7938,18 +7949,18 @@ const DropdownInput = props => {
           onChange(e);
         },
         className: activeMatcher(item, value) ? activeItemClassName : baseItemClassName
-      }, typeof InnerComp === "function" ? /*#__PURE__*/React__default["default"].createElement(InnerComp, {
+      }, typeof InnerComp === "function" ? /*#__PURE__*/React__default["default"].createElement(InnerComp, _extends$3({}, props, {
         item: item
-      }) : item?.title);
+      })) : item?.title);
     }) : null,
     dropdownClassName: dropdownClassName,
     dropdownContainerClassName: inputContainerClassName,
     className: srInputClassName
-  }, typeof InnerComp === "function" && activeItem ? /*#__PURE__*/React__default["default"].createElement(InnerComp, {
+  }, typeof InnerComp === "function" && activeItem ? /*#__PURE__*/React__default["default"].createElement(InnerComp, _extends$3({}, props, {
     item: activeItem
-  }) : activeItem?.title ? activeItem?.title : placeholder, typeof Icon === "function" ? /*#__PURE__*/React__default["default"].createElement(Icon, {
+  })) : activeItem?.title ? activeItem?.title : placeholder, typeof Icon === "function" ? /*#__PURE__*/React__default["default"].createElement(Icon, _extends$3({}, props, {
     isDropdownOpen: isDropdownOpen
-  }) : null));
+  })) : null));
 };
 const baseInputClassName = `
   @cr cursor-pointer

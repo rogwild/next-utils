@@ -13,7 +13,6 @@ const TextInput = forwardRef((props, ref) => {
     enableTypeChanging = false,
     inputClassName,
     Icon,
-    error,
     name,
     ChangeInputTypeButton,
     inputErrorClassName = `@brc border-red-500`,

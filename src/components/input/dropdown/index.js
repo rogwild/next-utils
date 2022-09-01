@@ -68,7 +68,7 @@ const DropdownInput = (props) => {
                       }
                     >
                       {typeof InnerComp === "function" ? (
-                        <InnerComp item={item} />
+                        <InnerComp {...props} item={item} />
                       ) : (
                         item?.title
                       )}
@@ -82,14 +82,14 @@ const DropdownInput = (props) => {
         className={srInputClassName}
       >
         {typeof InnerComp === "function" && activeItem ? (
-          <InnerComp item={activeItem} />
+          <InnerComp {...props} item={activeItem} />
         ) : activeItem?.title ? (
           activeItem?.title
         ) : (
           placeholder
         )}
         {typeof Icon === "function" ? (
-          <Icon isDropdownOpen={isDropdownOpen} />
+          <Icon {...props} isDropdownOpen={isDropdownOpen} />
         ) : null}
       </SmartButton>
     </InputOverlay>

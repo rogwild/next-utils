@@ -39,6 +39,9 @@ const FormPage = () => {
         label: "Text input",
         placeholder: `Project title*`,
         defaultValue: ``,
+        LabelComponent,
+        ErrorComponent,
+        labelContainerClassName: `@gp gap-4`,
         checkerFuncs: [`checkRequiredField`],
         inputContainerClassName: ``,
         inputClassName: `@bdc bg-white @pg p-3`,
@@ -116,6 +119,7 @@ const FormPage = () => {
         inputContainerClassName: `@bdc bg-white @bxsw shadow-lg`,
         dropdownClassName: `@pg p-2 @dy flex @fxd flex-col @gp gap-1`,
         baseItemClassName: `@brw border @brc border-transparent hover:border-black`,
+        Icon: DropdownIcon,
         activeItemClassName: `@brw border @brc border-black`,
         activeMatcher: (item, value) => item.slug === value,
         setter: (item) => item.slug,
@@ -148,7 +152,7 @@ const FormPage = () => {
         containerClassName: `@gp gap-2`,
         BeforeUploadFileIcon: BeforeUploadFileIcon,
         DeleteFileButton: DeleteFileButton,
-        FileComp: FileComp,
+        FileComponent: FileComponent,
         BACKEND_URL: "http://localhost:1337",
         type: `file`,
       },
@@ -160,9 +164,9 @@ const FormPage = () => {
     inputPropsType: `object`,
   });
 
-  // useEffect(() => {
-  //   setErrors({ title: { id: "wrong", message: "wrong password" } });
-  // }, [inputsValues]);
+  useEffect(() => {
+    setErrors({ title: { id: "wrong", message: "wrong password" } });
+  }, [inputsValues]);
 
   console.log(`🚀 ~ FormPage ~ inputs`, inputs);
 
@@ -254,7 +258,9 @@ const CheckIcon = () => {
 };
 
 const BeforeUploadFileIcon = () => {
-  return <div className="w-5 h-5 bg-green-500 rounded-full"></div>;
+  return (
+    <div className="w-5 h-5 flex flex-shrink-0 bg-green-500 rounded-full"></div>
+  );
 };
 
 const DeleteFileButton = ({ onClick }) => {
@@ -263,7 +269,7 @@ const DeleteFileButton = ({ onClick }) => {
   );
 };
 
-const FileComp = ({ file }) => {
+const FileComponent = ({ file }) => {
   return (
     <div className="absolute inset-0 flex items-center justify-center flex-col">
       <p className="text-black">{getShortFileName(file.name)}</p>
@@ -281,4 +287,39 @@ const getShortFileName = (string) => {
   }
 
   return string;
+};
+
+const LabelComponent = (props) => {
+  const { label } = props;
+  console.log(`🚀 ~ LabelComponent ~ props`, props);
+
+  return (
+    <div className="w-full">
+      <p className="text-lg text-blue-500 font-bold">{label}</p>
+    </div>
+  );
+};
+
+const DropdownIcon = (props) => {
+  console.log(`🚀 ~ DropdownIcon ~ props`, props);
+
+  return (
+    <div
+      className={`absolute right-2 top-1 w-3 h-3 bg-green-500 transform duration-200 transition ${
+        props.isDropdownOpen ? "rotate-90" : "rotate-45"
+      }`}
+    ></div>
+  );
+};
+
+const ErrorComponent = (props) => {
+  console.log(`🚀 ~ ErrorComponent ~ props`, props);
+
+  return (
+    <div className="w-full">
+      <p className="text-xl text-orange-500 capitalize">
+        {props.error?.message}
+      </p>
+    </div>
+  );
 };

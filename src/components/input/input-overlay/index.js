@@ -2,24 +2,47 @@ import React from "react";
 import InputError from "../input-error";
 import useStyleRewriter from "../../../hooks/use-style-rewriter";
 
-const InputOverlay = ({
-  children,
-  label,
-  inputContainerClasses = ``,
-  error,
-  PairComponent = () => <></>,
-  ...props
-}) => {
-  const srClasses = useStyleRewriter(baseClasses, inputContainerClasses);
+const InputOverlay = (props) => {
+  const {
+    children,
+    label,
+    labelContainerClassName = ``,
+    labelClassName = ``,
+    labelInputContainerClassName = ``,
+    error,
+    ErrorComponent,
+    PairComponent,
+    LabelComponent,
+  } = props;
+
+  const srLabelContainerClassName = useStyleRewriter(
+    baseClasses,
+    labelContainerClassName
+  );
+  const srLabelClassName = useStyleRewriter(baseLabelClassName, labelClassName);
+  const srLabelInputContainerClassName = useStyleRewriter(
+    baseInputContainerClassName,
+    labelInputContainerClassName
+  );
 
   return (
-    <div className={srClasses}>
-      {label ? <p className="mb-0">{label}</p> : null}
-      <div className="flex justify-start gap-2 relative w-full">
+    <div className={srLabelContainerClassName}>
+      {typeof LabelComponent === "function" && label ? (
+        <LabelComponent {...props} />
+      ) : label ? (
+        <p className={srLabelClassName}>{label}</p>
+      ) : null}
+      <div className={srLabelInputContainerClassName}>
         {children}
-        {PairComponent ? <PairComponent error={error} {...props} /> : null}
+        {typeof PairComponent === "function" ? (
+          <PairComponent {...props} />
+        ) : null}
       </div>
-      {error ? <InputError error={error} /> : null}
+      {typeof ErrorComponent === "function" && error ? (
+        <ErrorComponent {...props} />
+      ) : error ? (
+        <InputError {...props} />
+      ) : null}
     </div>
   );
 };
@@ -27,8 +50,20 @@ const InputOverlay = ({
 export default InputOverlay;
 
 const baseClasses = `
-  @dy flex gap-2
-  @wh w-full
+  @pn relative
+  @dy flex
+  @gp gap-2
   @fxd flex-col
+  @wh w-full
+`;
+
+const baseLabelClassName = `
+  @mn mb-0`;
+
+const baseInputContainerClassName = `
+  @wh w-full
+  @dy flex
+  @jyc justify-start
+  @ani items-center
   @pn relative
 `;
