@@ -16,12 +16,12 @@ const InputOverlay = (props) => {
   } = props;
 
   const srLabelContainerClassName = useStyleRewriter(
-    baseClasses,
+    baseLabelContainerClasses,
     labelContainerClassName
   );
   const srLabelClassName = useStyleRewriter(baseLabelClassName, labelClassName);
   const srLabelInputContainerClassName = useStyleRewriter(
-    baseInputContainerClassName,
+    baseLabelInputContainerClassName,
     labelInputContainerClassName
   );
 
@@ -49,7 +49,7 @@ const InputOverlay = (props) => {
 
 export default InputOverlay;
 
-const baseClasses = `
+const baseLabelContainerClasses = `
   @pn relative
   @dy flex
   @gp gap-2
@@ -60,7 +60,7 @@ const baseClasses = `
 const baseLabelClassName = `
   @mn mb-0`;
 
-const baseInputContainerClassName = `
+const baseLabelInputContainerClassName = `
   @wh w-full
   @dy flex
   @jyc justify-start

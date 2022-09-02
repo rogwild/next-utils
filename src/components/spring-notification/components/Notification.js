@@ -52,7 +52,9 @@ const Notification = React.forwardRef((props, ref) => {
       <div className={srContentContainerClassName} ref={ref}>
         {Child ? <Child {...props} /> : null}
         {showDefault ? (
-          <div className="flex flex-col items-start gap-2">
+          <div
+            className={`flex flex-col items-start ${message ? "gap-2" : ""}`}
+          >
             <div className={`markdown ${srHeaderClassName}`}>
               <ReactMarkdown>{title}</ReactMarkdown>
             </div>

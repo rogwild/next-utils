@@ -12,8 +12,9 @@ const CheckboxInput = (props) => {
     inputContainerClassName,
     labelClassName,
     inputClassName,
-    activeInputClassName = `@bdc bg-gray-800`,
+    checkedInputClassName = ``,
     Icon,
+    InnerComponent,
   } = props;
   const [localValue, setLocalValue] = useState(value);
 
@@ -30,7 +31,7 @@ const CheckboxInput = (props) => {
 
   const resInputlassName = useStyleRewriter(
     srInputClassName,
-    value ? activeInputClassName : ""
+    value ? checkedInputClassName : ""
   );
 
   useEffect(() => {
@@ -58,7 +59,9 @@ const CheckboxInput = (props) => {
     <InputOverlay {...props} label={null} error={error}>
       <div className={srInputContainerClassName}>
         <label htmlFor={id} className={resInputlassName}>
-          {localValue && typeof Icon === "function" ? <Icon /> : null}
+          {localValue && typeof Icon === "function" ? (
+            <Icon {...props} isChecked={localValue} />
+          ) : null}
           <input
             type="checkbox"
             id={id}
@@ -68,12 +71,20 @@ const CheckboxInput = (props) => {
             checked={localValue}
           />
         </label>
-        <p
-          onClick={() => setLocalValue(!localValue)}
-          className={srLabelClassName}
-        >
-          {label}
-        </p>
+        {typeof InnerComponent === "function" ? (
+          <InnerComponent
+            {...props}
+            onClick={() => setLocalValue(!localValue)}
+            isChecked={localValue}
+          />
+        ) : label ? (
+          <p
+            onClick={() => setLocalValue(!localValue)}
+            className={srLabelClassName}
+          >
+            {label}
+          </p>
+        ) : null}
       </div>
     </InputOverlay>
   );
@@ -82,23 +93,17 @@ const CheckboxInput = (props) => {
 export default CheckboxInput;
 
 const baseInputContainerClassName = `
-  @dy flex gap-2
+  @dy flex
+  @gp gap-2
   @ani items-center
 `;
 
 const baseInputClassName = `
-  @wh w-5
-  @ht h-5
-  @dy flex shrink-0
+  @dy flex
+  @fxsk shrink-0
   @ani items-center
   @jyc justify-center
-  @tndn duration-200
-  @oe outline-none
-  @brc border-primary-900
-  @brw border
-  @brr rounded-sm
   @cr cursor-pointer
-  @bdc bg-transparent
 `;
 
 const baseLabelClassName = `

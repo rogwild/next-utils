@@ -115,7 +115,7 @@ const ModalComponent = ({
         }}
       >
         <div
-          className={`relative w-screen h-90vh bg-white  rounded-t-2xl pt-5`}
+          className={`relative w-screen h-[90vh] bg-white  rounded-t-2xl pt-5`}
         >
           <div className="absolute bg-white w-12 h-2 -top-4 left-1/2 transform -translate-x-1/2 rounded-full" />
           <div

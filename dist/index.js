@@ -1137,6 +1137,7 @@ const fullByShort = {
   "@dew": "@divideWidth",
   "@fl": "@fill",
   "@fx": "@flex",
+  "@fxsk": "@flexShrink",
   "@fxd": "@flexDirection",
   "@fxg": "@flexGrow",
   "@fxs": "@flexShrink",
@@ -1242,6 +1243,7 @@ const shortByFull = {
   "@divideWidth": "@dew",
   "@fill": "@fl",
   "@flex": "@fx",
+  "@flexShrink": "@fxsk",
   "@flexDirection": "@fxd",
   "@flexGrow": "@fxg",
   "@flexShrink": "@fxs",
@@ -1691,7 +1693,7 @@ const checkEmailMask = ({
       errors,
       field,
       id: `mask`,
-      message: `Допустимый формат`
+      message: `Invalid E-mail address format`
     });
   }
 };
@@ -1708,7 +1710,7 @@ const checkPhoneMask = ({
       errors,
       field,
       id: `mask`,
-      message: `Правильный формат: +79991234567`
+      message: `Invalid phone format`
     });
   }
 };
@@ -1726,7 +1728,7 @@ const checkPassword = ({
       errors,
       field,
       id: `length`,
-      message: `Пароль слишком короткий (мин. 8 символов)`
+      message: `Password is too short, minimum ${min} characters`
     });
   }
 };
@@ -1742,7 +1744,7 @@ const checkRequiredField = ({
       errors,
       field,
       id: `required`,
-      message: `Обязательное поле`
+      message: `Reqired field`
     });
   }
 };
@@ -1763,7 +1765,7 @@ const checkEqualTo = ({
       errors,
       field,
       id: `equal`,
-      message: `Поля не совпадают`
+      message: `Not equal`
     });
   }
 };
@@ -2292,7 +2294,7 @@ const DropdownContainer = ({
   className,
   dropdownRef
 }) => {
-  const srClassName = useStyleRewriter$5(baseClasses$3, className);
+  const srClassName = useStyleRewriter$5(baseClasses$2, className);
   const srContainerClassName = useStyleRewriter$5(baseContainerClassName$3, containerClassName);
   return /*#__PURE__*/React__default["default"].createElement("div", {
     ref: dropdownRef,
@@ -2308,7 +2310,7 @@ const baseContainerClassName$3 = `
   @zi z-50
   @it top-full left-0
 `;
-const baseClasses$3 = `
+const baseClasses$2 = `
   @dy flex
   @fxd flex-col
   @pn relative
@@ -2326,7 +2328,7 @@ const Tooltip = ({
   className,
   tooltipPosition
 }) => {
-  const srClasses = useStyleRewriter$4(baseClasses$2, className);
+  const srClasses = useStyleRewriter$4(baseClasses$1, className);
   const tooltipClasses = React.useMemo(() => {
     switch (tooltipPosition) {
       case "left-bottom":
@@ -2359,7 +2361,7 @@ const Tooltip = ({
     className: `${visible ? "opacity-100 w-auto" : "opacity-0"} ${srClasses} ${tooltipClasses}`
   }, children);
 };
-const baseClasses$2 = `
+const baseClasses$1 = `
     @pn absolute
     @wh w-fit
     @it left-0 top-0
@@ -6897,7 +6899,7 @@ const ModalComponent = ({
       y
     }
   }), /*#__PURE__*/React__default["default"].createElement("div", {
-    className: `relative w-screen h-90vh bg-white  rounded-t-2xl pt-5`
+    className: `relative w-screen h-[90vh] bg-white  rounded-t-2xl pt-5`
   }, /*#__PURE__*/React__default["default"].createElement("div", {
     className: "absolute bg-white w-12 h-2 -top-4 left-1/2 transform -translate-x-1/2 rounded-full"
   }), /*#__PURE__*/React__default["default"].createElement("div", {
@@ -6970,10 +6972,10 @@ const InputError = ({
   error
 }) => {
   return error.message ? /*#__PURE__*/React__default["default"].createElement("p", {
-    className: baseClasses$1
+    className: baseClasses
   }, error.message) : null;
 };
-const baseClasses$1 = `@ttc text-red-500 @fts text-[12px] @ttt normal-case @wh w-fit @leh leading-none text-left`;
+const baseClasses = `@ttc text-red-500 @fts text-[12px] @ttt normal-case @wh w-fit @leh leading-none text-left`;
 
 const InputOverlay = props => {
   const {
@@ -6987,9 +6989,9 @@ const InputOverlay = props => {
     PairComponent,
     LabelComponent
   } = props;
-  const srLabelContainerClassName = useStyleRewriter$6(baseClasses, labelContainerClassName);
+  const srLabelContainerClassName = useStyleRewriter$6(baseLabelContainerClasses, labelContainerClassName);
   const srLabelClassName = useStyleRewriter$6(baseLabelClassName$1, labelClassName);
-  const srLabelInputContainerClassName = useStyleRewriter$6(baseInputContainerClassName$3, labelInputContainerClassName);
+  const srLabelInputContainerClassName = useStyleRewriter$6(baseLabelInputContainerClassName, labelInputContainerClassName);
   return /*#__PURE__*/React__default["default"].createElement("div", {
     className: srLabelContainerClassName
   }, typeof LabelComponent === "function" && label ? /*#__PURE__*/React__default["default"].createElement(LabelComponent, props) : label ? /*#__PURE__*/React__default["default"].createElement("p", {
@@ -6998,7 +7000,7 @@ const InputOverlay = props => {
     className: srLabelInputContainerClassName
   }, children, typeof PairComponent === "function" ? /*#__PURE__*/React__default["default"].createElement(PairComponent, props) : null), typeof ErrorComponent === "function" && error ? /*#__PURE__*/React__default["default"].createElement(ErrorComponent, props) : error ? /*#__PURE__*/React__default["default"].createElement(InputError, props) : null);
 };
-const baseClasses = `
+const baseLabelContainerClasses = `
   @pn relative
   @dy flex
   @gp gap-2
@@ -7007,7 +7009,7 @@ const baseClasses = `
 `;
 const baseLabelClassName$1 = `
   @mn mb-0`;
-const baseInputContainerClassName$3 = `
+const baseLabelInputContainerClassName = `
   @wh w-full
   @dy flex
   @jyc justify-start
@@ -7025,14 +7027,15 @@ const CheckboxInput = props => {
     inputContainerClassName,
     labelClassName,
     inputClassName,
-    activeInputClassName = `@bdc bg-gray-800`,
-    Icon
+    checkedInputClassName = ``,
+    Icon,
+    InnerComponent
   } = props;
   const [localValue, setLocalValue] = React.useState(value);
   const srInputContainerClassName = useStyleRewriter$6(baseInputContainerClassName$2, inputContainerClassName);
   const srLabelClassName = useStyleRewriter$6(baseLabelClassName, labelClassName);
   const srInputClassName = useStyleRewriter$6(baseInputClassName$5, inputClassName, false);
-  const resInputlassName = useStyleRewriter$6(srInputClassName, value ? activeInputClassName : "");
+  const resInputlassName = useStyleRewriter$6(srInputClassName, value ? checkedInputClassName : "");
   React.useEffect(() => {
     if (value !== localValue) {
       setLocalValue(value);
@@ -7064,35 +7067,34 @@ const CheckboxInput = props => {
   }, /*#__PURE__*/React__default["default"].createElement("label", {
     htmlFor: id,
     className: resInputlassName
-  }, localValue && typeof Icon === "function" ? /*#__PURE__*/React__default["default"].createElement(Icon, null) : null, /*#__PURE__*/React__default["default"].createElement("input", {
+  }, localValue && typeof Icon === "function" ? /*#__PURE__*/React__default["default"].createElement(Icon, _extends$3({}, props, {
+    isChecked: localValue
+  })) : null, /*#__PURE__*/React__default["default"].createElement("input", {
     type: "checkbox",
     id: id,
     className: "hidden",
     onChange: () => {},
     onClick: () => setLocalValue(!localValue),
     checked: localValue
-  })), /*#__PURE__*/React__default["default"].createElement("p", {
+  })), typeof InnerComponent === "function" ? /*#__PURE__*/React__default["default"].createElement(InnerComponent, _extends$3({}, props, {
+    onClick: () => setLocalValue(!localValue),
+    isChecked: localValue
+  })) : label ? /*#__PURE__*/React__default["default"].createElement("p", {
     onClick: () => setLocalValue(!localValue),
     className: srLabelClassName
-  }, label)));
+  }, label) : null));
 };
 const baseInputContainerClassName$2 = `
-  @dy flex gap-2
+  @dy flex
+  @gp gap-2
   @ani items-center
 `;
 const baseInputClassName$5 = `
-  @wh w-5
-  @ht h-5
-  @dy flex shrink-0
+  @dy flex
+  @fxsk shrink-0
   @ani items-center
   @jyc justify-center
-  @tndn duration-200
-  @oe outline-none
-  @brc border-primary-900
-  @brw border
-  @brr rounded-sm
   @cr cursor-pointer
-  @bdc bg-transparent
 `;
 const baseLabelClassName = `
   @cr cursor-pointer
@@ -8280,7 +8282,7 @@ const Notification = /*#__PURE__*/React__default["default"].forwardRef((props, r
     className: srContentContainerClassName,
     ref: ref
   }, Child ? /*#__PURE__*/React__default["default"].createElement(Child, props) : null, showDefault ? /*#__PURE__*/React__default["default"].createElement("div", {
-    className: "flex flex-col items-start gap-2"
+    className: `flex flex-col items-start ${message ? "gap-2" : ""}`
   }, /*#__PURE__*/React__default["default"].createElement("div", {
     className: `markdown ${srHeaderClassName}`
   }, /*#__PURE__*/React__default["default"].createElement(ReactMarkdown__default["default"], null, title)), /*#__PURE__*/React__default["default"].createElement("div", {

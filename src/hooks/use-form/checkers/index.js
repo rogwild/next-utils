@@ -71,7 +71,7 @@ export const checkEmailMask = ({ field, value, errors }) => {
       errors,
       field,
       id: `mask`,
-      message: `Допустимый формат`,
+      message: `Invalid E-mail address format`,
     });
   }
 };
@@ -83,7 +83,7 @@ const checkPhoneMask = ({ field, value, errors }) => {
       errors,
       field,
       id: `mask`,
-      message: `Правильный формат: +79991234567`,
+      message: `Invalid phone format`,
     });
   }
 };
@@ -95,7 +95,7 @@ export const checkPassword = ({ field, value, errors, title }) => {
       errors,
       field,
       id: `length`,
-      message: `Пароль слишком короткий (мин. 8 символов)`,
+      message: `Password is too short, minimum ${min} characters`,
     });
   }
 };
@@ -112,7 +112,7 @@ export const checkRequiredField = ({ field, value, errors }) => {
       errors,
       field,
       id: `required`,
-      message: `Обязательное поле`,
+      message: `Reqired field`,
     });
   }
 };
@@ -127,7 +127,7 @@ export const checkEqualTo = ({ field, value, errors, config, inputs }) => {
       errors,
       field,
       id: `equal`,
-      message: `Поля не совпадают`,
+      message: `Not equal`,
     });
   }
 };
