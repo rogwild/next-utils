@@ -9,6 +9,7 @@ var reactDom = require('react-dom');
 var reactUseGesture = require('react-use-gesture');
 var Calendar = require('react-calendar');
 var ReactMarkdown = require('react-markdown');
+var react = require('@use-gesture/react');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -1190,6 +1191,7 @@ const fullByShort = {
   "@se": "@stroke",
   "@sew": "@strokeWidth",
   "@tel": "@tableLayout",
+  "@th": "@touchAction",
   "@tta": "@textAlign",
   "@ttc": "@textColor",
   "@ttd": "@textDecoration",
@@ -1298,6 +1300,7 @@ const shortByFull = {
   "@stroke": "@se",
   "@strokeWidth": "@sew",
   "@tableLayout": "@tel",
+  "@touchAction": "@th",
   "@textAlign": "@tta",
   "@textColor": "@ttc",
   "@textDecoration": "@ttd",
@@ -2295,7 +2298,7 @@ const DropdownContainer = ({
   dropdownRef
 }) => {
   const srClassName = useStyleRewriter$5(baseClasses$2, className);
-  const srContainerClassName = useStyleRewriter$5(baseContainerClassName$3, containerClassName);
+  const srContainerClassName = useStyleRewriter$5(baseContainerClassName$4, containerClassName);
   return /*#__PURE__*/React__default["default"].createElement("div", {
     ref: dropdownRef,
     className: srContainerClassName
@@ -2303,7 +2306,7 @@ const DropdownContainer = ({
     className: srClassName
   }, children));
 };
-const baseContainerClassName$3 = `
+const baseContainerClassName$4 = `
   @pn absolute
   @wh w-full
   @mn mt-2
@@ -7135,7 +7138,7 @@ const Input = /*#__PURE__*/React.forwardRef(({
   const baseClasses = useStyleRewriter$6(baseClassName, typeClasses, false);
   const statusClasses = disabled ? useStyleRewriter$6(baseClasses, inputDisabledClassName, false) : error ? useStyleRewriter$6(baseClasses, inputErrorClassName, false) : baseClasses;
   const srClasses = useStyleRewriter$6(statusClasses, inputClassName);
-  const srInputContainerClassName = useStyleRewriter$6(baseContainerClassName$2, inputContainerClassName);
+  const srInputContainerClassName = useStyleRewriter$6(baseContainerClassName$3, inputContainerClassName);
   const baseDropdownContainerClasses = `@wh w-full @mn mt-1 @ht h-200px @ow overflow-y-scroll ${dropdownPosition === `right` ? `@it left-auto right-0` : `@it inset-x-0`}`;
   const srDropdownContainerClasses = useStyleRewriter$6(baseDropdownContainerClasses, dropdownContainerClasses, true);
   return /*#__PURE__*/React__default["default"].createElement("div", {
@@ -7171,7 +7174,7 @@ const classesByType = {
   select: `@cr cursor-pointer`,
   text: `@cr cursor-text`
 };
-const baseContainerClassName$2 = `w-full relative`;
+const baseContainerClassName$3 = `w-full relative`;
 const baseClassName = `
   @bdc bg-transparent
   @ttc text-black
@@ -7254,7 +7257,7 @@ const RangeInput = ({
     onChange(e, value);
   };
 
-  const srContainerClassName = useStyleRewriter$6(baseContainerClassName$1, containerClassName);
+  const srContainerClassName = useStyleRewriter$6(baseContainerClassName$2, containerClassName);
   const valueDividedByMaxValue = value / maxValue * 100 || 0;
   const srRangeClassName = useStyleRewriter$6(baseRangeClassName, rangeClassName);
   const srActiveRangeClassName = useStyleRewriter$6(baseActiveRangeClassName, activeRangeClassName);
@@ -7316,7 +7319,7 @@ const RangeInput = ({
   }));
 };
 
-const baseContainerClassName$1 = `
+const baseContainerClassName$2 = `
   @wh w-full
   @dy flex
   @ani items-center
@@ -7558,7 +7561,7 @@ const OtpInput = props => {
     }
   }, [activeInput, getRightValue, length, otpValues]);
   const allInputs = Array(length).fill(``);
-  const srContainerClassName = useStyleRewriter$6(baseContainerClassName, containerClassName);
+  const srContainerClassName = useStyleRewriter$6(baseContainerClassName$1, containerClassName);
   const srInputClassName = useStyleRewriter$6(baseInputClassName$3, inputClassName);
   return /*#__PURE__*/React__default["default"].createElement(InputOverlay, props, /*#__PURE__*/React__default["default"].createElement("div", {
     className: srContainerClassName
@@ -7583,7 +7586,7 @@ const OtpInput = props => {
 
   }))));
 };
-const baseContainerClassName = `
+const baseContainerClassName$1 = `
   @dy flex gap-2
   @jyc justify-center
   @ani items-center
@@ -8427,12 +8430,301 @@ var SpringNotification = {
   useNotifications
 };
 
+function ReactSpringGallery({
+  media,
+  galleryClassName = "",
+  mediaItemClassName = "",
+  imageItemClassName = "",
+  videoItemClassName = "",
+  activeSlide = 0,
+  setActiveSlide,
+  PreviousNavItemComponent,
+  NextNavItemComponent,
+  navItemClassName = "",
+  children,
+  setShow
+}) {
+  const srGalleryClassName = useStyleRewriter$6(baseGalleryClassName, galleryClassName);
+  const srMediaItemClassName = useStyleRewriter$6(baseMediaItemClassName, mediaItemClassName);
+  const srImageItemClassName = useStyleRewriter$6(baseImageItemClassName, imageItemClassName);
+  const srVideoItemClassName = useStyleRewriter$6(baseVideoItemClassName, videoItemClassName);
+  const isDesktop = useBreakpoint$1(`md`);
+  const [width, setWidth] = React.useState();
+  React.useEffect(() => {
+    if (typeof window === `undefined`) {
+      return;
+    }
+
+    if (isDesktop) {
+      setWidth(window.innerWidth * 0.8);
+    } else {
+      setWidth(window.innerWidth);
+    }
+  }, [isDesktop]);
+  const ref = React.useRef(activeSlide);
+  const [props, api] = useSprings(media.length, i => ({
+    x: i === activeSlide ? 0 : width * (i - activeSlide),
+    display: i === activeSlide ? `block` : `none`
+  }));
+  const bind = react.useDrag(({
+    active,
+    movement: [mx],
+    direction: [xDir],
+    cancel
+  }) => {
+    if (active && Math.abs(mx) > width / 10) {
+      ref.current = clamp(ref.current + (xDir > 0 ? -1 : 1), 0, media.length - 1);
+      cancel();
+    }
+
+    api.start(i => {
+      if (i < ref.current - 1 || i > ref.current + 1) return {
+        display: `none`
+      };
+      const x = (i - ref.current) * width + (active ? mx : 0);
+      setActiveSlide(ref.current);
+      return {
+        x,
+        display: `block`
+      };
+    });
+  });
+
+  const setSlidePosition = () => api.start(i => {
+    if (i < ref.current - 1 || i > ref.current + 1) return {
+      display: `none`
+    };
+    const x = i === ref.current ? 0 : width * (i - ref.current);
+    return {
+      x,
+      display: `block`
+    };
+  });
+
+  const mediaLength = media.length;
+  React.useEffect(() => {
+    if (ref.current !== activeSlide) {
+      const next = activeSlide > ref.current;
+      const dirMultiplier = next ? 1 : -1;
+
+      for (let index = ref.current; next ? index <= activeSlide : index >= activeSlide; index += dirMultiplier) {
+        if (index >= 0 && index < mediaLength) {
+          ref.current = index;
+          setSlidePosition();
+        }
+      }
+    }
+  }, [activeSlide]);
+  return /*#__PURE__*/React__default["default"].createElement(React__default["default"].Fragment, null, mediaLength > 1 ? typeof PreviousNavItemComponent === "function" ? /*#__PURE__*/React__default["default"].createElement(PreviousNavItemComponent, {
+    onClick: () => {
+      ref.current = ref.current ? ref.current - 1 : 0;
+      setActiveSlide(ref.current);
+      setSlidePosition();
+    }
+  }) : /*#__PURE__*/React__default["default"].createElement(NavItem, {
+    next: false,
+    navItemClassName: navItemClassName,
+    onClick: () => {
+      ref.current = ref.current ? ref.current - 1 : 0;
+      setActiveSlide(ref.current);
+      setSlidePosition();
+    }
+  }) : null, /*#__PURE__*/React__default["default"].createElement("div", {
+    className: srGalleryClassName
+  }, props.map((item, index) => {
+    const {
+      x,
+      display
+    } = item;
+    const mediaObj = media[index];
+    return /*#__PURE__*/React__default["default"].createElement(animated.div, _extends$3({}, bind(), {
+      key: `${mediaObj.id}-${index}`,
+      className: srMediaItemClassName,
+      style: {
+        display,
+        x
+      }
+    }), mediaObj.renderType === `image` ? /*#__PURE__*/React__default["default"].createElement("img", {
+      src: mediaObj.url,
+      className: srImageItemClassName
+    }) : /*#__PURE__*/React__default["default"].createElement("video", {
+      src: url,
+      controls: true,
+      className: srVideoItemClassName
+    }));
+  }), mediaLength > 1 ? typeof NextNavItemComponent === "function" ? /*#__PURE__*/React__default["default"].createElement(NextNavItemComponent, {
+    onClick: () => {
+      const lastItem = media.length - 1;
+      ref.current = ref.current < lastItem ? ref.current + 1 : lastItem;
+      setActiveSlide(ref.current);
+      setSlidePosition();
+    }
+  }) : /*#__PURE__*/React__default["default"].createElement(NavItem, {
+    next: true,
+    navItemClassName: navItemClassName,
+    onClick: () => {
+      const lastItem = media.length - 1;
+      ref.current = ref.current < lastItem ? ref.current + 1 : lastItem;
+      setActiveSlide(ref.current);
+      setSlidePosition();
+    }
+  }) : null));
+}
+
+const clamp = (number, lower, upper) => {
+  number = +number;
+  lower = +lower;
+  upper = +upper;
+  lower = lower === lower ? lower : 0;
+  upper = upper === upper ? upper : 0;
+
+  if (number === number) {
+    number = number <= upper ? number : upper;
+    number = number >= lower ? number : lower;
+  }
+
+  return number;
+}; // true = next, false = prev
+
+
+const NavItem = ({
+  next,
+  onClick,
+  navItemClassName
+}) => {
+  const srNavItemClassName = useStyleRewriter$6(baseNavItemClassName, navItemClassName);
+  return /*#__PURE__*/React__default["default"].createElement("div", {
+    className: `z-10 absolute  ${next ? `right-2` : `left-2`}  flex items-center`
+  }, /*#__PURE__*/React__default["default"].createElement("div", {
+    onClick: onClick,
+    className: srNavItemClassName
+  }, /*#__PURE__*/React__default["default"].createElement(ChevronIcon, {
+    className: `w-[26px] ${next ? `` : `rotate-180`}`
+  })));
+};
+
+const baseGalleryClassName = `
+  @ht h-full
+  @wh w-full
+  @pn relative
+  @ow overflow-hidden
+  @dy flex
+  @jyc justify-center
+  @ani items-center
+`;
+const baseMediaItemClassName = `
+  @pn absolute
+  @wh w-full
+  @ht h-full
+  @ow overflow-hidden
+  @th touch-none
+`;
+const baseImageItemClassName = `
+  @wh w-full
+  @ht h-full
+  @pre pointer-events-none
+  @th touch-none
+  @urs select-none
+  @otf object-cover
+`;
+const baseVideoItemClassName = `
+  @wh w-full
+  @ht h-full
+`;
+const baseNavItemClassName = `
+  @dy flex
+  @jyc justify-center
+  @ani items-center
+  @wh w-[32px]
+  @ht h-[50px]
+  @brr rounded-full
+  @cr cursor-pointer
+  @bdc bg-black
+  @bdo bg-opacity-30
+  @ttc text-white`;
+
+const ChevronIcon = ({
+  className
+}) => {
+  return /*#__PURE__*/React__default["default"].createElement("svg", {
+    viewBox: "0 0 36 36",
+    fill: "none",
+    xmlns: "http://www.w3.org/2000/svg",
+    className: `fill-current ${className}`
+  }, /*#__PURE__*/React__default["default"].createElement("path", {
+    fillRule: "evenodd",
+    clipRule: "evenodd",
+    d: "M24.3923 17.9512L10.106 4.81458L11.4102 3.61536L26.9999 17.9506L26.8933 18.0487L26.894 18.0493L11.3042 32.3845L10 31.1853L24.3923 17.9512Z"
+  }));
+};
+
+const MediaGallery = ({
+  media,
+  containerClassName = "",
+  galleryContainerClassName = "",
+  mediaItemClassName,
+  imageItemClassName,
+  videoItemClassName,
+  PreviousNavItemComponent,
+  NextNavItemComponent,
+  galleryClassName
+}) => {
+  const [show, setShow] = React.useState(false);
+  const [activeSlideIndex, setActiveSlideIndex] = React.useState(0);
+  const localMedia = React.useMemo(() => {
+    if (!media) {
+      return;
+    }
+
+    return media.map(item => {
+      return { ...item,
+        renderType: parseMimeType$1(item.mime).renderType
+      };
+    });
+  }, [media]);
+  if (!localMedia) return null;
+  const srContainerClassName = useStyleRewriter$6(baseContainerClassName, containerClassName);
+  const srGalleryContainerClassName = useStyleRewriter$6(baseGalleryContainerClassName, galleryContainerClassName);
+  return /*#__PURE__*/React__default["default"].createElement("div", {
+    className: srContainerClassName
+  }, /*#__PURE__*/React__default["default"].createElement("div", {
+    className: srGalleryContainerClassName
+  }, /*#__PURE__*/React__default["default"].createElement("div", {
+    className: "absolute w-full h-full inset-0"
+  }, /*#__PURE__*/React__default["default"].createElement(ReactSpringGallery, {
+    activeSlide: activeSlideIndex,
+    galleryClassName: galleryClassName,
+    mediaItemClassName: mediaItemClassName,
+    imageItemClassName: imageItemClassName,
+    videoItemClassName: videoItemClassName,
+    PreviousNavItemComponent: PreviousNavItemComponent,
+    NextNavItemComponent: NextNavItemComponent,
+    setActiveSlide: setActiveSlideIndex,
+    media: localMedia,
+    setShow: setShow
+  }))));
+};
+const baseContainerClassName = `
+  @wh w-full
+  @ht h-full
+  @dy flex
+  @fxd flex-row
+  @ani items-center md:items-start
+  @jyc justify-center
+  @pn relative`;
+const baseGalleryContainerClassName = `
+  @dy flex
+  @wh w-full
+  @pg pb-screen
+  @pn relative`;
+
 const components = {
   SmartButton,
   Modal,
   ModalArray,
   Input: FormInput,
-  SpringNotification
+  SpringNotification,
+  MediaGallery
 };
 
 var index = {
