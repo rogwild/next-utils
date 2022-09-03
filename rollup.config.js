@@ -41,5 +41,6 @@ export default {
     "prop-types",
     "react-markdown",
     "react-calendar",
+    "@use-gesture/react",
   ],
 };

@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import * as ReactDOM from "react-dom/client";
 import Input from "./src/components/input";
+import MediaGallery from "./src/components/media-gallery";
 // import Modal from "./src/components/modal";
 // const { SpringNotification } = utils.components;
 
@@ -14,7 +15,8 @@ const App = () => {
   return (
     <div>
       <NotificationsWrapper>
-        <FormPage />
+        {/* <FormPage /> */}
+        <GalleryPage />
       </NotificationsWrapper>
     </div>
   );
@@ -30,6 +32,20 @@ const Popup = () => {
 
 const root = ReactDOM.createRoot(document.getElementById("app"));
 root.render(<App />);
+
+const GalleryPage = () => {
+  return (
+    <div className="min-h-screen w-full flex justify-center items-center">
+      <MediaGallery
+        media={images}
+        galleryContainerClassName="@wh w-1/2 @pg pb-[600px]"
+        galleryClassName="@brr rounded-[10px]"
+        imageItemClassName="@brr rounded-[10px]"
+        PreviousNavItemComponent={PreviousNavItemComponent}
+      />
+    </div>
+  );
+};
 
 const FormPage = () => {
   const inputsConfig = useMemo(() => {
@@ -339,6 +355,49 @@ const InnerComponent = (props) => {
         }`}
       ></div>
       <p>{item.title}</p>
+    </div>
+  );
+};
+
+const images = [
+  {
+    id: 61,
+    name: "The-Sims-4-620624fac8d21.jpeg",
+    alternativeText: "The-Sims-4-620624fac8d21.jpeg",
+    caption: "The-Sims-4-620624fac8d21.jpeg",
+    ext: ".jpeg",
+    mime: "image/jpeg",
+    url: "https://api.dubaipad.space/uploads/The_Sims_4_620624fac8d21_bcfd8e363b.jpeg",
+  },
+  {
+    id: 62,
+    name: "nova-filepond-RKBwKc.jpeg",
+    alternativeText: "nova-filepond-RKBwKc.jpeg",
+    caption: "nova-filepond-RKBwKc.jpeg",
+    ext: ".jpeg",
+    mime: "image/jpeg",
+    url: "https://api.dubaipad.space/uploads/nova_filepond_RK_Bw_Kc_e8e8cf9bd2.jpeg",
+  },
+  {
+    id: 63,
+    name: "ts4-sp30-official-screens-02-002-1080.png.adapt.crop191x100.628p.png",
+    alternativeText:
+      "ts4-sp30-official-screens-02-002-1080.png.adapt.crop191x100.628p.png",
+    caption:
+      "ts4-sp30-official-screens-02-002-1080.png.adapt.crop191x100.628p.png",
+    ext: ".png",
+    mime: "image/png",
+    url: "https://api.dubaipad.space/uploads/ts4_sp30_official_screens_02_002_1080_png_adapt_crop191x100_628p_082c44a81b.png",
+  },
+];
+
+const PreviousNavItemComponent = ({ onClick }) => {
+  return (
+    <div className="z-10 absolute h-[100%] flex items-center justify-center">
+      <div
+        onClick={onClick}
+        className="w-10 h-10 bg-red-500 rounded-full -ml-5"
+      ></div>
     </div>
   );
 };
