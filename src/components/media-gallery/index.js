@@ -11,6 +11,7 @@ const MediaGallery = ({
   imageItemClassName,
   videoItemClassName,
   PreviousNavItemComponent,
+  mediaContainerClassName,
   NextNavItemComponent,
   galleryClassName,
 }) => {
@@ -89,6 +90,7 @@ const MediaGallery = ({
           <ReactSpringGallery
             activeSlide={activeSlideIndex}
             galleryClassName={galleryClassName}
+            mediaContainerClassName={mediaContainerClassName}
             mediaItemClassName={mediaItemClassName}
             imageItemClassName={imageItemClassName}
             videoItemClassName={videoItemClassName}

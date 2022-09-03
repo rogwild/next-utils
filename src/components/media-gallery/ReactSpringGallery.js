@@ -16,6 +16,7 @@ function ReactSpringGallery({
   PreviousNavItemComponent,
   NextNavItemComponent,
   navItemClassName = "",
+  mediaContainerClassName = "",
   children,
   setShow,
 }) {
@@ -23,6 +24,11 @@ function ReactSpringGallery({
     baseGalleryClassName,
     galleryClassName
   );
+  const srMediaContainerClassName = useStyleRewriter(
+    baseMediaContainerClassName,
+    mediaContainerClassName
+  );
+
   const srMediaItemClassName = useStyleRewriter(
     baseMediaItemClassName,
     mediaItemClassName
@@ -106,7 +112,7 @@ function ReactSpringGallery({
   }, [activeSlide]);
 
   return (
-    <>
+    <div className={srGalleryClassName}>
       {mediaLength > 1 ? (
         typeof PreviousNavItemComponent === "function" ? (
           <PreviousNavItemComponent
@@ -129,7 +135,7 @@ function ReactSpringGallery({
         )
       ) : null}
 
-      <div className={srGalleryClassName}>
+      <div className={srMediaContainerClassName}>
         {/* <div
         onClick={() => setShow(false)}
         className="w-full h-full absolute inset-0"
@@ -154,33 +160,31 @@ function ReactSpringGallery({
             </animated.div>
           );
         })}
-        {mediaLength > 1 ? (
-          typeof NextNavItemComponent === "function" ? (
-            <NextNavItemComponent
-              onClick={() => {
-                const lastItem = media.length - 1;
-                ref.current =
-                  ref.current < lastItem ? ref.current + 1 : lastItem;
-                setActiveSlide(ref.current);
-                setSlidePosition();
-              }}
-            />
-          ) : (
-            <NavItem
-              next={true}
-              navItemClassName={navItemClassName}
-              onClick={() => {
-                const lastItem = media.length - 1;
-                ref.current =
-                  ref.current < lastItem ? ref.current + 1 : lastItem;
-                setActiveSlide(ref.current);
-                setSlidePosition();
-              }}
-            />
-          )
-        ) : null}
       </div>
-    </>
+      {mediaLength > 1 ? (
+        typeof NextNavItemComponent === "function" ? (
+          <NextNavItemComponent
+            onClick={() => {
+              const lastItem = media.length - 1;
+              ref.current = ref.current < lastItem ? ref.current + 1 : lastItem;
+              setActiveSlide(ref.current);
+              setSlidePosition();
+            }}
+          />
+        ) : (
+          <NavItem
+            next={true}
+            navItemClassName={navItemClassName}
+            onClick={() => {
+              const lastItem = media.length - 1;
+              ref.current = ref.current < lastItem ? ref.current + 1 : lastItem;
+              setActiveSlide(ref.current);
+              setSlidePosition();
+            }}
+          />
+        )
+      ) : null}
+    </div>
   );
 }
 
@@ -208,7 +212,7 @@ const NavItem = ({ next, onClick, navItemClassName }) => {
 
   return (
     <div
-      className={`z-10 absolute  ${
+      className={`z-10 absolute h-full top-0 ${
         next ? `right-2` : `left-2`
       }  flex items-center`}
     >
@@ -220,6 +224,12 @@ const NavItem = ({ next, onClick, navItemClassName }) => {
 };
 
 const baseGalleryClassName = `
+  @ht h-full
+  @wh w-full
+  @pn relative
+`;
+
+const baseMediaContainerClassName = `
   @ht h-full
   @wh w-full
   @pn relative

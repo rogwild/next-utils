@@ -42,6 +42,7 @@ const GalleryPage = () => {
         galleryClassName="@brr rounded-[10px]"
         imageItemClassName="@brr rounded-[10px]"
         PreviousNavItemComponent={PreviousNavItemComponent}
+        navItemClassName=""
       />
     </div>
   );

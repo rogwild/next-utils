@@ -8441,10 +8441,12 @@ function ReactSpringGallery({
   PreviousNavItemComponent,
   NextNavItemComponent,
   navItemClassName = "",
+  mediaContainerClassName = "",
   children,
   setShow
 }) {
   const srGalleryClassName = useStyleRewriter$6(baseGalleryClassName, galleryClassName);
+  const srMediaContainerClassName = useStyleRewriter$6(baseMediaContainerClassName, mediaContainerClassName);
   const srMediaItemClassName = useStyleRewriter$6(baseMediaItemClassName, mediaItemClassName);
   const srImageItemClassName = useStyleRewriter$6(baseImageItemClassName, imageItemClassName);
   const srVideoItemClassName = useStyleRewriter$6(baseVideoItemClassName, videoItemClassName);
@@ -8515,7 +8517,9 @@ function ReactSpringGallery({
       }
     }
   }, [activeSlide]);
-  return /*#__PURE__*/React__default["default"].createElement(React__default["default"].Fragment, null, mediaLength > 1 ? typeof PreviousNavItemComponent === "function" ? /*#__PURE__*/React__default["default"].createElement(PreviousNavItemComponent, {
+  return /*#__PURE__*/React__default["default"].createElement("div", {
+    className: srGalleryClassName
+  }, mediaLength > 1 ? typeof PreviousNavItemComponent === "function" ? /*#__PURE__*/React__default["default"].createElement(PreviousNavItemComponent, {
     onClick: () => {
       ref.current = ref.current ? ref.current - 1 : 0;
       setActiveSlide(ref.current);
@@ -8530,7 +8534,7 @@ function ReactSpringGallery({
       setSlidePosition();
     }
   }) : null, /*#__PURE__*/React__default["default"].createElement("div", {
-    className: srGalleryClassName
+    className: srMediaContainerClassName
   }, props.map((item, index) => {
     const {
       x,
@@ -8552,7 +8556,7 @@ function ReactSpringGallery({
       controls: true,
       className: srVideoItemClassName
     }));
-  }), mediaLength > 1 ? typeof NextNavItemComponent === "function" ? /*#__PURE__*/React__default["default"].createElement(NextNavItemComponent, {
+  })), mediaLength > 1 ? typeof NextNavItemComponent === "function" ? /*#__PURE__*/React__default["default"].createElement(NextNavItemComponent, {
     onClick: () => {
       const lastItem = media.length - 1;
       ref.current = ref.current < lastItem ? ref.current + 1 : lastItem;
@@ -8568,7 +8572,7 @@ function ReactSpringGallery({
       setActiveSlide(ref.current);
       setSlidePosition();
     }
-  }) : null));
+  }) : null);
 }
 
 const clamp = (number, lower, upper) => {
@@ -8594,7 +8598,7 @@ const NavItem = ({
 }) => {
   const srNavItemClassName = useStyleRewriter$6(baseNavItemClassName, navItemClassName);
   return /*#__PURE__*/React__default["default"].createElement("div", {
-    className: `z-10 absolute  ${next ? `right-2` : `left-2`}  flex items-center`
+    className: `z-10 absolute h-full top-0 ${next ? `right-2` : `left-2`}  flex items-center`
   }, /*#__PURE__*/React__default["default"].createElement("div", {
     onClick: onClick,
     className: srNavItemClassName
@@ -8604,6 +8608,11 @@ const NavItem = ({
 };
 
 const baseGalleryClassName = `
+  @ht h-full
+  @wh w-full
+  @pn relative
+`;
+const baseMediaContainerClassName = `
   @ht h-full
   @wh w-full
   @pn relative
@@ -8666,6 +8675,7 @@ const MediaGallery = ({
   imageItemClassName,
   videoItemClassName,
   PreviousNavItemComponent,
+  mediaContainerClassName,
   NextNavItemComponent,
   galleryClassName
 }) => {
@@ -8694,6 +8704,7 @@ const MediaGallery = ({
   }, /*#__PURE__*/React__default["default"].createElement(ReactSpringGallery, {
     activeSlide: activeSlideIndex,
     galleryClassName: galleryClassName,
+    mediaContainerClassName: mediaContainerClassName,
     mediaItemClassName: mediaItemClassName,
     imageItemClassName: imageItemClassName,
     videoItemClassName: videoItemClassName,

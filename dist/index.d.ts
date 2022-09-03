@@ -91,7 +91,7 @@ declare const _default: {
                 add: () => any;
             };
         };
-        MediaGallery: ({ media, containerClassName, galleryContainerClassName, mediaItemClassName, imageItemClassName, videoItemClassName, PreviousNavItemComponent, NextNavItemComponent, galleryClassName, }: {
+        MediaGallery: ({ media, containerClassName, galleryContainerClassName, mediaItemClassName, imageItemClassName, videoItemClassName, PreviousNavItemComponent, mediaContainerClassName, NextNavItemComponent, galleryClassName, }: {
             media: any;
             containerClassName?: string;
             galleryContainerClassName?: string;
@@ -99,6 +99,7 @@ declare const _default: {
             imageItemClassName: any;
             videoItemClassName: any;
             PreviousNavItemComponent: any;
+            mediaContainerClassName: any;
             NextNavItemComponent: any;
             galleryClassName: any;
         }) => JSX.Element;
