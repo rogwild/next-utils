@@ -51,6 +51,7 @@ declare const _default: {
             clearInputs: () => void;
             setInitialErrors: () => void;
         };
+        useChildForm: typeof import("./hooks/use-form/use-child-form/index").default;
     };
     components: {
         SmartButton: ({ disabled, className, disabledClassName, children, tooltipPosition, href, dropdownItems: DropdownItems, dropdownContainerClassName, dropdownClassName, dropdownProps, tooltipItems: TooltipItems, tooltipContainerClasses, onClick: onClickCb, linkProps, Link, }: {

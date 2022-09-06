@@ -1,5 +1,5 @@
-import { useMemo, useEffect } from "react";
-import useForm from "~hooks/use-form";
+import React, { useMemo, useEffect } from "react";
+import useForm from "../index";
 
 export default function useChildForm({
   inputsConfig,

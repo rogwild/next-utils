@@ -2336,6 +2336,68 @@ const selectFilesForDelete = ({
   }
 };
 
+function useChildForm({
+  inputsConfig,
+  setParentErrors = () => {},
+  setSubmitPipe = () => {},
+  setParentInputs = () => {},
+  inputPropsType,
+  setParentFiles = () => {}
+}) {
+  const {
+    inputsValues,
+    errors,
+    onSubmit,
+    inputs,
+    files,
+    setInputsValues
+  } = useForm({
+    inputsConfig,
+    inputPropsType
+  });
+  const submitId = React.useMemo(() => {
+    return `${(Math.random() * 1000000).toFixed(0)}`;
+  }, []);
+  React.useEffect(() => {
+    setParentErrors(errors);
+  }, [errors]); // console.log(`🚀 ~ inputsConfig`, submitId, inputsConfig);
+
+  React.useEffect(() => {
+    setSubmitPipe(prev => ({ ...prev,
+      [submitId]: onSubmit
+    }));
+  }, [onSubmit]);
+
+  const onDelete = () => {
+    setSubmitPipe(prev => {
+      const newSubmitPipes = { ...prev
+      };
+      delete newSubmitPipes[submitId];
+      return newSubmitPipes;
+    });
+  };
+
+  React.useEffect(() => {
+    // console.log(`🚀 ~ useEffect ~ inputsValues`, inputsValues);
+    setParentErrors(null);
+    setParentInputs(inputsValues);
+  }, [inputsValues]);
+  React.useEffect(() => {
+    setParentErrors(null); // console.log(`🚀 ~ useEffect ~ setParentFiles files Stage`, files);
+
+    setParentFiles(files);
+  }, [files]);
+  return {
+    inputsValues,
+    setInputsValues,
+    onSubmit,
+    inputs,
+    files,
+    onDelete,
+    errors
+  };
+}
+
 const hooks = {
   useDetectMouseover: useDetectMouseover$1,
   useDetectOutsideClick: useDetectOutsideClick$1,
@@ -2343,7 +2405,8 @@ const hooks = {
   useBreakpoint: useBreakpoint$1,
   useSetParentsInput,
   useStyleRewriter: useStyleRewriter$6,
-  useForm
+  useForm,
+  useChildForm
 };
 
 function _extends$3() {
