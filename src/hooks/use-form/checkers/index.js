@@ -6,21 +6,28 @@ export const changeInput = (
   let localErrors = { ...errors };
   let localFiles = { ...files };
   localErrors[e.target.id] = [];
-  // console.log(`🚀 ~ localFiles`, e.target.id);
+
   if (!e.target.files) {
     if (!Object.keys(files).includes(e.target.id)) {
       localInputs[e.target.id] = e.target.value;
+    } else {
+      // Delete files on backend
+      localInputs[e.target.id] = e.target.value;
+
+      if (e.target.multiple) {
+        if (localFiles && Array.isArray(localFiles[e.target.id])) {
+          localFiles = {
+            ...localFiles,
+            [e.target.id]: [...localInputs[e.target.id]],
+          };
+        }
+      }
     }
   } else {
     const loadedFiles = { ...e.target.files };
-    // console.log(`🚀 ~ loadedFiles`, loadedFiles);
+
     for (const [index] of new Array(e.target.files.length).entries()) {
       if (e.target.multiple) {
-        // console.log(
-        //   `🚀 ~ localFiles[e.target.id]`,
-        //   loadedFiles,
-        //   localFiles[e.target.id]
-        // );
         if (localFiles && Array.isArray(localFiles[e.target.id])) {
           localFiles = {
             ...localFiles,
@@ -117,7 +124,16 @@ export const checkRequiredField = ({ field, value, errors }) => {
   }
 };
 
-export const checkEqualTo = ({ field, value, errors, config, inputs }) => {
+export const checkEqualTo = ({
+  field,
+  value,
+  errors,
+  config,
+  inputs,
+  title,
+  label,
+  inputsConfig,
+}) => {
   const equalTo = config.equalTo;
   if (value !== inputs[equalTo]) {
     // const fieldTitle = title || label || field;
@@ -185,14 +201,16 @@ export const checkFields = ({
   );
   setErrors(localErrors);
   const hasErrors = [];
-  for (const [, value] of Object.entries(localErrors)) {
+  for (const [key, value] of Object.entries(localErrors)) {
     if (value) {
+      // console.log(`🚀 ~ localErrors ~ key, value`, key, value);
       // Во вложенных формах своя проверка
       if (
         Object.values(value).every((message) => typeof message === `string`)
       ) {
         hasErrors.push({ ...value });
       }
+      // hasErrors.push({ ...value });
     }
   }
   // console.log(`🚀 ~ hasErrors`, hasErrors, localErrors);

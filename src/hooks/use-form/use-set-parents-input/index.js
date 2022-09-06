@@ -1,6 +1,7 @@
 import { useMemo, useEffect, useState } from "react";
 
 const useSetParentsInput = ({
+  parentKey,
   passedState,
   passedFiles = {},
   setParentInputs = () => {},
@@ -34,6 +35,8 @@ const useSetParentsInput = ({
   };
 
   const handleDeleteItem = (index) => {
+    // console.log(`🚀 ~ handleDeleteItem ~ index`, index);
+
     // setParentErrors((prev) => {
     //   console.log(`🚀 ~ setErrors ~ prev`, prev);
     //   return prev;
@@ -53,6 +56,8 @@ const useSetParentsInput = ({
   };
 
   const changeInputs = (updatedInputs, index) => {
+    // console.log(`🚀 ~ changeInputs ~ updatedInputs`, updatedInputs);
+
     if (!updatedInputs || typeof updatedInputs !== `object`) {
       return;
     }
@@ -131,17 +136,44 @@ const useSetParentsInput = ({
     // console.log(`🚀 ~ changeFiles ~ updatedFiles`, updatedFiles, localFiles);
     // console.log(`🚀 ~ changeFiles`, localFiles, updatedFiles);
     for (const updatedFileKey in updatedFiles) {
-      updatedFileKey;
-      // console.log(`🚀 ~ changeFiles ~ updatedFileKey`, updatedFileKey);
+      // updatedFileKey;
       const newFiles = updatedFiles[updatedFileKey];
       // Если файл передается
       if (typeof newFiles === `object` && newFiles !== null) {
         // Если передается массив файлов
         if (Array.isArray(newFiles)) {
+          // // If file uploaded to backend was deleted
+          // if (
+          //   Array.isArray(localState) &&
+          //   localFiles[updatedFileKey].length > newFiles.length
+          // ) {
+          //   let deletedFile;
+          //   for (const oldFile of localFiles[updatedFileKey]) {
+          //     let exists = false;
+          //     for (const newFile of newFiles) {
+          //       if (newFile.id === oldFile.id) {
+          //         exists = true;
+          //       }
+          //       if (!exists) {
+          //         deletedFile = oldFile;
+          //       }
+          //     }
+          //   }
+
+          //   if (deletedFile) {
+          //     setLocalState((prev) => {
+          //       return { ...prev, [updatedFileKey]: newFiles };
+          //     });
+          //   }
+          // }
+
           // console.log(`🚀 ~ changeFiles ~ newFiles-массив`, newFiles);
           setLocalFiles((prev) => {
-            return { ...prev, [updatedFileKey]: newFiles };
+            const newLocalFiles = { ...prev, [updatedFileKey]: newFiles };
+
+            return newLocalFiles;
           });
+
           continue;
         } else {
           // console.log(`🚀 ~ changeFiles ~ newFiles-объект`, newFiles);
@@ -154,6 +186,7 @@ const useSetParentsInput = ({
         // console.log(`🚀 ~ changeFiles ~ delete`, updatedFileKey);
         // удалить этот файл
         setLocalFiles((prev) => {
+          // console.log(`🚀 ~ setLocalFiles ~ prev`, prev);
           const newFiles = { ...prev };
           delete newFiles[updatedFileKey];
           return newFiles;

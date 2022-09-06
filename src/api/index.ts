@@ -31,35 +31,8 @@ export const transformPageBlock = (block, transformers) => {
   return transformers[key](block);
 };
 
-export const removeEmptyFields = ({ data, passKey, files }) => {
-  // console.log(`🚀 ~ removeEmptyFields ~ files`, files);
-  let modified;
-  if (typeof data === `object` && data !== null) {
-    modified = {};
-    if (Array.isArray(data)) {
-      modified = [];
-      for (const element of data) {
-        modified.push(removeEmptyFields({ data: element, passKey, files }));
-      }
-    } else {
-      for (const key of Object.keys(data)) {
-        if (data[key] === `` && key !== `publishedAt`) {
-          continue;
-        }
-        modified[key] = removeEmptyFields({
-          data: data[key],
-          passKey: `${passKey ? `${passKey}.` : ``}${key}`,
-          files,
-        });
-      }
-    }
-  } else {
-    modified = data;
-  }
-  return modified;
-};
-
 export const appendFilesToFormData = (formData, files) => {
+  // console.log(`🚀 ~ appendFilesToFormData ~ files`, files);
   // console.log(`🚀 ~ appendFilesToFormData ~ formData`, formData);
   if (Object.keys(files).length) {
     for (const key of Object.keys(files)) {
@@ -78,6 +51,85 @@ export const appendFilesToFormData = (formData, files) => {
   }
 };
 
+export const unlunkRemovedFiles = ({ data }) => {
+  let sanitized;
+  if (typeof data === `object`) {
+    sanitized = {};
+    for (const key of Object.keys(data)) {
+      // If we should unlink files from model
+      let sanitizedKey = key;
+      let priority = 1;
+      const splitted = key.split(`].`);
+      if (splitted.length > 1) {
+        priority = 2;
+        // console.log(`🚀 ~ unlunkRemovedFiles ~ splitted`, splitted);
+        sanitizedKey = splitted[splitted.length - 1];
+      }
+      if (Array.isArray(data[key])) {
+        if (sanitized[sanitizedKey]?.length) {
+          if (priority !== 2) {
+            continue;
+          }
+        }
+
+        // console.log(`🚀 ~ unlunkRemovedFiles ~ array`);
+        sanitized[sanitizedKey] = data[key].map((item) =>
+          unlunkRemovedFiles({ data: item })
+        );
+      } else {
+        // console.log(`🚀 ~ unlunkRemovedFiles ~ object`);
+        sanitized[sanitizedKey] = data[key];
+      }
+    }
+  } else {
+    // console.log(`🚀 ~ unlunkRemovedFiles ~ text`);
+    sanitized = data;
+  }
+
+  // console.log(`🚀 ~ unlunkRemovedFiles ~ data`, data);
+  return sanitized;
+};
+
+export const removeEmptyFields = ({ data, passKey, files }) => {
+  let modified;
+  if (typeof data === `object` && data !== null) {
+    modified = {};
+    if (Array.isArray(data)) {
+      modified = [];
+      for (const element of data) {
+        modified.push(removeEmptyFields({ data: element, passKey, files }));
+      }
+    } else {
+      for (const key of Object.keys(data)) {
+        if (data[key] === `` && key !== `publishedAt`) {
+          continue;
+        }
+        // // For situations, when you
+        // // should delete file in components documents[0].files: [...<here>]
+        // const splitted = key?.split(`].`);
+        // if (splitted?.length > 1) {
+        //   console.log(`🚀 ~ removeEmptyFields ~ splitted`, splitted);
+        //   const splittedKey = splitted[splitted.length - 1];
+        //   modified[key] = removeEmptyFields({
+        //     data: data[key],
+        //     splittedKey,
+        //     files,
+        //   });
+        // } else {
+        modified[key] = removeEmptyFields({
+          data: data[key],
+          passKey: `${passKey ? `${passKey}.` : ``}${key}`,
+          files,
+        });
+        // }
+      }
+    }
+  } else {
+    modified = data;
+  }
+
+  return modified;
+};
 const mainTransformers = {
   [`page-blocks.main-block`]: (block) => {
     return {

@@ -52,14 +52,37 @@ const UploadFileInput = (props) => {
     // }
   };
 
-  const handleDelete = (e, params) => {
+  const handleDelete = (e, params = {}) => {
+    const { index, file } = params;
+    e.target.id = id;
+    e.target.multiple = multiple;
+
+    // console.log(`🚀 ~ handleDelete ~ files[id]`, files[id]);
+
+    // Exists files on backend
+    if (
+      file?.id ||
+      (files[id]?.length && files[id].filter((f) => f.id)?.length)
+    ) {
+      if (multiple) {
+        e.target.value = files[id].filter(
+          (backendFile) => backendFile.id !== file.id
+        );
+      } else {
+        e.target.value = {};
+      }
+    }
+
+    // console.log(`🚀 ~ handleDelete ~ files`, files[id]);
+    // console.log(`🚀 ~ handleDelete ~ handleDelete params`, params);
+
     setFiles((prev) => {
       const newFiles = { ...prev };
       let toDeleteFile;
       if (multiple) {
-        toDeleteFile = newFiles[params.id][params.index];
+        toDeleteFile = newFiles[id][index];
       } else {
-        toDeleteFile = newFiles[params.id];
+        toDeleteFile = newFiles[id];
       }
       if (toDeleteFile?.url) {
         // console.log(`🚀 ~ setFiles ~ toDeleteFile`, toDeleteFile);
@@ -67,16 +90,18 @@ const UploadFileInput = (props) => {
       }
 
       if (multiple) {
-        newFiles[params.id] = newFiles[params.id].filter(
-          (file, index) => index !== params.index
-        );
+        newFiles[id] = newFiles[id].filter((file, fIndex) => fIndex !== index);
       } else {
-        delete newFiles[params.id];
+        delete newFiles[id];
       }
 
       // console.log(`🚀 ~ setFiles ~ newFiles`, newFiles);
       return newFiles;
     });
+
+    // console.log(`🚀 ~ handleDelete ~ files, file`, files, file);
+
+    onChange(e);
 
     // console.log(`🚀 ~ handleDelete ~ e`, e, deleteFile);
   };
@@ -128,7 +153,7 @@ const UploadFileInput = (props) => {
         )}
 
         <FilesRow
-          handleDelete={(e, params) => handleDelete(e, { ...params, id })}
+          handleDelete={(e, params) => handleDelete(e, params)}
           files={files[id]}
           multiple={multiple}
           DeleteFileButton={DeleteFileButton}
@@ -172,7 +197,7 @@ const FilesRow = ({
     ? localFiles?.map((file, index) => {
         return (
           <FileCard
-            handleDelete={(e) => handleDelete(e, { index })}
+            handleDelete={(e) => handleDelete(e, { index, file })}
             key={index}
             file={file}
             fileCardClassName={fileCardClassName}

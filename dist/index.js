@@ -360,10 +360,101 @@ var transformPageBlock = function (block, transformers) {
     }
     return transformers[key](block);
 };
+var appendFilesToFormData = function (formData, files) {
+    var e_1, _a, e_2, _b;
+    // console.log(`🚀 ~ appendFilesToFormData ~ files`, files);
+    // console.log(`🚀 ~ appendFilesToFormData ~ formData`, formData);
+    if (Object.keys(files).length) {
+        try {
+            for (var _c = __values(Object.keys(files)), _d = _c.next(); !_d.done; _d = _c.next()) {
+                var key = _d.value;
+                // console.log(`🚀 ~ key`, key);
+                if (Array.isArray(files[key])) {
+                    try {
+                        for (var _e = (e_2 = void 0, __values(files[key].entries())), _f = _e.next(); !_f.done; _f = _e.next()) {
+                            var _g = __read(_f.value, 2), _ = _g[0], file = _g[1];
+                            // console.log(`🚀 ~ file`, file, files[key]);
+                            formData.append("files.".concat(key), file);
+                        }
+                    }
+                    catch (e_2_1) { e_2 = { error: e_2_1 }; }
+                    finally {
+                        try {
+                            if (_f && !_f.done && (_b = _e.return)) _b.call(_e);
+                        }
+                        finally { if (e_2) throw e_2.error; }
+                    }
+                }
+                else {
+                    // console.log(`🚀 ~ appendFilesToFormData ~ key`, key);
+                    // console.log(`🚀 ~ file`, file, files[key]);
+                    formData.append("files.".concat(key), files[key]);
+                }
+            }
+        }
+        catch (e_1_1) { e_1 = { error: e_1_1 }; }
+        finally {
+            try {
+                if (_d && !_d.done && (_a = _c.return)) _a.call(_c);
+            }
+            finally { if (e_1) throw e_1.error; }
+        }
+    }
+};
+var unlunkRemovedFiles = function (_a) {
+    var e_3, _b;
+    var _c;
+    var data = _a.data;
+    var sanitized;
+    if (typeof data === "object") {
+        sanitized = {};
+        try {
+            for (var _d = __values(Object.keys(data)), _e = _d.next(); !_e.done; _e = _d.next()) {
+                var key = _e.value;
+                // If we should unlink files from model
+                var sanitizedKey = key;
+                var priority = 1;
+                var splitted = key.split("].");
+                if (splitted.length > 1) {
+                    priority = 2;
+                    // console.log(`🚀 ~ unlunkRemovedFiles ~ splitted`, splitted);
+                    sanitizedKey = splitted[splitted.length - 1];
+                }
+                if (Array.isArray(data[key])) {
+                    if ((_c = sanitized[sanitizedKey]) === null || _c === void 0 ? void 0 : _c.length) {
+                        if (priority !== 2) {
+                            continue;
+                        }
+                    }
+                    // console.log(`🚀 ~ unlunkRemovedFiles ~ array`);
+                    sanitized[sanitizedKey] = data[key].map(function (item) {
+                        return unlunkRemovedFiles({ data: item });
+                    });
+                }
+                else {
+                    // console.log(`🚀 ~ unlunkRemovedFiles ~ object`);
+                    sanitized[sanitizedKey] = data[key];
+                }
+            }
+        }
+        catch (e_3_1) { e_3 = { error: e_3_1 }; }
+        finally {
+            try {
+                if (_e && !_e.done && (_b = _d.return)) _b.call(_d);
+            }
+            finally { if (e_3) throw e_3.error; }
+        }
+    }
+    else {
+        // console.log(`🚀 ~ unlunkRemovedFiles ~ text`);
+        sanitized = data;
+    }
+    // console.log(`🚀 ~ unlunkRemovedFiles ~ data`, data);
+    return sanitized;
+};
 var removeEmptyFields = function (_a) {
-    var e_1, _b, e_2, _c;
+    var e_4, _b, e_5, _c;
     var data = _a.data, passKey = _a.passKey, files = _a.files;
-    // console.log(`🚀 ~ removeEmptyFields ~ files`, files);
     var modified;
     if (typeof data === "object" && data !== null) {
         modified = {};
@@ -375,12 +466,12 @@ var removeEmptyFields = function (_a) {
                     modified.push(removeEmptyFields({ data: element, passKey: passKey, files: files }));
                 }
             }
-            catch (e_1_1) { e_1 = { error: e_1_1 }; }
+            catch (e_4_1) { e_4 = { error: e_4_1 }; }
             finally {
                 try {
                     if (data_1_1 && !data_1_1.done && (_b = data_1.return)) _b.call(data_1);
                 }
-                finally { if (e_1) throw e_1.error; }
+                finally { if (e_4) throw e_4.error; }
             }
         }
         else {
@@ -390,19 +481,32 @@ var removeEmptyFields = function (_a) {
                     if (data[key] === "" && key !== "publishedAt") {
                         continue;
                     }
+                    // // For situations, when you
+                    // // should delete file in components documents[0].files: [...<here>]
+                    // const splitted = key?.split(`].`);
+                    // if (splitted?.length > 1) {
+                    //   console.log(`🚀 ~ removeEmptyFields ~ splitted`, splitted);
+                    //   const splittedKey = splitted[splitted.length - 1];
+                    //   modified[key] = removeEmptyFields({
+                    //     data: data[key],
+                    //     splittedKey,
+                    //     files,
+                    //   });
+                    // } else {
                     modified[key] = removeEmptyFields({
                         data: data[key],
                         passKey: "".concat(passKey ? "".concat(passKey, ".") : "").concat(key),
                         files: files,
                     });
+                    // }
                 }
             }
-            catch (e_2_1) { e_2 = { error: e_2_1 }; }
+            catch (e_5_1) { e_5 = { error: e_5_1 }; }
             finally {
                 try {
                     if (_e && !_e.done && (_c = _d.return)) _c.call(_d);
                 }
-                finally { if (e_2) throw e_2.error; }
+                finally { if (e_5) throw e_5.error; }
             }
         }
     }
@@ -410,46 +514,6 @@ var removeEmptyFields = function (_a) {
         modified = data;
     }
     return modified;
-};
-var appendFilesToFormData = function (formData, files) {
-    var e_3, _a, e_4, _b;
-    // console.log(`🚀 ~ appendFilesToFormData ~ formData`, formData);
-    if (Object.keys(files).length) {
-        try {
-            for (var _c = __values(Object.keys(files)), _d = _c.next(); !_d.done; _d = _c.next()) {
-                var key = _d.value;
-                // console.log(`🚀 ~ key`, key);
-                if (Array.isArray(files[key])) {
-                    try {
-                        for (var _e = (e_4 = void 0, __values(files[key].entries())), _f = _e.next(); !_f.done; _f = _e.next()) {
-                            var _g = __read(_f.value, 2), _ = _g[0], file = _g[1];
-                            // console.log(`🚀 ~ file`, file, files[key]);
-                            formData.append("files.".concat(key), file);
-                        }
-                    }
-                    catch (e_4_1) { e_4 = { error: e_4_1 }; }
-                    finally {
-                        try {
-                            if (_f && !_f.done && (_b = _e.return)) _b.call(_e);
-                        }
-                        finally { if (e_4) throw e_4.error; }
-                    }
-                }
-                else {
-                    // console.log(`🚀 ~ appendFilesToFormData ~ key`, key);
-                    // console.log(`🚀 ~ file`, file, files[key]);
-                    formData.append("files.".concat(key), files[key]);
-                }
-            }
-        }
-        catch (e_3_1) { e_3 = { error: e_3_1 }; }
-        finally {
-            try {
-                if (_d && !_d.done && (_a = _c.return)) _a.call(_c);
-            }
-            finally { if (e_3) throw e_3.error; }
-        }
-    }
 };
 (_a = {},
     _a["page-blocks.main-block"] = function (block) {
@@ -473,7 +537,7 @@ var appendFilesToFormData = function (formData, files) {
  */
 var getPageData = function (params) { return __awaiter(void 0, void 0, void 0, function () {
     var url, locale, _a, keys, page, _b, transformers, _c, additionalBlocks, query, client, additionalPopulate, additionalBlocks_1, additionalBlocks_1_1, block, filledQuery, res, pageBlocks, additionalBlocksData, additionalBlocks_2, additionalBlocks_2_1, block;
-    var e_5, _d, e_6, _e;
+    var e_6, _d, e_7, _e;
     var _f;
     return __generator(this, function (_g) {
         switch (_g.label) {
@@ -493,12 +557,12 @@ var getPageData = function (params) { return __awaiter(void 0, void 0, void 0, f
                             };
                         }
                     }
-                    catch (e_5_1) { e_5 = { error: e_5_1 }; }
+                    catch (e_6_1) { e_6 = { error: e_6_1 }; }
                     finally {
                         try {
                             if (additionalBlocks_1_1 && !additionalBlocks_1_1.done && (_d = additionalBlocks_1.return)) _d.call(additionalBlocks_1);
                         }
-                        finally { if (e_5) throw e_5.error; }
+                        finally { if (e_6) throw e_6.error; }
                     }
                 }
                 filledQuery = __assign({ locale: locale, populate: __assign({ page_blocks: {
@@ -527,12 +591,12 @@ var getPageData = function (params) { return __awaiter(void 0, void 0, void 0, f
                         }
                     }
                 }
-                catch (e_6_1) { e_6 = { error: e_6_1 }; }
+                catch (e_7_1) { e_7 = { error: e_7_1 }; }
                 finally {
                     try {
                         if (additionalBlocks_2_1 && !additionalBlocks_2_1.done && (_e = additionalBlocks_2.return)) _e.call(additionalBlocks_2);
                     }
-                    finally { if (e_6) throw e_6.error; }
+                    finally { if (e_7) throw e_7.error; }
                 }
                 return [2 /*return*/, { pageBlocks: pageBlocks, res: res, additionalBlocks: additionalBlocksData }];
         }
@@ -554,8 +618,9 @@ var apiUtils = /*#__PURE__*/Object.freeze({
     __proto__: null,
     getImageUrl: getImageUrl,
     transformPageBlock: transformPageBlock,
-    removeEmptyFields: removeEmptyFields,
     appendFilesToFormData: appendFilesToFormData,
+    unlunkRemovedFiles: unlunkRemovedFiles,
+    removeEmptyFields: removeEmptyFields,
     getPageData: getPageData,
     handleApiError: handleApiError,
     ApiClient: ApiClient,
@@ -1623,23 +1688,29 @@ const changeInput = (e, {
   };
   let localFiles = { ...files
   };
-  localErrors[e.target.id] = []; // console.log(`🚀 ~ localFiles`, e.target.id);
+  localErrors[e.target.id] = [];
 
   if (!e.target.files) {
     if (!Object.keys(files).includes(e.target.id)) {
       localInputs[e.target.id] = e.target.value;
+    } else {
+      // Delete files on backend
+      localInputs[e.target.id] = e.target.value;
+
+      if (e.target.multiple) {
+        if (localFiles && Array.isArray(localFiles[e.target.id])) {
+          localFiles = { ...localFiles,
+            [e.target.id]: [...localInputs[e.target.id]]
+          };
+        }
+      }
     }
   } else {
     const loadedFiles = { ...e.target.files
-    }; // console.log(`🚀 ~ loadedFiles`, loadedFiles);
+    };
 
     for (const [index] of new Array(e.target.files.length).entries()) {
       if (e.target.multiple) {
-        // console.log(
-        //   `🚀 ~ localFiles[e.target.id]`,
-        //   loadedFiles,
-        //   localFiles[e.target.id]
-        // );
         if (localFiles && Array.isArray(localFiles[e.target.id])) {
           localFiles = { ...localFiles,
             [e.target.id]: [...localFiles[e.target.id], loadedFiles[index]]
@@ -1756,7 +1827,10 @@ const checkEqualTo = ({
   value,
   errors,
   config,
-  inputs
+  inputs,
+  title,
+  label,
+  inputsConfig
 }) => {
   const equalTo = config.equalTo;
 
@@ -1832,13 +1906,15 @@ const checkFields = ({
   setErrors(localErrors);
   const hasErrors = [];
 
-  for (const [, value] of Object.entries(localErrors)) {
+  for (const [key, value] of Object.entries(localErrors)) {
     if (value) {
+      // console.log(`🚀 ~ localErrors ~ key, value`, key, value);
       // Во вложенных формах своя проверка
       if (Object.values(value).every(message => typeof message === `string`)) {
         hasErrors.push({ ...value
         });
-      }
+      } // hasErrors.push({ ...value });
+
     }
   } // console.log(`🚀 ~ hasErrors`, hasErrors, localErrors);
 
@@ -7694,29 +7770,49 @@ const UploadFileInput = props => {
     // }
   };
 
-  const handleDelete = (e, params) => {
+  const handleDelete = (e, params = {}) => {
+    const {
+      index,
+      file
+    } = params;
+    e.target.id = id;
+    e.target.multiple = multiple; // console.log(`🚀 ~ handleDelete ~ files[id]`, files[id]);
+    // Exists files on backend
+
+    if (file?.id || files[id]?.length && files[id].filter(f => f.id)?.length) {
+      if (multiple) {
+        e.target.value = files[id].filter(backendFile => backendFile.id !== file.id);
+      } else {
+        e.target.value = {};
+      }
+    } // console.log(`🚀 ~ handleDelete ~ files`, files[id]);
+    // console.log(`🚀 ~ handleDelete ~ handleDelete params`, params);
+
+
     setFiles(prev => {
       const newFiles = { ...prev
       };
       let toDeleteFile;
 
       if (multiple) {
-        toDeleteFile = newFiles[params.id][params.index];
+        toDeleteFile = newFiles[id][index];
       } else {
-        toDeleteFile = newFiles[params.id];
+        toDeleteFile = newFiles[id];
       }
 
       if (toDeleteFile?.url) ;
 
       if (multiple) {
-        newFiles[params.id] = newFiles[params.id].filter((file, index) => index !== params.index);
+        newFiles[id] = newFiles[id].filter((file, fIndex) => fIndex !== index);
       } else {
-        delete newFiles[params.id];
+        delete newFiles[id];
       } // console.log(`🚀 ~ setFiles ~ newFiles`, newFiles);
 
 
       return newFiles;
-    }); // console.log(`🚀 ~ handleDelete ~ e`, e, deleteFile);
+    }); // console.log(`🚀 ~ handleDelete ~ files, file`, files, file);
+
+    onChange(e); // console.log(`🚀 ~ handleDelete ~ e`, e, deleteFile);
   };
 
   const srInputClassName = useStyleRewriter$6(baseInputClassName$1, inputClassName);
@@ -7749,9 +7845,7 @@ const UploadFileInput = props => {
   }), typeof InnerComponent === "function" ? /*#__PURE__*/React__default["default"].createElement(InnerComponent, props) : uploadTitle ? /*#__PURE__*/React__default["default"].createElement("p", {
     className: uploadTitleClassName
   }, uploadTitle) : null), /*#__PURE__*/React__default["default"].createElement(FilesRow, {
-    handleDelete: (e, params) => handleDelete(e, { ...params,
-      id
-    }),
+    handleDelete: (e, params) => handleDelete(e, params),
     files: files[id],
     multiple: multiple,
     DeleteFileButton: DeleteFileButton,
@@ -7789,7 +7883,8 @@ const FilesRow = ({
   return localFiles?.length > 0 ? localFiles?.map((file, index) => {
     return /*#__PURE__*/React__default["default"].createElement(FileCard, {
       handleDelete: e => handleDelete(e, {
-        index
+        index,
+        file
       }),
       key: index,
       file: file,
