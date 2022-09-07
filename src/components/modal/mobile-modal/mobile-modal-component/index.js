@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useMemo, useState } from "react";
 import { useSpring, a, config } from "@react-spring/web";
-import { useDrag } from "react-use-gesture";
+import { useDrag } from "@use-gesture/react";
 
 import hooks from "../../../../hooks";
 const { useStyleRewriter } = hooks;

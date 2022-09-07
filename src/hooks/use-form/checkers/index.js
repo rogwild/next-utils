@@ -21,6 +21,9 @@ export const changeInput = (
             [e.target.id]: [...localInputs[e.target.id]],
           };
         }
+      } else {
+        // Deleted not multiple file
+        delete localFiles[e.target.id];
       }
     }
   } else {

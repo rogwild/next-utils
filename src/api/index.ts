@@ -52,6 +52,7 @@ export const appendFilesToFormData = (formData, files) => {
 };
 
 export const unlunkRemovedFiles = ({ data }) => {
+  // console.log(`🚀 ~ unlunkRemovedFiles ~ data`, data);
   let sanitized;
   if (typeof data === `object`) {
     sanitized = {};

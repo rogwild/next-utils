@@ -34,7 +34,6 @@ export default {
     "react-table",
     "axios",
     "qs",
-    "react-use-gesture",
     "transition-component",
     "react-spring",
     "react-dom",

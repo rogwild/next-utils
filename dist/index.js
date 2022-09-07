@@ -6,10 +6,9 @@ var React = require('react');
 var reactTable = require('react-table');
 var transitionComponent = require('transition-component');
 var reactDom = require('react-dom');
-var reactUseGesture = require('react-use-gesture');
+var react = require('@use-gesture/react');
 var Calendar = require('react-calendar');
 var ReactMarkdown = require('react-markdown');
-var react = require('@use-gesture/react');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -405,6 +404,7 @@ var unlunkRemovedFiles = function (_a) {
     var e_3, _b;
     var _c;
     var data = _a.data;
+    // console.log(`🚀 ~ unlunkRemovedFiles ~ data`, data);
     var sanitized;
     if (typeof data === "object") {
         sanitized = {};
@@ -1703,6 +1703,9 @@ const changeInput = (e, {
             [e.target.id]: [...localInputs[e.target.id]]
           };
         }
+      } else {
+        // Deleted not multiple file
+        delete localFiles[e.target.id];
       }
     }
   } else {
@@ -6970,7 +6973,7 @@ const ModalComponent = ({
     setIsOpen(false);
   };
 
-  const bind = reactUseGesture.useDrag(({
+  const bind = react.useDrag(({
     last,
     vxvy: [, vy],
     movement: [, my],
@@ -7846,7 +7849,7 @@ const UploadFileInput = props => {
       if (multiple) {
         e.target.value = files[id].filter(backendFile => backendFile.id !== file.id);
       } else {
-        e.target.value = {};
+        e.target.value = undefined; // console.log(`🚀 ~ handleDelete ~ e.target.value`, e.target.value);
       }
     } // console.log(`🚀 ~ handleDelete ~ files`, files[id]);
     // console.log(`🚀 ~ handleDelete ~ handleDelete params`, params);
@@ -7905,9 +7908,12 @@ const UploadFileInput = props => {
     accept: accept,
     onChange: handleUploadImage,
     className: "hidden"
-  }), typeof InnerComponent === "function" ? /*#__PURE__*/React__default["default"].createElement(InnerComponent, props) : uploadTitle ? /*#__PURE__*/React__default["default"].createElement("p", {
+  }), typeof InnerComponent === "function" ? /*#__PURE__*/React__default["default"].createElement(InnerComponent, _extends$3({}, props, {
+    handleUploadImage: handleUploadImage
+  })) : uploadTitle ? /*#__PURE__*/React__default["default"].createElement("p", {
     className: uploadTitleClassName
   }, uploadTitle) : null), /*#__PURE__*/React__default["default"].createElement(FilesRow, {
+    handleUploadImage: handleUploadImage,
     handleDelete: (e, params) => handleDelete(e, params),
     files: files[id],
     multiple: multiple,
@@ -7951,6 +7957,7 @@ const FilesRow = ({
       }),
       key: index,
       file: file,
+      files: localFiles,
       fileCardClassName: fileCardClassName,
       DeleteFileButton: DeleteFileButton,
       fileCardImageClassName: fileCardImageClassName,
@@ -7962,6 +7969,7 @@ const FilesRow = ({
 };
 
 const FileCard = ({
+  files,
   file,
   handleDelete = () => {},
   BACKEND_URL,
@@ -7972,6 +7980,10 @@ const FileCard = ({
   FileComponent
 }) => {
   const src = React.useMemo(() => {
+    if (!file) {
+      return "";
+    }
+
     if (file.url) {
       return `${BACKEND_URL}${file.url}`;
     }

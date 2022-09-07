@@ -9,7 +9,7 @@ declare const _default: {
     hooks: {
         useDetectMouseover: (el: any, initialState: any) => any[];
         useDetectOutsideClick: (trigger: any, initialState: any) => any[];
-        useLookupTable: ({ columns, data: passedData, getRowId, config, initialFiltersState, }: array<import("./hooks/use-lookup-table/index").ColumnItemObject>) => import("./hooks/use-lookup-table/index").ReturnObject;
+        useLookupTable: ({ columns, data, getRowId, config, initialFiltersState, }: array<import("./hooks/use-lookup-table").ColumnItemObject>) => import("./hooks/use-lookup-table").ReturnObject;
         useBreakpoint: (breakpoint: any) => boolean;
         useSetParentsInput: ({ passedState, passedFiles, parentKey, setParentInputs, setParentFiles, setParentErrors, }: {
             passedState: any;
@@ -51,10 +51,10 @@ declare const _default: {
             clearInputs: () => void;
             setInitialErrors: () => void;
         };
-        useChildForm: typeof import("./hooks/use-form/use-child-form/index").default;
+        useChildForm: typeof import("./hooks/use-form/use-child-form").default;
     };
     components: {
-        SmartButton: ({ disabled, className, disabledClassName, children, tooltipPosition, href, dropdownItems: DropdownItems, dropdownContainerClassName, dropdownClassName, dropdownProps, tooltipItems: TooltipItems, tooltipContainerClasses, onClick: onClickCb, linkProps, Link, }: {
+        SmartButton: ({ disabled, className, disabledClassName, children, tooltipPosition, href, dropdownItems, dropdownContainerClassName, dropdownClassName, dropdownProps, tooltipItems, tooltipContainerClasses, onClick, linkProps, Link, }: {
             disabled: any;
             className: any;
             disabledClassName: any;

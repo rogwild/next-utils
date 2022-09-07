@@ -69,7 +69,8 @@ const UploadFileInput = (props) => {
           (backendFile) => backendFile.id !== file.id
         );
       } else {
-        e.target.value = {};
+        e.target.value = undefined;
+        // console.log(`🚀 ~ handleDelete ~ e.target.value`, e.target.value);
       }
     }
 
@@ -145,7 +146,10 @@ const UploadFileInput = (props) => {
             )}
 
             {typeof InnerComponent === "function" ? (
-              <InnerComponent {...props} />
+              <InnerComponent
+                {...props}
+                handleUploadImage={handleUploadImage}
+              />
             ) : uploadTitle ? (
               <p className={uploadTitleClassName}>{uploadTitle}</p>
             ) : null}
@@ -153,6 +157,7 @@ const UploadFileInput = (props) => {
         )}
 
         <FilesRow
+          handleUploadImage={handleUploadImage}
           handleDelete={(e, params) => handleDelete(e, params)}
           files={files[id]}
           multiple={multiple}
@@ -186,6 +191,7 @@ const FilesRow = ({
     if (!files) {
       return;
     }
+
     if (multiple) {
       return files;
     } else {
@@ -200,6 +206,7 @@ const FilesRow = ({
             handleDelete={(e) => handleDelete(e, { index, file })}
             key={index}
             file={file}
+            files={localFiles}
             fileCardClassName={fileCardClassName}
             DeleteFileButton={DeleteFileButton}
             fileCardImageClassName={fileCardImageClassName}
@@ -215,6 +222,7 @@ const FilesRow = ({
 };
 
 const FileCard = ({
+  files,
   file,
   handleDelete = () => {},
   BACKEND_URL,
@@ -225,9 +233,14 @@ const FileCard = ({
   FileComponent,
 }) => {
   const src = useMemo(() => {
+    if (!file) {
+      return "";
+    }
+
     if (file.url) {
       return `${BACKEND_URL}${file.url}`;
     }
+
     return URL.createObjectURL(file);
   }, [file]);
 
