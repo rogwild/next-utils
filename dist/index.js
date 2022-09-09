@@ -5,7 +5,7 @@ var qs = require('qs');
 var React = require('react');
 var reactTable = require('react-table');
 var transitionComponent = require('transition-component');
-var reactDom = require('react-dom');
+var require$$0 = require('react-dom');
 var react = require('@use-gesture/react');
 var Calendar = require('react-calendar');
 var ReactMarkdown = require('react-markdown');
@@ -33,6 +33,7 @@ function _interopNamespace(e) {
 var axios__default = /*#__PURE__*/_interopDefaultLegacy(axios);
 var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 var React__namespace = /*#__PURE__*/_interopNamespace(React);
+var require$$0__default = /*#__PURE__*/_interopDefaultLegacy(require$$0);
 var Calendar__default = /*#__PURE__*/_interopDefaultLegacy(Calendar);
 var ReactMarkdown__default = /*#__PURE__*/_interopDefaultLegacy(ReactMarkdown);
 
@@ -2711,8 +2712,7 @@ const ModalComponent$1 = ({
     };
   }, []);
   const TransitionElement = removeFromDom ? TransitionComponent : PlainDiv;
-  return /*#__PURE__*/React__default["default"].createElement(React__default["default"].Fragment, null, /*#__PURE__*/React__default["default"].createElement("div", {
-    // onClick={(e) => e.stopPropagation()}
+  return /*#__PURE__*/React__default["default"].createElement("div", {
     className: `${showLayout ? `z-30 block` : `-z-1`} ${srContainerClasses} `
   }, /*#__PURE__*/React__default["default"].createElement(TransitionElement, {
     baseClasses: `fixed inset-0 pointer-events-auto duration-${duration} transition z-10`,
@@ -2737,7 +2737,7 @@ const ModalComponent$1 = ({
   })))), !hideCloseButton && show ? /*#__PURE__*/React__default["default"].createElement(CloseButton, {
     setShow: bool => setShow(bool),
     closeButtonClasses: closeButtonClasses
-  }) : null));
+  }) : null);
 };
 
 const DefaultCloseButton = ({
@@ -2803,7 +2803,7 @@ const ModalPortal$1 = ({
   targetId = `modal`,
   ...props
 }) => {
-  return document.querySelector(`#${targetId}`) ? /*#__PURE__*/reactDom.createPortal( /*#__PURE__*/React__default["default"].createElement(ModalComponent$1, props), document.querySelector(`#${targetId}`)) : null;
+  return document.querySelector(`#${targetId}`) ? /*#__PURE__*/require$$0.createPortal( /*#__PURE__*/React__default["default"].createElement(ModalComponent$1, props), document.querySelector(`#${targetId}`)) : null;
 };
 
 const ModalArray = ({
@@ -6903,7 +6903,7 @@ class FluidTransform extends FluidValue {
 const primitives = ['a', 'abbr', 'address', 'area', 'article', 'aside', 'audio', 'b', 'base', 'bdi', 'bdo', 'big', 'blockquote', 'body', 'br', 'button', 'canvas', 'caption', 'cite', 'code', 'col', 'colgroup', 'data', 'datalist', 'dd', 'del', 'details', 'dfn', 'dialog', 'div', 'dl', 'dt', 'em', 'embed', 'fieldset', 'figcaption', 'figure', 'footer', 'form', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'head', 'header', 'hgroup', 'hr', 'html', 'i', 'iframe', 'img', 'input', 'ins', 'kbd', 'keygen', 'label', 'legend', 'li', 'link', 'main', 'map', 'mark', 'menu', 'menuitem', 'meta', 'meter', 'nav', 'noscript', 'object', 'ol', 'optgroup', 'option', 'output', 'p', 'param', 'picture', 'pre', 'progress', 'q', 'rp', 'rt', 'ruby', 's', 'samp', 'script', 'section', 'select', 'small', 'source', 'span', 'strong', 'style', 'sub', 'summary', 'sup', 'table', 'tbody', 'td', 'textarea', 'tfoot', 'th', 'thead', 'time', 'title', 'tr', 'track', 'u', 'ul', 'var', 'video', 'wbr', 'circle', 'clipPath', 'defs', 'ellipse', 'foreignObject', 'g', 'image', 'line', 'linearGradient', 'mask', 'path', 'pattern', 'polygon', 'polyline', 'radialGradient', 'rect', 'stop', 'svg', 'text', 'tspan'];
 const _excluded = ["scrollTop", "scrollLeft"];
 globals.assign({
-  batchedUpdates: reactDom.unstable_batchedUpdates,
+  batchedUpdates: require$$0.unstable_batchedUpdates,
   createStringInterpolator,
   colors
 });
@@ -7071,7 +7071,7 @@ const ModalPortal = ({
   targetId = `modal`,
   ...props
 }) => {
-  return document.querySelector(`#${targetId}`) ? /*#__PURE__*/reactDom.createPortal( /*#__PURE__*/React__default["default"].createElement(ModalComponent, props), document.querySelector(`#${targetId}`)) : null;
+  return document.querySelector(`#${targetId}`) ? /*#__PURE__*/require$$0.createPortal( /*#__PURE__*/React__default["default"].createElement(ModalComponent, props), document.querySelector(`#${targetId}`)) : null;
 };
 
 const {
@@ -8501,39 +8501,55 @@ const CloseButton = ({
   })));
 };
 
-const notificationsContainerClassName = `z-50 fixed bottom-0 right-0 flex items-end flex-col mx-4`;
+const notificationsContainerClassName = `z-50 fixed right-0 flex items-end flex-col mx-4`;
+const defaultNotificationHeight = 44;
 
 const Overlay = ({
   notifications = [],
-  remove = () => {}
+  remove = () => {},
+  isFromTop = false
 }) => {
   // use weakmap to get div height for alert items
   //
   // prevents memory leaks by garbage collecting removed items
-  const [refMap] = React.useState(() => new Map());
+  const ref = React.useRef(new Map());
+  const refMap = ref.current;
   const transitionConfigWithHeightAnimation = {
     from: {
-      height: 0
+      opacity: 0,
+      height: 0,
+      transform: `translateY(${isFromTop ? "-100%" : 0}) scale(1)`,
+      marginBottom: 0
     },
     enter: item => async next => {
+      const minHeight = item.minHeight || defaultNotificationHeight;
+      const offsetHeight = refMap.get(item).offsetHeight;
       await next({
-        height: refMap.get(item)?.offsetHeight
+        opacity: 1,
+        height: offsetHeight >= minHeight ? offsetHeight : minHeight,
+        transform: `translateY(0) scale(1)`,
+        marginBottom: 8
       });
     },
     update: item => async next => {
+      const minHeight = item.minHeight || defaultNotificationHeight;
+      const offsetHeight = refMap.get(item).offsetHeight;
       await next({
-        height: refMap.get(item)?.offsetHeight
+        height: offsetHeight >= minHeight ? offsetHeight : minHeight
       });
     },
     leave: () => async next => {
       await next({
-        height: 0
+        opacity: 1,
+        height: 0,
+        transform: `translateY(0 scale(0.9)`,
+        marginBottom: 0
       });
     }
   };
   const transitions = useTransition(notifications, transitionConfigWithHeightAnimation);
   return /*#__PURE__*/React__default["default"].createElement("div", {
-    className: notificationsContainerClassName
+    className: `${notificationsContainerClassName} ${isFromTop ? `top-0 mt-4` : `bottom-0 mb-4`}`
   }, transitions((styles, item) => {
     return /*#__PURE__*/React__default["default"].createElement(Notification, _extends$3({
       key: item.id,
@@ -8546,11 +8562,34 @@ const Overlay = ({
   }));
 };
 
+var createRoot;
+
+var m = require$$0__default["default"];
+
+if (process.env.NODE_ENV === 'production') {
+  createRoot = m.createRoot;
+  m.hydrateRoot;
+} else {
+  var i = m.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+
+  createRoot = function (c, o) {
+    i.usingClientEntryPoint = true;
+
+    try {
+      return m.createRoot(c, o);
+    } finally {
+      i.usingClientEntryPoint = false;
+    }
+  };
+}
+
 const NotificationsContext = /*#__PURE__*/React.createContext({
   add: () => null
 });
 
 const useNotifications = () => React.useContext(NotificationsContext);
+
+const isBrowser = typeof window !== `undefined`;
 
 const NotificationsWrapper = ({
   children
@@ -8585,19 +8624,101 @@ const NotificationsWrapper = ({
       duration: 1
     });
   }, []);
+  const isFromTop = isBrowser && window.innerWidth < 540;
   return /*#__PURE__*/React__default["default"].createElement(NotificationsContext.Provider, {
     value: {
       add
     }
   }, children, /*#__PURE__*/React__default["default"].createElement(Overlay, {
     notifications: notifications,
-    remove: remove
+    remove: remove,
+    isFromTop: isFromTop
   }));
+};
+
+const OverlayWrapper = ({
+  notify = () => {}
+}) => {
+  const isFromTop = isBrowser && window.innerWidth < 540;
+  const [notifications, setNotifications] = React.useState([]); // use state fns to avoid passing stale alerts array to showAlert and removeAlert functions
+
+  const remove = timestampId => {
+    setNotifications(alertNotifications => alertNotifications.filter(alertInfo => alertInfo.id !== timestampId));
+  };
+
+  const add = ({
+    duration = 8000,
+    ...props
+  }) => {
+    // use creation timestamp as psuedo-unique alert object ID
+    const newNotificationId = new Date().getTime();
+    const newNotification = {
+      id: newNotificationId,
+      ...props
+    };
+    setNotifications(alertNotifications => isFromTop ? [newNotification, ...alertNotifications] : [...alertNotifications, newNotification]);
+
+    if (duration !== 0) {
+      setTimeout(() => remove(newNotificationId), duration);
+    }
+  };
+
+  React.useEffect(() => {
+    notify(add, remove);
+  }, []);
+  return /*#__PURE__*/React__default["default"].createElement(Overlay, {
+    notifications: notifications,
+    remove: remove,
+    isFromTop: isFromTop
+  });
+};
+
+const notificationPortalId = `notification-portal`;
+
+class NotifiactionsManager {
+  constructor() {
+    let portalElement = document.getElementById(notificationPortalId);
+
+    if (!portalElement) {
+      const element = document.createElement("div");
+      element.id = notificationPortalId; // element.className = notificationsContainerClassName;
+
+      if (document.body) {
+        document.body.appendChild(element);
+      }
+
+      portalElement = element;
+    }
+
+    const portal = createRoot(portalElement);
+    portal.render( /*#__PURE__*/React__default["default"].createElement(OverlayWrapper, {
+      notify: this.bindNotify
+    }));
+  }
+
+  bindNotify = add => {
+    this.createNotificationFn = add;
+  };
+
+  createNotification(message) {
+    if (this.createNotificationFn) {
+      return this.createNotificationFn(message);
+    }
+  }
+
+}
+
+const notifiactionsManager = new NotifiactionsManager();
+
+const createNotification = message => {
+  return notifiactionsManager.createNotification(message);
 };
 
 var SpringNotification = {
   NotificationsWrapper,
-  useNotifications
+  useNotifications,
+  notificationPortalId,
+  createNotification
 };
 
 function ReactSpringGallery({

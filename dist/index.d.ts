@@ -91,6 +91,8 @@ declare const _default: {
             useNotifications: () => {
                 add: () => any;
             };
+            notificationPortalId: string;
+            createNotification: (message: any) => any;
         };
         MediaGallery: ({ media, containerClassName, galleryContainerClassName, mediaItemClassName, imageItemClassName, videoItemClassName, PreviousNavItemComponent, mediaContainerClassName, NextNavItemComponent, galleryClassName, }: {
             media: any;

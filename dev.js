@@ -228,7 +228,7 @@ const NotificationPage = () => {
               message: "Test message **alert** notification",
               // Child: ChildComp,
               showDefault: true,
-              duration: 100000,
+              duration: 3000,
               minHeight: 60,
             });
           }}
