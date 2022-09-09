@@ -69,43 +69,38 @@ const ModalComponent = ({
   const TransitionElement = removeFromDom ? TransitionComponent : PlainDiv;
 
   return (
-    <>
-      <div
-        // onClick={(e) => e.stopPropagation()}
-        className={`${
-          showLayout ? `z-30 block` : `-z-1`
-        } ${srContainerClasses} `}
+    <div
+      className={`${showLayout ? `z-30 block` : `-z-1`} ${srContainerClasses} `}
+    >
+      <TransitionElement
+        baseClasses={`fixed inset-0 pointer-events-auto duration-${duration} transition z-10`}
+        show={show}
+        transitionProps={layoutTransitionProps}
       >
-        <TransitionElement
-          baseClasses={`fixed inset-0 pointer-events-auto duration-${duration} transition z-10`}
-          show={show}
-          transitionProps={layoutTransitionProps}
-        >
-          <div className="transition fixed inset-0">
-            <div onClick={() => setShow(false)} className={srLayoutClasses} />
-          </div>
-        </TransitionElement>
+        <div className="transition fixed inset-0">
+          <div onClick={() => setShow(false)} className={srLayoutClasses} />
+        </div>
+      </TransitionElement>
 
-        <TransitionElement
-          baseClasses={`pointer-events-auto transition duration-${duration} transform z-40 relative`}
-          show={show}
-          id={`modal`}
-          changePopup={setShow}
-          transitionProps={contentTransitionProps}
-        >
-          <div className={srPopupWindowClasses}>
-            <RenderCard {...renderCardProps} show={show} setShow={setShow} />
-          </div>
-        </TransitionElement>
+      <TransitionElement
+        baseClasses={`pointer-events-auto transition duration-${duration} transform z-40 relative`}
+        show={show}
+        id={`modal`}
+        changePopup={setShow}
+        transitionProps={contentTransitionProps}
+      >
+        <div className={srPopupWindowClasses}>
+          <RenderCard {...renderCardProps} show={show} setShow={setShow} />
+        </div>
+      </TransitionElement>
 
-        {!hideCloseButton && show ? (
-          <CloseButton
-            setShow={(bool) => setShow(bool)}
-            closeButtonClasses={closeButtonClasses}
-          />
-        ) : null}
-      </div>
-    </>
+      {!hideCloseButton && show ? (
+        <CloseButton
+          setShow={(bool) => setShow(bool)}
+          closeButtonClasses={closeButtonClasses}
+        />
+      ) : null}
+    </div>
   );
 };
 

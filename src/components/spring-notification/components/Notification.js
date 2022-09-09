@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from "react";
+import React, { useEffect } from "react";
 import { animated } from "@react-spring/web";
 import useStyleRewriter from "../../../hooks/use-style-rewriter";
 import ReactMarkdown from "react-markdown";

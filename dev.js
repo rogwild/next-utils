@@ -3,22 +3,33 @@ import * as ReactDOM from "react-dom/client";
 import Input from "./src/components/input";
 import MediaGallery from "./src/components/media-gallery";
 // import Modal from "./src/components/modal";
-// const { SpringNotification } = utils.components;
 
 // const { NotificationsWrapper, useNotifications } = SpringNotification;
 import springNotification from "./src/components/spring-notification";
-const { NotificationsWrapper, useNotifications } = springNotification;
+const {
+  NotificationsWrapper,
+  useNotifications,
+  notificationPortalId,
+  createNotification,
+} = springNotification;
 import SmartButton from "./src/components/smart-button";
 import useForm from "./src/hooks/use-form";
 
 const App = () => {
   return (
-    <div>
-      <NotificationsWrapper>
+    <>
+      <div>
+        {/* <NotificationsWrapper> */}
         {/* <FormPage /> */}
-        <GalleryPage />
-      </NotificationsWrapper>
-    </div>
+        {/* <GalleryPage /> */}
+        <NotificationPage />
+        {/* </NotificationsWrapper> */}
+      </div>
+      <div
+        className="z-50 fixed bottom-0 right-0 w-full flex items-end flex-col mx-4 mb-10"
+        id={notificationPortalId}
+      ></div>
+    </>
   );
 };
 
@@ -206,37 +217,24 @@ const FormPage = () => {
 };
 
 const NotificationPage = () => {
-  const [showPopup, setShowPopup] = useState(false);
-  const notificationsContext = useNotifications();
-
-  useEffect(() => {
-    notificationsContext.add({
-      title: "**Test** alert",
-      message: "Test message **alert** notification",
-      containerClassName: "@mn mb-2",
-      Child: ChildComp,
-      showDefault: false,
-      duration: 1,
-    });
-  }, []);
-
   return (
     <div className="main">
       <div className="min-w-screen min-h-screen bg-gray-100 realtive flex flex-col items-center justify-center">
         {/* <Input value="Input value" /> */}
         <SmartButton
           onClick={() => {
-            notificationsContext.add({
+            createNotification({
               title: "**Test** alert",
               message: "Test message **alert** notification",
-              containerClassName: "@mn mb-2",
-              Child: ChildComp,
-              showDefault: false,
-              duration: 105000,
+              // Child: ChildComp,
+              showDefault: true,
+              duration: 100000,
+              minHeight: 60,
             });
           }}
+          className="p-3 border border-black rounded-md text-lg font-medium"
         >
-          SmartButton
+          Create notifiaction
         </SmartButton>
         {/* <Modal
           RenderCard={Popup}
@@ -264,10 +262,8 @@ const NotificationPage = () => {
   );
 };
 
-const ChildComp = (item) => {
-  console.log(`🚀 ~ ChildComp ~ props`, item);
-
-  return <div className="w-4 h-4 bg-red-500 rounded-full mt-1 ml-2"></div>;
+const ChildComp = ({ title }) => {
+  return <div className=" mt-1 ml-2">{title}</div>;
 };
 
 const CheckIcon = () => {
