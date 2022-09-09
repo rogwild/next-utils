@@ -99,6 +99,8 @@ const OverlayWrapper = ({ notify = () => {} }) => {
 const notificationPortalId = `notification-portal`;
 class NotifiactionsManager {
   constructor() {
+    if (typeof window === "undefined") return;
+
     let portalElement = document.getElementById(notificationPortalId);
 
     if (!portalElement) {
