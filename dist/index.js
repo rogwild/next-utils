@@ -6973,28 +6973,25 @@ const ModalComponent = ({
     setIsOpen(false);
   };
 
-  const bind = react.useDrag(({
-    last,
-    vxvy: [, vy],
-    movement: [, my],
-    cancel,
-    canceled
-  }) => {
-    if (scrollActive) return;
-    if (my < -50) cancel();
-
-    if (last) {
-      my > modalHeight * 0.5 || vy > 0.35 ? close(vy) : open({
-        canceled
-      });
-    } else {
-      set({
-        y: my,
-        immediate: true
-      });
-    }
+  const bind = react.useDrag(state => {
+    console.log(`🚀 ~ state`, state); // const {
+    //   last,
+    //   vxvy: [],
+    //   movement: [],
+    //   cancel = () => {},
+    //   canceled,
+    // } = state;
+    // const [_, vy] = vxvy;
+    // const [, my] = movement;
+    // if (scrollActive) return;
+    // if (my < -50) cancel();
+    // if (last) {
+    //   my > modalHeight * 0.5 || vy > 0.35 ? close(vy) : open({ canceled });
+    // } else {
+    //   set({ y: my, immediate: true });
+    // }
   }, {
-    initial: () => [0, y.get()],
+    from: () => [0, y.get()],
     filterTaps: true,
     bounds: {
       top: 0

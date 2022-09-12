@@ -52,19 +52,34 @@ const ModalComponent = ({
   };
 
   const bind = useDrag(
-    ({ last, vxvy: [, vy], movement: [, my], cancel, canceled }) => {
-      if (scrollActive) return;
-
-      if (my < -50) cancel();
-
-      if (last) {
-        my > modalHeight * 0.5 || vy > 0.35 ? close(vy) : open({ canceled });
-      } else {
-        set({ y: my, immediate: true });
-      }
+    (state) => {
+      /**
+       * @todo
+       * !!! API was changed, need to fix
+       *
+       * Uncaught TypeError:
+       * Cannot destructure property 'Symbol(Symbol.iterator)' of 'state' as it is undefined.
+       */
+      // console.log(`🚀 ~ state`, state);
+      // const {
+      //   last,
+      //   vxvy: [],
+      //   movement: [],
+      //   cancel = () => {}, //
+      //   canceled, //
+      // } = state;
+      // const [_, vy] = vxvy;
+      // const [, my] = movement;
+      // if (scrollActive) return;
+      // if (my < -50) cancel();
+      // if (last) {
+      //   my > modalHeight * 0.5 || vy > 0.35 ? close(vy) : open({ canceled });
+      // } else {
+      //   set({ y: my, immediate: true });
+      // }
     },
     {
-      initial: () => [0, y.get()],
+      from: () => [0, y.get()],
       filterTaps: true,
       bounds: { top: 0 },
       rubberband: true,
