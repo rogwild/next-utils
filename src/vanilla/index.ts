@@ -32,7 +32,7 @@ export const GTMPageView = (url) => {
 export const isNil = (value) => value === null || value === undefined;
 
 export const urlRegex =
-  /\b(?<![@.,%&#-])(?<protocol>\w{2,10}:\/\/)?((?:\w|\&\#\d{1,5};)[.-]?)+(\.([a-z]{2,15})|((protocol)(?:\:\d{1,6})|(?!)))\b(?![@])(\/)?(?:([\w\d\?\-=#:%@&.;])+(?:\/(?:([\w\d\?\--=#:%@&;.])+))*)?(?<![.,?!-])/gim;
+  /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gim;
 
 export const shortenAddress = (address, symbols = [6, 4]) => {
   const firstPart = address.slice(0, symbols[0]);

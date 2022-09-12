@@ -2008,7 +2008,7 @@ var GTMPageView = function (url) {
     return pageEvent;
 };
 var isNil = function (value) { return value === null || value === undefined; };
-var urlRegex = /\b(?<![@.,%&#-])(?<protocol>\w{2,10}:\/\/)?((?:\w|\&\#\d{1,5};)[.-]?)+(\.([a-z]{2,15})|((protocol)(?:\:\d{1,6})|(?!)))\b(?![@])(\/)?(?:([\w\d\?\-=#:%@&.;])+(?:\/(?:([\w\d\?\--=#:%@&;.])+))*)?(?<![.,?!-])/gim;
+var urlRegex = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gim;
 var shortenAddress = function (address, symbols) {
     if (symbols === void 0) { symbols = [6, 4]; }
     var firstPart = address.slice(0, symbols[0]);
