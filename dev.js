@@ -20,9 +20,9 @@ const App = () => {
     <>
       <div>
         {/* <NotificationsWrapper> */}
-        {/* <FormPage /> */}
+        <FormPage />
         {/* <GalleryPage /> */}
-        <NotificationPage />
+        {/* <NotificationPage /> */}
         {/* </NotificationsWrapper> */}
       </div>
       <div

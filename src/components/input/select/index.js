@@ -20,8 +20,8 @@ const SelectInput = (props) => {
   } = props;
 
   const srInputContainerClassName = useStyleRewriter(
-    inputContainerClassName,
-    baseInputContainerClassName
+    baseInputContainerClassName,
+    inputContainerClassName
   );
 
   return (
