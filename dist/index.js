@@ -7372,25 +7372,28 @@ const TextInput = /*#__PURE__*/React.forwardRef((props, ref) => {
   }));
 });
 
-const RangeInput = ({
-  id = Math.random(),
-  value = 0,
-  onChange = () => {},
-  minValue = 0,
-  maxValue = 100,
-  minLimit = minValue,
-  maxLimit = maxValue,
-  range = [0, maxValue * 0.25, maxValue * 0.5, maxValue * 0.75, maxValue],
-  tooltip = false,
-  disabled,
-  onMouseUp = () => {},
-  inputClassName,
-  rangeClassName,
-  activeRangeClassName,
-  Comp,
-  step = 0.01,
-  containerClassName
-}) => {
+const RangeInput = props => {
+  const {
+    id = Math.random(),
+    value = 0,
+    onChange = () => {},
+    minValue = 0,
+    maxValue = 100,
+    minLimit = minValue,
+    maxLimit = maxValue,
+    range = [0, maxValue * 0.25, maxValue * 0.5, maxValue * 0.75, maxValue],
+    tooltip = false,
+    disabled,
+    onMouseUp = () => {},
+    inputClassName,
+    rangeClassName,
+    activeRangeClassName,
+    label,
+    error,
+    Comp,
+    step = 0.01,
+    containerClassName
+  } = props;
   const rangeRef = React.useRef(null);
 
   const onMouseUpHandler = e => {
@@ -7415,7 +7418,7 @@ const RangeInput = ({
     };
   }, [value]);
   return /*#__PURE__*/React__default["default"].createElement(InputOverlay, _extends$3({}, props, {
-    label: null,
+    label: label,
     error: error
   }), /*#__PURE__*/React__default["default"].createElement("div", {
     className: srContainerClassName

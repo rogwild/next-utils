@@ -2,25 +2,29 @@ import React, { useMemo, useRef } from "react";
 import useStyleRewriter from "../../../hooks/use-style-rewriter";
 import InputOverlay from "../input-overlay";
 
-const RangeInput = ({
-  id = Math.random(),
-  value = 0,
-  onChange = () => {},
-  minValue = 0,
-  maxValue = 100,
-  minLimit = minValue,
-  maxLimit = maxValue,
-  range = [0, maxValue * 0.25, maxValue * 0.5, maxValue * 0.75, maxValue],
-  tooltip = false,
-  disabled,
-  onMouseUp = () => {},
-  inputClassName,
-  rangeClassName,
-  activeRangeClassName,
-  Comp,
-  step = 0.01,
-  containerClassName,
-}) => {
+const RangeInput = (props) => {
+  const {
+    id = Math.random(),
+    value = 0,
+    onChange = () => {},
+    minValue = 0,
+    maxValue = 100,
+    minLimit = minValue,
+    maxLimit = maxValue,
+    range = [0, maxValue * 0.25, maxValue * 0.5, maxValue * 0.75, maxValue],
+    tooltip = false,
+    disabled,
+    onMouseUp = () => {},
+    inputClassName,
+    rangeClassName,
+    activeRangeClassName,
+    label,
+    error,
+    Comp,
+    step = 0.01,
+    containerClassName,
+  } = props;
+
   const rangeRef = useRef(null);
   const onMouseUpHandler = (e) => {
     let value = +e.target.value;
@@ -57,7 +61,7 @@ const RangeInput = ({
   }, [value]);
 
   return (
-    <InputOverlay {...props} label={null} error={error}>
+    <InputOverlay {...props} label={label} error={error}>
       <div className={srContainerClassName}>
         <div style={circleStyle} className={srRangeClassName}>
           <div

@@ -196,6 +196,9 @@ const FormPage = () => {
 
   useEffect(() => {
     setErrors({ title: { id: "wrong", message: "wrong password" } });
+    if (inputsValues.amount < 3) {
+      setErrors({ amount: { id: "min", message: "less than min amount" } });
+    }
   }, [inputsValues]);
 
   console.log(`🚀 ~ FormPage ~ inputs`, inputs);
