@@ -7414,7 +7414,10 @@ const RangeInput = ({
       left: `${value / maxValue * 100 <= maxLimit / maxValue * 100 ? value / maxValue * 100 : maxLimit / maxValue * 100}%`
     };
   }, [value]);
-  return /*#__PURE__*/React__default["default"].createElement("div", {
+  return /*#__PURE__*/React__default["default"].createElement(InputOverlay, _extends$3({}, props, {
+    label: null,
+    error: error
+  }), /*#__PURE__*/React__default["default"].createElement("div", {
     className: srContainerClassName
   }, /*#__PURE__*/React__default["default"].createElement("div", {
     style: circleStyle,
@@ -7463,7 +7466,7 @@ const RangeInput = ({
     id: id,
     value: value,
     range: range
-  }));
+  })));
 };
 
 const baseContainerClassName$2 = `
