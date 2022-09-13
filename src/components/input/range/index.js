@@ -1,5 +1,6 @@
 import React, { useMemo, useRef } from "react";
 import useStyleRewriter from "../../../hooks/use-style-rewriter";
+import InputOverlay from "../input-overlay";
 
 const RangeInput = ({
   id = Math.random(),
@@ -56,60 +57,62 @@ const RangeInput = ({
   }, [value]);
 
   return (
-    <div className={srContainerClassName}>
-      <div style={circleStyle} className={srRangeClassName}>
-        <div
-          style={{
-            width: `${
-              (value / maxValue) * 100 <= (maxLimit / maxValue) * 100
-                ? (value / maxValue) * 100
-                : (maxLimit / maxValue) * 100
-            }%`,
-          }}
-          className={srActiveRangeClassName}
-        />
-        {typeof Comp === "function" ? (
-          <Comp style={draggedItemStyle} />
-        ) : (
-          <div style={draggedItemStyle} className={srInputClassName} />
-        )}
-      </div>
-      {tooltip && (
-        <div className="absolute left-0 z-50" style={circleStyle}>
+    <InputOverlay {...props} label={null} error={error}>
+      <div className={srContainerClassName}>
+        <div style={circleStyle} className={srRangeClassName}>
           <div
             style={{
-              left: `${valueDividedByMaxValue}%`,
+              width: `${
+                (value / maxValue) * 100 <= (maxLimit / maxValue) * 100
+                  ? (value / maxValue) * 100
+                  : (maxLimit / maxValue) * 100
+              }%`,
             }}
-            className="opacity-0 group-hover:opacity-100 absolute -top-10 bg-primary-700 text-white text-xs left-1/2 -translate-x-1/2 p-1 rounded-4px pointer-events-none"
-          >
-            <div className="absolute -bottom-1 bg-primary-700 left-1/2 -translate-x-1/2 rotate-45 w-2 h-2 rounded-1px" />
-            {valueDividedByMaxValue || 0}%
-          </div>
+            className={srActiveRangeClassName}
+          />
+          {typeof Comp === "function" ? (
+            <Comp style={draggedItemStyle} />
+          ) : (
+            <div style={draggedItemStyle} className={srInputClassName} />
+          )}
         </div>
-      )}
-      <input
-        disabled={disabled}
-        list={id}
-        ref={rangeRef}
-        min={minValue}
-        max={maxValue}
-        step={step}
-        onMouseDown={() => (rangeRef.current.style.cursor = `grabbing`)}
-        onMouseUp={(e) => onMouseUpHandler(e)}
-        onInput={(e) => onChangeHandler(e)}
-        type="range"
-        className="w-full absolute h-full opacity-0 z-20"
-        id={id}
-        style={{
-          width: `${((maxLimit - minLimit) / maxValue) * 100}%`,
-          left: `calc(${(minLimit / maxValue) * 100}% )`,
-          cursor: `grab`,
-          minWidth: `2%`,
-        }}
-        value={value}
-      />
-      {range && <Datalist id={id} value={value} range={range} />}
-    </div>
+        {tooltip && (
+          <div className="absolute left-0 z-50" style={circleStyle}>
+            <div
+              style={{
+                left: `${valueDividedByMaxValue}%`,
+              }}
+              className="opacity-0 group-hover:opacity-100 absolute -top-10 bg-primary-700 text-white text-xs left-1/2 -translate-x-1/2 p-1 rounded-4px pointer-events-none"
+            >
+              <div className="absolute -bottom-1 bg-primary-700 left-1/2 -translate-x-1/2 rotate-45 w-2 h-2 rounded-1px" />
+              {valueDividedByMaxValue || 0}%
+            </div>
+          </div>
+        )}
+        <input
+          disabled={disabled}
+          list={id}
+          ref={rangeRef}
+          min={minValue}
+          max={maxValue}
+          step={step}
+          onMouseDown={() => (rangeRef.current.style.cursor = `grabbing`)}
+          onMouseUp={(e) => onMouseUpHandler(e)}
+          onInput={(e) => onChangeHandler(e)}
+          type="range"
+          className="w-full absolute h-full opacity-0 z-20"
+          id={id}
+          style={{
+            width: `${((maxLimit - minLimit) / maxValue) * 100}%`,
+            left: `calc(${(minLimit / maxValue) * 100}% )`,
+            cursor: `grab`,
+            minWidth: `2%`,
+          }}
+          value={value}
+        />
+        {range && <Datalist id={id} value={value} range={range} />}
+      </div>
+    </InputOverlay>
   );
 };
 
