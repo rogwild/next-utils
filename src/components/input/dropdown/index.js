@@ -45,7 +45,7 @@ const DropdownInput = (props) => {
   }, [isDropdownOpen]);
 
   return (
-    <InputOverlay label={label} error={error}>
+    <InputOverlay {...props} label={label} error={error}>
       <SmartButton
         onClick={() => setDropdownOpen(!isDropdownOpen)}
         dropdownItems={

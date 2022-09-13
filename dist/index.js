@@ -8125,10 +8125,10 @@ const DropdownInput = props => {
   React.useEffect(() => {
     onDropdownOpenChange(isDropdownOpen);
   }, [isDropdownOpen]);
-  return /*#__PURE__*/React__default["default"].createElement(InputOverlay, {
+  return /*#__PURE__*/React__default["default"].createElement(InputOverlay, _extends$3({}, props, {
     label: label,
     error: error
-  }, /*#__PURE__*/React__default["default"].createElement(SmartButton, {
+  }), /*#__PURE__*/React__default["default"].createElement(SmartButton, {
     onClick: () => setDropdownOpen(!isDropdownOpen),
     dropdownItems: items?.length ? () => items.map((item, index) => {
       return /*#__PURE__*/React__default["default"].createElement(SmartButton, {
