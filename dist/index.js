@@ -6974,12 +6974,20 @@ const ModalComponent = ({
   };
 
   const bind = react.useDrag(state => {
-    console.log(`🚀 ~ state`, state); // const {
+    /**
+     * @todo
+     * !!! API was changed, need to fix
+     *
+     * Uncaught TypeError:
+     * Cannot destructure property 'Symbol(Symbol.iterator)' of 'state' as it is undefined.
+     */
+    // console.log(`🚀 ~ state`, state);
+    // const {
     //   last,
     //   vxvy: [],
     //   movement: [],
-    //   cancel = () => {},
-    //   canceled,
+    //   cancel = () => {}, //
+    //   canceled, //
     // } = state;
     // const [_, vy] = vxvy;
     // const [, my] = movement;
@@ -8054,7 +8062,7 @@ const SelectInput = props => {
     baseItemClassName,
     InnerComponent
   } = props;
-  const srInputContainerClassName = useStyleRewriter$6(inputContainerClassName, baseInputContainerClassName);
+  const srInputContainerClassName = useStyleRewriter$6(baseInputContainerClassName, inputContainerClassName);
   return /*#__PURE__*/React__default["default"].createElement(InputOverlay, {
     label: label,
     error: error
