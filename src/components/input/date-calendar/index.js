@@ -3,9 +3,24 @@ import PopupCalendar from "./popup-calendar";
 import { Transition } from "transition-component";
 import Input from "../text/Input";
 import InputOverlay from "../input-overlay";
+import useStyleRewriter from "../../../hooks/use-style-rewriter";
 
 const DateCalendar = forwardRef((props, ref) => {
-  const { value, id, onChange, error, LeftArrowIcon, RightArrowIcon } = props;
+  const {
+    value,
+    id,
+    onChange,
+    error,
+    nextButtonChild,
+    prevButtonChild,
+    inputContainerClassName,
+    dateInputInputContainerClassName,
+    dateInputDateInputClassName,
+    dateInputMonthInputClassName,
+    dateInputYearInputClassName,
+    calendarContainerClassName,
+    DividerComponent,
+  } = props;
 
   const buttonRef = useRef();
 
@@ -100,21 +115,28 @@ const DateCalendar = forwardRef((props, ref) => {
     }
   }, [localValue]);
 
+  const srInputContainerClassName = useStyleRewriter(
+    baseInputContainerClassName,
+    inputContainerClassName
+  );
+
   return (
     <InputOverlay {...props} error={localError}>
-      <div className="flex items-center relative z-70 " ref={buttonRef}>
+      <div className={srInputContainerClassName} ref={buttonRef}>
         <DateInput
+          dateInputInputContainerClassName={dateInputInputContainerClassName}
+          dateInputDateInputClassName={dateInputDateInputClassName}
+          dateInputMonthInputClassName={dateInputMonthInputClassName}
+          dateInputYearInputClassName={dateInputYearInputClassName}
           error={localError}
           value={inputValues}
           onChange={setInputValues}
           onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+          DividerComponent={DividerComponent}
         />
-        <Transition
-          show={isDropdownOpen}
-          {...contentTransitionProps}
-          className="absolute top-12 w-fit md:left-0 z-20 overflow-hidden drop-shadow-xl"
-        >
+        <Transition show={isDropdownOpen} {...contentTransitionProps}>
           <PopupCalendar
+            containerClassName={calendarContainerClassName}
             value={localValue || new Date()}
             setValue={setLocalValue}
             open={isDropdownOpen}
@@ -124,8 +146,8 @@ const DateCalendar = forwardRef((props, ref) => {
             onClick={(localValue) => {
               setIsDropdownOpen(false);
             }}
-            LeftArrowIcon={LeftArrowIcon}
-            RightArrowIcon={RightArrowIcon}
+            nextButtonChild={nextButtonChild}
+            prevButtonChild={prevButtonChild}
           />
         </Transition>
       </div>
@@ -135,9 +157,12 @@ const DateCalendar = forwardRef((props, ref) => {
 
 export default DateCalendar;
 
-const inputClassName = `@ttc text-black @bdc bg-primary-200 @pg px-0 py-0 @brr rounded-0 @tta text-center @brc border-transparent`;
-const containerClassName = `@wh w-fit @tta text-center`;
 const DateInput = ({
+  dateInputInputContainerClassName = "",
+  dateInputDateInputClassName = "",
+  dateInputMonthInputClassName = "",
+  dateInputYearInputClassName = "",
+  DividerComponent,
   value = [],
   onChange = () => {},
   onClick = () => {},
@@ -159,15 +184,13 @@ const DateInput = ({
     });
   }, [date, month, year]);
 
+  const srInputContainerClassName = useStyleRewriter(
+    baseDateInputInputContainerClassName,
+    dateInputInputContainerClassName
+  );
+
   return (
-    <div
-      onClick={onClick}
-      className={`w-fit pl-[8px] pr-[10px] py-[12px] bg-primary-200 flex justify-start rounded-4px text-black text-base border-[1px] ${
-        error
-          ? `border-red-500 hover:border-red-500 shadow-red-outline`
-          : `border-transparent`
-      }`}
-    >
+    <div onClick={onClick} className={srInputContainerClassName}>
       <Input
         type="number"
         value={date || ``}
@@ -180,10 +203,10 @@ const DateInput = ({
 
           setDate(`${value}`);
         }}
-        className={`@wh w-[32px] ${inputClassName}`}
-        containerClassName={containerClassName}
+        inputContainerClassName="@wh w-fit"
+        inputClassName={dateInputDateInputClassName}
       />
-      <div>.</div>
+      {typeof DividerComponent === "function" ? <DividerComponent /> : null}
       <Input
         type="number"
         value={month || ``}
@@ -196,10 +219,10 @@ const DateInput = ({
 
           setMonth(value);
         }}
-        className={`@wh w-[32px] ${inputClassName}`}
-        containerClassName={containerClassName}
+        inputContainerClassName="@wh w-fit"
+        inputClassName={dateInputMonthInputClassName}
       />
-      <div>.</div>
+      {typeof DividerComponent === "function" ? <DividerComponent /> : null}
       <Input
         type="number"
         value={year || ``}
@@ -212,8 +235,8 @@ const DateInput = ({
 
           setYear(value);
         }}
-        className={`@wh w-[46px] ${inputClassName}`}
-        containerClassName={containerClassName}
+        inputContainerClassName="@wh w-fit"
+        inputClassName={dateInputYearInputClassName}
       />
     </div>
   );
@@ -257,6 +280,7 @@ const formatDatesObject = (date) => {
 };
 
 const options = { year: `numeric`, month: `2-digit`, day: `2-digit` };
+
 const formatDate = (date) =>
   new Intl.DateTimeFormat(options)
     .format(new Date(date))
@@ -276,3 +300,14 @@ const useOutsideClick = (ref, action) => {
     };
   }, [ref]);
 };
+
+const baseInputContainerClassName = `
+  @pn relative
+  @zi z-70
+  @wh w-full
+`;
+
+const baseDateInputInputContainerClassName = `
+  @wh w-fit
+  @dy flex
+`;

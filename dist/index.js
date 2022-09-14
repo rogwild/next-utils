@@ -2441,7 +2441,7 @@ const DropdownContainer = ({
   dropdownRef
 }) => {
   const srClassName = useStyleRewriter$5(baseClasses$2, className);
-  const srContainerClassName = useStyleRewriter$5(baseContainerClassName$4, containerClassName);
+  const srContainerClassName = useStyleRewriter$5(baseContainerClassName$5, containerClassName);
   return /*#__PURE__*/React__default["default"].createElement("div", {
     ref: dropdownRef,
     className: srContainerClassName
@@ -2449,7 +2449,7 @@ const DropdownContainer = ({
     className: srClassName
   }, children));
 };
-const baseContainerClassName$4 = `
+const baseContainerClassName$5 = `
   @pn absolute
   @wh w-full
   @mn mt-2
@@ -7182,7 +7182,7 @@ const CheckboxInput = props => {
     InnerComponent
   } = props;
   const [localValue, setLocalValue] = React.useState(value);
-  const srInputContainerClassName = useStyleRewriter$6(baseInputContainerClassName$2, inputContainerClassName);
+  const srInputContainerClassName = useStyleRewriter$6(baseInputContainerClassName$3, inputContainerClassName);
   const srLabelClassName = useStyleRewriter$6(baseLabelClassName, labelClassName);
   const srInputClassName = useStyleRewriter$6(baseInputClassName$5, inputClassName, false);
   const resInputlassName = useStyleRewriter$6(srInputClassName, value ? checkedInputClassName : "");
@@ -7234,7 +7234,7 @@ const CheckboxInput = props => {
     className: srLabelClassName
   }, label) : null));
 };
-const baseInputContainerClassName$2 = `
+const baseInputContainerClassName$3 = `
   @dy flex
   @gp gap-2
   @ani items-center
@@ -7285,7 +7285,7 @@ const Input = /*#__PURE__*/React.forwardRef(({
   const baseClasses = useStyleRewriter$6(baseClassName, typeClasses, false);
   const statusClasses = disabled ? useStyleRewriter$6(baseClasses, inputDisabledClassName, false) : error ? useStyleRewriter$6(baseClasses, inputErrorClassName, false) : baseClasses;
   const srClasses = useStyleRewriter$6(statusClasses, inputClassName);
-  const srInputContainerClassName = useStyleRewriter$6(baseContainerClassName$3, inputContainerClassName);
+  const srInputContainerClassName = useStyleRewriter$6(baseContainerClassName$4, inputContainerClassName);
   const baseDropdownContainerClasses = `@wh w-full @mn mt-1 @ht h-200px @ow overflow-y-scroll ${dropdownPosition === `right` ? `@it left-auto right-0` : `@it inset-x-0`}`;
   const srDropdownContainerClasses = useStyleRewriter$6(baseDropdownContainerClasses, dropdownContainerClasses, true);
   return /*#__PURE__*/React__default["default"].createElement("div", {
@@ -7321,7 +7321,7 @@ const classesByType = {
   select: `@cr cursor-pointer`,
   text: `@cr cursor-text`
 };
-const baseContainerClassName$3 = `w-full relative`;
+const baseContainerClassName$4 = `w-full relative`;
 const baseClassName = `
   @bdc bg-transparent
   @ttc text-black
@@ -7333,7 +7333,6 @@ const baseClassName = `
   @tndn duration-200
   @oe outline-none focus:outline-none hover:outline-none
   @dy flex
-  @pg p-3
 `;
 
 const TextInput = /*#__PURE__*/React.forwardRef((props, ref) => {
@@ -7407,7 +7406,7 @@ const RangeInput = props => {
     onChange(e, value);
   };
 
-  const srContainerClassName = useStyleRewriter$6(baseContainerClassName$2, containerClassName);
+  const srContainerClassName = useStyleRewriter$6(baseContainerClassName$3, containerClassName);
   const valueDividedByMaxValue = value / maxValue * 100 || 0;
   const srRangeClassName = useStyleRewriter$6(baseRangeClassName, rangeClassName);
   const srActiveRangeClassName = useStyleRewriter$6(baseActiveRangeClassName, activeRangeClassName);
@@ -7472,7 +7471,7 @@ const RangeInput = props => {
   })));
 };
 
-const baseContainerClassName$2 = `
+const baseContainerClassName$3 = `
   @wh w-full
   @dy flex
   @ani items-center
@@ -7714,7 +7713,7 @@ const OtpInput = props => {
     }
   }, [activeInput, getRightValue, length, otpValues]);
   const allInputs = Array(length).fill(``);
-  const srContainerClassName = useStyleRewriter$6(baseContainerClassName$1, containerClassName);
+  const srContainerClassName = useStyleRewriter$6(baseContainerClassName$2, containerClassName);
   const srInputClassName = useStyleRewriter$6(baseInputClassName$3, inputClassName);
   return /*#__PURE__*/React__default["default"].createElement(InputOverlay, props, /*#__PURE__*/React__default["default"].createElement("div", {
     className: srContainerClassName
@@ -7739,7 +7738,7 @@ const OtpInput = props => {
 
   }))));
 };
-const baseContainerClassName$1 = `
+const baseContainerClassName$2 = `
   @dy flex gap-2
   @jyc justify-center
   @ani items-center
@@ -7893,7 +7892,7 @@ const UploadFileInput = props => {
   };
 
   const srInputClassName = useStyleRewriter$6(baseInputClassName$1, inputClassName);
-  const srInputContainerClassName = useStyleRewriter$6(baseInputContainerClassName$1, containerClassName);
+  const srInputContainerClassName = useStyleRewriter$6(baseInputContainerClassName$2, containerClassName);
   return /*#__PURE__*/React__default["default"].createElement(InputOverlay, _extends$3({}, props, {
     error: error
   }), /*#__PURE__*/React__default["default"].createElement("div", {
@@ -8019,7 +8018,7 @@ const FileCard = ({
 };
 
 const preventDefaultEvent = e => e.preventDefault();
-const baseInputContainerClassName$1 = `
+const baseInputContainerClassName$2 = `
   @dy flex
   @fxw flex-wrap
   @wh w-full
@@ -8068,7 +8067,7 @@ const SelectInput = props => {
     baseItemClassName,
     InnerComponent
   } = props;
-  const srInputContainerClassName = useStyleRewriter$6(baseInputContainerClassName, inputContainerClassName);
+  const srInputContainerClassName = useStyleRewriter$6(baseInputContainerClassName$1, inputContainerClassName);
   return /*#__PURE__*/React__default["default"].createElement(InputOverlay, _extends$3({
     label: label,
     error: error
@@ -8090,7 +8089,7 @@ const SelectInput = props => {
     })) : item.title);
   })));
 };
-const baseInputContainerClassName = `
+const baseInputContainerClassName$1 = `
   @dy flex
   @fxw flex-wrap
   @gp gap-2`;
@@ -8165,16 +8164,20 @@ const PopupCalendar = ({
   value,
   setValue,
   setActiveTimeframe,
-  LeftArrowIcon = () => {},
-  RightArrowIcon = () => {}
+  containerClassName = "",
+  nextButtonChild,
+  prevButtonChild
 }) => {
+  const srContainerClassName = useStyleRewriter$6(baseContainerClassName$1, containerClassName);
   return /*#__PURE__*/React__default["default"].createElement("div", {
-    className: "@dy flex flex-col md:flex-row @bdc bg-white overflow-hidden @pg p-0 divide-x divide-true-gray-150 @bxsw shadow-none rounded-[8px]"
+    className: srContainerClassName
   }, /*#__PURE__*/React__default["default"].createElement("div", {
     className: "px-2 flex flex-col items-center text-black"
   }, /*#__PURE__*/React__default["default"].createElement(Calendar__default["default"], _extends$3({}, calendarSettings, {
-    nextLabel: RightArrowIcon,
-    prevLabel: LeftArrowIcon,
+    nextLabel: nextButtonChild,
+    prevLabel: prevButtonChild,
+    next2AriaLabel: null,
+    prev2AriaLabel: null,
     value: new Date(value),
     onChange: setValue,
     onClickDay: value => {
@@ -8209,6 +8212,20 @@ const calendarSettings = {
   showNavigation: true,
   returnValue: `start`
 };
+const baseContainerClassName$1 = `
+  @pn absolute
+  @it left-0 top-full
+  @dy flex
+  @fxd flex-col md:flex-row
+  @bdc bg-white
+  @ow overflow-hidden
+  @pg p-0
+  @dew divide-x
+  @des divide-true-gray-150
+  @bxsw shadow-none
+  @brr rounded-[8px]
+  @zi z-40
+`;
 
 const DateCalendar = /*#__PURE__*/React.forwardRef((props, ref) => {
   const {
@@ -8216,8 +8233,15 @@ const DateCalendar = /*#__PURE__*/React.forwardRef((props, ref) => {
     id,
     onChange,
     error,
-    LeftArrowIcon,
-    RightArrowIcon
+    nextButtonChild,
+    prevButtonChild,
+    inputContainerClassName,
+    dateInputInputContainerClassName,
+    dateInputDateInputClassName,
+    dateInputMonthInputClassName,
+    dateInputYearInputClassName,
+    calendarContainerClassName,
+    DividerComponent
   } = props;
   const buttonRef = React.useRef();
   const [localValue, setLocalValue] = React.useState(null);
@@ -8295,21 +8319,26 @@ const DateCalendar = /*#__PURE__*/React.forwardRef((props, ref) => {
       }
     }
   }, [localValue]);
+  const srInputContainerClassName = useStyleRewriter$6(baseInputContainerClassName, inputContainerClassName);
   return /*#__PURE__*/React__default["default"].createElement(InputOverlay, _extends$3({}, props, {
     error: localError
   }), /*#__PURE__*/React__default["default"].createElement("div", {
-    className: "flex items-center relative z-70 ",
+    className: srInputContainerClassName,
     ref: buttonRef
   }, /*#__PURE__*/React__default["default"].createElement(DateInput, {
+    dateInputInputContainerClassName: dateInputInputContainerClassName,
+    dateInputDateInputClassName: dateInputDateInputClassName,
+    dateInputMonthInputClassName: dateInputMonthInputClassName,
+    dateInputYearInputClassName: dateInputYearInputClassName,
     error: localError,
     value: inputValues,
     onChange: setInputValues,
-    onClick: () => setIsDropdownOpen(!isDropdownOpen)
+    onClick: () => setIsDropdownOpen(!isDropdownOpen),
+    DividerComponent: DividerComponent
   }), /*#__PURE__*/React__default["default"].createElement(transitionComponent.Transition, _extends$3({
     show: isDropdownOpen
-  }, contentTransitionProps, {
-    className: "absolute top-12 w-fit md:left-0 z-20 overflow-hidden drop-shadow-xl"
-  }), /*#__PURE__*/React__default["default"].createElement(PopupCalendar, {
+  }, contentTransitionProps), /*#__PURE__*/React__default["default"].createElement(PopupCalendar, {
+    containerClassName: calendarContainerClassName,
     value: localValue || new Date(),
     setValue: setLocalValue,
     open: isDropdownOpen,
@@ -8319,14 +8348,17 @@ const DateCalendar = /*#__PURE__*/React.forwardRef((props, ref) => {
     onClick: localValue => {
       setIsDropdownOpen(false);
     },
-    LeftArrowIcon: LeftArrowIcon,
-    RightArrowIcon: RightArrowIcon
+    nextButtonChild: nextButtonChild,
+    prevButtonChild: prevButtonChild
   }))));
 });
-const inputClassName = `@ttc text-black @bdc bg-primary-200 @pg px-0 py-0 @brr rounded-0 @tta text-center @brc border-transparent`;
-const containerClassName = `@wh w-fit @tta text-center`;
 
 const DateInput = ({
+  dateInputInputContainerClassName = "",
+  dateInputDateInputClassName = "",
+  dateInputMonthInputClassName = "",
+  dateInputYearInputClassName = "",
+  DividerComponent,
   value = [],
   onChange = () => {},
   onClick = () => {},
@@ -8345,9 +8377,10 @@ const DateInput = ({
       return [date, month, year];
     });
   }, [date, month, year]);
+  const srInputContainerClassName = useStyleRewriter$6(baseDateInputInputContainerClassName, dateInputInputContainerClassName);
   return /*#__PURE__*/React__default["default"].createElement("div", {
     onClick: onClick,
-    className: `w-fit pl-[8px] pr-[10px] py-[12px] bg-primary-200 flex justify-start rounded-4px text-black text-base border-[1px] ${error ? `border-red-500 hover:border-red-500 shadow-red-outline` : `border-transparent`}`
+    className: srInputContainerClassName
   }, /*#__PURE__*/React__default["default"].createElement(Input, {
     type: "number",
     value: date || ``,
@@ -8360,9 +8393,9 @@ const DateInput = ({
       if (value > 31) return;
       setDate(`${value}`);
     },
-    className: `@wh w-[32px] ${inputClassName}`,
-    containerClassName: containerClassName
-  }), /*#__PURE__*/React__default["default"].createElement("div", null, "."), /*#__PURE__*/React__default["default"].createElement(Input, {
+    inputContainerClassName: "@wh w-fit",
+    inputClassName: dateInputDateInputClassName
+  }), typeof DividerComponent === "function" ? /*#__PURE__*/React__default["default"].createElement(DividerComponent, null) : null, /*#__PURE__*/React__default["default"].createElement(Input, {
     type: "number",
     value: month || ``,
     onChange: e => {
@@ -8374,9 +8407,9 @@ const DateInput = ({
       if (value > 12) return;
       setMonth(value);
     },
-    className: `@wh w-[32px] ${inputClassName}`,
-    containerClassName: containerClassName
-  }), /*#__PURE__*/React__default["default"].createElement("div", null, "."), /*#__PURE__*/React__default["default"].createElement(Input, {
+    inputContainerClassName: "@wh w-fit",
+    inputClassName: dateInputMonthInputClassName
+  }), typeof DividerComponent === "function" ? /*#__PURE__*/React__default["default"].createElement(DividerComponent, null) : null, /*#__PURE__*/React__default["default"].createElement(Input, {
     type: "number",
     value: year || ``,
     onChange: e => {
@@ -8388,8 +8421,8 @@ const DateInput = ({
       if (value > 2100) return;
       setYear(value);
     },
-    className: `@wh w-[46px] ${inputClassName}`,
-    containerClassName: containerClassName
+    inputContainerClassName: "@wh w-fit",
+    inputClassName: dateInputYearInputClassName
   }));
 };
 
@@ -8414,6 +8447,16 @@ const useOutsideClick = (ref, action) => {
     };
   }, [ref]);
 };
+
+const baseInputContainerClassName = `
+  @pn relative
+  @zi z-70
+  @wh w-full
+`;
+const baseDateInputInputContainerClassName = `
+  @wh w-fit
+  @dy flex
+`;
 
 const FormInput = /*#__PURE__*/React.forwardRef((props, ref) => {
   const {

@@ -63,6 +63,21 @@ const FormPage = () => {
   const inputsConfig = useMemo(() => {
     return [
       {
+        field: `date`,
+        label: "Date of birth",
+        defaultValue: ``,
+        checkerFuncs: [`checkRequiredField`],
+        inputContainerClassName: `@oe outline outline-2 outline-black`,
+        dateInputInputContainerClassName: `@brc border-red-500 @brw border-2 @wh w-full @dy flex @jyc justify-between`,
+        DividerComponent,
+        dateInputDateInputClassName: `@wh w-20 @tta text-center @brw border-2 @brc border-blue-500`,
+        dateInputMonthInputClassName: `@wh w-20 @tta text-center @brw border-2 @brc border-green-500`,
+        dateInputYearInputClassName: `@wh w-32 @tta text-center @brw border-2 @brc border-yellow-500`,
+        prevButtonChild: <LeftArrowIcon />,
+        nextButtonChild: <RightArrowIcon />,
+        type: `date`,
+      },
+      {
         field: `title`,
         label: "Text input",
         placeholder: `Project title*`,
@@ -206,6 +221,7 @@ const FormPage = () => {
   return (
     <div className="flex w-screen h-screen justify-center items-center">
       <div className="w-4/12 flex flex-col gap-4 p-8 bg-gray-200">
+        <Input {...inputs.date} />
         <Input {...inputs.title} />
         <Input {...inputs.status} />
         <Input {...inputs.privacy} />
@@ -400,4 +416,19 @@ const PreviousNavItemComponent = ({ onClick }) => {
       ></div>
     </div>
   );
+};
+
+const DividerComponent = () => {
+  return (
+    <div className="flex items-center justify-center">
+      <div className="w-2 h-2 rounded-full bg-pink-500"></div>
+    </div>
+  );
+};
+
+const LeftArrowIcon = () => {
+  return <div className="w-4 h-4 bg-red-500 rounded-full"></div>;
+};
+const RightArrowIcon = () => {
+  return <div className="w-4 h-4 bg-red-500 rounded-full"></div>;
 };

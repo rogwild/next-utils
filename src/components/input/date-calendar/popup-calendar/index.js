@@ -1,6 +1,7 @@
 import React from "react";
 
 import Calendar from "react-calendar";
+import useStyleRewriter from "../../../../hooks/use-style-rewriter";
 import SmartButton from "../../../smart-button";
 
 const PopupCalendar = ({
@@ -9,16 +10,24 @@ const PopupCalendar = ({
   value,
   setValue,
   setActiveTimeframe,
-  LeftArrowIcon = () => {},
-  RightArrowIcon = () => {},
+  containerClassName = "",
+  nextButtonChild,
+  prevButtonChild,
 }) => {
+  const srContainerClassName = useStyleRewriter(
+    baseContainerClassName,
+    containerClassName
+  );
+
   return (
-    <div className="@dy flex flex-col md:flex-row @bdc bg-white overflow-hidden @pg p-0 divide-x divide-true-gray-150 @bxsw shadow-none rounded-[8px]">
+    <div className={srContainerClassName}>
       <div className="px-2 flex flex-col items-center text-black">
         <Calendar
           {...calendarSettings}
-          nextLabel={RightArrowIcon}
-          prevLabel={LeftArrowIcon}
+          nextLabel={nextButtonChild}
+          prevLabel={prevButtonChild}
+          next2AriaLabel={null}
+          prev2AriaLabel={null}
           value={new Date(value)}
           onChange={setValue}
           onClickDay={(value) => {
@@ -59,4 +68,18 @@ const calendarSettings = {
   returnValue: `start`,
 };
 
+const baseContainerClassName = `
+  @pn absolute
+  @it left-0 top-full
+  @dy flex
+  @fxd flex-col md:flex-row
+  @bdc bg-white
+  @ow overflow-hidden
+  @pg p-0
+  @dew divide-x
+  @des divide-true-gray-150
+  @bxsw shadow-none
+  @brr rounded-[8px]
+  @zi z-40
+`;
 export default PopupCalendar;

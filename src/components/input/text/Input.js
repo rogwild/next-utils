@@ -137,7 +137,6 @@ const baseClassName = `
   @tndn duration-200
   @oe outline-none focus:outline-none hover:outline-none
   @dy flex
-  @pg p-3
 `;
 
 const getClassName = (baseClassName, newClassName, cleared) => {
