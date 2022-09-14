@@ -8069,10 +8069,10 @@ const SelectInput = props => {
     InnerComponent
   } = props;
   const srInputContainerClassName = useStyleRewriter$6(baseInputContainerClassName, inputContainerClassName);
-  return /*#__PURE__*/React__default["default"].createElement(InputOverlay, {
+  return /*#__PURE__*/React__default["default"].createElement(InputOverlay, _extends$3({
     label: label,
     error: error
-  }, /*#__PURE__*/React__default["default"].createElement("div", {
+  }, props), /*#__PURE__*/React__default["default"].createElement("div", {
     className: srInputContainerClassName
   }, items.map((item, index) => {
     return /*#__PURE__*/React__default["default"].createElement(SmartButton, {

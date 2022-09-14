@@ -25,7 +25,7 @@ const SelectInput = (props) => {
   );
 
   return (
-    <InputOverlay label={label} error={error}>
+    <InputOverlay label={label} error={error} {...props}>
       <div className={srInputContainerClassName}>
         {items.map((item, index) => {
           return (
