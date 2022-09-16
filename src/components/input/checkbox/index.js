@@ -7,7 +7,7 @@ const CheckboxInput = (props) => {
     value = false,
     label,
     error,
-    onChange,
+    onChange = () => {},
     id = Math.floor(Math.random() * 10000),
     inputContainerClassName,
     labelClassName,
@@ -41,10 +41,11 @@ const CheckboxInput = (props) => {
     if (value == ``) {
       setLocalValue(false);
     }
-  }, [value]);
+  }, []);
 
   useEffect(() => {
     const e = { target: {} };
+
     handleChange(e);
   }, [localValue]);
 
@@ -59,7 +60,7 @@ const CheckboxInput = (props) => {
     <InputOverlay {...props} label={null} error={error}>
       <div className={srInputContainerClassName}>
         <label htmlFor={id} className={resInputlassName}>
-          {localValue && typeof Icon === "function" ? (
+          {typeof Icon === "function" ? (
             <Icon {...props} isChecked={localValue} />
           ) : null}
           <input

@@ -7172,7 +7172,7 @@ const CheckboxInput = props => {
     value = false,
     label,
     error,
-    onChange,
+    onChange = () => {},
     id = Math.floor(Math.random() * 10000),
     inputContainerClassName,
     labelClassName,
@@ -7194,7 +7194,7 @@ const CheckboxInput = props => {
     if (value == ``) {
       setLocalValue(false);
     }
-  }, [value]);
+  }, []);
   React.useEffect(() => {
     const e = {
       target: {}
@@ -7217,7 +7217,7 @@ const CheckboxInput = props => {
   }, /*#__PURE__*/React__default["default"].createElement("label", {
     htmlFor: id,
     className: resInputlassName
-  }, localValue && typeof Icon === "function" ? /*#__PURE__*/React__default["default"].createElement(Icon, _extends$3({}, props, {
+  }, typeof Icon === "function" ? /*#__PURE__*/React__default["default"].createElement(Icon, _extends$3({}, props, {
     isChecked: localValue
   })) : null, /*#__PURE__*/React__default["default"].createElement("input", {
     type: "checkbox",
