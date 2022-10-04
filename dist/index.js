@@ -4,6 +4,7 @@ var axios = require('axios');
 var qs = require('qs');
 var React = require('react');
 var reactTable = require('react-table');
+var toolkit = require('@reduxjs/toolkit');
 var transitionComponent = require('transition-component');
 var require$$0 = require('react-dom');
 var react = require('@use-gesture/react');
@@ -2411,6 +2412,113 @@ const hooks = {
   useStyleRewriter: useStyleRewriter$6,
   useForm,
   useChildForm
+};
+
+const sliceCreator = profilesApi => {
+  const initialState = {
+    id: null,
+    jwt: null,
+    isAuthenticated: false,
+    currentAuthFactor: "local"
+  };
+  return toolkit.createSlice({
+    name: `auth`,
+    initialState,
+    reducers: {
+      logout: () => {
+        localStorage.removeItem(`jwt`);
+        return initialState;
+      }
+    },
+    extraReducers: builder => {
+      builder.addMatcher(profilesApi.endpoints.loginWithEmailAndPassword.matchFulfilled, (state, action) => {
+        const {
+          user,
+          jwt,
+          nextAuthFactor
+        } = action.payload;
+
+        if (jwt) {
+          state.id = user?.id;
+          state.isAuthenticated = true;
+          localStorage.setItem("jwt", jwt);
+          return;
+        }
+
+        state.user = user;
+        state.currentAuthFactor = nextAuthFactor;
+      }).addMatcher(profilesApi.endpoints.confirmPhone.matchFulfilled, (state, action) => {
+        const {
+          user,
+          jwt,
+          nextAuthFactor
+        } = action.payload;
+
+        if (jwt) {
+          state.id = user?.id;
+          state.isAuthenticated = true;
+          localStorage.setItem("jwt", jwt);
+          return;
+        }
+
+        state.user = user;
+        state.currentAuthFactor = nextAuthFactor;
+      }).addMatcher(profilesApi.endpoints.register.matchFulfilled, (state, action) => {
+        const {
+          user,
+          jwt
+        } = action.payload;
+        state.user = user;
+        state.currentAuthFactor = "email";
+
+        if (jwt) {
+          state.id = user?.id;
+          state.isAuthenticated = true;
+          localStorage.setItem("jwt", jwt);
+          return;
+        }
+      }).addMatcher(profilesApi.endpoints.confirmEmail.matchFulfilled, (state, action) => {
+        const {
+          user,
+          jwt,
+          nextAuthFactor
+        } = action.payload;
+
+        if (jwt) {
+          state.id = user?.id;
+          state.isAuthenticated = true;
+          localStorage.setItem("jwt", jwt);
+          return;
+        }
+
+        state.currentAuthFactor = nextAuthFactor;
+      }).addMatcher(profilesApi.endpoints.checkOtp.matchFulfilled, (state, action) => {
+        const {
+          user,
+          jwt,
+          nextAuthFactor
+        } = action.payload;
+
+        if (jwt) {
+          state.id = user?.id;
+          state.isAuthenticated = true;
+          localStorage.setItem("jwt", jwt);
+          return;
+        }
+
+        state.user = user;
+        state.currentAuthFactor = nextAuthFactor;
+      }).addMatcher(profilesApi.endpoints.getMe.matchFulfilled, (state, action) => {
+        state.jwt = localStorage.jwt;
+        state.id = action.payload.id;
+        state.isAuthenticated = true;
+      });
+    }
+  });
+};
+
+const redux = {
+  authSlice: sliceCreator
 };
 
 function _extends$3() {
@@ -9090,6 +9198,7 @@ var index = {
     vanilla: vanilla,
     hooks: hooks,
     components: components,
+    redux: redux,
 };
 
 exports["default"] = index;

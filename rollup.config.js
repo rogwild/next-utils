@@ -41,5 +41,6 @@ export default {
     "react-markdown",
     "react-calendar",
     "@use-gesture/react",
+    "@reduxjs/toolkit",
   ],
 };

@@ -107,5 +107,20 @@ declare const _default: {
             galleryClassName: any;
         }) => JSX.Element;
     };
+    redux: {
+        authSlice: (profilesApi: any) => import("@reduxjs/toolkit").Slice<{
+            id: any;
+            jwt: any;
+            isAuthenticated: boolean;
+            currentAuthFactor: string;
+        }, {
+            logout: () => {
+                id: any;
+                jwt: any;
+                isAuthenticated: boolean;
+                currentAuthFactor: string;
+            };
+        }, "auth">;
+    };
 };
 export default _default;
