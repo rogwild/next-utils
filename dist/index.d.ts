@@ -108,19 +108,9 @@ declare const _default: {
         }) => JSX.Element;
     };
     redux: {
-        authSlice: (profilesApi: any) => import("@reduxjs/toolkit").Slice<{
-            id: any;
-            jwt: any;
-            isAuthenticated: boolean;
-            currentAuthFactor: string;
-        }, {
-            logout: () => {
-                id: any;
-                jwt: any;
-                isAuthenticated: boolean;
-                currentAuthFactor: string;
-            };
-        }, "auth">;
+        slices: {
+            authSlice: typeof import("./redux/slices/authSlice");
+        };
     };
 };
 export default _default;

@@ -1,4 +1,4 @@
-import authSlice from "./slices/authSlice";
+import * as authSlice from "./slices/authSlice";
 
 const redux = {
   slices: {

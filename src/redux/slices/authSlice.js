@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const sliceCreator = (profilesApi) => {
+export const sliceCreator = (profilesApi) => {
   const initialState = {
     id: null,
     jwt: null,
@@ -109,8 +109,6 @@ const sliceCreator = (profilesApi) => {
     },
   });
 };
-
-export default sliceCreator;
 
 export const selectIsAuthenticated = (state) => state.auth.isAuthenticated;
 

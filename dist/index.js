@@ -2516,9 +2516,22 @@ const sliceCreator = profilesApi => {
     }
   });
 };
+const selectIsAuthenticated = state => state.auth.isAuthenticated;
+const selectAccountId = state => state.auth.id;
+const selectJwt = state => state.auth.jwt;
+
+var authSlice = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    sliceCreator: sliceCreator,
+    selectIsAuthenticated: selectIsAuthenticated,
+    selectAccountId: selectAccountId,
+    selectJwt: selectJwt
+});
 
 const redux = {
-  authSlice: sliceCreator
+  slices: {
+    authSlice
+  }
 };
 
 function _extends$3() {
