@@ -52,6 +52,7 @@ declare const _default: {
             setInitialErrors: () => void;
         };
         useChildForm: typeof import("./hooks/use-form/use-child-form").default;
+        useDomMeasure: (ref: any, triggers?: any[]) => number[];
     };
     components: {
         SmartButton: ({ disabled, className, disabledClassName, children, tooltipPosition, href, dropdownItems, dropdownContainerClassName, dropdownClassName, dropdownProps, tooltipItems, tooltipContainerClasses, onClick, linkProps, Link, }: {

@@ -2403,6 +2403,40 @@ function useChildForm({
   };
 }
 
+const useDomMeasure = (ref, triggers = []) => {
+  const [domRect, setDomRect] = React.useState({
+    width: 0,
+    height: 0
+  });
+  React.useEffect(() => {
+    if (ref.current) {
+      const elemDomRect = ref.current.getBoundingClientRect();
+      setDomRect(elemDomRect);
+    }
+  }, [ref, ...triggers]);
+  React.useEffect(() => {
+    if (ref.current) {
+      const setRectCallback = () => {
+        const elemDomRect = ref.current.getBoundingClientRect();
+        const {
+          width: newWidth,
+          height: newHeight
+        } = elemDomRect;
+
+        if (newWidth !== domRect.width || newHeight !== domRect.height) {
+          setDomRect(elemDomRect);
+        }
+      };
+
+      window.addEventListener("resize", setRectCallback);
+      return () => {
+        window.removeEventListener("resize", setRectCallback);
+      };
+    }
+  }, []);
+  return [domRect.width, domRect.height];
+};
+
 const hooks = {
   useDetectMouseover: useDetectMouseover$1,
   useDetectOutsideClick: useDetectOutsideClick$1,
@@ -2411,7 +2445,8 @@ const hooks = {
   useSetParentsInput,
   useStyleRewriter: useStyleRewriter$6,
   useForm,
-  useChildForm
+  useChildForm,
+  useDomMeasure
 };
 
 const sliceCreator = profilesApi => {
