@@ -88,7 +88,6 @@ const FormPage = () => {
         checkerFuncs: [`checkRequiredField`],
         inputContainerClassName: ``,
         inputClassName: `@bdc bg-white @pg p-3`,
-        disabled: true,
         inputErrorClassName: `@brc border-yellow-500`,
         type: `text`,
       },

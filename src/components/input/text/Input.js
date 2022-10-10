@@ -49,7 +49,7 @@ const Input = forwardRef(
       ? inputDisabledClassName
       : error
       ? inputErrorClassName
-      : defaultClasses;
+      : ``;
 
     const srClasses = useStyleRewriter(baseClasses, statusClasses);
 
@@ -121,13 +121,6 @@ const classesByType = {
 
 const baseContainerClassName = `w-full relative`;
 
-const baseBlockedClassName = `
-  @cr cursor-not-allowed
-  @pre pointer-events-none
-  @ttc text-gray-600
-  @bdc bg-gray-100
-`;
-
 const baseClassName = `
   @bdc bg-transparent
   @pn relative
@@ -139,9 +132,3 @@ const baseClassName = `
   @oe outline-none focus:outline-none hover:outline-none
   @dy flex
 `;
-
-const getClassName = (baseClassName, newClassName, cleared) => {
-  const srClassName = useStyleRewriter(baseClassName, newClassName, cleared);
-
-  return srClassName;
-};

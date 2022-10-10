@@ -7440,7 +7440,7 @@ const Input = /*#__PURE__*/React.forwardRef(({
   const typeClasses = classesByType[type];
   const defaultClasses = useStyleRewriter$6(baseClassName, typeClasses, false);
   const baseClasses = useStyleRewriter$6(defaultClasses, inputClassName, false);
-  const statusClasses = disabled ? inputDisabledClassName : error ? inputErrorClassName : defaultClasses;
+  const statusClasses = disabled ? inputDisabledClassName : error ? inputErrorClassName : ``;
   const srClasses = useStyleRewriter$6(baseClasses, statusClasses);
   const srInputContainerClassName = useStyleRewriter$6(baseContainerClassName$4, inputContainerClassName);
   const baseDropdownContainerClasses = `@wh w-full @mn mt-1 @ht h-200px @ow overflow-y-scroll ${dropdownPosition === `right` ? `@it left-auto right-0` : `@it inset-x-0`}`;
