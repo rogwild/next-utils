@@ -15,9 +15,10 @@ const TextInput = forwardRef((props, ref) => {
     Icon,
     name,
     ChangeInputTypeButton,
-    inputErrorClassName = `@brc border-red-500`,
+    inputErrorClassName,
     inputDisabledClassName,
     inputContainerClassName,
+    error,
   } = props;
 
   return (
@@ -43,6 +44,7 @@ const TextInput = forwardRef((props, ref) => {
         inputErrorClassName={inputErrorClassName}
         inputContainerClassName={inputContainerClassName}
         name={name}
+        error={error}
       />
     </InputOverlay>
   );

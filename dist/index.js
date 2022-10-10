@@ -7438,9 +7438,10 @@ const Input = /*#__PURE__*/React.forwardRef(({
   };
 
   const typeClasses = classesByType[type];
-  const baseClasses = useStyleRewriter$6(baseClassName, typeClasses, false);
-  const statusClasses = disabled ? useStyleRewriter$6(baseClasses, inputDisabledClassName, false) : error ? useStyleRewriter$6(baseClasses, inputErrorClassName, false) : baseClasses;
-  const srClasses = useStyleRewriter$6(statusClasses, inputClassName);
+  const defaultClasses = useStyleRewriter$6(baseClassName, typeClasses, false);
+  const baseClasses = useStyleRewriter$6(defaultClasses, inputClassName, false);
+  const statusClasses = disabled ? inputDisabledClassName : error ? inputErrorClassName : defaultClasses;
+  const srClasses = useStyleRewriter$6(baseClasses, statusClasses);
   const srInputContainerClassName = useStyleRewriter$6(baseContainerClassName$4, inputContainerClassName);
   const baseDropdownContainerClasses = `@wh w-full @mn mt-1 @ht h-200px @ow overflow-y-scroll ${dropdownPosition === `right` ? `@it left-auto right-0` : `@it inset-x-0`}`;
   const srDropdownContainerClasses = useStyleRewriter$6(baseDropdownContainerClasses, dropdownContainerClasses, true);
@@ -7480,7 +7481,6 @@ const classesByType = {
 const baseContainerClassName$4 = `w-full relative`;
 const baseClassName = `
   @bdc bg-transparent
-  @ttc text-black
   @pn relative
   @wh w-full
   @brw border
@@ -7504,9 +7504,10 @@ const TextInput = /*#__PURE__*/React.forwardRef((props, ref) => {
     Icon,
     name,
     ChangeInputTypeButton,
-    inputErrorClassName = `@brc border-red-500`,
+    inputErrorClassName,
     inputDisabledClassName,
-    inputContainerClassName
+    inputContainerClassName,
+    error
   } = props;
   return /*#__PURE__*/React__default["default"].createElement(InputOverlay, _extends$3({}, props, {
     PairComponent: enableTypeChanging && ChangeInputTypeButton ? ChangeInputTypeButton : null
@@ -7523,7 +7524,8 @@ const TextInput = /*#__PURE__*/React.forwardRef((props, ref) => {
     inputDisabledClassName: inputDisabledClassName,
     inputErrorClassName: inputErrorClassName,
     inputContainerClassName: inputContainerClassName,
-    name: name
+    name: name,
+    error: error
   }));
 });
 

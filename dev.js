@@ -88,6 +88,8 @@ const FormPage = () => {
         checkerFuncs: [`checkRequiredField`],
         inputContainerClassName: ``,
         inputClassName: `@bdc bg-white @pg p-3`,
+        disabled: true,
+        inputErrorClassName: `@brc border-yellow-500`,
         type: `text`,
       },
       {
@@ -360,8 +362,6 @@ const ErrorComponent = (props) => {
 
 const InnerComponent = (props) => {
   const { item, isSelected } = props;
-
-  console.log(`🚀 ~ InnerComponent ~ props`, props);
 
   return (
     <div className="flex items-center gap-2 px-2">

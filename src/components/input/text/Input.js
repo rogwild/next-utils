@@ -1,4 +1,4 @@
-import React, { useRef, forwardRef } from "react";
+import React, { useMemo, useRef, forwardRef } from "react";
 import DropdownContainer from "../../dropdown-container";
 import useDetectOutsideClick from "../../../hooks/use-detect-outsideclick";
 import useStyleRewriter from "../../../hooks/use-style-rewriter";
@@ -42,15 +42,17 @@ const Input = forwardRef(
 
     const typeClasses = classesByType[type];
 
-    const baseClasses = useStyleRewriter(baseClassName, typeClasses, false);
+    const defaultClasses = useStyleRewriter(baseClassName, typeClasses, false);
+    const baseClasses = useStyleRewriter(defaultClasses, inputClassName, false);
 
     const statusClasses = disabled
-      ? useStyleRewriter(baseClasses, inputDisabledClassName, false)
+      ? inputDisabledClassName
       : error
-      ? useStyleRewriter(baseClasses, inputErrorClassName, false)
-      : baseClasses;
+      ? inputErrorClassName
+      : defaultClasses;
 
-    const srClasses = useStyleRewriter(statusClasses, inputClassName);
+    const srClasses = useStyleRewriter(baseClasses, statusClasses);
+
     const srInputContainerClassName = useStyleRewriter(
       baseContainerClassName,
       inputContainerClassName
@@ -128,7 +130,6 @@ const baseBlockedClassName = `
 
 const baseClassName = `
   @bdc bg-transparent
-  @ttc text-black
   @pn relative
   @wh w-full
   @brw border
