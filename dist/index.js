@@ -2959,7 +2959,13 @@ const ModalPortal$1 = ({
   targetId = `modal`,
   ...props
 }) => {
-  return document.querySelector(`#${targetId}`) ? /*#__PURE__*/require$$0.createPortal( /*#__PURE__*/React__default["default"].createElement(ModalComponent$1, props), document.querySelector(`#${targetId}`)) : null;
+  const [domLoaded, setDomLoaded] = React.useState(false);
+  React.useEffect(() => {
+    if (typeof window !== undefined && document.querySelector(`#${targetId}`)) {
+      setDomLoaded(true);
+    }
+  }, []);
+  return domLoaded && /*#__PURE__*/require$$0.createPortal( /*#__PURE__*/React__default["default"].createElement(ModalComponent$1, props), document.querySelector(`#${targetId}`));
 };
 
 const ModalArray = ({
