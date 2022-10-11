@@ -14,6 +14,7 @@ const MediaGallery = ({
   mediaContainerClassName,
   NextNavItemComponent,
   galleryClassName,
+  MediaItemComponent,
 }) => {
   const [show, setShow] = useState(false);
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
@@ -96,6 +97,7 @@ const MediaGallery = ({
             videoItemClassName={videoItemClassName}
             PreviousNavItemComponent={PreviousNavItemComponent}
             NextNavItemComponent={NextNavItemComponent}
+            MediaItemComponent={MediaItemComponent}
             setActiveSlide={setActiveSlideIndex}
             media={localMedia}
             setShow={setShow}
@@ -120,5 +122,4 @@ const baseContainerClassName = `
 const baseGalleryContainerClassName = `
   @dy flex
   @wh w-full
-  @pg pb-screen
   @pn relative`;

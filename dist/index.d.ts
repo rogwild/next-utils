@@ -95,7 +95,7 @@ declare const _default: {
             notificationPortalId: string;
             createNotification: (message: any) => any;
         };
-        MediaGallery: ({ media, containerClassName, galleryContainerClassName, mediaItemClassName, imageItemClassName, videoItemClassName, PreviousNavItemComponent, mediaContainerClassName, NextNavItemComponent, galleryClassName, }: {
+        MediaGallery: ({ media, containerClassName, galleryContainerClassName, mediaItemClassName, imageItemClassName, videoItemClassName, PreviousNavItemComponent, mediaContainerClassName, NextNavItemComponent, galleryClassName, MediaItemComponent, }: {
             media: any;
             containerClassName?: string;
             galleryContainerClassName?: string;
@@ -106,6 +106,7 @@ declare const _default: {
             mediaContainerClassName: any;
             NextNavItemComponent: any;
             galleryClassName: any;
+            MediaItemComponent: any;
         }) => JSX.Element;
     };
     redux: {

@@ -17,6 +17,7 @@ function ReactSpringGallery({
   NextNavItemComponent,
   navItemClassName = "",
   mediaContainerClassName = "",
+  MediaItemComponent,
   children,
   setShow,
 }) {
@@ -152,7 +153,9 @@ function ReactSpringGallery({
               className={srMediaItemClassName}
               style={{ display, x }}
             >
-              {mediaObj.renderType === `image` ? (
+              {typeof MediaItemComponent === "function" ? (
+                <MediaItemComponent mediaObj={mediaObj} />
+              ) : mediaObj.renderType === `image` ? (
                 <img src={mediaObj.url} className={srImageItemClassName} />
               ) : (
                 <video src={url} controls className={srVideoItemClassName} />

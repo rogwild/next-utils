@@ -8952,6 +8952,7 @@ function ReactSpringGallery({
   NextNavItemComponent,
   navItemClassName = "",
   mediaContainerClassName = "",
+  MediaItemComponent,
   children,
   setShow
 }) {
@@ -9058,7 +9059,9 @@ function ReactSpringGallery({
         display,
         x
       }
-    }), mediaObj.renderType === `image` ? /*#__PURE__*/React__default["default"].createElement("img", {
+    }), typeof MediaItemComponent === "function" ? /*#__PURE__*/React__default["default"].createElement(MediaItemComponent, {
+      mediaObj: mediaObj
+    }) : mediaObj.renderType === `image` ? /*#__PURE__*/React__default["default"].createElement("img", {
       src: mediaObj.url,
       className: srImageItemClassName
     }) : /*#__PURE__*/React__default["default"].createElement("video", {
@@ -9187,7 +9190,8 @@ const MediaGallery = ({
   PreviousNavItemComponent,
   mediaContainerClassName,
   NextNavItemComponent,
-  galleryClassName
+  galleryClassName,
+  MediaItemComponent
 }) => {
   const [show, setShow] = React.useState(false);
   const [activeSlideIndex, setActiveSlideIndex] = React.useState(0);
@@ -9220,6 +9224,7 @@ const MediaGallery = ({
     videoItemClassName: videoItemClassName,
     PreviousNavItemComponent: PreviousNavItemComponent,
     NextNavItemComponent: NextNavItemComponent,
+    MediaItemComponent: MediaItemComponent,
     setActiveSlide: setActiveSlideIndex,
     media: localMedia,
     setShow: setShow
