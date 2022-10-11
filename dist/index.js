@@ -7739,13 +7739,11 @@ const OtpInput = props => {
     autoFocus,
     disabled,
     onChange: onChangeOTP,
-    inputStyle,
-    error,
     containerClassName,
     inputClassName,
     id
   } = props;
-  const [activeInput, setActiveInput] = React.useState(0);
+  const [activeInput, setActiveInput] = React.useState(autoFocus ? 0 : undefined);
   const [otpValues, setOTPValues] = React.useState(Array(length).fill(``)); // Helper to return OTP from inputs
 
   const handleOtpChange = (e, otp) => {
@@ -9241,7 +9239,6 @@ const baseContainerClassName = `
 const baseGalleryContainerClassName = `
   @dy flex
   @wh w-full
-  @pg pb-screen
   @pn relative`;
 
 const components = {
