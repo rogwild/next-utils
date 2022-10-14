@@ -27,17 +27,11 @@ declare const _default: {
             handleDeleteItem: (index: any) => void;
         };
         useStyleRewriter: (baseClassName: any, className: any, cleared?: boolean) => string;
-        useForm: ({ inputsConfig, submitFunc, afterPassed, inputPropsType, }: {
+        useForm: ({ inputsConfig, submitFunc, inputPropsType, }: {
             inputsConfig: any;
             submitFunc?: (submitFuncProps: any) => boolean;
-            afterPassed?: ({ setInputs, clearInputs }: {
-                setInputs: any;
-                clearInputs: any;
-            }) => void;
             inputPropsType?: string;
         }) => {
-            setRequestId: import("react").Dispatch<import("react").SetStateAction<string>>;
-            requestId: string;
             inputs: {};
             onSubmit: (e: any, submitProps?: {}) => any;
             inputsValues: {};
@@ -45,8 +39,6 @@ declare const _default: {
             errors: {};
             files: {};
             setErrors: import("react").Dispatch<import("react").SetStateAction<{}>>;
-            passed: boolean;
-            setPassed: import("react").Dispatch<import("react").SetStateAction<boolean>>;
             changeBlockedInputs: (inputs: any) => void;
             clearInputs: () => void;
             setInitialErrors: () => void;
