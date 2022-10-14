@@ -40,7 +40,7 @@ const useForm = ({
           inputs[field] = defaultValue;
         }
         errors[field] = null;
-        if (config?.enableTypeChanging) {
+        if (config.enableTypeChanging) {
           types[field] = type;
         }
         if (!isNil(blocked)) {
@@ -164,8 +164,8 @@ const useForm = ({
             placeholder,
             onChange,
             type: types[field] || defaultType,
-            enableTypeChanging: config && config.enableTypeChanging,
-            headingProps: config?.headingProps,
+            enableTypeChanging: config.enableTypeChanging,
+            headingProps: config.headingProps,
             changeBlockedInputs,
             setFiles,
             PairComponent,
@@ -189,7 +189,6 @@ const useForm = ({
       }
     );
 
-    // console.log(`🚀 ~ inputsProps ~ props`, props, files);
     return props;
   }, [inputs, files, errors, types, blockedInputs]);
 
@@ -226,16 +225,16 @@ export const onSubmit = (e, props) => {
     files,
   });
 
-  if (isValid) {
-    // console.log(`🚀 ~ if (isValid) onSubmit ~ isValid`, isValid);
-    if (files) {
-      selectFilesForDelete({ files, inputsConfig });
-    }
-    // console.log(`🚀 ~ submitFunc props`, props);
-    return submitFunc(props);
-  } else {
+  if (!isValid) {
     console.log(`🚀 ~ onSubmit ~ errors`, errors);
+    return;
   }
+
+  if (files) {
+    selectFilesForDelete({ files, inputsConfig });
+  }
+
+  return submitFunc(props);
 };
 
 const selectFilesForDelete = ({ files, inputsConfig }) => {
@@ -253,15 +252,15 @@ const selectFilesForDelete = ({ files, inputsConfig }) => {
             (passedFile) => passedFile.url === defaultFile.url
           ).length
         ) {
-          config?.deleteFile(defaultFile);
+          config.deleteFile(defaultFile);
         }
       }
     } else if (typeof config.defaultValue === `object`) {
       const passedFile = passedFiles;
-      const defaultFile = config?.defaultValue;
-      if (defaultFile?.url) {
-        if (!passedFile || passedFile.url !== defaultFile?.url) {
-          config?.deleteFile(defaultFile);
+      const defaultFile = config.defaultValue;
+      if (defaultFile.url) {
+        if (!passedFile || passedFile.url !== defaultFile.url) {
+          config.deleteFile(defaultFile);
         }
       }
     }
