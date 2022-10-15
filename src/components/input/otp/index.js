@@ -10,14 +10,12 @@ const OtpInput = (props) => {
     autoFocus,
     disabled,
     onChange: onChangeOTP,
-    inputStyle,
-    error,
     containerClassName,
     inputClassName,
     id,
   } = props;
 
-  const [activeInput, setActiveInput] = useState(0);
+  const [activeInput, setActiveInput] = useState(autoFocus ? 0 : undefined);
   const [otpValues, setOTPValues] = useState(Array(length).fill(``));
 
   // Helper to return OTP from inputs

@@ -1804,8 +1804,7 @@ const checkPhoneMask = ({
 const checkPassword = ({
   field,
   value,
-  errors,
-  title
+  errors
 }) => {
   const min = 8;
 
@@ -1840,21 +1839,18 @@ const checkEqualTo = ({
   errors,
   config,
   inputs,
-  title,
-  label,
   inputsConfig
 }) => {
   const equalTo = config.equalTo;
 
   if (value !== inputs[equalTo]) {
-    // const fieldTitle = title || label || field;
-    // const equalToConfig = inputsConfig?.find((a) => a?.field === equalTo);
-    // const equalToTitle = equalToConfig.title || equalToConfig.label || equalTo;
+    const equalToConfig = inputsConfig.find(a => a.field === equalTo);
+    const equalToTitle = equalToConfig.title || equalToConfig.label || equalTo;
     addError({
       errors,
       field,
       id: `equal`,
-      message: `Not equal`
+      message: config.equalToError || `Not equal to ${equalToTitle}`
     });
   }
 };
@@ -1918,18 +1914,15 @@ const checkFields = ({
   setErrors(localErrors);
   const hasErrors = [];
 
-  for (const [key, value] of Object.entries(localErrors)) {
+  for (const [_, value] of Object.entries(localErrors)) {
     if (value) {
-      // console.log(`🚀 ~ localErrors ~ key, value`, key, value);
       // Во вложенных формах своя проверка
       if (Object.values(value).every(message => typeof message === `string`)) {
         hasErrors.push({ ...value
         });
-      } // hasErrors.push({ ...value });
-
+      }
     }
-  } // console.log(`🚀 ~ hasErrors`, hasErrors, localErrors);
-
+  }
 
   const isValid = hasErrors.length ? false : true;
   return isValid;
@@ -2084,13 +2077,7 @@ var vanilla = /*#__PURE__*/Object.freeze({
 
 const useForm = ({
   inputsConfig,
-  submitFunc = submitFuncProps => {
-    return true;
-  },
-  afterPassed = ({
-    setInputs,
-    clearInputs
-  }) => {},
+  submitFunc = submitFuncProps => true,
   inputPropsType = `array`
 }) => {
   const {
@@ -2112,7 +2099,7 @@ const useForm = ({
       config = {},
       blocked
     }) => {
-      defaultValue = defaultValue !== undefined ? defaultValue : ``; // console.log(`🚀 ~ defaultValue`, defaultValue);
+      defaultValue = defaultValue !== undefined ? defaultValue : ``;
 
       if (type === `file`) {
         if (defaultValue !== ``) {
@@ -2124,7 +2111,7 @@ const useForm = ({
 
       errors[field] = null;
 
-      if (config?.enableTypeChanging) {
+      if (config.enableTypeChanging) {
         types[field] = type;
       }
 
@@ -2145,7 +2132,6 @@ const useForm = ({
   const [errors, setErrors] = React.useState(initialErrors);
   const [types, setTypes] = React.useState(initialTypes);
   const [blockedInputs, setBlockedInputs] = React.useState(initialBlocked);
-  const [requestId, setRequestId] = React.useState(``);
   React.useEffect(() => {
     setInputs(initialInputs);
     setErrors(initialErrors);
@@ -2153,38 +2139,22 @@ const useForm = ({
     setFiles(initialFiles);
     setBlockedInputs(initialBlocked);
   }, [inputsConfig]);
-  const [passed, setPassed] = React.useState(false);
   React.useEffect(() => {
     setErrors(initialErrors);
   }, [inputs]);
 
-  const clearInputs = () => setInputs(initialInputs); // call afterPassed function after passed
+  const clearInputs = () => setInputs(initialInputs);
 
-
-  React.useEffect(() => {
-    if (passed) {
-      const unmountCallback = afterPassed({
-        setInputs,
-        clearInputs,
-        passed,
-        setPassed
-      });
-      return unmountCallback;
-    }
-  }, [passed]);
-  const onSubmitFunc = React.useMemo(() => {
-    return (e, submitProps = {}) => onSubmit(e, {
-      inputsConfig,
-      inputs,
-      errors,
-      setErrors,
-      submitFunc,
-      setRequestId,
-      files,
-      evt: e,
-      ...submitProps
-    });
-  }, [inputsConfig, inputs, errors, files]);
+  const onSubmitFunc = React.useCallback((e, submitProps = {}) => onSubmit(e, {
+    inputsConfig,
+    inputs,
+    errors,
+    setErrors,
+    submitFunc,
+    files,
+    evt: e,
+    ...submitProps
+  }), [inputsConfig, inputs, errors, files]);
 
   const changeType = (e, {
     field
@@ -2242,8 +2212,8 @@ const useForm = ({
           placeholder,
           onChange,
           type: types[field] || defaultType,
-          enableTypeChanging: config && config.enableTypeChanging,
-          headingProps: config?.headingProps,
+          enableTypeChanging: config.enableTypeChanging,
+          headingProps: config.headingProps,
           changeBlockedInputs,
           setFiles,
           PairComponent,
@@ -2264,13 +2234,10 @@ const useForm = ({
           props[field] = prop;
         }
       }
-    }); // console.log(`🚀 ~ inputsProps ~ props`, props, files);
-
+    });
     return props;
   }, [inputs, files, errors, types, blockedInputs]);
   return {
-    setRequestId,
-    requestId,
     inputs: inputsProps,
     onSubmit: onSubmitFunc,
     inputsValues: inputs,
@@ -2278,8 +2245,6 @@ const useForm = ({
     errors,
     files,
     setErrors,
-    passed,
-    setPassed,
     changeBlockedInputs,
     clearInputs,
     setInitialErrors: () => setErrors(initialErrors)
@@ -2303,20 +2268,19 @@ const onSubmit = (e, props) => {
     files
   });
 
-  if (isValid) {
-    // console.log(`🚀 ~ if (isValid) onSubmit ~ isValid`, isValid);
-    if (files) {
-      selectFilesForDelete({
-        files,
-        inputsConfig
-      });
-    } // console.log(`🚀 ~ submitFunc props`, props);
-
-
-    return submitFunc(props);
-  } else {
+  if (!isValid) {
     console.log(`🚀 ~ onSubmit ~ errors`, errors);
+    return;
   }
+
+  if (files) {
+    selectFilesForDelete({
+      files,
+      inputsConfig
+    });
+  }
+
+  return submitFunc(props);
 };
 
 const selectFilesForDelete = ({
@@ -2332,16 +2296,16 @@ const selectFilesForDelete = ({
     if (Array.isArray(config.defaultValue)) {
       for (const defaultFile of config.defaultValue) {
         if (!passedFiles.filter(passedFile => passedFile.url === defaultFile.url).length) {
-          config?.deleteFile(defaultFile);
+          config.deleteFile(defaultFile);
         }
       }
     } else if (typeof config.defaultValue === `object`) {
       const passedFile = passedFiles;
-      const defaultFile = config?.defaultValue;
+      const defaultFile = config.defaultValue;
 
-      if (defaultFile?.url) {
-        if (!passedFile || passedFile.url !== defaultFile?.url) {
-          config?.deleteFile(defaultFile);
+      if (defaultFile.url) {
+        if (!passedFile || passedFile.url !== defaultFile.url) {
+          config.deleteFile(defaultFile);
         }
       }
     }
@@ -7746,13 +7710,11 @@ const OtpInput = props => {
     autoFocus,
     disabled,
     onChange: onChangeOTP,
-    inputStyle,
-    error,
     containerClassName,
     inputClassName,
     id
   } = props;
-  const [activeInput, setActiveInput] = React.useState(0);
+  const [activeInput, setActiveInput] = React.useState(autoFocus ? 0 : undefined);
   const [otpValues, setOTPValues] = React.useState(Array(length).fill(``)); // Helper to return OTP from inputs
 
   const handleOtpChange = (e, otp) => {

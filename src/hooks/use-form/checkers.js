@@ -98,7 +98,7 @@ const checkPhoneMask = ({ field, value, errors }) => {
   }
 };
 
-export const checkPassword = ({ field, value, errors, title }) => {
+export const checkPassword = ({ field, value, errors }) => {
   const min = 8;
   if (value.length < min || value.includes(` `)) {
     addError({
@@ -133,20 +133,17 @@ export const checkEqualTo = ({
   errors,
   config,
   inputs,
-  title,
-  label,
   inputsConfig,
 }) => {
   const equalTo = config.equalTo;
   if (value !== inputs[equalTo]) {
-    // const fieldTitle = title || label || field;
-    // const equalToConfig = inputsConfig?.find((a) => a?.field === equalTo);
-    // const equalToTitle = equalToConfig.title || equalToConfig.label || equalTo;
+    const equalToConfig = inputsConfig.find((a) => a.field === equalTo);
+    const equalToTitle = equalToConfig.title || equalToConfig.label || equalTo;
     addError({
       errors,
       field,
       id: `equal`,
-      message: `Not equal`,
+      message: config.equalToError || `Not equal to ${equalToTitle}`,
     });
   }
 };
@@ -204,19 +201,16 @@ export const checkFields = ({
   );
   setErrors(localErrors);
   const hasErrors = [];
-  for (const [key, value] of Object.entries(localErrors)) {
+  for (const [_, value] of Object.entries(localErrors)) {
     if (value) {
-      // console.log(`🚀 ~ localErrors ~ key, value`, key, value);
       // Во вложенных формах своя проверка
       if (
         Object.values(value).every((message) => typeof message === `string`)
       ) {
         hasErrors.push({ ...value });
       }
-      // hasErrors.push({ ...value });
     }
   }
-  // console.log(`🚀 ~ hasErrors`, hasErrors, localErrors);
   const isValid = hasErrors.length ? false : true;
   return isValid;
 };
