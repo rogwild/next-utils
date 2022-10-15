@@ -27,3 +27,10 @@ export const parseMimeType = (mime) => {
 
   return { type, ext, renderType };
 };
+
+export const shortenAddress = (address, symbols = [6, 4]) => {
+  const firstPart = address.slice(0, symbols[0]);
+  const secondPart = address.slice(-symbols[1]);
+
+  return `${firstPart}...${secondPart}`;
+};

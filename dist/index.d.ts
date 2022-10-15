@@ -108,6 +108,7 @@ declare const _default: {
             galleryClassName: any;
             MediaItemComponent: any;
         }) => JSX.Element;
+        CopyButton: (props: any) => JSX.Element;
     };
     redux: {
         slices: {

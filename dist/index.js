@@ -653,13 +653,20 @@ var parseMimeType$1 = function (mime) {
     }
     return { type: type, ext: ext, renderType: renderType };
 };
+var shortenAddress$1 = function (address, symbols) {
+    if (symbols === void 0) { symbols = [6, 4]; }
+    var firstPart = address.slice(0, symbols[0]);
+    var secondPart = address.slice(-symbols[1]);
+    return "".concat(firstPart, "...").concat(secondPart);
+};
 
 var formatters = /*#__PURE__*/Object.freeze({
     __proto__: null,
     hasZeroAfterDot: hasZeroAfterDot,
     getCountAfterDot: getCountAfterDot,
     formatPercent: formatPercent,
-    parseMimeType: parseMimeType$1
+    parseMimeType: parseMimeType$1,
+    shortenAddress: shortenAddress$1
 });
 
 /**
@@ -9241,8 +9248,31 @@ const baseContainerClassName = `
 const baseGalleryContainerClassName = `
   @dy flex
   @wh w-full
-  @pg pb-screen
   @pn relative`;
+
+const CopyButton = props => {
+  const {
+    textToCopy,
+    CopyButtonComponent = () => {}
+  } = props;
+  const [copied, setCopied] = React.useState(false);
+
+  const handleClick = () => {
+    if (!window.isSecureContext) {
+      alert(`Copying is not supported in your browser`);
+      return;
+    }
+
+    window.navigator.clipboard.writeText(textToCopy);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 7000);
+  };
+
+  return /*#__PURE__*/React__default["default"].createElement(CopyButtonComponent, _extends$3({}, props, {
+    onClick: handleClick,
+    copied: copied
+  }));
+};
 
 const components = {
   SmartButton,
@@ -9250,7 +9280,8 @@ const components = {
   ModalArray,
   Input: FormInput,
   SpringNotification,
-  MediaGallery
+  MediaGallery,
+  CopyButton
 };
 
 var index = {

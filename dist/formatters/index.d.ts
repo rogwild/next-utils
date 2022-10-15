@@ -10,3 +10,4 @@ export declare const parseMimeType: (mime: any) => {
     ext: any;
     renderType: any;
 };
+export declare const shortenAddress: (address: any, symbols?: number[]) => string;
