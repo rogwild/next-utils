@@ -31,7 +31,7 @@ const CheckboxInput = (props) => {
 
   const resInputlassName = useStyleRewriter(
     srInputClassName,
-    value ? checkedInputClassName : ""
+    localValue ? checkedInputClassName : ""
   );
 
   useEffect(() => {

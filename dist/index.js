@@ -7318,7 +7318,7 @@ const CheckboxInput = props => {
   const srInputContainerClassName = useStyleRewriter$6(baseInputContainerClassName$3, inputContainerClassName);
   const srLabelClassName = useStyleRewriter$6(baseLabelClassName, labelClassName);
   const srInputClassName = useStyleRewriter$6(baseInputClassName$5, inputClassName, false);
-  const resInputlassName = useStyleRewriter$6(srInputClassName, value ? checkedInputClassName : "");
+  const resInputlassName = useStyleRewriter$6(srInputClassName, localValue ? checkedInputClassName : "");
   React.useEffect(() => {
     if (value !== localValue) {
       setLocalValue(value);
