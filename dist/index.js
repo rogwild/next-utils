@@ -7712,6 +7712,8 @@ const OtpInput = props => {
     onChange: onChangeOTP,
     containerClassName,
     inputClassName,
+    inputErrorClassName,
+    error,
     id
   } = props;
   const [activeInput, setActiveInput] = React.useState(autoFocus ? 0 : undefined);
@@ -7847,7 +7849,9 @@ const OtpInput = props => {
   }, [activeInput, getRightValue, length, otpValues]);
   const allInputs = Array(length).fill(``);
   const srContainerClassName = useStyleRewriter$6(baseContainerClassName$2, containerClassName);
-  const srInputClassName = useStyleRewriter$6(baseInputClassName$3, inputClassName);
+  const baseClasses = useStyleRewriter$6(baseInputClassName$3, inputClassName, false);
+  const statusClasses = error ? inputErrorClassName : ``;
+  const srClasses = useStyleRewriter$6(baseClasses, statusClasses);
   return /*#__PURE__*/React__default["default"].createElement(InputOverlay, props, /*#__PURE__*/React__default["default"].createElement("div", {
     className: srContainerClassName
   }, allInputs.map((_, index) => /*#__PURE__*/React__default["default"].createElement(SingleOTPInput, {
@@ -7861,7 +7865,7 @@ const OtpInput = props => {
     onBlur: onBlur,
     onPaste: handleOnPaste,
     type: "text",
-    className: srInputClassName,
+    className: srClasses,
     disabled: disabled,
     style: {
       appearance: "textfield",

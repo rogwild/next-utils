@@ -12,6 +12,8 @@ const OtpInput = (props) => {
     onChange: onChangeOTP,
     containerClassName,
     inputClassName,
+    inputErrorClassName,
+    error,
     id,
   } = props;
 
@@ -179,7 +181,15 @@ const OtpInput = (props) => {
     containerClassName
   );
 
-  const srInputClassName = useStyleRewriter(baseInputClassName, inputClassName);
+  const baseClasses = useStyleRewriter(
+    baseInputClassName,
+    inputClassName,
+    false
+  );
+
+  const statusClasses = error ? inputErrorClassName : ``;
+
+  const srClasses = useStyleRewriter(baseClasses, statusClasses);
 
   return (
     <InputOverlay {...props}>
@@ -196,7 +206,7 @@ const OtpInput = (props) => {
             onBlur={onBlur}
             onPaste={handleOnPaste}
             type="text"
-            className={srInputClassName}
+            className={srClasses}
             disabled={disabled}
             style={{
               appearance: "textfield",

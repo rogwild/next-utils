@@ -176,7 +176,8 @@ const FormPage = () => {
         field: `otp`,
         label: "One time password",
         containerClassName: `@brw border @brc border-black @pg p-1`,
-        inputClassName: `@bdc bg-white @pn py-4`,
+        inputClassName: `@bdc bg-white @pn py-4 @brw border @brc border-black`,
+        inputErrorClassName: `@brc border-red-500`,
         checkerFuncs: [`checkRequiredField`],
         type: `otp`,
       },
@@ -213,6 +214,7 @@ const FormPage = () => {
 
   useEffect(() => {
     setErrors({ title: { id: "wrong", message: "wrong password" } });
+    setErrors({ otp: { id: "wrong", message: "wrong code" } });
     if (inputsValues.amount < 3) {
       setErrors({ amount: { id: "min", message: "less than min amount" } });
     }
