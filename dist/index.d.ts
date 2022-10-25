@@ -77,6 +77,7 @@ declare const _default: {
             getRenderCardProps: any;
         }) => JSX.Element;
         Input: import("react").ForwardRefExoticComponent<import("react").RefAttributes<any>>;
+        DropdownInput: (props: any) => JSX.Element;
         SpringNotification: {
             NotificationsWrapper: ({ children }: {
                 children: any;
