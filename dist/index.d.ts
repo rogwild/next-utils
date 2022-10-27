@@ -27,9 +27,9 @@ declare const _default: {
             handleDeleteItem: (index: any) => void;
         };
         useStyleRewriter: (baseClassName: any, className: any, cleared?: boolean) => string;
-        useForm: ({ inputsConfig, submitFunc, inputPropsType, }: {
+        useForm: ({ inputsConfig, submitFunc, inputPropsType }: {
             inputsConfig: any;
-            submitFunc?: (submitFuncProps: any) => boolean;
+            submitFunc: any;
             inputPropsType?: string;
         }) => {
             inputs: {};

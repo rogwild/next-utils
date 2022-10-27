@@ -7,11 +7,7 @@ import {
 } from "./checkers";
 import { isNil } from "../../vanilla";
 
-const useForm = ({
-  inputsConfig,
-  submitFunc = (submitFuncProps) => true,
-  inputPropsType = `array`,
-}) => {
+const useForm = ({ inputsConfig, submitFunc, inputPropsType = `array` }) => {
   const {
     initialInputs,
     initialErrors,

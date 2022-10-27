@@ -2077,7 +2077,7 @@ var vanilla = /*#__PURE__*/Object.freeze({
 
 const useForm = ({
   inputsConfig,
-  submitFunc = submitFuncProps => true,
+  submitFunc,
   inputPropsType = `array`
 }) => {
   const {
