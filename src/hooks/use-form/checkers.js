@@ -1,6 +1,6 @@
 export const changeInput = (
   e,
-  { inputs, errors, files, setErrors = () => {}, setInputs, setFiles }
+  { inputs, errors, files, setErrors, setInputs, setFiles }
 ) => {
   let localInputs = { ...inputs };
   let localErrors = { ...errors };

@@ -6,8 +6,17 @@ import {
   checkFields,
 } from "./checkers";
 import { isNil } from "../../vanilla";
+import { InputConfig, InputProp } from "./types";
 
-const useForm = ({ inputsConfig, submitFunc, inputPropsType = `array` }) => {
+const useForm = ({
+  inputsConfig,
+  submitFunc,
+  inputPropsType = `array`,
+}: {
+  inputsConfig: InputConfig[];
+  submitFunc: () => void;
+  inputPropsType: "array" | "object";
+}) => {
   const {
     initialInputs,
     initialErrors,
@@ -22,7 +31,13 @@ const useForm = ({ inputsConfig, submitFunc, inputPropsType = `array` }) => {
     const files = {};
 
     inputsConfig.forEach(
-      ({ field, defaultValue, type = `text`, config = {}, blocked }) => {
+      ({
+        field,
+        defaultValue,
+        type = `text`,
+        config,
+        blocked,
+      }: InputConfig) => {
         defaultValue = defaultValue !== undefined ? defaultValue : ``;
         if (type === `file`) {
           if (defaultValue !== ``) {
@@ -116,53 +131,52 @@ const useForm = ({ inputsConfig, submitFunc, inputPropsType = `array` }) => {
       props = null;
     }
 
-    inputsConfig.forEach(
-      ({
+    inputsConfig.forEach((configProps) => {
+      const {
         field,
         blocked,
         placeholder = ``,
         title = ``,
         label = ``,
-        config = {},
+        config,
         type: defaultType = `text`,
         PairComponent,
         ...params
-      }) => {
-        if (defaultType !== `hidden`) {
-          const prop = {
-            id: field,
-            error: errors[field],
-            changeType,
-            blocked: isNil(blocked) ? false : blockedInputs[field],
-            title,
-            label,
-            placeholder,
-            onChange,
-            type: types[field] || defaultType,
-            enableTypeChanging: config.enableTypeChanging,
-            headingProps: config.headingProps,
-            changeBlockedInputs,
-            setFiles,
-            PairComponent,
-            ...params,
-          };
+      } = configProps;
 
-          if (prop.type === `file`) {
-            // console.log(`🚀 ~ inputsProps ~ files`, files);
-            prop.files = files;
-            prop.value = undefined;
-          } else {
-            prop.value = inputs[field];
-          }
+      if (defaultType !== `hidden`) {
+        const prop: InputProp = {
+          id: field,
+          error: errors[field],
+          changeType,
+          blocked: isNil(blocked) ? false : blockedInputs[field],
+          title,
+          label,
+          placeholder,
+          onChange,
+          type: defaultType,
+          enableTypeChanging: config.enableTypeChanging,
+          changeBlockedInputs,
+          setFiles,
+          PairComponent,
+          ...params,
+        };
 
-          if (inputPropsType === `array`) {
-            props.push(prop);
-          } else if (`object`) {
-            props[field] = prop;
-          }
+        if (prop.type === `file`) {
+          // console.log(`🚀 ~ inputsProps ~ files`, files);
+          prop.files = files;
+          prop.value = undefined;
+        } else {
+          prop.value = inputs[field];
+        }
+
+        if (inputPropsType === `array`) {
+          props.push(prop);
+        } else if (`object`) {
+          props[field] = prop;
         }
       }
-    );
+    });
 
     return props;
   }, [inputs, files, errors, types, blockedInputs]);

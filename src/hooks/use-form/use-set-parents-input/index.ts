@@ -1,16 +1,21 @@
 import { useMemo, useEffect, useState } from "react";
 
 const useSetParentsInput = ({
-  parentKey,
   passedState,
   passedFiles = {},
   setParentInputs = () => {},
   setParentFiles = () => {},
   setParentErrors = () => {},
+}: {
+  passedState: object[];
+  passedFiles: object;
+  setParentInputs: (i: object) => void;
+  setParentFiles: (f: object) => void;
+  setParentErrors: (e: object) => void;
 }) => {
   // console.log(`🚀 ~ passedState`, passedState);
-  const [localState, setLocalState] = useState(passedState);
-  const [localFiles, setLocalFiles] = useState(passedFiles);
+  const [localState, setLocalState] = useState<object[]>(passedState);
+  const [localFiles, setLocalFiles] = useState<object>(passedFiles);
   // console.log(`🚀 ~ passedFiles`, passedFiles, localFiles);
 
   useEffect(() => {
@@ -41,7 +46,7 @@ const useSetParentsInput = ({
     //   console.log(`🚀 ~ setErrors ~ prev`, prev);
     //   return prev;
     // });
-    setParentErrors((prev) => {
+    setParentErrors((prev: object) => {
       const clearedErrors = {};
       console.log(`🚀 ~ setParentErrors ~ clearedErrors`, clearedErrors);
       for (const key of Object.keys(prev)) {
