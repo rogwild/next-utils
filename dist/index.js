@@ -1156,26 +1156,28 @@ function objAreEq(newObj, prevObj) {
     return equals;
 }
 
-var BREAKPOINTS = {
-    sm: 640,
-    md: 768,
-    lg: 1024,
-    xl: 1280,
-    "2xl": 1536,
+const BREAKPOINTS = {
+  sm: 640,
+  md: 768,
+  xl: 1024,
+  xl: 1280,
+  "2xl": 1536
 };
-var useBreakpoint$1 = function (breakpoint) {
-    var _a = __read(React.useState(false), 2), reached = _a[0], setReached = _a[1];
-    React.useEffect(function () {
-        function checkReached() {
-            setReached(!window.innerWidth || window.innerWidth >= BREAKPOINTS[breakpoint]);
-        }
-        window.addEventListener("resize", checkReached);
-        checkReached();
-        return function () {
-            window.removeEventListener("resize", checkReached);
-        };
-    }, [breakpoint]);
-    return reached;
+
+const useBreakpoint$1 = breakpoint => {
+  const [width, setWidth] = React.useState(undefined);
+  React.useEffect(() => {
+    const handleResize = () => {
+      setWidth(window.innerWidth);
+    };
+
+    window.addEventListener(`resize`, handleResize);
+    handleResize();
+    return () => {
+      window.removeEventListener(`resize`, handleResize);
+    };
+  }, []);
+  return !width || width >= BREAKPOINTS[breakpoint];
 };
 
 const fullByShort = {
