@@ -7,7 +7,15 @@ import {
 } from "./checkers";
 import { isNil } from "../../vanilla";
 
-const useForm = ({ inputsConfig, submitFunc = () => {}, inputPropsType = `array` }) => {
+const useForm = ({
+  inputsConfig,
+  submitFunc = () => {
+    // For useChild and setParent pipes
+
+    return true;
+  },
+  inputPropsType = `array`,
+}) => {
   const {
     initialInputs,
     initialErrors,

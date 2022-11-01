@@ -2077,7 +2077,10 @@ var vanilla = /*#__PURE__*/Object.freeze({
 
 const useForm = ({
   inputsConfig,
-  submitFunc = () => {},
+  submitFunc = () => {
+    // For useChild and setParent pipes
+    return true;
+  },
   inputPropsType = `array`
 }) => {
   const {
