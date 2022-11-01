@@ -29,7 +29,7 @@ declare const _default: {
         useStyleRewriter: (baseClassName: any, className: any, cleared?: boolean) => string;
         useForm: ({ inputsConfig, submitFunc, inputPropsType }: {
             inputsConfig: any;
-            submitFunc: any;
+            submitFunc?: () => void;
             inputPropsType?: string;
         }) => {
             inputs: {};
