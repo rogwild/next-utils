@@ -155,6 +155,8 @@ export const checkFields = ({
   inputs,
   files,
 }) => {
+  console.log("checkFields");
+
   const localErrors = { ...errors };
   inputsConfig.forEach(
     ({ field, checkerFuncs, config, title, label, type, multiple }) => {
@@ -200,18 +202,20 @@ export const checkFields = ({
     }
   );
   setErrors(localErrors);
+
   const hasErrors = [];
   for (const [_, value] of Object.entries(localErrors)) {
     if (value) {
       // Во вложенных формах своя проверка
       if (
-        Object.values(value).every((message) => typeof message === `string`)
+        Object.values(value)?.filter((m) => typeof m === "string")?.length > 0
       ) {
         hasErrors.push({ ...value });
       }
     }
   }
-  const isValid = hasErrors.length ? false : true;
+
+  const isValid = !hasErrors.length ? true : false;
   return isValid;
 };
 
