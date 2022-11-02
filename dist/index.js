@@ -1861,7 +1861,6 @@ const checkFields = ({
   inputs,
   files
 }) => {
-  console.log("checkFields");
   const localErrors = { ...errors
   };
   inputsConfig.forEach(({

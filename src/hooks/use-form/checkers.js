@@ -155,8 +155,6 @@ export const checkFields = ({
   inputs,
   files,
 }) => {
-  console.log("checkFields");
-
   const localErrors = { ...errors };
   inputsConfig.forEach(
     ({ field, checkerFuncs, config, title, label, type, multiple }) => {
