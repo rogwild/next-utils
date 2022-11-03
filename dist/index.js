@@ -2311,7 +2311,6 @@ const selectFilesForDelete = ({
     } else if (typeof config.defaultValue === `object`) {
       const passedFile = passedFiles;
       const defaultFile = config.defaultValue;
-      console.log(`🚀 ~ selectFilesForDelete ~ defaultFile`, defaultFile);
 
       if (typeof defaultFile !== "object" || defaultFile === null) {
         return;
