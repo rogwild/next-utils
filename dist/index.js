@@ -2296,8 +2296,12 @@ const selectFilesForDelete = ({
     const filesKey = config.field;
     const passedFiles = files[filesKey];
 
-    if (Array.isArray(config.defaultValue)) {
+    if (Array.isArray(config.defaultValue) && config.defaultValue.length) {
       for (const defaultFile of config.defaultValue) {
+        if (typeof defaultFile !== "object") {
+          continue;
+        }
+
         if (!passedFiles.filter(passedFile => passedFile.url === defaultFile.url).length) {
           if (typeof config.deleteFile === "function") {
             config.deleteFile(defaultFile);
@@ -2307,6 +2311,11 @@ const selectFilesForDelete = ({
     } else if (typeof config.defaultValue === `object`) {
       const passedFile = passedFiles;
       const defaultFile = config.defaultValue;
+      console.log(`🚀 ~ selectFilesForDelete ~ defaultFile`, defaultFile);
+
+      if (typeof defaultFile !== "object" || defaultFile === null) {
+        return;
+      }
 
       if (defaultFile.url) {
         if (!passedFile || passedFile.url !== defaultFile.url) {
