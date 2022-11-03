@@ -231,7 +231,9 @@ const selectFilesForDelete = ({ files, inputsConfig }) => {
             (passedFile) => passedFile.url === defaultFile.url
           ).length
         ) {
-          config.deleteFile(defaultFile);
+          if (typeof config.deleteFile === "function") {
+            config.deleteFile(defaultFile);
+          }
         }
       }
     } else if (typeof config.defaultValue === `object`) {
@@ -239,7 +241,9 @@ const selectFilesForDelete = ({ files, inputsConfig }) => {
       const defaultFile = config.defaultValue;
       if (defaultFile.url) {
         if (!passedFile || passedFile.url !== defaultFile.url) {
-          config.deleteFile(defaultFile);
+          if (typeof config.deleteFile === "function") {
+            config.deleteFile(defaultFile);
+          }
         }
       }
     }

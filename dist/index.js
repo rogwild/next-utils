@@ -2299,7 +2299,9 @@ const selectFilesForDelete = ({
     if (Array.isArray(config.defaultValue)) {
       for (const defaultFile of config.defaultValue) {
         if (!passedFiles.filter(passedFile => passedFile.url === defaultFile.url).length) {
-          config.deleteFile(defaultFile);
+          if (typeof config.deleteFile === "function") {
+            config.deleteFile(defaultFile);
+          }
         }
       }
     } else if (typeof config.defaultValue === `object`) {
@@ -2308,7 +2310,9 @@ const selectFilesForDelete = ({
 
       if (defaultFile.url) {
         if (!passedFile || passedFile.url !== defaultFile.url) {
-          config.deleteFile(defaultFile);
+          if (typeof config.deleteFile === "function") {
+            config.deleteFile(defaultFile);
+          }
         }
       }
     }
