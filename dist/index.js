@@ -310,6 +310,9 @@ var transformResponseItem$1 = function (resItem) {
         else {
             resItem = transformEntriesInObj(flatItemAttributes(resItem));
         }
+        if (isObject(resItem.meta)) {
+            resItem._meta = resItem.meta;
+        }
         for (var key in resItem) {
             resItem[key] = transformResponseItem$1(resItem[key]);
         }
@@ -363,18 +366,14 @@ var transformPageBlock = function (block, transformers) {
 };
 var appendFilesToFormData = function (formData, files) {
     var e_1, _a, e_2, _b;
-    // console.log(`🚀 ~ appendFilesToFormData ~ files`, files);
-    // console.log(`🚀 ~ appendFilesToFormData ~ formData`, formData);
     if (Object.keys(files).length) {
         try {
             for (var _c = __values(Object.keys(files)), _d = _c.next(); !_d.done; _d = _c.next()) {
                 var key = _d.value;
-                // console.log(`🚀 ~ key`, key);
                 if (Array.isArray(files[key])) {
                     try {
                         for (var _e = (e_2 = void 0, __values(files[key].entries())), _f = _e.next(); !_f.done; _f = _e.next()) {
                             var _g = __read(_f.value, 2), _ = _g[0], file = _g[1];
-                            // console.log(`🚀 ~ file`, file, files[key]);
                             formData.append("files.".concat(key), file);
                         }
                     }
@@ -387,8 +386,6 @@ var appendFilesToFormData = function (formData, files) {
                     }
                 }
                 else {
-                    // console.log(`🚀 ~ appendFilesToFormData ~ key`, key);
-                    // console.log(`🚀 ~ file`, file, files[key]);
                     formData.append("files.".concat(key), files[key]);
                 }
             }
@@ -406,7 +403,6 @@ var unlunkRemovedFiles = function (_a) {
     var e_3, _b;
     var _c;
     var data = _a.data;
-    // console.log(`🚀 ~ unlunkRemovedFiles ~ data`, data);
     var sanitized;
     if (typeof data === "object") {
         sanitized = {};
@@ -419,7 +415,6 @@ var unlunkRemovedFiles = function (_a) {
                 var splitted = key.split("].");
                 if (splitted.length > 1) {
                     priority = 2;
-                    // console.log(`🚀 ~ unlunkRemovedFiles ~ splitted`, splitted);
                     sanitizedKey = splitted[splitted.length - 1];
                 }
                 if (Array.isArray(data[key])) {
@@ -428,13 +423,11 @@ var unlunkRemovedFiles = function (_a) {
                             continue;
                         }
                     }
-                    // console.log(`🚀 ~ unlunkRemovedFiles ~ array`);
                     sanitized[sanitizedKey] = data[key].map(function (item) {
                         return unlunkRemovedFiles({ data: item });
                     });
                 }
                 else {
-                    // console.log(`🚀 ~ unlunkRemovedFiles ~ object`);
                     sanitized[sanitizedKey] = data[key];
                 }
             }
@@ -448,10 +441,8 @@ var unlunkRemovedFiles = function (_a) {
         }
     }
     else {
-        // console.log(`🚀 ~ unlunkRemovedFiles ~ text`);
         sanitized = data;
     }
-    // console.log(`🚀 ~ unlunkRemovedFiles ~ data`, data);
     return sanitized;
 };
 var removeEmptyFields = function (_a) {
@@ -483,24 +474,11 @@ var removeEmptyFields = function (_a) {
                     if (data[key] === "" && key !== "publishedAt") {
                         continue;
                     }
-                    // // For situations, when you
-                    // // should delete file in components documents[0].files: [...<here>]
-                    // const splitted = key?.split(`].`);
-                    // if (splitted?.length > 1) {
-                    //   console.log(`🚀 ~ removeEmptyFields ~ splitted`, splitted);
-                    //   const splittedKey = splitted[splitted.length - 1];
-                    //   modified[key] = removeEmptyFields({
-                    //     data: data[key],
-                    //     splittedKey,
-                    //     files,
-                    //   });
-                    // } else {
                     modified[key] = removeEmptyFields({
                         data: data[key],
                         passKey: "".concat(passKey ? "".concat(passKey, ".") : "").concat(key),
                         files: files,
                     });
-                    // }
                 }
             }
             catch (e_5_1) { e_5 = { error: e_5_1 }; }
