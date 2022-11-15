@@ -9,7 +9,7 @@ declare const _default: {
     hooks: {
         useDetectMouseover: (el: any, initialState: any) => any[];
         useDetectOutsideClick: (trigger: any, initialState: any) => any[];
-        useLookupTable: ({ columns, data, getRowId, config, initialFiltersState, }: array<import("./hooks/use-lookup-table").ColumnItemObject>) => import("./hooks/use-lookup-table").ReturnObject;
+        useLookupTable: ({ columns, data, memoUpdateFunc, getRowId, config, initialFiltersState, }: array<import("./hooks/use-lookup-table").ColumnItemObject>) => import("./hooks/use-lookup-table").ReturnObject;
         useBreakpoint: (breakpoint: any) => boolean;
         useSetParentsInput: ({ passedState, passedFiles, parentKey, setParentInputs, setParentFiles, setParentErrors, }: {
             passedState: any;

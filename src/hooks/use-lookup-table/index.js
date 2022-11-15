@@ -80,13 +80,14 @@ const baseFilters = {
 const useLookupTable = ({
   columns = [],
   data: passedData = [],
+  memoUpdateFunc = (passedData) => passedData.length,
   getRowId,
   config = { selectedRowIds: [] },
   initialFiltersState = [],
 }) => {
   const data = useMemo(() => {
     return passedData;
-  }, [passedData.length]);
+  }, [memoUpdateFunc(passedData)]);
 
   const [sortBy, setSortBy] = useState(config.sortBy);
   const [filters, setFilters] = useState(initialFiltersState);

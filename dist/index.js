@@ -737,6 +737,7 @@ const baseFilters = {
 const useLookupTable = ({
   columns = [],
   data: passedData = [],
+  memoUpdateFunc = passedData => passedData.length,
   getRowId,
   config = {
     selectedRowIds: []
@@ -745,7 +746,7 @@ const useLookupTable = ({
 }) => {
   const data = React.useMemo(() => {
     return passedData;
-  }, [passedData.length]);
+  }, [memoUpdateFunc(passedData)]);
   const [sortBy, setSortBy] = React.useState(config.sortBy);
   const [filters, setFilters] = React.useState(initialFiltersState);
   const [localGlobalFilter, setLocalGlobalFilter] = React.useState(config.globalFilter || ``);
