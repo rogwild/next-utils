@@ -74,7 +74,8 @@ export const transformResponseItem = (resItem: any) => {
     } else {
       resItem = transformEntriesInObj(flatItemAttributes(resItem));
     }
-    if (isObject(resItem.meta)) {
+
+    if (isObject(resItem) && isObject(resItem.meta)) {
       resItem._meta = resItem.meta;
     }
 
