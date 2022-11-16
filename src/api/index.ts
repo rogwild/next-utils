@@ -18,6 +18,12 @@ export const getImageUrl = (
 
   const url = size ? obj.formats?.[size]?.url || obj.url : obj.url;
 
+  const httpsExists = url.match(/https?:\/\//);
+
+  if (httpsExists) {
+    return url;
+  }
+
   return `${BACKEND_URL || ""}${url}`;
 };
 

@@ -355,6 +355,10 @@ var getImageUrl = function (obj, options) {
         return null;
     }
     var url = size ? ((_b = (_a = obj.formats) === null || _a === void 0 ? void 0 : _a[size]) === null || _b === void 0 ? void 0 : _b.url) || obj.url : obj.url;
+    var httpsExists = url.match(/https?:\/\//);
+    if (httpsExists) {
+        return url;
+    }
     return "".concat(BACKEND_URL || "").concat(url);
 };
 var transformPageBlock = function (block, transformers) {
