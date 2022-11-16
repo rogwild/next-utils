@@ -238,6 +238,11 @@ const FileCard = ({
     }
 
     if (file.url) {
+      const httpsExists = file.url.match(/https?:\/\//);
+      if (httpsExists) {
+        return file.url;
+      }
+
       return `${BACKEND_URL}${file.url}`;
     }
 
