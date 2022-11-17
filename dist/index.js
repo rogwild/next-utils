@@ -9249,6 +9249,7 @@ const components = {
   Modal,
   ModalArray,
   Input: FormInput,
+  CheckboxInput,
   DropdownInput,
   SpringNotification,
   MediaGallery,
