@@ -45,6 +45,7 @@ declare const _default: {
         };
         useChildForm: typeof import("./hooks/use-form/use-child-form").default;
         useDomMeasure: (ref: any, triggers?: any[]) => number[];
+        useDebounce: (value: string | number, delay: number) => string | number;
     };
     components: {
         SmartButton: ({ disabled, className, disabledClassName, children, tooltipPosition, href, dropdownItems, dropdownContainerClassName, dropdownClassName, dropdownProps, tooltipItems, tooltipContainerClasses, onClick, linkProps, Link, }: {

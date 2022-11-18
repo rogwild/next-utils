@@ -7,6 +7,7 @@ import useDetectOutsideClick from "./use-detect-outsideclick";
 import useForm from "./use-form";
 import useChildForm from "./use-form/use-child-form";
 import useDomMeasure from "./use-dom-measure";
+import useDebounce from "./use-debounce";
 
 const hooks = {
   useDetectMouseover,
@@ -18,6 +19,7 @@ const hooks = {
   useForm,
   useChildForm,
   useDomMeasure,
+  useDebounce,
 };
 
 export default hooks;

@@ -2406,6 +2406,19 @@ const useDomMeasure = (ref, triggers = []) => {
   return [domRect.width, domRect.height];
 };
 
+var useDebounce = function (value, delay) {
+    var _a = __read(React.useState(value), 2), depouncedValue = _a[0], setDebouncedValue = _a[1];
+    React.useEffect(function () {
+        var timer = setTimeout(function () {
+            setDebouncedValue(value);
+        }, delay);
+        return function () {
+            clearTimeout(timer);
+        };
+    }, [value, delay]);
+    return depouncedValue;
+};
+
 const hooks = {
   useDetectMouseover: useDetectMouseover$1,
   useDetectOutsideClick: useDetectOutsideClick$1,
@@ -2415,7 +2428,8 @@ const hooks = {
   useStyleRewriter: useStyleRewriter$6,
   useForm,
   useChildForm,
-  useDomMeasure
+  useDomMeasure,
+  useDebounce
 };
 
 const sliceCreator = profilesApi => {
