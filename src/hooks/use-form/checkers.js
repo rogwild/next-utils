@@ -15,7 +15,11 @@ export const changeInput = (
       localInputs[e.target.id] = e.target.value;
 
       if (e.target.multiple) {
-        if (localFiles && Array.isArray(localFiles[e.target.id])) {
+        if (
+          localFiles &&
+          Array.isArray(localFiles[e.target.id]) &&
+          Array.isArray(localInputs[e.target.id])
+        ) {
           localFiles = {
             ...localFiles,
             [e.target.id]: [...localInputs[e.target.id]],
@@ -31,7 +35,11 @@ export const changeInput = (
 
     for (const [index] of new Array(e.target.files.length).entries()) {
       if (e.target.multiple) {
-        if (localFiles && Array.isArray(localFiles[e.target.id])) {
+        if (
+          localFiles &&
+          Array.isArray(localFiles[e.target.id]) &&
+          Array.isArray(localInputs[e.target.id])
+        ) {
           localFiles = {
             ...localFiles,
             [e.target.id]: [...localFiles[e.target.id], loadedFiles[index]],
