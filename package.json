@@ -84,11 +84,5 @@
   "bugs": {
     "url": "https://github.com/rogwild/next-utils/issues"
   },
-  "overrides": {
-    "@mdx-js/react": {
-      "react": "^18.2.0",
-      "react-dom": "^18.2.0"
-    }
-  },
   "homepage": "https://github.com/rogwild/next-utils#readme"
 }
