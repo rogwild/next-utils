@@ -34,13 +34,6 @@ export const isNil = (value) => value === null || value === undefined;
 export const urlRegex =
   /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gim;
 
-export const shortenAddress = (address, symbols = [6, 4]) => {
-  const firstPart = address.slice(0, symbols[0]);
-  const secondPart = address.slice(-symbols[1]);
-
-  return `${firstPart}...${secondPart}`;
-};
-
 export const addProtocolToUrl = (url) => {
   const splittedString = url.split(`://`);
   let urlWithProtocol = ``;

@@ -640,8 +640,11 @@ var parseMimeType$1 = function (mime) {
     }
     return { type: type, ext: ext, renderType: renderType };
 };
-var shortenAddress$1 = function (address, symbols) {
+var shortenAddress = function (address, symbols) {
     if (symbols === void 0) { symbols = [6, 4]; }
+    if (!(address === null || address === void 0 ? void 0 : address.length)) {
+        return "";
+    }
     var firstPart = address.slice(0, symbols[0]);
     var secondPart = address.slice(-symbols[1]);
     return "".concat(firstPart, "...").concat(secondPart);
@@ -653,7 +656,7 @@ var formatters = /*#__PURE__*/Object.freeze({
     getCountAfterDot: getCountAfterDot,
     formatPercent: formatPercent,
     parseMimeType: parseMimeType$1,
-    shortenAddress: shortenAddress$1
+    shortenAddress: shortenAddress
 });
 
 /**
@@ -1998,12 +2001,6 @@ var GTMPageView = function (url) {
 };
 var isNil = function (value) { return value === null || value === undefined; };
 var urlRegex = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gim;
-var shortenAddress = function (address, symbols) {
-    if (symbols === void 0) { symbols = [6, 4]; }
-    var firstPart = address.slice(0, symbols[0]);
-    var secondPart = address.slice(-symbols[1]);
-    return "".concat(firstPart, "...").concat(secondPart);
-};
 var addProtocolToUrl = function (url) {
     var splittedString = url.split("://");
     var urlWithProtocol = "";
@@ -2055,7 +2052,6 @@ var vanilla = /*#__PURE__*/Object.freeze({
     GTMPageView: GTMPageView,
     isNil: isNil,
     urlRegex: urlRegex,
-    shortenAddress: shortenAddress,
     addProtocolToUrl: addProtocolToUrl,
     getURLsFromText: getURLsFromText,
     parseMimeType: parseMimeType,

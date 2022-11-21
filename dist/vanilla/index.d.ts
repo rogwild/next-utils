@@ -10,7 +10,6 @@ export declare const GTMPageView: (url: any) => {
 };
 export declare const isNil: (value: any) => boolean;
 export declare const urlRegex: RegExp;
-export declare const shortenAddress: (address: any, symbols?: number[]) => string;
 export declare const addProtocolToUrl: (url: any) => string;
 export declare const getURLsFromText: (text: any) => {
     textWithMarkup: any;
