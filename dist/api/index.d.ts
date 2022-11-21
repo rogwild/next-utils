@@ -1,4 +1,14 @@
 import { Api } from "./client";
+export declare const getFileUrl: (obj: {
+    formats?: object;
+    url: string;
+}, options?: {
+    size?: string;
+    BACKEND_URL?: string;
+}) => string;
+/**
+ * Will be deprecated, use getFileUrl
+ */
 export declare const getImageUrl: (obj: {
     formats?: object;
     url: string;

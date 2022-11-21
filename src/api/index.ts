@@ -4,7 +4,7 @@ import {
   transformResponseItem as transformResponseItemFunc,
 } from "./client";
 
-export const getImageUrl = (
+export const getFileUrl = (
   obj: { formats?: object; url: string },
   options: {
     size?: string;
@@ -18,7 +18,7 @@ export const getImageUrl = (
 
   const url = size ? obj.formats?.[size]?.url || obj.url : obj.url;
 
-  const httpsExists = url.match(/https?:\/\//);
+  const httpsExists = url.match(/^https?:\/\//);
 
   if (httpsExists) {
     return url;
@@ -26,6 +26,11 @@ export const getImageUrl = (
 
   return `${BACKEND_URL || ""}${url}`;
 };
+
+/**
+ * Will be deprecated, use getFileUrl
+ */
+export const getImageUrl = getFileUrl;
 
 export const transformPageBlock = (block, transformers) => {
   const key = block?._Component;
