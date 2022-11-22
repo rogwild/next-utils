@@ -21,7 +21,7 @@ const SmartButton = ({
   tooltipContainerClasses = "",
   onClick: onClickCb,
   linkProps = [],
-  Link = () => {},
+  Link = () => undefined,
 }) => {
   const dropdownRef = useRef(null);
   const SmartButtonRef = useRef(null);

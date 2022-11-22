@@ -89,4 +89,5 @@ export const selectors = {
   selectIsAuthenticated: (state: any) => state.auth.isAuthenticated,
   selectAccountId: (state: any) => state.auth.id,
   selectJwt: (state: any) => state.auth.jwt,
+  selectUser: (state: any) => state.auth.user,
 };

@@ -8,6 +8,7 @@ const App = () => {
   return (
     <div className="max-w-[1200px] mx-auto">
       <Provider store={store}>
+        <div className="py-10"></div>
         <Login />
       </Provider>
     </div>

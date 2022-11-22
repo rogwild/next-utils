@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import qs from "qs";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://localhost:1337",
+  baseUrl: "http://localhost:1337/api",
   paramsSerializer: (object) => {
     return qs.stringify(object, {
       encodeValuesOnly: true,
