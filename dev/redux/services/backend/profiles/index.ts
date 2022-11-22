@@ -1,7 +1,7 @@
 import { backendServiceApi } from "..";
 import { createProfilesApi } from "../../../../../src/redux/queries/profiles";
 
-export const { profilesApi } = createProfilesApi(backendServiceApi);
+export const { profilesApi, hooks } = createProfilesApi(backendServiceApi);
 
 export const {
   useGetMeQuery,
@@ -19,4 +19,4 @@ export const {
   useUpdateMeMutation,
   useRegisterMutation,
   useGenerateOtpQuery,
-} = profilesApi;
+} = hooks;

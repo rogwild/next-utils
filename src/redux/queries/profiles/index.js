@@ -1,35 +1,142 @@
-import {
-  Api,
-  BaseQueryFn,
-  FetchArgs,
-  FetchBaseQueryError,
-  FetchBaseQueryMeta,
-} from "@reduxjs/toolkit/dist/query";
+// import {
+//   Api,
+//   BaseQueryFn,
+//   FetchArgs,
+//   FetchBaseQueryError,
+//   FetchBaseQueryMeta,
+//   MutationDefinition,
+//   QueryDefinition,
+// } from "@reduxjs/toolkit/dist/query";
+// import { EndpointBuilder } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
+// import {
+//   UseMutation,
+//   UseQuery,
+// } from "@reduxjs/toolkit/dist/query/react/buildHooks";
 import {
   appendFilesToFormData,
   removeEmptyFields,
   transformResponseItem,
 } from "../../../api/index";
 
-interface IStrapiParams {
-  filters?: object;
-  populate?: object;
-  fields?: object;
-  sort?: Array<string>;
-  pagination?: object;
-}
+// interface IStrapiParams {
+//   filters?: object;
+//   populate?: object;
+//   fields?: object;
+//   sort?: Array<string>;
+//   pagination?: object;
+// }
 
-interface IQueryParams extends IStrapiParams {
-  id: string;
-}
+// type IQueryParams = {
+//   id: string;
+//   filters?: object;
+//   populate?: object;
+//   fields?: object;
+//   sort?: Array<string>;
+//   pagination?: object;
+// };
 
-export const createProfilesApi = (backendServiceApi: any) => {
+// type IUseGetQuery = UseQuery<
+//   QueryDefinition<
+//     any,
+//     BaseQueryFn<
+//       string | FetchArgs,
+//       unknown,
+//       FetchBaseQueryError,
+//       any,
+//       FetchBaseQueryMeta
+//     >,
+//     string,
+//     any,
+//     "backend"
+//   >
+// >;
+
+// type IUseMutation = UseMutation<
+//   MutationDefinition<
+//     any,
+//     BaseQueryFn<
+//       string | FetchArgs,
+//       unknown,
+//       FetchBaseQueryError,
+//       any,
+//       FetchBaseQueryMeta
+//     >,
+//     string,
+//     any,
+//     "backend"
+//   >
+// >;
+
+// type TBuild = EndpointBuilder<
+//   BaseQueryFn<
+//     string | FetchArgs,
+//     unknown,
+//     FetchBaseQueryError,
+//     any,
+//     FetchBaseQueryMeta
+//   >,
+//   string,
+//   "backend"
+// >;
+
+// type TProfilesHooks = {
+//   useGetMeQuery: IUseGetQuery;
+//   useLazyGetMeQuery: IUseGetQuery;
+//   useGetProfileByIdQuery: IUseGetQuery;
+//   useLazyGetProfileByIdQuery: IUseGetQuery;
+//   useConfirmPhoneMutation: IUseMutation;
+//   useLoginWithEmailAndPasswordMutation: IUseMutation;
+//   useSendConfirmPhoneMutation: IUseMutation;
+//   useConfirmEmailMutation: IUseMutation;
+//   useForgotPasswordMutation: IUseMutation;
+//   useResetPasswordMutation: IUseMutation;
+//   useCheckOtpMutation: IUseMutation;
+//   useSendEmailCodeMutation: IUseMutation;
+//   useUpdateMeMutation: IUseMutation;
+//   useRegisterMutation: IUseMutation;
+//   useGenerateOtpQuery: IUseGetQuery;
+// };
+
+// type TBackendServicApi = Api<
+//   BaseQueryFn<
+//     string | FetchArgs,
+//     unknown,
+//     FetchBaseQueryError,
+//     any,
+//     FetchBaseQueryMeta
+//   >,
+//   any,
+//   "backend",
+//   string,
+//   any
+// >;
+
+const prepareDataToSend = (params) => {
+  const { data, files } = params;
+
+  const clearedData = removeEmptyFields({ data, files });
+
+  console.log(`🚀 ~ clearedData`, clearedData);
+
+  const formData = new FormData();
+  formData.append(`data`, JSON.stringify(clearedData));
+
+  if (files) {
+    appendFilesToFormData(formData, files);
+  }
+
+  return formData;
+};
+
+export function createProfilesApi(backendServiceApi) {
   const profilesApi = backendServiceApi.injectEndpoints({
     endpoints: (build) => ({
       getMe: build.query({
-        query: () => ({
-          url: `users/me`,
-        }),
+        query: () => {
+          return {
+            url: `users/me`,
+          };
+        },
 
         transformResponse: transformResponseItem,
 
@@ -38,11 +145,13 @@ export const createProfilesApi = (backendServiceApi: any) => {
       }),
 
       loginWithEmailAndPassword: build.mutation({
-        query: ({ identifier, password }) => ({
-          method: "POST",
-          url: `auth/local`,
-          body: { identifier, password },
-        }),
+        query: ({ identifier, password }) => {
+          return {
+            method: "POST",
+            url: `auth/local`,
+            body: { identifier, password },
+          };
+        },
 
         transformResponse: transformResponseItem,
       }),
@@ -67,7 +176,7 @@ export const createProfilesApi = (backendServiceApi: any) => {
       }),
 
       checkOtp: build.mutation({
-        query: (params: any) => {
+        query: (params) => {
           const { userId, code } = params;
 
           return {
@@ -140,19 +249,10 @@ export const createProfilesApi = (backendServiceApi: any) => {
       }),
 
       updateMe: build.mutation({
-        query: (params: any) => {
-          const { id, data, files } = params;
+        query: (params) => {
+          const { id } = params;
 
-          const clearedData = removeEmptyFields({ data, files });
-
-          console.log(`🚀 ~ clearedData`, clearedData);
-
-          const formData = new FormData();
-          formData.append(`data`, JSON.stringify(clearedData));
-
-          if (files) {
-            appendFilesToFormData(formData, files);
-          }
+          const formData = prepareDataToSend(params);
 
           return {
             url: `users/${id}`,
@@ -167,7 +267,7 @@ export const createProfilesApi = (backendServiceApi: any) => {
       }),
 
       getProfileById: build.query({
-        query: (params: IQueryParams) => {
+        query: (params) => {
           const { id, populate } = params;
 
           return {
@@ -239,4 +339,4 @@ export const createProfilesApi = (backendServiceApi: any) => {
       useGenerateOtpQuery,
     },
   };
-};
+}

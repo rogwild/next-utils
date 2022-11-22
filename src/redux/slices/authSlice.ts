@@ -8,10 +8,6 @@ export interface IProfileState {
   user?: any;
 }
 
-interface IState {
-  auth: IProfileState;
-}
-
 export const sliceCreator = (profilesApi) => {
   const initialState: IProfileState = {
     id: null,
@@ -90,7 +86,7 @@ export const sliceCreator = (profilesApi) => {
 };
 
 export const selectors = {
-  selectIsAuthenticated: (state) => state.auth.isAuthenticated,
-  selectAccountId: (state) => state.auth.id,
-  selectJwt: (state) => state.auth.jwt,
+  selectIsAuthenticated: (state: any) => state.auth.isAuthenticated,
+  selectAccountId: (state: any) => state.auth.id,
+  selectJwt: (state: any) => state.auth.jwt,
 };

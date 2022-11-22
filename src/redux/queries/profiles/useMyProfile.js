@@ -1,7 +1,10 @@
 import { useEffect, useMemo } from "react";
 import { useSelector } from "react-redux";
 import { selectAccountId } from "~redux/authSlice";
-import { useGetMeQuery, useGetProfileByIdQuery } from "./index";
+import {
+  useGetMeQuery,
+  useGetProfileByIdQuery,
+} from "./index.js/index.js.js.js";
 
 const useMyProfile = () => {
   const accountId = useSelector(selectAccountId);
