@@ -1,7 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+export interface IProfileState {
+  id: string | null;
+  jwt: string | null;
+  isAuthenticated: boolean;
+  currentAuthFactor: "local" | "otp" | "email" | "phone";
+  user?: any;
+}
+
+interface IState {
+  auth: IProfileState;
+}
+
 export const sliceCreator = (profilesApi) => {
-  const initialState = {
+  const initialState: IProfileState = {
     id: null,
     jwt: null,
     isAuthenticated: false,
@@ -21,22 +33,6 @@ export const sliceCreator = (profilesApi) => {
       builder
         .addMatcher(
           profilesApi.endpoints.loginWithEmailAndPassword.matchFulfilled,
-          (state, action) => {
-            const { user, jwt, nextAuthFactor } = action.payload;
-
-            if (jwt) {
-              state.id = user?.id;
-              state.isAuthenticated = true;
-              localStorage.setItem("jwt", jwt);
-              return;
-            }
-
-            state.user = user;
-            state.currentAuthFactor = nextAuthFactor;
-          }
-        )
-        .addMatcher(
-          profilesApi.endpoints.confirmPhone.matchFulfilled,
           (state, action) => {
             const { user, jwt, nextAuthFactor } = action.payload;
 
@@ -82,25 +78,8 @@ export const sliceCreator = (profilesApi) => {
           }
         )
         .addMatcher(
-          profilesApi.endpoints.checkOtp.matchFulfilled,
-          (state, action) => {
-            const { user, jwt, nextAuthFactor } = action.payload;
-
-            if (jwt) {
-              state.id = user?.id;
-              state.isAuthenticated = true;
-              localStorage.setItem("jwt", jwt);
-              return;
-            }
-
-            state.user = user;
-            state.currentAuthFactor = nextAuthFactor;
-          }
-        )
-        .addMatcher(
           profilesApi.endpoints.getMe.matchFulfilled,
           (state, action) => {
-            state.jwt = localStorage.jwt;
             state.id = action.payload.id;
 
             state.isAuthenticated = true;
@@ -110,8 +89,8 @@ export const sliceCreator = (profilesApi) => {
   });
 };
 
-export const selectIsAuthenticated = (state) => state.auth.isAuthenticated;
-
-export const selectAccountId = (state) => state.auth.id;
-
-export const selectJwt = (state) => state.auth.jwt;
+export const selectors = {
+  selectIsAuthenticated: (state) => state.auth.isAuthenticated,
+  selectAccountId: (state) => state.auth.id,
+  selectJwt: (state) => state.auth.jwt,
+};

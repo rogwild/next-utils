@@ -8,11 +8,11 @@ const htmlPlugin = new HtmlWebPackPlugin({
 
 module.exports = {
   mode: "development",
-  entry: "./dev.js",
+  entry: "./dev/index.tsx",
   module: {
     rules: [
       {
-        test: /\.(ts|js)?$/,
+        test: /\.(ts|js|tsx)?$/,
         use: "ts-loader",
         exclude: /node_modules/,
       },

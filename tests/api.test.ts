@@ -87,7 +87,7 @@ describe("API UTILS", () => {
   });
 
   describe("getPageData", () => {
-    it.only("should get data and transform it", async () => {
+    it("should get data and transform it", async () => {
       const transformers = {
         ["page-blocks.main-block"]: (block) => {
           block; //?

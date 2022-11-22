@@ -91,7 +91,15 @@ export const unlunkRemovedFiles = ({ data }) => {
   return sanitized;
 };
 
-export const removeEmptyFields = ({ data, passKey, files }) => {
+export const removeEmptyFields = ({
+  data,
+  passKey,
+  files,
+}: {
+  data: object;
+  passKey?: string;
+  files: any;
+}) => {
   let modified;
   if (typeof data === `object` && data !== null) {
     modified = {};
