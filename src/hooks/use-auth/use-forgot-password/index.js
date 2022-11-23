@@ -4,7 +4,7 @@ import useForm from "../../use-form";
 
 const useForgotPassword = ({ profilesApi, authSlice }) => {
   const dispatch = useDispatch();
-  const [forgotPassword, { isSuccess }] =
+  const [forgotPassword, { isSuccess, isLoading, data }] =
     profilesApi.useForgotPasswordMutation();
 
   useEffect(() => {
@@ -15,8 +15,7 @@ const useForgotPassword = ({ profilesApi, authSlice }) => {
 
   const submitFunc = ({ inputs }) => {
     forgotPassword({
-      email: inputs.email,
-      type: "email",
+      data: inputs,
     });
   };
 
@@ -27,6 +26,8 @@ const useForgotPassword = ({ profilesApi, authSlice }) => {
   });
 
   return {
+    isLoading,
+    data,
     isSuccess,
     inputs,
     onSubmit,
@@ -43,6 +44,6 @@ const inputsConfig = [
     field: `email`,
     checkerFuncs: [`checkRequiredField`, `checkEmailMask`],
     type: `email`,
-    placeholder: `Email`,
+    placeholder: `Type your email`,
   },
 ];

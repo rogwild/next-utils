@@ -204,12 +204,12 @@ export function createProfilesApi(backendServiceApi) {
       }),
 
       forgotPassword: build.mutation({
-        query: ({ email, type }) => {
-          console.log(`🚀 ~ email, type`, email, type);
+        query: ({ data }) => {
+          // console.log(`🚀 ~ createProfilesApi ~ data`, data);
           return {
             url: `auth/forgot-password`,
             method: "POST",
-            body: { email },
+            body: data,
           };
         },
 
@@ -217,11 +217,12 @@ export function createProfilesApi(backendServiceApi) {
       }),
 
       resetPassword: build.mutation({
-        query: ({ password, code }) => {
+        query: ({ data }) => {
+          console.log(`🚀 ~ createProfilesApi ~ data`, data);
           return {
             url: `auth/reset-password`,
             method: "POST",
-            body: { password, passwordConfirmation: password, code },
+            body: data,
           };
         },
 

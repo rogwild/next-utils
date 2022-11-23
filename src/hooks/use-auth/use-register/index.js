@@ -54,7 +54,7 @@ const defaultInputsConfig = [
     field: `username`,
     checkerFuncs: [`checkRequiredField`],
     type: `text`,
-    placeholder: `Username`,
+    placeholder: `Type your username`,
   },
   {
     label: `Email`,
@@ -62,7 +62,7 @@ const defaultInputsConfig = [
     checkerFuncs: [`checkRequiredField`, `checkEmailMask`],
     type: `email`,
     id: `email`,
-    placeholder: `Email`,
+    placeholder: `Type your email`,
   },
   {
     label: `Password`,
@@ -83,13 +83,12 @@ const defaultInputsConfig = [
       enableTypeChanging: true,
     },
     type: `password`,
-    id: `confirmPassword`,
     placeholder: `Repeat your password`,
   },
   {
     label: `I agree with terms and conditions`,
     field: `agreement_checkbox`,
-    checkerFuncs: [`checkRequiredField`],
+    checkerFuncs: [],
     type: `checkbox`,
     defaultValue: false,
   },

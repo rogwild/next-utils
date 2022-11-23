@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useDispatch } from "react-redux";
 import useForm from "../../use-form";
 
@@ -15,15 +15,18 @@ const useResetPassword = ({
     sessionStorage.removeItem(`jwt`);
   }, [authSlice?.actions]);
 
-  const [resetPassword, { isSuccess, error }] =
+  const [resetPassword, { isSuccess, error, data, isLoading }] =
     profilesApi.useResetPasswordMutation();
 
   const submitFunc = ({ inputs }) => {
     resetPassword({
-      password: inputs.password,
-      code: inputs.code,
+      data: inputs,
     });
   };
+
+  const inputsConfig = useMemo(() => {
+    return passedInputsConfig;
+  }, [passedInputsConfig]);
 
   const {
     inputs,
@@ -33,7 +36,7 @@ const useResetPassword = ({
     errors: inputsErrors,
     setErrors: setInputsErrors,
   } = useForm({
-    passedInputsConfig,
+    inputsConfig,
     submitFunc,
     inputPropsType: `object`,
   });
@@ -48,6 +51,8 @@ const useResetPassword = ({
   }, [window]);
 
   return {
+    data,
+    isLoading,
     error,
     inputs,
     onSubmit,
