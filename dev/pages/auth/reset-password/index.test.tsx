@@ -1,10 +1,9 @@
 import React from "react";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { Provider } from "react-redux";
-import store from "../../../redux";
+import { fireEvent, screen, waitFor } from "@testing-library/react";
 import { rest } from "msw";
 import { setupServer } from "msw/node";
 import ResetPassword from "./index";
+import { renderApp } from "../../../utils/testing";
 
 const server = setupServer(
   rest.post(
@@ -33,12 +32,8 @@ afterAll(() => {
 });
 
 describe("Reset password hook", () => {
-  it.only("should get data from inputs and send to backend", async () => {
-    render(
-      <Provider store={store}>
-        <ResetPassword />
-      </Provider>
-    );
+  it("should get data from inputs and send to backend", async () => {
+    renderApp(<ResetPassword />);
 
     const passwordInput = screen.getByPlaceholderText(
       /type your new password/i

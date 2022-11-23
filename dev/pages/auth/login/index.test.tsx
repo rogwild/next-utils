@@ -1,10 +1,9 @@
 import React from "react";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import Login from "./index";
-import { Provider } from "react-redux";
-import store from "../../../redux";
+import { fireEvent, screen, waitFor } from "@testing-library/react";
 import { rest } from "msw";
 import { setupServer } from "msw/node";
+import Login from ".";
+import { renderApp } from "../../../utils/testing";
 
 const server = setupServer(
   rest.post("http://localhost:1337/api/auth/local", async (req, res, ctx) => {
@@ -34,11 +33,7 @@ afterAll(() => {
 
 describe("Login hook", () => {
   it("should get data from inputs and send to backend", async () => {
-    render(
-      <Provider store={store}>
-        <Login />
-      </Provider>
-    );
+    renderApp(<Login />); //?
 
     const emailInput = screen.getByPlaceholderText(/type your email/i);
     const passwordInput = screen.getByPlaceholderText(/type your password/i);

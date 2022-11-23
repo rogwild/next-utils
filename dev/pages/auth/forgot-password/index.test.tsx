@@ -1,10 +1,9 @@
 import React from "react";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { Provider } from "react-redux";
-import store from "../../../redux";
+import { fireEvent, screen, waitFor } from "@testing-library/react";
 import { rest } from "msw";
 import { setupServer } from "msw/node";
 import ForgotPassword from "./index";
+import { renderApp } from "../../../utils/testing";
 
 const server = setupServer(
   rest.post(
@@ -34,11 +33,7 @@ afterAll(() => {
 
 describe("Forgot password hook", () => {
   it("should get data from inputs and send to backend", async () => {
-    render(
-      <Provider store={store}>
-        <ForgotPassword />
-      </Provider>
-    );
+    renderApp(<ForgotPassword />);
 
     const emailInput = screen.getByPlaceholderText(/type your email/i);
 

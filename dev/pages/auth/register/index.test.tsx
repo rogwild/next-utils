@@ -1,10 +1,9 @@
 import React from "react";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, screen, waitFor } from "@testing-library/react";
 import Register from "./index";
-import { Provider } from "react-redux";
-import store from "../../../redux";
 import { rest } from "msw";
 import { setupServer } from "msw/node";
+import { renderApp } from "../../../utils/testing";
 
 const server = setupServer(
   rest.post(
@@ -37,11 +36,7 @@ afterAll(() => {
 
 describe("Register hook", () => {
   it("should get data from inputs and send to backend", async () => {
-    render(
-      <Provider store={store}>
-        <Register />
-      </Provider>
-    );
+    renderApp(<Register />);
 
     const usernameInput = screen.getByPlaceholderText(/type your username/i);
     const emailInput = screen.getByPlaceholderText(/type your email/i);
