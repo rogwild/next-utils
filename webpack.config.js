@@ -25,6 +25,9 @@ module.exports = {
     filename: "bundle.js",
     path: path.resolve(__dirname, "devdist"),
   },
+  devServer: {
+    historyApiFallback: true,
+  },
   plugins: [
     htmlPlugin,
     new webpack.DefinePlugin({
