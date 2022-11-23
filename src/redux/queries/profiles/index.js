@@ -17,6 +17,7 @@ import {
   removeEmptyFields,
   transformResponseItem,
 } from "../../../api/index";
+import qs from "qs";
 
 // interface IStrapiParams {
 //   filters?: object;
@@ -158,25 +159,6 @@ export function createProfilesApi(backendServiceApi) {
         },
       }),
 
-      sendConfirmPhone: build.mutation({
-        query: ({ data }) => {
-          return {
-            url: `auth/send-phone-confirmation`,
-            method: "POST",
-            body: data,
-          };
-        },
-      }),
-
-      confirmPhone: build.mutation({
-        query: ({ confirmation }) => {
-          return {
-            url: `auth/phone-confirmation`,
-            params: { confirmation },
-          };
-        },
-      }),
-
       checkOtp: build.mutation({
         query: (params) => {
           const { userId, code } = params;
@@ -192,15 +174,50 @@ export function createProfilesApi(backendServiceApi) {
         transformResponse: transformResponseItem,
       }),
 
+      sendEmailConfirmation: build.mutation({
+        query: ({ data }) => ({
+          url: `auth/send-email-confirmation`,
+          method: `POST`,
+          body: data,
+        }),
+
+        transformResponse: transformResponseItem,
+      }),
+
       confirmEmail: build.mutation({
-        query: ({ confirmation, email }) => {
+        query: ({ data }) => {
+          const stringifiedParams = qs.stringify(data);
+          // console.log(
+          //   `🚀 ~ createProfilesApi ~ stringifiedParams`,
+          //   stringifiedParams
+          // );
+
           return {
-            url: `auth/email-confirmation`,
-            params: { confirmation, email },
+            url: `auth/email-confirmation?${stringifiedParams}`,
           };
         },
 
         transformResponse: transformResponseItem,
+      }),
+
+      sendPhoneConfirmation: build.mutation({
+        query: ({ data }) => {
+          return {
+            url: `auth/send-phone-confirmation`,
+            method: "POST",
+            body: data,
+          };
+        },
+      }),
+
+      confirmPhone: build.mutation({
+        query: ({ data }) => {
+          const stringifiedParams = qs.stringify(data); //?
+
+          return {
+            url: `auth/phone-confirmation?${stringifiedParams}`,
+          };
+        },
       }),
 
       forgotPassword: build.mutation({
@@ -237,16 +254,6 @@ export function createProfilesApi(backendServiceApi) {
             body: data,
           };
         },
-
-        transformResponse: transformResponseItem,
-      }),
-
-      sendEmailCode: build.mutation({
-        query: ({ email }) => ({
-          url: `auth/send-email-confirmation`,
-          method: `POST`,
-          body: { email },
-        }),
 
         transformResponse: transformResponseItem,
       }),
@@ -310,13 +317,14 @@ export function createProfilesApi(backendServiceApi) {
     useGetProfileByIdQuery,
     useLazyGetProfileByIdQuery,
     useConfirmPhoneMutation,
-    useLoginWithEmailAndPasswordMutation,
-    useSendConfirmPhoneMutation,
     useConfirmEmailMutation,
+    useLoginWithEmailAndPasswordMutation,
+    useSendPhoneConfitmationMutation,
+    useSendEmailConfirmationMutation,
     useForgotPasswordMutation,
     useResetPasswordMutation,
     useCheckOtpMutation,
-    useSendEmailCodeMutation,
+    useSendConfirmEmailMutation,
     useUpdateMeMutation,
     useRegisterMutation,
     useGenerateOtpQuery,
@@ -330,13 +338,14 @@ export function createProfilesApi(backendServiceApi) {
       useGetProfileByIdQuery,
       useLazyGetProfileByIdQuery,
       useConfirmPhoneMutation,
-      useLoginWithEmailAndPasswordMutation,
-      useSendConfirmPhoneMutation,
       useConfirmEmailMutation,
+      useLoginWithEmailAndPasswordMutation,
+      useSendPhoneConfitmationMutation,
+      useSendEmailConfirmationMutation,
       useForgotPasswordMutation,
       useResetPasswordMutation,
       useCheckOtpMutation,
-      useSendEmailCodeMutation,
+      useSendConfirmEmailMutation,
       useUpdateMeMutation,
       useRegisterMutation,
       useGenerateOtpQuery,
