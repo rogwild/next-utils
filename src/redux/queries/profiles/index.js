@@ -48,20 +48,6 @@ export const profilesApi = backendServiceApi.injectEndpoints({
       },
     }),
 
-    checkOtp: build.mutation({
-      query: (params = {}) => {
-        const { userId, code } = params;
-
-        return {
-          url: `auth/check-otp/${userId}`,
-          params: {
-            code,
-          },
-        };
-      },
-
-      transformResponse: transformResponseItem,
-    }),
 
     confirmEmail: build.mutation({
       query: ({ confirmation, email }) => {
@@ -175,6 +161,21 @@ export const profilesApi = backendServiceApi.injectEndpoints({
       transformResponse: transformResponseItem,
 
       invalidatesTags: (_result, _error, { id }) => [],
+    }),
+
+    checkOtp: build.mutation({
+      query: (params = {}) => {
+        const { userId, code } = params;
+
+        return {
+          url: `auth/check-otp/${userId}`,
+          params: {
+            code,
+          },
+        };
+      },
+
+      transformResponse: transformResponseItem,
     }),
   }),
 });
