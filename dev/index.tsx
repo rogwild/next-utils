@@ -1,7 +1,7 @@
 import React from "react";
 import * as ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
-import Login from "./pages/auth/Login";
+import Login from "./pages/auth/login";
 import store from "./redux/index";
 
 const App = () => {

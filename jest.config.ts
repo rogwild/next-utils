@@ -2,10 +2,14 @@ import type { Config } from "@jest/types";
 // Sync object
 
 const config: Config.InitialOptions = {
-  verbose: true,
+  preset: "ts-jest",
+  testEnvironment: "jsdom",
   transform: {
-    "^.+\\.tsx?$": "ts-jest",
+    "^.+\\.(ts|tsx)?$": "ts-jest",
+    "^.+\\.(js|jsx)$": "babel-jest",
   },
+  transformIgnorePatterns: ["<rootDir>/node_modules/", "<rootDir>/dist/"],
+  setupFilesAfterEnv: ["<rootDir>/setupTests.js"],
 };
 
 export default config;
