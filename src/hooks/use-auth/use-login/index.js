@@ -67,7 +67,7 @@ const defaultInputsConfig = [
     field: `email`,
     checkerFuncs: [`checkRequiredField`],
     type: `text`,
-    placeholder: `Email`,
+    placeholder: `Type your email`,
     label: "Email",
   },
   {

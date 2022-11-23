@@ -153,7 +153,9 @@ export function createProfilesApi(backendServiceApi) {
           };
         },
 
-        transformResponse: transformResponseItem,
+        transformResponse: (res) => {
+          return transformResponseItem(res);
+        },
       }),
 
       sendConfirmPhone: build.mutation({
