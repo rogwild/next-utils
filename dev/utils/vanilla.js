@@ -12,3 +12,7 @@ export const blackButtonProps = {
 export const redButtonProps = {
   className: `@bdc bg-red-500 @ttx text-white ${baseButtonClassName}`,
 };
+
+export const grayButtonProps = {
+  className: `@bdc bg-zinc-100 @ttc text-zinc-800 ${baseButtonClassName}`,
+};

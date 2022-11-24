@@ -2,7 +2,11 @@ import React, { useEffect } from "react";
 import FormInput from "../../../../src/components/input";
 import { useConfirmEmail } from "../../../../src/hooks/use-auth";
 import { profilesApi } from "../../../redux/services/backend/profiles";
-import { blackButtonProps, textInputProps } from "../../../utils/vanilla";
+import {
+  blackButtonProps,
+  grayButtonProps,
+  textInputProps,
+} from "../../../utils/vanilla";
 
 const ConfirmEmail = () => {
   const {
@@ -10,10 +14,21 @@ const ConfirmEmail = () => {
     onSubmit,
     data,
     isLoading,
-  }: { inputs: any; onSubmit: any; data: any; isLoading: boolean } =
-    useConfirmEmail({
-      profilesApi,
-    });
+    resendEmailConfirmation,
+    counter,
+  }: {
+    inputs: any;
+    onSubmit: any;
+    data: any;
+    isLoading: boolean;
+    counter: number;
+    resendEmailConfirmation: any;
+  } = useConfirmEmail({
+    profilesApi,
+    ping: 5,
+  });
+
+  console.log(`🚀 ~ useEffect ~ counter`, counter);
 
   useEffect(() => {
     console.log(`🚀 ~ ConfirmEmail ~ data`, data, isLoading);
@@ -25,6 +40,18 @@ const ConfirmEmail = () => {
       {data ? <h4>Email was confirmed</h4> : null}
       <FormInput {...inputs.email} {...textInputProps} />
       <FormInput {...inputs.code} {...textInputProps} />
+      {counter === 0 ? (
+        <button
+          onClick={() => {
+            resendEmailConfirmation();
+          }}
+          {...grayButtonProps}
+        >
+          Resend code
+        </button>
+      ) : (
+        <p>Resend code in {counter} seconds</p>
+      )}
       <button onClick={onSubmit} {...blackButtonProps}>
         Confirm email
       </button>
