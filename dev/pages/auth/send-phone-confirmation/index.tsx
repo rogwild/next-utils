@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import FormInput from "../../../../src/components/input";
 import { useSendPhoneConfirmation } from "../../../../src/hooks/use-auth";
 import { profilesApi } from "../../../redux/services/backend/profiles";
-import { baseButtonProps, textInputProps } from "../../../utils/vanilla";
+import { blackButtonProps, textInputProps } from "../../../utils/vanilla";
 
 const SendPhoneConfirmation = () => {
   const {
@@ -24,7 +24,7 @@ const SendPhoneConfirmation = () => {
       <h1 className="mx-auto text-2xl font-bold">Login by phone and code</h1>
       {data ? <h4>Code was send to your phone</h4> : null}
       <FormInput {...inputs.phone} {...textInputProps} />
-      <button onClick={onSubmit} {...baseButtonProps}>
+      <button onClick={onSubmit} {...blackButtonProps}>
         Send code
       </button>
     </div>

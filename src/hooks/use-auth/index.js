@@ -7,6 +7,8 @@ import usePhoneConfirmation from "./use-phone-confirmation";
 import useSendPhoneConfirmation from "./use-send-phone-confirmation";
 import useConfirmEmail from "./use-confirm-email";
 import useConfirmPhone from "./use-confirm-phone";
+import useUpdateMe from "./use-update-me";
+import useMyProfile from "./use-my-profile";
 
 export {
   useSendEmailConfirmation,
@@ -18,4 +20,6 @@ export {
   useSendPhoneConfirmation,
   useConfirmEmail,
   useConfirmPhone,
+  useUpdateMe,
+  useMyProfile,
 };

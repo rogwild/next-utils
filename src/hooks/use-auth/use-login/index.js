@@ -1,18 +1,15 @@
 import { useEffect, useMemo } from "react";
 import useForm from "../../use-form";
 
-const useLogin = ({
-  profilesApi,
-  passedInputsConfig = defaultInputsConfig,
-}) => {
+const useLogin = ({ profilesApi, inputsConfig = defaultInputsConfig }) => {
   const [
     loginWithEmailAndPassword,
     { error, data, isSuccess, isLoading, isFetching },
   ] = profilesApi.useLoginWithEmailAndPasswordMutation();
 
-  const inputsConfig = useMemo(() => {
-    return passedInputsConfig;
-  }, [passedInputsConfig]);
+  const memoInputsConfig = useMemo(() => {
+    return inputsConfig;
+  }, [inputsConfig]);
 
   const submitFunc = ({ inputs }) => {
     loginWithEmailAndPassword({
@@ -23,7 +20,7 @@ const useLogin = ({
 
   const { inputs, setErrors, onSubmit, changeBlockedInputs, clearInputs } =
     useForm({
-      inputsConfig,
+      inputsConfig: memoInputsConfig,
       submitFunc,
       inputPropsType: `object`,
     });

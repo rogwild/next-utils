@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export interface IProfileState {
-  id: string | null;
-  jwt: string | null;
+  id: string | undefined;
+  jwt: string | undefined;
   isAuthenticated: boolean;
   currentAuthFactor: "local" | "otp" | "email" | "phone";
   user?: any;
@@ -11,7 +11,8 @@ export interface IProfileState {
 export const sliceCreator = (profilesApi) => {
   const initialState: IProfileState = {
     id: null,
-    jwt: null,
+    jwt:
+      typeof window !== "undefined" ? localStorage.getItem("jwt") : undefined,
     isAuthenticated: false,
     currentAuthFactor: "local",
   };
@@ -30,47 +31,37 @@ export const sliceCreator = (profilesApi) => {
         .addMatcher(
           profilesApi.endpoints.loginWithEmailAndPassword.matchFulfilled,
           (state, action) => {
-            const { user, jwt, nextAuthFactor } = action.payload;
-
-            if (jwt) {
-              state.id = user?.id;
-              state.isAuthenticated = true;
-              localStorage.setItem("jwt", jwt);
-              return;
-            }
-
-            state.user = user;
-            state.currentAuthFactor = nextAuthFactor;
+            setUser(state, action);
           }
         )
         .addMatcher(
           profilesApi.endpoints.register.matchFulfilled,
           (state, action) => {
-            const { user, jwt } = action.payload;
-            state.user = user;
-            state.currentAuthFactor = "email";
-
-            if (jwt) {
-              state.id = user?.id;
-              state.isAuthenticated = true;
-              localStorage.setItem("jwt", jwt);
-              return;
-            }
+            setUser(state, action);
+          }
+        )
+        .addMatcher(
+          profilesApi.endpoints.checkOtp.matchFulfilled,
+          (state, action) => {
+            setUser(state, action);
+          }
+        )
+        .addMatcher(
+          profilesApi.endpoints.checkOtp.matchFulfilled,
+          (state, action) => {
+            setUser(state, action);
           }
         )
         .addMatcher(
           profilesApi.endpoints.confirmEmail.matchFulfilled,
           (state, action) => {
-            const { user, jwt, nextAuthFactor } = action.payload;
-
-            if (jwt) {
-              state.id = user?.id;
-              state.isAuthenticated = true;
-              localStorage.setItem("jwt", jwt);
-              return;
-            }
-
-            state.currentAuthFactor = nextAuthFactor;
+            setUser(state, action);
+          }
+        )
+        .addMatcher(
+          profilesApi.endpoints.confirmPhone.matchFulfilled,
+          (state, action) => {
+            setUser(state, action);
           }
         )
         .addMatcher(
@@ -89,5 +80,19 @@ export const selectors = {
   selectIsAuthenticated: (state: any) => state.auth.isAuthenticated,
   selectAccountId: (state: any) => state.auth.id,
   selectJwt: (state: any) => state.auth.jwt,
-  selectUser: (state: any) => state.auth.user,
 };
+
+function setUser(state, action) {
+  const { user, jwt, nextAuthFactor } = action.payload;
+
+  if (jwt) {
+    state.id = user.id;
+    state.isAuthenticated = true;
+    localStorage.setItem("jwt", jwt);
+    return;
+  }
+
+  if (nextAuthFactor) {
+    state.currentAuthFactor = nextAuthFactor;
+  }
+}

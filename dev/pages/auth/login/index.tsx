@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import FormInput from "../../../../src/components/input";
 import { useLogin } from "../../../../src/hooks/use-auth";
 import { profilesApi } from "../../../redux/services/backend/profiles";
-import { baseButtonProps, textInputProps } from "../../../utils/vanilla";
+import { blackButtonProps, textInputProps } from "../../../utils/vanilla";
 
 const Login = () => {
   const {
@@ -24,9 +25,14 @@ const Login = () => {
       {data ? <h4>You are logged in</h4> : null}
       <FormInput {...inputs.email} {...textInputProps} />
       <FormInput {...inputs.password} {...textInputProps} />
-      <button onClick={onSubmit} {...baseButtonProps}>
+      <button onClick={onSubmit} {...blackButtonProps}>
         Login
       </button>
+      {data ? (
+        <Link to="/profile" {...blackButtonProps}>
+          Profile
+        </Link>
+      ) : null}
     </div>
   );
 };

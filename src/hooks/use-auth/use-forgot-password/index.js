@@ -1,8 +1,12 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useDispatch } from "react-redux";
 import useForm from "../../use-form";
 
-const useForgotPassword = ({ profilesApi, authSlice }) => {
+const useForgotPassword = ({
+  profilesApi,
+  inputsConfig = defaultInputsConfig,
+  authSlice,
+}) => {
   const dispatch = useDispatch();
   const [forgotPassword, { isSuccess, isLoading, data }] =
     profilesApi.useForgotPasswordMutation();
@@ -19,8 +23,12 @@ const useForgotPassword = ({ profilesApi, authSlice }) => {
     });
   };
 
+  const memoInputsConfig = useMemo(() => {
+    return inputsConfig;
+  }, [inputsConfig]);
+
   const { inputs, onSubmit, setPassed } = useForm({
-    inputsConfig,
+    inputsConfig: memoInputsConfig,
     submitFunc,
     inputPropsType: `object`,
   });
@@ -37,7 +45,7 @@ const useForgotPassword = ({ profilesApi, authSlice }) => {
 
 export default useForgotPassword;
 
-const inputsConfig = [
+const defaultInputsConfig = [
   {
     title: `Email address*`,
     label: `Email address`,

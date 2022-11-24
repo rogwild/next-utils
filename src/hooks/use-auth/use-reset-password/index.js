@@ -4,7 +4,7 @@ import useForm from "../../use-form";
 
 const useResetPassword = ({
   profilesApi,
-  passedInputsConfig = defaultInputsConfig,
+  inputsConfig = defaultInputsConfig,
   authSlice,
 }) => {
   const dispatch = useDispatch();
@@ -24,9 +24,9 @@ const useResetPassword = ({
     });
   };
 
-  const inputsConfig = useMemo(() => {
-    return passedInputsConfig;
-  }, [passedInputsConfig]);
+  const memoInputsConfig = useMemo(() => {
+    return inputsConfig;
+  }, [inputsConfig]);
 
   const {
     inputs,
@@ -36,7 +36,7 @@ const useResetPassword = ({
     errors: inputsErrors,
     setErrors: setInputsErrors,
   } = useForm({
-    inputsConfig,
+    inputsConfig: memoInputsConfig,
     submitFunc,
     inputPropsType: `object`,
   });

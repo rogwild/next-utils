@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import FormInput from "../../../../src/components/input";
 import { useResetPassword } from "../../../../src/hooks/use-auth";
 import { profilesApi } from "../../../redux/services/backend/profiles";
-import { baseButtonProps, textInputProps } from "../../../utils/vanilla";
-import authSlice from "../../../redux/authSlice";
+import { blackButtonProps, textInputProps } from "../../../utils/vanilla";
+import { authSlice } from "../../../redux/authSlice";
 
 const ResetPassword = () => {
   const {
@@ -27,7 +27,7 @@ const ResetPassword = () => {
       {data ? <h4>Password was reset</h4> : null}
       <FormInput {...inputs.password} {...textInputProps} />
       <FormInput {...inputs.confirm_password} {...textInputProps} />
-      <button onClick={onSubmit} {...baseButtonProps}>
+      <button onClick={onSubmit} {...blackButtonProps}>
         Reset password
       </button>
     </div>

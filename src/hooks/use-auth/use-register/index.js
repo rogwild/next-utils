@@ -1,16 +1,13 @@
 import { useMemo } from "react";
 import useForm from "../../use-form";
 
-const useRegister = ({
-  profilesApi,
-  passedInputsConfig = defaultInputsConfig,
-}) => {
+const useRegister = ({ profilesApi, inputsConfig = defaultInputsConfig }) => {
   const [register, { error, isSuccess, isLoading, data }] =
     profilesApi.useRegisterMutation();
 
-  const inputsConfig = useMemo(() => {
-    return passedInputsConfig;
-  }, [passedInputsConfig]);
+  const memoInputsConfig = useMemo(() => {
+    return inputsConfig;
+  }, [inputsConfig]);
 
   const submitFunc = ({ inputs }) => {
     register({ data: inputs });
@@ -27,7 +24,7 @@ const useRegister = ({
     onSubmit,
     setPassed,
   } = useForm({
-    inputsConfig,
+    inputsConfig: memoInputsConfig,
     afterPassed,
     submitFunc,
     inputPropsType: `object`,

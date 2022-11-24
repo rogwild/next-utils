@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import FormInput from "../../../../src/components/input";
 import { useRegister } from "../../../../src/hooks/use-auth";
 import { profilesApi } from "../../../redux/services/backend/profiles";
-import { baseButtonProps, textInputProps } from "../../../utils/vanilla";
+import { blackButtonProps, textInputProps } from "../../../utils/vanilla";
 
 const Register = () => {
   const {
@@ -27,7 +27,7 @@ const Register = () => {
       <FormInput {...inputs.email} {...textInputProps} />
       <FormInput {...inputs.password} {...textInputProps} />
       <FormInput {...inputs.confirm_password} {...textInputProps} />
-      <button onClick={onSubmit} {...baseButtonProps}>
+      <button onClick={onSubmit} {...blackButtonProps}>
         Register
       </button>
     </div>

@@ -3,7 +3,7 @@ import useForm from "../../use-form";
 
 const useSendPhoneConfirmation = ({
   profilesApi,
-  passedInputsConfig = defaultInputsConfig,
+  inputsConfig = defaultInputsConfig,
 }) => {
   const [sendPhoneConfirmation, { error, isLoading, isSuccess, data }] =
     profilesApi.useSendPhoneConfirmationMutation();
@@ -12,9 +12,9 @@ const useSendPhoneConfirmation = ({
     sendPhoneConfirmation({ data: inputs });
   };
 
-  const inputsConfig = useMemo(() => {
-    return passedInputsConfig;
-  }, [passedInputsConfig]);
+  const memoInputsConfig = useMemo(() => {
+    return inputsConfig;
+  }, [inputsConfig]);
 
   const {
     inputs,
@@ -22,7 +22,7 @@ const useSendPhoneConfirmation = ({
     onSubmit,
     setErrors: inputsSetErrors,
   } = useForm({
-    inputsConfig,
+    inputsConfig: memoInputsConfig,
     submitFunc,
     inputPropsType: `object`,
   });

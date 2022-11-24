@@ -15,6 +15,8 @@ import Register from "./pages/auth/register";
 import ResetPassword from "./pages/auth/reset-password";
 import SendEmailConfirmation from "./pages/auth/send-email-confirmation";
 import SendPhoneConfirmation from "./pages/auth/send-phone-confirmation";
+import ProfilePage from "./pages/profile";
+import ProfileEdit from "./pages/profile/edit";
 import store from "./redux";
 
 const App = () => {
@@ -36,6 +38,8 @@ const App = () => {
         />
         <Route path="/auth/confirm-email" element={<ConfirmEmail />} />
         <Route path="/auth/confirm-phone" element={<ConfirmPhone />} />
+        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/profile/edit" element={<ProfileEdit />} />
       </>
     )
   );

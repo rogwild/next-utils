@@ -3,7 +3,7 @@ import useForm from "../../use-form";
 
 const useSendEmailConfirmation = ({
   profilesApi,
-  passedInputsConfig = defaultInputsConfig,
+  inputsConfig = defaultInputsConfig,
 }) => {
   const [sendEmailConfirmation, { error, isLoading, isSuccess, data }] =
     profilesApi.useSendEmailConfirmationMutation();
@@ -12,9 +12,9 @@ const useSendEmailConfirmation = ({
     sendEmailConfirmation({ data: inputs });
   };
 
-  const inputsConfig = useMemo(() => {
-    return passedInputsConfig;
-  }, [passedInputsConfig]);
+  const memoInputsConfig = useMemo(() => {
+    return inputsConfig;
+  }, [inputsConfig]);
 
   const {
     inputs,
@@ -22,7 +22,7 @@ const useSendEmailConfirmation = ({
     onSubmit,
     setErrors: inputsSetErrors,
   } = useForm({
-    inputsConfig,
+    inputsConfig: memoInputsConfig,
     submitFunc,
     inputPropsType: `object`,
   });

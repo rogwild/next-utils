@@ -1,8 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import useForm from "../../use-form";
 
-const usePhoneConfirmation = ({ profilesApi, authSlice }) => {
+const usePhoneConfirmation = ({
+  profilesApi,
+  inputsConfig = defaultInputsConfig,
+  authSlice,
+}) => {
   const auth = useSelector(authSlice.selectors.auth);
   const [user, setUser] = useState();
 
@@ -29,6 +33,10 @@ const usePhoneConfirmation = ({ profilesApi, authSlice }) => {
     }
   }, [user, isUninitialized]);
 
+  const memoInputsConfig = useMemo(() => {
+    return inputsConfig;
+  }, [inputsConfig]);
+
   const [confirmPhone, { error, isSuccess }] =
     profilesApi.useConfirmPhoneMutation();
 
@@ -42,7 +50,7 @@ const usePhoneConfirmation = ({ profilesApi, authSlice }) => {
     inputs: inputsErrors,
     setErrors: inputsSetErrors,
   } = useForm({
-    inputsConfig,
+    inputsConfig: memoInputsConfig,
     submitFunc,
     inputPropsType: `object`,
   });
@@ -52,7 +60,7 @@ const usePhoneConfirmation = ({ profilesApi, authSlice }) => {
 
 export default usePhoneConfirmation;
 
-const inputsConfig = [
+const defaultInputsConfig = [
   {
     label: `Verification code`,
     field: `confirmation`,

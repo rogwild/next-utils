@@ -3,7 +3,7 @@ import useForm from "../../use-form";
 
 const useConfirmPhone = ({
   profilesApi,
-  passedInputsConfig = defaultInputsConfig,
+  inputsConfig = defaultInputsConfig,
 }) => {
   const [confirmEmail, { isSuccess, error, data, isLoading }] =
     profilesApi.useConfirmPhoneMutation();
@@ -14,9 +14,9 @@ const useConfirmPhone = ({
     });
   };
 
-  const inputsConfig = useMemo(() => {
-    return passedInputsConfig;
-  }, [passedInputsConfig]);
+  const memoInputsConfig = useMemo(() => {
+    return inputsConfig;
+  }, [inputsConfig]);
 
   const {
     inputs,
@@ -26,7 +26,7 @@ const useConfirmPhone = ({
     errors: inputsErrors,
     setErrors: setInputsErrors,
   } = useForm({
-    inputsConfig,
+    inputsConfig: memoInputsConfig,
     submitFunc,
     inputPropsType: `object`,
   });

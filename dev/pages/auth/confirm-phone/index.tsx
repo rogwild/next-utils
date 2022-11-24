@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import FormInput from "../../../../src/components/input";
 import { useConfirmPhone } from "../../../../src/hooks/use-auth";
 import { profilesApi } from "../../../redux/services/backend/profiles";
-import { baseButtonProps, textInputProps } from "../../../utils/vanilla";
+import { blackButtonProps, textInputProps } from "../../../utils/vanilla";
 
 const ConfirmPhone = () => {
   const {
@@ -25,7 +25,7 @@ const ConfirmPhone = () => {
       {data ? <h4>Phone was confirmed</h4> : null}
       <FormInput {...inputs.phone} {...textInputProps} />
       <FormInput {...inputs.code} {...textInputProps} />
-      <button onClick={onSubmit} {...baseButtonProps}>
+      <button onClick={onSubmit} {...blackButtonProps}>
         Confirm phone
       </button>
     </div>
