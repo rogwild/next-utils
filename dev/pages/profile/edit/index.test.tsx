@@ -2,9 +2,6 @@ import React from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { rest } from "msw";
 import { setupServer } from "msw/node";
-import { renderApp } from "../../../utils/testing";
-import ProfileEdit from "./index";
-import Login from "../../auth/login";
 import App from "../../../App";
 
 const server = setupServer(
