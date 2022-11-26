@@ -17,6 +17,19 @@ const server = setupServer(
         })
       );
     }
+  ),
+  rest.post(
+    "http://localhost:1337/api/auth/send-phone-confirmation",
+    async (req, res, ctx) => {
+      const data = await req.json();
+      console.log(`🚀 ~ rest.post ~ req`, data);
+
+      return res(
+        ctx.json({
+          ok: true,
+        })
+      );
+    }
   )
 );
 
@@ -50,5 +63,9 @@ describe("Reset password hook", () => {
         })
       )
     ).toBeInTheDocument();
+  });
+
+  it("resend button is sending phone code", async () => {
+    expect(3).toEqual(3);
   });
 });

@@ -88,6 +88,7 @@ function setUser(state, action) {
   if (jwt) {
     state.id = user.id;
     state.isAuthenticated = true;
+    state.jwt = jwt;
     localStorage.setItem("jwt", jwt);
     return;
   }

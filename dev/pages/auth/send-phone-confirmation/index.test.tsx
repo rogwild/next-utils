@@ -2,13 +2,12 @@ import React from "react";
 import { fireEvent, screen, waitFor } from "@testing-library/react";
 import { rest } from "msw";
 import { setupServer } from "msw/node";
-import ForgotPassword from "./index";
 import { renderApp } from "../../../utils/testing";
-import SendEmailConfirmation from "./index";
+import SendPhoneConfirmation from "./index";
 
 const server = setupServer(
   rest.post(
-    "http://localhost:1337/api/auth/send-email-confirmation",
+    "http://localhost:1337/api/auth/send-phone-confirmation",
     async (req, res, ctx) => {
       const data = await req.json();
       console.log(`🚀 ~ rest.post ~ req`, data);
@@ -32,23 +31,25 @@ afterAll(() => {
   server.close();
 });
 
-describe("Send email confirmation hook", () => {
+describe("Send phone confirmation hook", () => {
   it("should get data from inputs and send to backend", async () => {
-    renderApp(<SendEmailConfirmation />);
+    renderApp(<SendPhoneConfirmation />);
 
-    const emailInput = screen.getByPlaceholderText(/type your email/i);
+    const phoneInput = screen.getByPlaceholderText(/type your phone/i);
 
-    fireEvent.change(emailInput, { target: { value: "tester@example.com" } });
+    fireEvent.change(phoneInput, { target: { value: "+79435648432" } });
     fireEvent.click(
       screen.getByRole("button", {
         name: /send code/i,
       })
     );
 
+    server; //?
+
     expect(
       await waitFor(() =>
         screen.getByRole("heading", {
-          name: /code was send to your email/i,
+          name: /code was send to your phone/i,
         })
       )
     ).toBeInTheDocument();

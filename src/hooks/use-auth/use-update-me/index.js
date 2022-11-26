@@ -1,12 +1,16 @@
 import { useMemo } from "react";
 import useForm from "../../use-form";
+import { selectors } from "../../../redux/slices/authSlice";
+import { useSelector } from "react-redux";
 
 const useUpdateMe = ({ profilesApi, inputsConfig = defaultInputsConfig }) => {
   const [updateMe, { isSuccess, error, data, isLoading }] =
     profilesApi.useUpdateMeMutation();
+  const accountId = useSelector(selectors.selectAccountId); //?
 
   const submitFunc = ({ inputs }) => {
     updateMe({
+      id: accountId,
       data: inputs,
     });
   };

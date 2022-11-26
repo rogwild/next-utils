@@ -260,7 +260,7 @@ export function createProfilesApi(backendServiceApi) {
 
       updateMe: build.mutation({
         query: (params) => {
-          const { id } = params;
+          const { id } = params; //?
 
           const formData = prepareDataToSend(params);
 

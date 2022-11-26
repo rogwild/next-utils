@@ -14,7 +14,7 @@ const server = setupServer(
       ctx.json({
         jwt: "XXXXX",
         user: {
-          id: 8,
+          id: 1,
         },
       })
     );

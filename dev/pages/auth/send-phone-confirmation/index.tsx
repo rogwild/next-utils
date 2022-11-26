@@ -16,7 +16,7 @@ const SendPhoneConfirmation = () => {
     });
 
   useEffect(() => {
-    console.log(`🚀 ~ SendEmailConfirmation ~ data`, data, isLoading);
+    console.log(`🚀 ~ SendPhoneConfirmation ~ data`, data, isLoading);
   }, [data]);
 
   return (

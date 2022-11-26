@@ -28,6 +28,8 @@ const useMyProfile = ({ profilesApi, populate }: IUseMyProfile) => {
       }
     );
 
+  console.log(`🚀 ~ useMyProfile ~ accountId`, accountId, filledProfile);
+
   useEffect(() => {
     if (
       meError &&

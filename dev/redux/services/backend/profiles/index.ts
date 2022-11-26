@@ -1,5 +1,5 @@
 import { backendServiceApi } from "..";
-import { createProfilesApi } from "../../../../../src/redux/queries/profiles";
+import { createProfilesApi } from "../../../../../src/redux/queries/profiles/index";
 
 export const { profilesApi, hooks } = createProfilesApi(backendServiceApi);
 
