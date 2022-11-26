@@ -3,6 +3,7 @@ import { Provider } from "react-redux";
 import {
   createBrowserRouter,
   createRoutesFromElements,
+  Link,
   Route,
   RouterProvider,
 } from "react-router-dom";
@@ -19,37 +20,60 @@ import ProfilePage from "./pages/profile";
 import ProfileEdit from "./pages/profile/edit";
 import store from "./redux";
 
-const App = () => {
-  const router = createBrowserRouter(
-    createRoutesFromElements(
-      <>
-        <Route path="/" element={<Main />} />
-        <Route path="/auth/login" element={<Login />} />
-        <Route path="/auth/register" element={<Register />} />
-        <Route path="/auth/forgot-password" element={<ForgotPassword />} />
-        <Route path="/auth/reset-password" element={<ResetPassword />} />
-        <Route
-          path="/auth/send-email-confirmation"
-          element={<SendEmailConfirmation />}
-        />
-        <Route
-          path="/auth/send-phone-confirmation"
-          element={<SendPhoneConfirmation />}
-        />
-        <Route path="/auth/confirm-email" element={<ConfirmEmail />} />
-        <Route path="/auth/confirm-phone" element={<ConfirmPhone />} />
-        <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/profile/edit" element={<ProfileEdit />} />
-      </>
-    )
-  );
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Main />,
+    children: [
+      {
+        path: "/auth/login",
+        element: <Login />,
+      },
+      {
+        path: "/auth/register",
+        element: <Register />,
+      },
+      {
+        path: "/auth/forgot-password",
+        element: <ForgotPassword />,
+      },
+      {
+        path: "/auth/reset-password",
+        element: <ResetPassword />,
+      },
+      {
+        path: "/auth/send-email-confirmation",
+        element: <SendEmailConfirmation />,
+      },
+      {
+        path: "/auth/send-phone-confirmation",
+        element: <SendPhoneConfirmation />,
+      },
+      {
+        path: "/auth/confirm-email",
+        element: <ConfirmEmail />,
+      },
+      {
+        path: "/auth/confirm-phone",
+        element: <ConfirmPhone />,
+      },
+      {
+        path: "/profile",
+        element: <ProfilePage />,
+      },
+      {
+        path: "/profile/edit",
+        element: <ProfileEdit />,
+      },
+    ],
+  },
+]);
 
+const App = () => {
   return (
-    <div className="max-w-[1200px] mx-auto">
-      <Provider store={store}>
-        <RouterProvider router={router} />
-      </Provider>
-    </div>
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   );
 };
 

@@ -1,10 +1,11 @@
 import React from "react";
-import { fireEvent, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { rest } from "msw";
 import { setupServer } from "msw/node";
 import { renderApp } from "../../../utils/testing";
 import ProfileEdit from "./index";
 import Login from "../../auth/login";
+import App from "../../../App";
 
 const server = setupServer(
   rest.post(`http://localhost:1337/api/auth/local`, async (req, res, ctx) => {
@@ -20,9 +21,9 @@ const server = setupServer(
       })
     );
   }),
-  rest.post(`http://localhost:1337/api/users/1`, async (req, res, ctx) => {
-    const data = await req.json();
-    console.log(`🚀 ~ rest.post ~ req`, data);
+  rest.put(`http://localhost:1337/api/users/1`, async (req, res, ctx) => {
+    // const data = await req.json();
+    // console.log(`🚀 ~ rest.post ~ req`, req.body);
 
     return res(
       ctx.json({
@@ -45,8 +46,14 @@ afterAll(() => {
 });
 
 describe("Edit profile hook", () => {
-  it.only("should get data from inputs and send to‰ backend", async () => {
-    renderApp(<Login />);
+  it("should get data from inputs and send to‰ backend", async () => {
+    render(<App />);
+
+    fireEvent.click(
+      screen.getByRole("link", {
+        name: /login/i,
+      })
+    );
 
     const emailInput = screen.getByPlaceholderText(/type your email/i);
     const passwordInput = screen.getByPlaceholderText(/type your password/i);
@@ -67,7 +74,11 @@ describe("Edit profile hook", () => {
       ).toBeInTheDocument(); //?
     });
 
-    renderApp(<ProfileEdit />);
+    fireEvent.click(
+      screen.getByRole("link", {
+        name: /edit profile/i,
+      })
+    );
 
     const usernameInput = screen.getByPlaceholderText(/type your username/i);
 

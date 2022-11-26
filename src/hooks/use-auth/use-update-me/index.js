@@ -9,6 +9,8 @@ const useUpdateMe = ({ profilesApi, inputsConfig = defaultInputsConfig }) => {
   const accountId = useSelector(selectors.selectAccountId); //?
 
   const submitFunc = ({ inputs }) => {
+    inputs; //?
+
     updateMe({
       id: accountId,
       data: inputs,
