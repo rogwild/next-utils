@@ -13,12 +13,6 @@ const useMyProfile = ({
   populate,
   useSelector,
 }: IUseMyProfile) => {
-  const state = useSelector((state) => {
-    return state;
-  });
-
-  console.log(`🚀 ~ useMyProfile ~ state`, state);
-
   const accountId = useSelector(selectors.selectAccountId);
   const jwtToken = useSelector(selectors.selectJwt);
 
