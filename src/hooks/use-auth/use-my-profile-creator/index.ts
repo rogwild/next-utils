@@ -3,12 +3,11 @@ import { selectors } from "../../../redux/slices/authSlice";
 
 export interface IUseMyProfile {
   profilesApi: any;
-  populate?: any;
-  authSlice: any;
   useSelector: any;
+  populate?: any;
 }
 
-const useMyProfile = ({
+const useMyProfileCreator = ({
   profilesApi,
   populate,
   useSelector,
@@ -63,4 +62,4 @@ const useMyProfile = ({
   return profile;
 };
 
-export default useMyProfile;
+export default useMyProfileCreator;

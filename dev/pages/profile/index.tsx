@@ -1,20 +1,14 @@
 import React, { useEffect } from "react";
-import utils from "../../../src";
-const { useMyProfile } = utils.hooks;
 import { authSlice } from "../../redux/authSlice";
-import { profilesApi } from "../../redux/services/backend/profiles";
 import { blackButtonProps, redButtonProps } from "../../utils/vanilla";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import useMyProfile from "../../redux/services/backend/profiles/useMyProfile";
 
 const ProfilePage = () => {
   const dispatch = useDispatch();
 
-  const { me }: { me: any } = useMyProfile({
-    profilesApi,
-    authSlice,
-    useSelector,
-  });
+  const { me }: { me: any } = useMyProfile();
 
   useEffect(() => {
     console.log(`🚀 ~ useEffect ~ data`, me);

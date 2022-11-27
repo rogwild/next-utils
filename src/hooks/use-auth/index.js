@@ -8,7 +8,7 @@ import useSendPhoneConfirmation from "./use-send-phone-confirmation";
 import useConfirmEmail from "./use-confirm-email";
 import useConfirmPhone from "./use-confirm-phone";
 import useUpdateMe from "./use-update-me";
-import useMyProfile from "./use-my-profile";
+import useMyProfileCreator from "./use-my-profile-creator";
 
 const useAuth = {
   useSendEmailConfirmation,
@@ -21,7 +21,7 @@ const useAuth = {
   useConfirmEmail,
   useConfirmPhone,
   useUpdateMe,
-  useMyProfile,
+  useMyProfileCreator,
 };
 
 export default useAuth;
