@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
-import FormInput from "../../../../src/components/input";
-import useAuth from "../../../../src/hooks/use-auth";
+import utils from "~utils";
+const { useSendEmailConfirmation } = utils.hooks;
+const { Input } = utils.components;
 import { profilesApi } from "../../../redux/services/backend/profiles";
 import { blackButtonProps, textInputProps } from "../../../utils/vanilla";
 
@@ -11,7 +12,7 @@ const SendEmailConfirmation = () => {
     data,
     isLoading,
   }: { inputs: any; onSubmit: any; data: any; isLoading: boolean } =
-    useAuth.useSendEmailConfirmation({
+    useSendEmailConfirmation({
       profilesApi,
     });
 
@@ -23,7 +24,7 @@ const SendEmailConfirmation = () => {
     <div className="w-1/2 mx-auto p-4 flex flex-col gap-4">
       <h1 className="mx-auto text-2xl font-bold">Login by email and code</h1>
       {data ? <h4>Code was send to your email</h4> : null}
-      <FormInput {...inputs.email} {...textInputProps} />
+      <Input {...inputs.email} {...textInputProps} />
       <button onClick={onSubmit} {...blackButtonProps}>
         Send code
       </button>

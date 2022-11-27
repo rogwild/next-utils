@@ -1,11 +1,11 @@
 import { useEffect, useMemo } from "react";
-import { useDispatch } from "react-redux";
 import useForm from "../../use-form";
 
 const useForgotPassword = ({
   profilesApi,
   inputsConfig = defaultInputsConfig,
   authSlice,
+  useDispatch,
 }) => {
   const dispatch = useDispatch();
   const [forgotPassword, { isSuccess, isLoading, data }] =

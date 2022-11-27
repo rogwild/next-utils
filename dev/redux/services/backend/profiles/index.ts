@@ -3,6 +3,7 @@ import utils from "../../../../../src";
 const { createProfilesApi } = utils.redux.queries.profiles;
 
 export const { profilesApi, hooks } = createProfilesApi(backendServiceApi);
+console.log(`🚀 ~ profilesApi`, profilesApi);
 
 export const {
   useGetMeQuery,

@@ -2628,8 +2628,9 @@ var useForgotPassword = function useForgotPassword(_ref) {
   var profilesApi = _ref.profilesApi,
     _ref$inputsConfig = _ref.inputsConfig,
     inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$8 : _ref$inputsConfig,
-    authSlice = _ref.authSlice;
-  var dispatch = reactRedux.useDispatch();
+    authSlice = _ref.authSlice,
+    useDispatch = _ref.useDispatch;
+  var dispatch = useDispatch();
   var _profilesApi$useForgo = profilesApi.useForgotPasswordMutation(),
     _profilesApi$useForgo2 = _slicedToArray(_profilesApi$useForgo, 2),
     forgotPassword = _profilesApi$useForgo2[0],
@@ -2861,8 +2862,9 @@ var useResetPassword = function useResetPassword(_ref) {
   var profilesApi = _ref.profilesApi,
     _ref$inputsConfig = _ref.inputsConfig,
     inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$5 : _ref$inputsConfig,
-    authSlice = _ref.authSlice;
-  var dispatch = reactRedux.useDispatch();
+    authSlice = _ref.authSlice,
+    useDispatch = _ref.useDispatch;
+  var dispatch = useDispatch();
   React.useEffect(function () {
     dispatch(authSlice.actions.logout());
     localStorage.removeItem("jwt");
@@ -3421,12 +3423,8 @@ var defaultInputsConfig = [{
   label: "Username"
 }];
 
-var useMyProfile = function (_a) {
+var useMyProfileCreator = function (_a) {
     var profilesApi = _a.profilesApi, populate = _a.populate, useSelector = _a.useSelector;
-    var state = useSelector(function (state) {
-        return state;
-    });
-    console.log("\uD83D\uDE80 ~ useMyProfile ~ state", state);
     var accountId = useSelector(selectors.selectAccountId);
     var jwtToken = useSelector(selectors.selectJwt);
     var _b = profilesApi.useGetMeQuery(undefined, { skip: !jwtToken }), myProfileByMe = _b.data, meError = _b.error, refetchMe = _b.refetch, isUninitialized = _b.isUninitialized;
@@ -3468,7 +3466,7 @@ var useAuth = {
   useConfirmEmail: useConfirmEmail,
   useConfirmPhone: useConfirmPhone,
   useUpdateMe: useUpdateMe,
-  useMyProfile: useMyProfile
+  useMyProfileCreator: useMyProfileCreator
 };
 
 function ownKeys$5(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }

@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
-import FormInput from "../../../../src/components/input";
-import useAuth from "../../../../src/hooks/use-auth";
+import utils from "~utils";
+const { useConfirmEmail } = utils.hooks;
+const { Input } = utils.components;
 import { profilesApi } from "../../../redux/services/backend/profiles";
 import {
   blackButtonProps,
@@ -23,7 +24,7 @@ const ConfirmEmail = () => {
     isLoading: boolean;
     counter: number;
     resendEmailConfirmation: any;
-  } = useAuth.useConfirmEmail({
+  } = useConfirmEmail({
     profilesApi,
     ping: 5,
   });
@@ -38,8 +39,8 @@ const ConfirmEmail = () => {
     <div className="w-1/2 mx-auto p-4 flex flex-col gap-4">
       <h1 className="mx-auto text-2xl font-bold">Confirm email</h1>
       {data ? <h4>Email was confirmed</h4> : null}
-      <FormInput {...inputs.email} {...textInputProps} />
-      <FormInput {...inputs.code} {...textInputProps} />
+      <Input {...inputs.email} {...textInputProps} />
+      <Input {...inputs.code} {...textInputProps} />
       {counter === 0 ? (
         <button
           onClick={() => {

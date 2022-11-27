@@ -45,7 +45,7 @@ declare const _default: {
             inputsErrors: {};
             inputsSetErrors: import("react").Dispatch<import("react").SetStateAction<{}>>;
         };
-        useForgotPassword: ({ profilesApi, inputsConfig, authSlice, }: {
+        useForgotPassword: ({ profilesApi, inputsConfig, authSlice, useDispatch, }: {
             profilesApi: any;
             inputsConfig?: {
                 title: string;
@@ -56,6 +56,7 @@ declare const _default: {
                 placeholder: string;
             }[];
             authSlice: any;
+            useDispatch: any;
         }) => {
             isLoading: any;
             data: any;
@@ -172,7 +173,7 @@ declare const _default: {
             inputsErrors: {};
             inputsSetErrors: import("react").Dispatch<import("react").SetStateAction<{}>>;
         };
-        useResetPassword: ({ profilesApi, inputsConfig, authSlice, }: {
+        useResetPassword: ({ profilesApi, inputsConfig, authSlice, useDispatch, }: {
             profilesApi: any;
             inputsConfig?: ({
                 label: string;
@@ -206,6 +207,7 @@ declare const _default: {
                 placeholder?: undefined;
             })[];
             authSlice: any;
+            useDispatch: any;
         }) => {
             data: any;
             isLoading: any;
@@ -322,7 +324,7 @@ declare const _default: {
             inputsErrors: {};
             setInputsErrors: import("react").Dispatch<import("react").SetStateAction<{}>>;
         };
-        useMyProfile: ({ profilesApi, populate, useSelector, }: import("./hooks/use-auth/use-my-profile").IUseMyProfile) => {
+        useMyProfileCreator: ({ profilesApi, populate, useSelector, }: import("./hooks/use-auth/use-my-profile-creator").IUseMyProfile) => {
             me: any;
             refetch: () => void;
         };

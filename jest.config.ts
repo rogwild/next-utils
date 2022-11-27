@@ -10,6 +10,9 @@ const config: Config.InitialOptions = {
   },
   transformIgnorePatterns: ["<rootDir>/node_modules/", "<rootDir>/dist/"],
   setupFilesAfterEnv: ["<rootDir>/setupTests.js"],
+  moduleNameMapper: {
+    "^~utils(.*)$": "<rootDir>/src$1",
+  },
 };
 
 export default config;

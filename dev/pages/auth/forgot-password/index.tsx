@@ -1,9 +1,11 @@
 import React, { useEffect } from "react";
-import FormInput from "../../../../src/components/input";
-import useAuth from "../../../../src/hooks/use-auth";
+import utils from "~utils";
+const { useForgotPassword } = utils.hooks;
+const { Input } = utils.components;
 import { profilesApi } from "../../../redux/services/backend/profiles";
 import { blackButtonProps, textInputProps } from "../../../utils/vanilla";
 import { authSlice } from "../../../redux/authSlice";
+import { useDispatch } from "react-redux";
 
 const ForgotPassword = () => {
   const {
@@ -12,9 +14,10 @@ const ForgotPassword = () => {
     data,
     isLoading,
   }: { inputs: any; onSubmit: any; data: any; isLoading: boolean } =
-    useAuth.useForgotPassword({
+    useForgotPassword({
       profilesApi,
       authSlice,
+      useDispatch,
     });
 
   useEffect(() => {
@@ -25,7 +28,7 @@ const ForgotPassword = () => {
     <div className="w-1/2 mx-auto p-4 flex flex-col gap-4">
       <h1 className="mx-auto text-2xl font-bold">Forgot password</h1>
       {data ? <h4>Email was sent</h4> : null}
-      <FormInput {...inputs.email} {...textInputProps} />
+      <Input {...inputs.email} {...textInputProps} />
       <button onClick={onSubmit} {...blackButtonProps}>
         Send reset password link
       </button>
