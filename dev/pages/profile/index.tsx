@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
-import { useMyProfile } from "../../../src/hooks/use-auth";
+import utils from "../../../src";
+const { useMyProfile } = utils.hooks;
 import { authSlice } from "../../redux/authSlice";
 import { profilesApi } from "../../redux/services/backend/profiles";
 import { blackButtonProps, redButtonProps } from "../../utils/vanilla";

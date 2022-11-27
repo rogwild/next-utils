@@ -4,36 +4,20 @@ var axios = require('axios');
 var qs = require('qs');
 var React = require('react');
 var reactTable = require('react-table');
+var reactRedux = require('react-redux');
 var toolkit = require('@reduxjs/toolkit');
 var transitionComponent = require('transition-component');
 var require$$0 = require('react-dom');
+var web = require('@react-spring/web');
 var react = require('@use-gesture/react');
 var Calendar = require('react-calendar');
 var ReactMarkdown = require('react-markdown');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
-function _interopNamespace(e) {
-    if (e && e.__esModule) return e;
-    var n = Object.create(null);
-    if (e) {
-        Object.keys(e).forEach(function (k) {
-            if (k !== 'default') {
-                var d = Object.getOwnPropertyDescriptor(e, k);
-                Object.defineProperty(n, k, d.get ? d : {
-                    enumerable: true,
-                    get: function () { return e[k]; }
-                });
-            }
-        });
-    }
-    n["default"] = e;
-    return Object.freeze(n);
-}
-
 var axios__default = /*#__PURE__*/_interopDefaultLegacy(axios);
+var qs__default = /*#__PURE__*/_interopDefaultLegacy(qs);
 var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
-var React__namespace = /*#__PURE__*/_interopNamespace(React);
 var require$$0__default = /*#__PURE__*/_interopDefaultLegacy(require$$0);
 var Calendar__default = /*#__PURE__*/_interopDefaultLegacy(Calendar);
 var ReactMarkdown__default = /*#__PURE__*/_interopDefaultLegacy(ReactMarkdown);
@@ -352,7 +336,7 @@ var appendFilesToFormData = function (formData, files) {
                 if (Array.isArray(files[key])) {
                     try {
                         for (var _e = (e_2 = void 0, __values(files[key].entries())), _f = _e.next(); !_f.done; _f = _e.next()) {
-                            var _g = __read(_f.value, 2), _1 = _g[0], file = _g[1];
+                            var _g = __read(_f.value, 2), _ = _g[0], file = _g[1];
                             formData.append("files.".concat(key), file);
                         }
                     }
@@ -630,10 +614,6 @@ var formatters = /*#__PURE__*/Object.freeze({
     shortenAddress: shortenAddress
 });
 
-function getDefaultExportFromCjs (x) {
-	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
-}
-
 function _defineProperty(obj, key, value) {
   if (key in obj) {
     Object.defineProperty(obj, key, {
@@ -647,23 +627,20 @@ function _defineProperty(obj, key, value) {
   }
   return obj;
 }
-var defineProperty = _defineProperty;
 
 function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
-var arrayWithHoles$1 = _arrayWithHoles;
 
 function _iterableToArrayLimit(arr, i) {
-  if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) {
-    return;
-  }
+  var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
+  if (_i == null) return;
   var _arr = [];
   var _n = true;
   var _d = false;
-  var _e = undefined;
+  var _s, _e;
   try {
-    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+    for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
       _arr.push(_s.value);
       if (i && _arr.length === i) break;
     }
@@ -679,23 +656,34 @@ function _iterableToArrayLimit(arr, i) {
   }
   return _arr;
 }
-var iterableToArrayLimit$1 = _iterableToArrayLimit;
+
+function _arrayLikeToArray$3(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+  for (var i = 0, arr2 = new Array(len); i < len; i++) {
+    arr2[i] = arr[i];
+  }
+  return arr2;
+}
+
+function _unsupportedIterableToArray$3(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return _arrayLikeToArray$3(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(o);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$3(o, minLen);
+}
 
 function _nonIterableRest() {
-  throw new TypeError("Invalid attempt to destructure non-iterable instance");
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
-var nonIterableRest$1 = _nonIterableRest;
 
-var arrayWithHoles = arrayWithHoles$1;
-var iterableToArrayLimit = iterableToArrayLimit$1;
-var nonIterableRest = nonIterableRest$1;
 function _slicedToArray(arr, i) {
-  return arrayWithHoles(arr) || iterableToArrayLimit(arr, i) || nonIterableRest();
+  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray$3(arr, i) || _nonIterableRest();
 }
-var slicedToArray = _slicedToArray;
 
-function ownKeys$9(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread$9(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$9(Object(source), !0).forEach(function (key) { defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$9(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function ownKeys$e(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$e(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$e(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$e(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 /**
  * Filter function by text content
@@ -780,19 +768,19 @@ var useLookupTable = function useLookupTable(_ref) {
     return passedData;
   }, [memoUpdateFunc(passedData)]);
   var _useState = React.useState(config.sortBy),
-    _useState2 = slicedToArray(_useState, 2),
+    _useState2 = _slicedToArray(_useState, 2),
     sortBy = _useState2[0],
     setSortBy = _useState2[1];
   var _useState3 = React.useState(initialFiltersState),
-    _useState4 = slicedToArray(_useState3, 2),
+    _useState4 = _slicedToArray(_useState3, 2),
     filters = _useState4[0],
     setFilters = _useState4[1];
   var _useState5 = React.useState(config.globalFilter || ""),
-    _useState6 = slicedToArray(_useState5, 2),
+    _useState6 = _slicedToArray(_useState5, 2),
     localGlobalFilter = _useState6[0],
     setLocalGlobalFilter = _useState6[1];
   var _useState7 = React.useState(config.selectedRowIds || undefined),
-    _useState8 = slicedToArray(_useState7, 2),
+    _useState8 = _slicedToArray(_useState7, 2),
     localSelectedRowIds = _useState8[0],
     setLocalSelectedRowIds = _useState8[1];
   React.useMemo(function () {
@@ -812,7 +800,7 @@ var useLookupTable = function useLookupTable(_ref) {
     return state;
   }, [sortBy, filters, localSelectedRowIds]);
   var filterTypes = React.useMemo(function () {
-    return _objectSpread$9(_objectSpread$9({}, baseFilters), config.filterTypes);
+    return _objectSpread$e(_objectSpread$e({}, baseFilters), config.filterTypes);
   }, []);
   React.useEffect(function () {
     if (data.length && config.selectedRowIds) {
@@ -900,7 +888,7 @@ var useLookupTable = function useLookupTable(_ref) {
     if (!foundFiltered) setFilters([]);
   }, [rows]);
   var _useState9 = React.useState(state.globalFilter),
-    _useState10 = slicedToArray(_useState9, 2),
+    _useState10 = _slicedToArray(_useState9, 2),
     inputValue = _useState10[0],
     setInputValue = _useState10[1];
   var onGlobalFilterChange = function onGlobalFilterChange(value) {
@@ -959,7 +947,7 @@ function createArgDocumentation(_ref2) {
     defaultValue = _ref2.defaultValue,
     _ref2$isRequired = _ref2.isRequired,
     isRequired = _ref2$isRequired === void 0 ? false : _ref2$isRequired;
-  var documentation = defineProperty({}, title, {
+  var documentation = _defineProperty({}, title, {
     description: description,
     table: {
       type: {
@@ -1032,7 +1020,7 @@ var returnDoc = createArgDocumentation({
 ({
   component: useLookupTable,
   title: "Hooks/useLookupTable",
-  argTypes: _objectSpread$9(_objectSpread$9(_objectSpread$9(_objectSpread$9({}, columnsDoc), dataDoc), configDoc), returnDoc),
+  argTypes: _objectSpread$e(_objectSpread$e(_objectSpread$e(_objectSpread$e({}, columnsDoc), dataDoc), configDoc), returnDoc),
   parameters: {
     docs: {
       description: {
@@ -1310,10 +1298,10 @@ var BREAKPOINTS = (_BREAKPOINTS = {
   sm: 640,
   md: 768,
   xl: 1024
-}, defineProperty(_BREAKPOINTS, "xl", 1280), defineProperty(_BREAKPOINTS, "2xl", 1536), _BREAKPOINTS);
+}, _defineProperty(_BREAKPOINTS, "xl", 1280), _defineProperty(_BREAKPOINTS, "2xl", 1536), _BREAKPOINTS);
 var useBreakpoint$1 = function useBreakpoint(breakpoint) {
   var _useState = React.useState(undefined),
-    _useState2 = slicedToArray(_useState, 2),
+    _useState2 = _slicedToArray(_useState, 2),
     width = _useState2[0],
     setWidth = _useState2[1];
   React.useEffect(function () {
@@ -1472,7 +1460,7 @@ var shortByFull = (_shortByFull = {
   "@flexShrink": "@fxsk",
   "@flexDirection": "@fxd",
   "@flexGrow": "@fxg"
-}, defineProperty(_shortByFull, "@flexShrink", "@fxs"), defineProperty(_shortByFull, "@flexWrap", "@fxw"), defineProperty(_shortByFull, "@fontFamily", "@ftf"), defineProperty(_shortByFull, "@fontSize", "@fts"), defineProperty(_shortByFull, "@fontSmoothing", "@ftsg"), defineProperty(_shortByFull, "@fontStyle", "@ftse"), defineProperty(_shortByFull, "@fontVariantNumeric", "@ftvn"), defineProperty(_shortByFull, "@fontWeight", "@ftw"), defineProperty(_shortByFull, "@gap", "@gp"), defineProperty(_shortByFull, "@gradientColorStops", "@gtcs"), defineProperty(_shortByFull, "@height", "@ht"), defineProperty(_shortByFull, "@inset", "@it"), defineProperty(_shortByFull, "@justifyContent", "@jyc"), defineProperty(_shortByFull, "@justifyItems", "@jyi"), defineProperty(_shortByFull, "@justifySelf", "@jys"), defineProperty(_shortByFull, "@letterSpacing", "@lrs"), defineProperty(_shortByFull, "@lineHeight", "@leh"), defineProperty(_shortByFull, "@listStylePosition", "@ltsp"), defineProperty(_shortByFull, "@listStyleType", "@ltst"), defineProperty(_shortByFull, "@margin", "@mn"), defineProperty(_shortByFull, "@maxHeight", "@mxh"), defineProperty(_shortByFull, "@maxWidth", "@mxw"), defineProperty(_shortByFull, "@minHeight", "@mnh"), defineProperty(_shortByFull, "@minWidth", "@mnw"), defineProperty(_shortByFull, "@objectFit", "@otf"), defineProperty(_shortByFull, "@objectPosition", "@otp"), defineProperty(_shortByFull, "@opacity", "@oy"), defineProperty(_shortByFull, "@order", "@or"), defineProperty(_shortByFull, "@outline", "@oe"), defineProperty(_shortByFull, "@overflow", "@ow"), defineProperty(_shortByFull, "@overscrollBehavior", "@olb"), defineProperty(_shortByFull, "@padding", "@pg"), defineProperty(_shortByFull, "@placeContent", "@pec"), defineProperty(_shortByFull, "@placeItems", "@pei"), defineProperty(_shortByFull, "@placeSelf", "@pes"), defineProperty(_shortByFull, "@placeholderColor", "@prc"), defineProperty(_shortByFull, "@placeholderOpacity", "@pro"), defineProperty(_shortByFull, "@pointerEvents", "@pre"), defineProperty(_shortByFull, "@position", "@pn"), defineProperty(_shortByFull, "@resize", "@re"), defineProperty(_shortByFull, "@ringColor", "@rgc"), defineProperty(_shortByFull, "@ringOffsetColor", "@rgoc"), defineProperty(_shortByFull, "@ringOffsetWidth", "@rgow"), defineProperty(_shortByFull, "@ringOpacity", "@rgo"), defineProperty(_shortByFull, "@ringWidth", "@rgw"), defineProperty(_shortByFull, "@rotate", "@re"), defineProperty(_shortByFull, "@scale", "@se"), defineProperty(_shortByFull, "@skew", "@sw"), defineProperty(_shortByFull, "@spaceBetween", "@seb"), defineProperty(_shortByFull, "@stroke", "@se"), defineProperty(_shortByFull, "@strokeWidth", "@sew"), defineProperty(_shortByFull, "@tableLayout", "@tel"), defineProperty(_shortByFull, "@touchAction", "@th"), defineProperty(_shortByFull, "@textAlign", "@tta"), defineProperty(_shortByFull, "@textColor", "@ttc"), defineProperty(_shortByFull, "@textDecoration", "@ttd"), defineProperty(_shortByFull, "@textOpacity", "@ttoy"), defineProperty(_shortByFull, "@textOverflow", "@ttow"), defineProperty(_shortByFull, "@textTransform", "@ttt"), defineProperty(_shortByFull, "@transform", "@tm"), defineProperty(_shortByFull, "@transformOrigin", "@tmo"), defineProperty(_shortByFull, "@transitionDelay", "@tndy"), defineProperty(_shortByFull, "@transitionDuration", "@tndn"), defineProperty(_shortByFull, "@transitionProperty", "@tnp"), defineProperty(_shortByFull, "@transitionTimingFunction", "@tntf"), defineProperty(_shortByFull, "@translate", "@te"), defineProperty(_shortByFull, "@userSelect", "@urs"), defineProperty(_shortByFull, "@verticalAlign", "@vla"), defineProperty(_shortByFull, "@visibility", "@vy"), defineProperty(_shortByFull, "@whitespace", "@we"), defineProperty(_shortByFull, "@width", "@wh"), defineProperty(_shortByFull, "@wordBreak", "@wdb"), defineProperty(_shortByFull, "@zIndex", "@zi"), _shortByFull);
+}, _defineProperty(_shortByFull, "@flexShrink", "@fxs"), _defineProperty(_shortByFull, "@flexWrap", "@fxw"), _defineProperty(_shortByFull, "@fontFamily", "@ftf"), _defineProperty(_shortByFull, "@fontSize", "@fts"), _defineProperty(_shortByFull, "@fontSmoothing", "@ftsg"), _defineProperty(_shortByFull, "@fontStyle", "@ftse"), _defineProperty(_shortByFull, "@fontVariantNumeric", "@ftvn"), _defineProperty(_shortByFull, "@fontWeight", "@ftw"), _defineProperty(_shortByFull, "@gap", "@gp"), _defineProperty(_shortByFull, "@gradientColorStops", "@gtcs"), _defineProperty(_shortByFull, "@height", "@ht"), _defineProperty(_shortByFull, "@inset", "@it"), _defineProperty(_shortByFull, "@justifyContent", "@jyc"), _defineProperty(_shortByFull, "@justifyItems", "@jyi"), _defineProperty(_shortByFull, "@justifySelf", "@jys"), _defineProperty(_shortByFull, "@letterSpacing", "@lrs"), _defineProperty(_shortByFull, "@lineHeight", "@leh"), _defineProperty(_shortByFull, "@listStylePosition", "@ltsp"), _defineProperty(_shortByFull, "@listStyleType", "@ltst"), _defineProperty(_shortByFull, "@margin", "@mn"), _defineProperty(_shortByFull, "@maxHeight", "@mxh"), _defineProperty(_shortByFull, "@maxWidth", "@mxw"), _defineProperty(_shortByFull, "@minHeight", "@mnh"), _defineProperty(_shortByFull, "@minWidth", "@mnw"), _defineProperty(_shortByFull, "@objectFit", "@otf"), _defineProperty(_shortByFull, "@objectPosition", "@otp"), _defineProperty(_shortByFull, "@opacity", "@oy"), _defineProperty(_shortByFull, "@order", "@or"), _defineProperty(_shortByFull, "@outline", "@oe"), _defineProperty(_shortByFull, "@overflow", "@ow"), _defineProperty(_shortByFull, "@overscrollBehavior", "@olb"), _defineProperty(_shortByFull, "@padding", "@pg"), _defineProperty(_shortByFull, "@placeContent", "@pec"), _defineProperty(_shortByFull, "@placeItems", "@pei"), _defineProperty(_shortByFull, "@placeSelf", "@pes"), _defineProperty(_shortByFull, "@placeholderColor", "@prc"), _defineProperty(_shortByFull, "@placeholderOpacity", "@pro"), _defineProperty(_shortByFull, "@pointerEvents", "@pre"), _defineProperty(_shortByFull, "@position", "@pn"), _defineProperty(_shortByFull, "@resize", "@re"), _defineProperty(_shortByFull, "@ringColor", "@rgc"), _defineProperty(_shortByFull, "@ringOffsetColor", "@rgoc"), _defineProperty(_shortByFull, "@ringOffsetWidth", "@rgow"), _defineProperty(_shortByFull, "@ringOpacity", "@rgo"), _defineProperty(_shortByFull, "@ringWidth", "@rgw"), _defineProperty(_shortByFull, "@rotate", "@re"), _defineProperty(_shortByFull, "@scale", "@se"), _defineProperty(_shortByFull, "@skew", "@sw"), _defineProperty(_shortByFull, "@spaceBetween", "@seb"), _defineProperty(_shortByFull, "@stroke", "@se"), _defineProperty(_shortByFull, "@strokeWidth", "@sew"), _defineProperty(_shortByFull, "@tableLayout", "@tel"), _defineProperty(_shortByFull, "@touchAction", "@th"), _defineProperty(_shortByFull, "@textAlign", "@tta"), _defineProperty(_shortByFull, "@textColor", "@ttc"), _defineProperty(_shortByFull, "@textDecoration", "@ttd"), _defineProperty(_shortByFull, "@textOpacity", "@ttoy"), _defineProperty(_shortByFull, "@textOverflow", "@ttow"), _defineProperty(_shortByFull, "@textTransform", "@ttt"), _defineProperty(_shortByFull, "@transform", "@tm"), _defineProperty(_shortByFull, "@transformOrigin", "@tmo"), _defineProperty(_shortByFull, "@transitionDelay", "@tndy"), _defineProperty(_shortByFull, "@transitionDuration", "@tndn"), _defineProperty(_shortByFull, "@transitionProperty", "@tnp"), _defineProperty(_shortByFull, "@transitionTimingFunction", "@tntf"), _defineProperty(_shortByFull, "@translate", "@te"), _defineProperty(_shortByFull, "@userSelect", "@urs"), _defineProperty(_shortByFull, "@verticalAlign", "@vla"), _defineProperty(_shortByFull, "@visibility", "@vy"), _defineProperty(_shortByFull, "@whitespace", "@we"), _defineProperty(_shortByFull, "@width", "@wh"), _defineProperty(_shortByFull, "@wordBreak", "@wdb"), _defineProperty(_shortByFull, "@zIndex", "@zi"), _shortByFull);
 
 /* */
 
@@ -1664,14 +1652,14 @@ var shortByFull = (_shortByFull = {
 //   }
 // });
 
-function ownKeys$8(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread$8(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$8(Object(source), !0).forEach(function (key) { defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$8(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function ownKeys$d(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$d(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$d(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$d(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 var useStyleRewriter$6 = function useStyleRewriter(baseClassName, className) {
   var cleared = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
   return React.useMemo(function () {
     var styleObj = getStyleObj("@base ".concat(baseClassName), cleared);
     var styleObjProps = getStyleObj("@prop ".concat(className), cleared);
-    var computedStyleObj = _objectSpread$8(_objectSpread$8({}, styleObj), styleObjProps);
+    var computedStyleObj = _objectSpread$d(_objectSpread$d({}, styleObj), styleObjProps);
     var resultClassName = Object.values(computedStyleObj).join(" ").replace(/\n/g, "");
     return resultClassName.replace(/\s+/g, " ");
   }, [baseClassName, className]);
@@ -1730,7 +1718,7 @@ var setValue = function setValue(_ref) {
 
 var useDetectMouseover$1 = function useDetectMouseover(el, initialState) {
   var _useState = React.useState(initialState),
-    _useState2 = slicedToArray(_useState, 2),
+    _useState2 = _slicedToArray(_useState, 2),
     isActive = _useState2[0],
     setIsActive = _useState2[1];
   var handleOver = React.useCallback(function (e) {
@@ -1756,7 +1744,7 @@ var useDetectMouseover$1 = function useDetectMouseover(el, initialState) {
 
 var useDetectOutsideClick$1 = function useDetectOutsideClick(trigger, initialState) {
   var _useState = React.useState(initialState),
-    _useState2 = slicedToArray(_useState, 2),
+    _useState2 = _slicedToArray(_useState, 2),
     isActive = _useState2[0],
     setIsActive = _useState2[1];
   React.useEffect(function () {
@@ -1773,35 +1761,17 @@ var useDetectOutsideClick$1 = function useDetectOutsideClick(trigger, initialSta
   return [isActive, setIsActive];
 };
 
-function _typeof2(obj) {
-  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-    _typeof2 = function _typeof2(obj) {
-      return typeof obj;
-    };
-  } else {
-    _typeof2 = function _typeof2(obj) {
-      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    };
-  }
-  return _typeof2(obj);
-}
-function _typeof(obj) {
-  if (typeof Symbol === "function" && _typeof2(Symbol.iterator) === "symbol") {
-    _typeof_1 = _typeof = function _typeof(obj) {
-      return _typeof2(obj);
-    };
-  } else {
-    _typeof_1 = _typeof = function _typeof(obj) {
-      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : _typeof2(obj);
-    };
-  }
-  return _typeof(obj);
-}
-var _typeof_1 = _typeof;
+function _typeof$1(obj) {
+  "@babel/helpers - typeof";
 
-var _typeof$1 = _typeof_1;
+  return _typeof$1 = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) {
+    return typeof obj;
+  } : function (obj) {
+    return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+  }, _typeof$1(obj);
+}
 
-function _objectWithoutPropertiesLoose$2(source, excluded) {
+function _objectWithoutPropertiesLoose(source, excluded) {
   if (source == null) return {};
   var target = {};
   var sourceKeys = Object.keys(source);
@@ -1813,12 +1783,10 @@ function _objectWithoutPropertiesLoose$2(source, excluded) {
   }
   return target;
 }
-var objectWithoutPropertiesLoose$1 = _objectWithoutPropertiesLoose$2;
 
-var objectWithoutPropertiesLoose = objectWithoutPropertiesLoose$1;
 function _objectWithoutProperties(source, excluded) {
   if (source == null) return {};
-  var target = objectWithoutPropertiesLoose(source, excluded);
+  var target = _objectWithoutPropertiesLoose(source, excluded);
   var key, i;
   if (Object.getOwnPropertySymbols) {
     var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
@@ -1831,41 +1799,28 @@ function _objectWithoutProperties(source, excluded) {
   }
   return target;
 }
-var objectWithoutProperties = _objectWithoutProperties;
 
 function _arrayWithoutHoles(arr) {
-  if (Array.isArray(arr)) {
-    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {
-      arr2[i] = arr[i];
-    }
-    return arr2;
-  }
+  if (Array.isArray(arr)) return _arrayLikeToArray$3(arr);
 }
-var arrayWithoutHoles$1 = _arrayWithoutHoles;
 
 function _iterableToArray(iter) {
-  if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
+  if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
 }
-var iterableToArray$1 = _iterableToArray;
 
 function _nonIterableSpread() {
-  throw new TypeError("Invalid attempt to spread non-iterable instance");
+  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
-var nonIterableSpread$1 = _nonIterableSpread;
 
-var arrayWithoutHoles = arrayWithoutHoles$1;
-var iterableToArray = iterableToArray$1;
-var nonIterableSpread = nonIterableSpread$1;
 function _toConsumableArray(arr) {
-  return arrayWithoutHoles(arr) || iterableToArray(arr) || nonIterableSpread();
+  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray$3(arr) || _nonIterableSpread();
 }
-var toConsumableArray = _toConsumableArray;
 
 function _createForOfIteratorHelper$2(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray$2(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 function _unsupportedIterableToArray$2(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray$2(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$2(o, minLen); }
 function _arrayLikeToArray$2(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-function ownKeys$7(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread$7(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$7(Object(source), !0).forEach(function (key) { defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$7(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function ownKeys$c(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$c(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$c(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$c(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 var changeInput = function changeInput(e, _ref) {
   var inputs = _ref.inputs,
     errors = _ref.errors,
@@ -1874,9 +1829,9 @@ var changeInput = function changeInput(e, _ref) {
     setErrors = _ref$setErrors === void 0 ? function () {} : _ref$setErrors,
     setInputs = _ref.setInputs,
     setFiles = _ref.setFiles;
-  var localInputs = _objectSpread$7({}, inputs);
-  var localErrors = _objectSpread$7({}, errors);
-  var localFiles = _objectSpread$7({}, files);
+  var localInputs = _objectSpread$c({}, inputs);
+  var localErrors = _objectSpread$c({}, errors);
+  var localFiles = _objectSpread$c({}, files);
   localErrors[e.target.id] = [];
   if (!e.target.files) {
     if (!Object.keys(files).includes(e.target.id)) {
@@ -1886,7 +1841,7 @@ var changeInput = function changeInput(e, _ref) {
       localInputs[e.target.id] = e.target.value;
       if (e.target.multiple) {
         if (localFiles && Array.isArray(localFiles[e.target.id]) && Array.isArray(localInputs[e.target.id])) {
-          localFiles = _objectSpread$7(_objectSpread$7({}, localFiles), {}, defineProperty({}, e.target.id, toConsumableArray(localInputs[e.target.id])));
+          localFiles = _objectSpread$c(_objectSpread$c({}, localFiles), {}, _defineProperty({}, e.target.id, _toConsumableArray(localInputs[e.target.id])));
         }
       } else {
         // Deleted not multiple file
@@ -1894,21 +1849,21 @@ var changeInput = function changeInput(e, _ref) {
       }
     }
   } else {
-    var loadedFiles = _objectSpread$7({}, e.target.files);
+    var loadedFiles = _objectSpread$c({}, e.target.files);
     var _iterator = _createForOfIteratorHelper$2(new Array(e.target.files.length).entries()),
       _step;
     try {
       for (_iterator.s(); !(_step = _iterator.n()).done;) {
-        var _step$value = slicedToArray(_step.value, 1),
+        var _step$value = _slicedToArray(_step.value, 1),
           index = _step$value[0];
         if (e.target.multiple) {
           if (localFiles && Array.isArray(localFiles[e.target.id]) && Array.isArray(localInputs[e.target.id])) {
-            localFiles = _objectSpread$7(_objectSpread$7({}, localFiles), {}, defineProperty({}, e.target.id, [].concat(toConsumableArray(localFiles[e.target.id]), [loadedFiles[index]])));
+            localFiles = _objectSpread$c(_objectSpread$c({}, localFiles), {}, _defineProperty({}, e.target.id, [].concat(_toConsumableArray(localFiles[e.target.id]), [loadedFiles[index]])));
           } else {
-            localFiles = _objectSpread$7(_objectSpread$7({}, localFiles), {}, defineProperty({}, e.target.id, [loadedFiles[index]]));
+            localFiles = _objectSpread$c(_objectSpread$c({}, localFiles), {}, _defineProperty({}, e.target.id, [loadedFiles[index]]));
           }
         } else {
-          localFiles = _objectSpread$7(_objectSpread$7({}, localFiles), {}, defineProperty({}, e.target.id, loadedFiles[index]));
+          localFiles = _objectSpread$c(_objectSpread$c({}, localFiles), {}, _defineProperty({}, e.target.id, loadedFiles[index]));
         }
       }
     } catch (err) {
@@ -1920,9 +1875,9 @@ var changeInput = function changeInput(e, _ref) {
   if (e.target.type == "checkbox") {
     localInputs[e.target.id] = e.target.checked;
   }
-  setFiles(_objectSpread$7({}, localFiles));
-  setInputs(_objectSpread$7({}, localInputs));
-  setErrors(_objectSpread$7({}, localErrors));
+  setFiles(_objectSpread$c({}, localFiles));
+  setInputs(_objectSpread$c({}, localInputs));
+  setErrors(_objectSpread$c({}, localErrors));
 };
 var checkUsernameMask = function checkUsernameMask(_ref2) {
   var field = _ref2.field,
@@ -2025,7 +1980,7 @@ var checkFields = function checkFields(_ref8) {
     inputsConfig = _ref8.inputsConfig,
     inputs = _ref8.inputs,
     files = _ref8.files;
-  var localErrors = _objectSpread$7({}, errors);
+  var localErrors = _objectSpread$c({}, errors);
   inputsConfig.forEach(function (_ref9) {
     var field = _ref9.field,
       checkerFuncs = _ref9.checkerFuncs,
@@ -2074,7 +2029,7 @@ var checkFields = function checkFields(_ref8) {
   setErrors(localErrors);
   var hasErrors = [];
   for (var _i = 0, _Object$entries = Object.entries(localErrors); _i < _Object$entries.length; _i++) {
-    var _Object$entries$_i = slicedToArray(_Object$entries[_i], 2);
+    var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2);
       _Object$entries$_i[0];
       var value = _Object$entries$_i[1];
     if (value) {
@@ -2083,7 +2038,7 @@ var checkFields = function checkFields(_ref8) {
       if (((_Object$values = Object.values(value)) === null || _Object$values === void 0 ? void 0 : (_Object$values$filter = _Object$values.filter(function (m) {
         return typeof m === "string";
       })) === null || _Object$values$filter === void 0 ? void 0 : _Object$values$filter.length) > 0) {
-        hasErrors.push(_objectSpread$7({}, value));
+        hasErrors.push(_objectSpread$c({}, value));
       }
     }
   }
@@ -2114,7 +2069,7 @@ var changeTypeFunc = function changeTypeFunc(_ref11) {
     field = _ref11.field;
   var type = types[field];
   if (types[field]) {
-    var localTypes = _objectSpread$7({}, types);
+    var localTypes = _objectSpread$c({}, types);
     if (type === "password") {
       localTypes[field] = "text";
     } else if (type === "text") {
@@ -2127,7 +2082,7 @@ var changeBlockedInputsFunc = function changeBlockedInputsFunc(_ref12) {
   var setBlockedInputs = _ref12.setBlockedInputs,
     blockedInputs = _ref12.blockedInputs,
     newBlockedInputs = _ref12.newBlockedInputs;
-  setBlockedInputs(_objectSpread$7(_objectSpread$7({}, blockedInputs), newBlockedInputs));
+  setBlockedInputs(_objectSpread$c(_objectSpread$c({}, blockedInputs), newBlockedInputs));
 };
 
 var checkIsServer = function () { return typeof window === "undefined"; };
@@ -2220,12 +2175,12 @@ var vanilla = /*#__PURE__*/Object.freeze({
     getMonthRange: getMonthRange
 });
 
-var _excluded$9 = ["field", "blocked", "placeholder", "title", "label", "config", "type", "PairComponent"];
+var _excluded$8 = ["field", "blocked", "placeholder", "title", "label", "config", "type", "PairComponent"];
 function _createForOfIteratorHelper$1(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray$1(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 function _unsupportedIterableToArray$1(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray$1(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$1(o, minLen); }
 function _arrayLikeToArray$1(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-function ownKeys$6(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread$6(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$6(Object(source), !0).forEach(function (key) { defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$6(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function ownKeys$b(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$b(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$b(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$b(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 var useForm = function useForm(_ref) {
   var inputsConfig = _ref.inputsConfig,
     _ref$submitFunc = _ref.submitFunc,
@@ -2280,23 +2235,23 @@ var useForm = function useForm(_ref) {
     initialBlocked = _useMemo.initialBlocked,
     initialFiles = _useMemo.initialFiles;
   var _useState = React.useState(initialInputs),
-    _useState2 = slicedToArray(_useState, 2),
+    _useState2 = _slicedToArray(_useState, 2),
     inputs = _useState2[0],
     setInputs = _useState2[1];
   var _useState3 = React.useState(initialFiles),
-    _useState4 = slicedToArray(_useState3, 2),
+    _useState4 = _slicedToArray(_useState3, 2),
     files = _useState4[0],
     setFiles = _useState4[1];
   var _useState5 = React.useState(initialErrors),
-    _useState6 = slicedToArray(_useState5, 2),
+    _useState6 = _slicedToArray(_useState5, 2),
     errors = _useState6[0],
     setErrors = _useState6[1];
   var _useState7 = React.useState(initialTypes),
-    _useState8 = slicedToArray(_useState7, 2),
+    _useState8 = _slicedToArray(_useState7, 2),
     types = _useState8[0],
     setTypes = _useState8[1];
   var _useState9 = React.useState(initialBlocked),
-    _useState10 = slicedToArray(_useState9, 2),
+    _useState10 = _slicedToArray(_useState9, 2),
     blockedInputs = _useState10[0],
     setBlockedInputs = _useState10[1];
   React.useEffect(function () {
@@ -2314,7 +2269,7 @@ var useForm = function useForm(_ref) {
   };
   var onSubmitFunc = React.useCallback(function (e) {
     var submitProps = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-    return onSubmit(e, _objectSpread$6({
+    return onSubmit(e, _objectSpread$b({
       inputsConfig: inputsConfig,
       inputs: inputs,
       errors: errors,
@@ -2370,9 +2325,9 @@ var useForm = function useForm(_ref) {
         _ref4$type = _ref4.type,
         defaultType = _ref4$type === void 0 ? "text" : _ref4$type,
         PairComponent = _ref4.PairComponent,
-        params = objectWithoutProperties(_ref4, _excluded$9);
+        params = _objectWithoutProperties(_ref4, _excluded$8);
       if (defaultType !== "hidden") {
-        var prop = _objectSpread$6({
+        var prop = _objectSpread$b({
           id: field,
           error: errors[field],
           changeType: changeType,
@@ -2507,8 +2462,8 @@ var selectFilesForDelete = function selectFilesForDelete(_ref5) {
   }
 };
 
-function ownKeys$5(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread$5(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$5(Object(source), !0).forEach(function (key) { defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$5(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function ownKeys$a(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$a(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$a(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$a(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 function useChildForm(_ref) {
   var inputsConfig = _ref.inputsConfig,
     _ref$setParentErrors = _ref.setParentErrors,
@@ -2541,12 +2496,12 @@ function useChildForm(_ref) {
 
   React.useEffect(function () {
     setSubmitPipe(function (prev) {
-      return _objectSpread$5(_objectSpread$5({}, prev), {}, defineProperty({}, submitId, onSubmit));
+      return _objectSpread$a(_objectSpread$a({}, prev), {}, _defineProperty({}, submitId, onSubmit));
     });
   }, [onSubmit]);
   var onDelete = function onDelete() {
     setSubmitPipe(function (prev) {
-      var newSubmitPipes = _objectSpread$5({}, prev);
+      var newSubmitPipes = _objectSpread$a({}, prev);
       delete newSubmitPipes[submitId];
       return newSubmitPipes;
     });
@@ -2578,7 +2533,7 @@ var useDomMeasure = function useDomMeasure(ref) {
       width: 0,
       height: 0
     }),
-    _useState2 = slicedToArray(_useState, 2),
+    _useState2 = _slicedToArray(_useState, 2),
     domRect = _useState2[0],
     setDomRect = _useState2[1];
   React.useEffect(function () {
@@ -2586,7 +2541,7 @@ var useDomMeasure = function useDomMeasure(ref) {
       var elemDomRect = ref.current.getBoundingClientRect();
       setDomRect(elemDomRect);
     }
-  }, [ref].concat(toConsumableArray(triggers)));
+  }, [ref].concat(_toConsumableArray(triggers)));
   React.useEffect(function () {
     if (ref.current) {
       var setRectCallback = function setRectCallback() {
@@ -2619,23 +2574,736 @@ var useDebounce = function (value, delay) {
     return depouncedValue;
 };
 
-var hooks = {
-  useDetectMouseover: useDetectMouseover$1,
-  useDetectOutsideClick: useDetectOutsideClick$1,
-  useLookupTable: useLookupTable,
-  useBreakpoint: useBreakpoint$1,
-  useSetParentsInput: useSetParentsInput,
-  useStyleRewriter: useStyleRewriter$6,
-  useForm: useForm,
-  useChildForm: useChildForm,
-  useDomMeasure: useDomMeasure,
-  useDebounce: useDebounce
+var useSendEmailConfirmation = function useSendEmailConfirmation(_ref) {
+  var profilesApi = _ref.profilesApi,
+    _ref$inputsConfig = _ref.inputsConfig,
+    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$9 : _ref$inputsConfig;
+  var _profilesApi$useSendE = profilesApi.useSendEmailConfirmationMutation(),
+    _profilesApi$useSendE2 = _slicedToArray(_profilesApi$useSendE, 2),
+    sendEmailConfirmation = _profilesApi$useSendE2[0],
+    _profilesApi$useSendE3 = _profilesApi$useSendE2[1],
+    error = _profilesApi$useSendE3.error,
+    isLoading = _profilesApi$useSendE3.isLoading,
+    isSuccess = _profilesApi$useSendE3.isSuccess,
+    data = _profilesApi$useSendE3.data;
+  var submitFunc = function submitFunc(_ref2) {
+    var inputs = _ref2.inputs;
+    sendEmailConfirmation({
+      data: inputs
+    });
+  };
+  var memoInputsConfig = React.useMemo(function () {
+    return inputsConfig;
+  }, [inputsConfig]);
+  var _useForm = useForm({
+      inputsConfig: memoInputsConfig,
+      submitFunc: submitFunc,
+      inputPropsType: "object"
+    }),
+    inputs = _useForm.inputs,
+    inputsErrors = _useForm.errors,
+    onSubmit = _useForm.onSubmit,
+    inputsSetErrors = _useForm.setErrors;
+  return {
+    inputs: inputs,
+    inputsErrors: inputsErrors,
+    inputsSetErrors: inputsSetErrors,
+    error: error,
+    onSubmit: onSubmit,
+    isLoading: isLoading,
+    isSuccess: isSuccess,
+    data: data
+  };
 };
+var defaultInputsConfig$9 = [{
+  label: "Email",
+  field: "email",
+  checkerFuncs: ["checkRequiredField", "checkEmailMask"],
+  type: "email",
+  id: "email",
+  placeholder: "Type your email"
+}];
+
+var useForgotPassword = function useForgotPassword(_ref) {
+  var profilesApi = _ref.profilesApi,
+    _ref$inputsConfig = _ref.inputsConfig,
+    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$8 : _ref$inputsConfig,
+    authSlice = _ref.authSlice;
+  var dispatch = reactRedux.useDispatch();
+  var _profilesApi$useForgo = profilesApi.useForgotPasswordMutation(),
+    _profilesApi$useForgo2 = _slicedToArray(_profilesApi$useForgo, 2),
+    forgotPassword = _profilesApi$useForgo2[0],
+    _profilesApi$useForgo3 = _profilesApi$useForgo2[1],
+    isSuccess = _profilesApi$useForgo3.isSuccess,
+    isLoading = _profilesApi$useForgo3.isLoading,
+    data = _profilesApi$useForgo3.data;
+  React.useEffect(function () {
+    dispatch(authSlice.actions.logout());
+    localStorage.removeItem("jwt");
+    sessionStorage.removeItem("jwt");
+  }, [authSlice === null || authSlice === void 0 ? void 0 : authSlice.actions]);
+  var submitFunc = function submitFunc(_ref2) {
+    var inputs = _ref2.inputs;
+    forgotPassword({
+      data: inputs
+    });
+  };
+  var memoInputsConfig = React.useMemo(function () {
+    return inputsConfig;
+  }, [inputsConfig]);
+  var _useForm = useForm({
+      inputsConfig: memoInputsConfig,
+      submitFunc: submitFunc,
+      inputPropsType: "object"
+    }),
+    inputs = _useForm.inputs,
+    onSubmit = _useForm.onSubmit,
+    setPassed = _useForm.setPassed;
+  return {
+    isLoading: isLoading,
+    data: data,
+    isSuccess: isSuccess,
+    inputs: inputs,
+    onSubmit: onSubmit,
+    setPassed: setPassed
+  };
+};
+var defaultInputsConfig$8 = [{
+  title: "Email address*",
+  label: "Email address",
+  field: "email",
+  checkerFuncs: ["checkRequiredField", "checkEmailMask"],
+  type: "email",
+  placeholder: "Type your email"
+}];
+
+function ownKeys$9(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$9(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$9(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$9(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+var useLogin = function useLogin(_ref) {
+  var profilesApi = _ref.profilesApi,
+    _ref$inputsConfig = _ref.inputsConfig,
+    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$7 : _ref$inputsConfig;
+  var _profilesApi$useLogin = profilesApi.useLoginWithEmailAndPasswordMutation(),
+    _profilesApi$useLogin2 = _slicedToArray(_profilesApi$useLogin, 2),
+    loginWithEmailAndPassword = _profilesApi$useLogin2[0],
+    _profilesApi$useLogin3 = _profilesApi$useLogin2[1],
+    error = _profilesApi$useLogin3.error,
+    data = _profilesApi$useLogin3.data,
+    isSuccess = _profilesApi$useLogin3.isSuccess,
+    isLoading = _profilesApi$useLogin3.isLoading,
+    isFetching = _profilesApi$useLogin3.isFetching;
+  var memoInputsConfig = React.useMemo(function () {
+    return inputsConfig;
+  }, [inputsConfig]);
+  var submitFunc = function submitFunc(_ref2) {
+    var inputs = _ref2.inputs;
+    loginWithEmailAndPassword({
+      identifier: inputs.email,
+      password: inputs.password
+    });
+  };
+  var _useForm = useForm({
+      inputsConfig: memoInputsConfig,
+      submitFunc: submitFunc,
+      inputPropsType: "object"
+    }),
+    inputs = _useForm.inputs,
+    setErrors = _useForm.setErrors,
+    onSubmit = _useForm.onSubmit,
+    changeBlockedInputs = _useForm.changeBlockedInputs,
+    clearInputs = _useForm.clearInputs;
+  React.useEffect(function () {
+    if (error) {
+      setErrors(function (prev) {
+        var _error$data;
+        var newErrors = _objectSpread$9({}, prev);
+        if ((_error$data = error.data) !== null && _error$data !== void 0 && _error$data.error) {
+          newErrors.email = {
+            id: error.data.error.name,
+            message: error.data.error.message
+          };
+          newErrors.password = {
+            id: error.data.error.name,
+            message: error.data.error.message
+          };
+        }
+        return newErrors;
+      });
+    }
+  }, [error, setErrors]);
+  return {
+    inputs: inputs,
+    onSubmit: onSubmit,
+    changeBlockedInputs: changeBlockedInputs,
+    clearInputs: clearInputs,
+    error: error,
+    data: data,
+    isSuccess: isSuccess,
+    isLoading: isLoading,
+    isFetching: isFetching
+  };
+};
+var defaultInputsConfig$7 = [{
+  field: "email",
+  checkerFuncs: ["checkRequiredField"],
+  type: "text",
+  placeholder: "Type your email",
+  label: "Email"
+}, {
+  field: "password",
+  checkerFuncs: ["checkRequiredField"],
+  config: {
+    enableTypeChanging: true
+  },
+  label: "Password",
+  type: "password",
+  placeholder: "Type your password"
+}, {
+  field: "rememberCheckbox",
+  checkerFuncs: [],
+  type: "checkbox",
+  defaultValue: true,
+  id: "rememberCheckbox",
+  label: "Remember"
+}];
+
+var useRegister = function useRegister(_ref) {
+  var profilesApi = _ref.profilesApi,
+    _ref$inputsConfig = _ref.inputsConfig,
+    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$6 : _ref$inputsConfig;
+  var _profilesApi$useRegis = profilesApi.useRegisterMutation(),
+    _profilesApi$useRegis2 = _slicedToArray(_profilesApi$useRegis, 2),
+    register = _profilesApi$useRegis2[0],
+    _profilesApi$useRegis3 = _profilesApi$useRegis2[1],
+    error = _profilesApi$useRegis3.error,
+    isSuccess = _profilesApi$useRegis3.isSuccess,
+    isLoading = _profilesApi$useRegis3.isLoading,
+    data = _profilesApi$useRegis3.data;
+  var memoInputsConfig = React.useMemo(function () {
+    return inputsConfig;
+  }, [inputsConfig]);
+  var submitFunc = function submitFunc(_ref2) {
+    var inputs = _ref2.inputs;
+    register({
+      data: inputs
+    });
+  };
+  var afterPassed = function afterPassed(_ref3) {
+    var clearInputs = _ref3.clearInputs;
+    clearInputs();
+  };
+  var _useForm = useForm({
+      inputsConfig: memoInputsConfig,
+      afterPassed: afterPassed,
+      submitFunc: submitFunc,
+      inputPropsType: "object"
+    }),
+    inputs = _useForm.inputs,
+    inputsSetErrors = _useForm.setErrors,
+    inputsErrors = _useForm.errors,
+    onSubmit = _useForm.onSubmit,
+    setPassed = _useForm.setPassed;
+  return {
+    data: data,
+    inputs: inputs,
+    onSubmit: onSubmit,
+    isSuccess: isSuccess,
+    isLoading: isLoading,
+    error: error,
+    setPassed: setPassed,
+    inputsErrors: inputsErrors,
+    inputsSetErrors: inputsSetErrors
+  };
+};
+var defaultInputsConfig$6 = [{
+  label: "Username",
+  field: "username",
+  checkerFuncs: ["checkRequiredField"],
+  type: "text",
+  placeholder: "Type your username"
+}, {
+  label: "Email",
+  field: "email",
+  checkerFuncs: ["checkRequiredField", "checkEmailMask"],
+  type: "email",
+  id: "email",
+  placeholder: "Type your email"
+}, {
+  label: "Password",
+  field: "password",
+  checkerFuncs: ["checkRequiredField", "checkPassword"],
+  config: {
+    enableTypeChanging: true
+  },
+  type: "password",
+  placeholder: "Type your password"
+}, {
+  label: "Repeat password",
+  field: "confirm_password",
+  checkerFuncs: ["checkRequiredField", "checkEqualTo"],
+  config: {
+    equalTo: "password",
+    enableTypeChanging: true
+  },
+  type: "password",
+  placeholder: "Repeat your password"
+}, {
+  label: "I agree with terms and conditions",
+  field: "agreement_checkbox",
+  checkerFuncs: [],
+  type: "checkbox",
+  defaultValue: false
+}];
+
+function ownKeys$8(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$8(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$8(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$8(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+var useResetPassword = function useResetPassword(_ref) {
+  var profilesApi = _ref.profilesApi,
+    _ref$inputsConfig = _ref.inputsConfig,
+    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$5 : _ref$inputsConfig,
+    authSlice = _ref.authSlice;
+  var dispatch = reactRedux.useDispatch();
+  React.useEffect(function () {
+    dispatch(authSlice.actions.logout());
+    localStorage.removeItem("jwt");
+    sessionStorage.removeItem("jwt");
+  }, [authSlice === null || authSlice === void 0 ? void 0 : authSlice.actions]);
+  var _profilesApi$useReset = profilesApi.useResetPasswordMutation(),
+    _profilesApi$useReset2 = _slicedToArray(_profilesApi$useReset, 2),
+    resetPassword = _profilesApi$useReset2[0],
+    _profilesApi$useReset3 = _profilesApi$useReset2[1],
+    isSuccess = _profilesApi$useReset3.isSuccess,
+    error = _profilesApi$useReset3.error,
+    data = _profilesApi$useReset3.data,
+    isLoading = _profilesApi$useReset3.isLoading;
+  var submitFunc = function submitFunc(_ref2) {
+    var inputs = _ref2.inputs;
+    resetPassword({
+      data: inputs
+    });
+  };
+  var memoInputsConfig = React.useMemo(function () {
+    return inputsConfig;
+  }, [inputsConfig]);
+  var _useForm = useForm({
+      inputsConfig: memoInputsConfig,
+      submitFunc: submitFunc,
+      inputPropsType: "object"
+    }),
+    inputs = _useForm.inputs,
+    onSubmit = _useForm.onSubmit,
+    setInputsValues = _useForm.setInputsValues,
+    inputsValues = _useForm.inputsValues,
+    inputsErrors = _useForm.errors,
+    setInputsErrors = _useForm.setErrors;
+  React.useEffect(function () {
+    if (typeof window !== "undefined") {
+      var _URLSearchParams, _URL, _window;
+      var code = (_URLSearchParams = new URLSearchParams((_URL = new URL((_window = window) === null || _window === void 0 ? void 0 : _window.location)) === null || _URL === void 0 ? void 0 : _URL.search)) === null || _URLSearchParams === void 0 ? void 0 : _URLSearchParams.get("code");
+      setInputsValues(_objectSpread$8(_objectSpread$8({}, inputsValues), {}, {
+        code: code
+      }));
+    }
+  }, [window]);
+  return {
+    data: data,
+    isLoading: isLoading,
+    error: error,
+    inputs: inputs,
+    onSubmit: onSubmit,
+    isSuccess: isSuccess,
+    inputsErrors: inputsErrors,
+    setInputsErrors: setInputsErrors
+  };
+};
+var defaultInputsConfig$5 = [{
+  label: "New Password",
+  field: "password",
+  checkerFuncs: ["checkRequiredField", "checkPassword"],
+  config: {
+    enableTypeChanging: true
+  },
+  type: "password",
+  placeholder: "Type your new password"
+}, {
+  label: "Repeat New Password",
+  field: "confirm_password",
+  checkerFuncs: ["checkRequiredField", "checkEqualTo"],
+  config: {
+    equalTo: "password",
+    enableTypeChanging: true
+  },
+  type: "password",
+  placeholder: "Repeat your new password"
+}, {
+  title: "Code",
+  field: "code",
+  checkerFuncs: ["checkRequiredField"],
+  type: "hidden"
+}];
+
+var usePhoneConfirmation = function usePhoneConfirmation(_ref) {
+  var profilesApi = _ref.profilesApi,
+    _ref$inputsConfig = _ref.inputsConfig,
+    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$4 : _ref$inputsConfig,
+    authSlice = _ref.authSlice;
+  var auth = reactRedux.useSelector(authSlice.selectors.auth);
+  var _useState = React.useState(),
+    _useState2 = _slicedToArray(_useState, 2),
+    user = _useState2[0],
+    setUser = _useState2[1];
+
+  // Without hard memoization sendPhoneConfirmSms calls twice
+  React.useEffect(function () {
+    var _auth$user, _auth$user2;
+    if (auth !== null && auth !== void 0 && (_auth$user = auth.user) !== null && _auth$user !== void 0 && _auth$user.phoneNumber && (auth === null || auth === void 0 ? void 0 : (_auth$user2 = auth.user) === null || _auth$user2 === void 0 ? void 0 : _auth$user2.phoneNumber) !== (user === null || user === void 0 ? void 0 : user.phoneNumber)) {
+      setUser(auth.user);
+    }
+  }, [auth]);
+  var _profilesApi$useSendC = profilesApi.useSendConfirmPhoneMutation(),
+    _profilesApi$useSendC2 = _slicedToArray(_profilesApi$useSendC, 2),
+    sendPhoneConfirmSms = _profilesApi$useSendC2[0],
+    isUninitialized = _profilesApi$useSendC2[1].isUninitialized;
+  React.useEffect(function () {
+    if (user && isUninitialized) {
+      sendPhoneConfirmSms({
+        data: {
+          phone_number: user.phoneNumber
+        }
+      });
+    }
+  }, [user, isUninitialized]);
+  var memoInputsConfig = React.useMemo(function () {
+    return inputsConfig;
+  }, [inputsConfig]);
+  var _profilesApi$useConfi = profilesApi.useConfirmPhoneMutation(),
+    _profilesApi$useConfi2 = _slicedToArray(_profilesApi$useConfi, 2),
+    confirmPhone = _profilesApi$useConfi2[0],
+    _profilesApi$useConfi3 = _profilesApi$useConfi2[1],
+    error = _profilesApi$useConfi3.error,
+    isSuccess = _profilesApi$useConfi3.isSuccess;
+  var submitFunc = function submitFunc(_ref2) {
+    var inputs = _ref2.inputs;
+    confirmPhone({
+      confirmation: inputs.confirmation
+    });
+  };
+  var _useForm = useForm({
+      inputsConfig: memoInputsConfig,
+      submitFunc: submitFunc,
+      inputPropsType: "object"
+    }),
+    inputs = _useForm.inputs,
+    onSubmit = _useForm.onSubmit,
+    inputsErrors = _useForm.inputs,
+    inputsSetErrors = _useForm.setErrors;
+  return {
+    inputs: inputs,
+    onSubmit: onSubmit,
+    error: error,
+    isSuccess: isSuccess,
+    inputsErrors: inputsErrors,
+    inputsSetErrors: inputsSetErrors
+  };
+};
+var defaultInputsConfig$4 = [{
+  label: "Verification code",
+  field: "confirmation",
+  type: "otp",
+  checkerFuncs: ["checkRequiredField"],
+  id: "confirmation"
+}];
+
+var useSendPhoneConfirmation = function useSendPhoneConfirmation(_ref) {
+  var profilesApi = _ref.profilesApi,
+    _ref$inputsConfig = _ref.inputsConfig,
+    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$3 : _ref$inputsConfig;
+  var _profilesApi$useSendP = profilesApi.useSendPhoneConfirmationMutation(),
+    _profilesApi$useSendP2 = _slicedToArray(_profilesApi$useSendP, 2),
+    sendPhoneConfirmation = _profilesApi$useSendP2[0],
+    _profilesApi$useSendP3 = _profilesApi$useSendP2[1],
+    error = _profilesApi$useSendP3.error,
+    isLoading = _profilesApi$useSendP3.isLoading,
+    isSuccess = _profilesApi$useSendP3.isSuccess,
+    data = _profilesApi$useSendP3.data;
+  var submitFunc = function submitFunc(_ref2) {
+    var inputs = _ref2.inputs;
+    sendPhoneConfirmation({
+      data: inputs
+    });
+  };
+  var memoInputsConfig = React.useMemo(function () {
+    return inputsConfig;
+  }, [inputsConfig]);
+  var _useForm = useForm({
+      inputsConfig: memoInputsConfig,
+      submitFunc: submitFunc,
+      inputPropsType: "object"
+    }),
+    inputs = _useForm.inputs,
+    inputsErrors = _useForm.errors,
+    onSubmit = _useForm.onSubmit,
+    inputsSetErrors = _useForm.setErrors;
+  return {
+    inputs: inputs,
+    inputsErrors: inputsErrors,
+    inputsSetErrors: inputsSetErrors,
+    error: error,
+    onSubmit: onSubmit,
+    isLoading: isLoading,
+    isSuccess: isSuccess,
+    data: data
+  };
+};
+var defaultInputsConfig$3 = [{
+  label: "Phone",
+  field: "phone",
+  checkerFuncs: ["checkRequiredField"],
+  type: "text",
+  placeholder: "Type your phone"
+}];
+
+function ownKeys$7(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$7(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$7(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$7(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+var useConfirmEmail = function useConfirmEmail(_ref) {
+  var profilesApi = _ref.profilesApi,
+    _ref$inputsConfig = _ref.inputsConfig,
+    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$2 : _ref$inputsConfig,
+    _ref$ping = _ref.ping,
+    ping = _ref$ping === void 0 ? 30 : _ref$ping;
+  var _profilesApi$useConfi = profilesApi.useConfirmEmailMutation(),
+    _profilesApi$useConfi2 = _slicedToArray(_profilesApi$useConfi, 2),
+    confirmEmail = _profilesApi$useConfi2[0],
+    _profilesApi$useConfi3 = _profilesApi$useConfi2[1],
+    isSuccess = _profilesApi$useConfi3.isSuccess,
+    error = _profilesApi$useConfi3.error,
+    data = _profilesApi$useConfi3.data,
+    isLoading = _profilesApi$useConfi3.isLoading;
+  var submitFunc = function submitFunc(_ref2) {
+    var inputs = _ref2.inputs;
+    confirmEmail({
+      data: inputs
+    });
+  };
+  var _profilesApi$useSendE = profilesApi.useSendEmailConfirmationMutation(),
+    _profilesApi$useSendE2 = _slicedToArray(_profilesApi$useSendE, 2),
+    sendEmailConfirmation = _profilesApi$useSendE2[0],
+    _profilesApi$useSendE3 = _profilesApi$useSendE2[1],
+    resendEmailConfirmationError = _profilesApi$useSendE3.error,
+    resendEmailConfirmationIsLoading = _profilesApi$useSendE3.isLoading,
+    resendEmailConfirmationIsSuccess = _profilesApi$useSendE3.isSuccess,
+    resendEmailConfirmationData = _profilesApi$useSendE3.data;
+  var _useState = React.useState(ping),
+    _useState2 = _slicedToArray(_useState, 2),
+    counter = _useState2[0],
+    setCounter = _useState2[1];
+  React.useEffect(function () {
+    var timer = counter > 0 && setInterval(function () {
+      return setCounter(counter - 1);
+    }, 1000);
+    return function () {
+      return clearInterval(timer);
+    };
+  }, [counter]);
+  var memoInputsConfig = React.useMemo(function () {
+    return inputsConfig;
+  }, [inputsConfig]);
+  var _useForm = useForm({
+      inputsConfig: memoInputsConfig,
+      submitFunc: submitFunc,
+      inputPropsType: "object"
+    }),
+    inputs = _useForm.inputs,
+    onSubmit = _useForm.onSubmit,
+    setInputsValues = _useForm.setInputsValues,
+    inputsValues = _useForm.inputsValues,
+    inputsErrors = _useForm.errors,
+    setInputsErrors = _useForm.setErrors;
+  var resendEmailConfirmation = function resendEmailConfirmation() {
+    if (!inputsValues.email) {
+      console.error("Pass email for resending code");
+      setInputsErrors(function (prev) {
+        var newErrors = _objectSpread$7({}, prev);
+        newErrors.email = {
+          id: "ValidationError",
+          message: "Empty email address"
+        };
+        return newErrors;
+      });
+      return;
+    }
+    sendEmailConfirmation({
+      data: {
+        email: inputsValues.email
+      }
+    });
+  };
+  React.useEffect(function () {
+    if (typeof window !== "undefined") {
+      var _URLSearchParams, _URL, _window, _URLSearchParams2, _URL2, _window2;
+      var code = (_URLSearchParams = new URLSearchParams((_URL = new URL((_window = window) === null || _window === void 0 ? void 0 : _window.location)) === null || _URL === void 0 ? void 0 : _URL.search)) === null || _URLSearchParams === void 0 ? void 0 : _URLSearchParams.get("code");
+      var email = (_URLSearchParams2 = new URLSearchParams((_URL2 = new URL((_window2 = window) === null || _window2 === void 0 ? void 0 : _window2.location)) === null || _URL2 === void 0 ? void 0 : _URL2.search)) === null || _URLSearchParams2 === void 0 ? void 0 : _URLSearchParams2.get("email");
+      setInputsValues(_objectSpread$7(_objectSpread$7({}, inputsValues), {}, {
+        code: code,
+        email: email
+      }));
+    }
+  }, [window]);
+  return {
+    counter: counter,
+    resendEmailConfirmation: resendEmailConfirmation,
+    resendEmailConfirmationError: resendEmailConfirmationError,
+    resendEmailConfirmationIsLoading: resendEmailConfirmationIsLoading,
+    resendEmailConfirmationIsSuccess: resendEmailConfirmationIsSuccess,
+    resendEmailConfirmationData: resendEmailConfirmationData,
+    data: data,
+    isLoading: isLoading,
+    error: error,
+    inputs: inputs,
+    onSubmit: onSubmit,
+    isSuccess: isSuccess,
+    inputsErrors: inputsErrors,
+    setInputsErrors: setInputsErrors
+  };
+};
+var defaultInputsConfig$2 = [{
+  field: "email",
+  checkerFuncs: ["checkRequiredField"],
+  type: "text",
+  placeholder: "Type your email",
+  label: "Email"
+}, {
+  title: "Code",
+  field: "code",
+  checkerFuncs: ["checkRequiredField"],
+  label: "Code",
+  placeholder: "Type code here",
+  type: "text"
+}];
+
+function ownKeys$6(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$6(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$6(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$6(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+var useConfirmPhone = function useConfirmPhone(_ref) {
+  var profilesApi = _ref.profilesApi,
+    _ref$inputsConfig = _ref.inputsConfig,
+    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$1 : _ref$inputsConfig,
+    _ref$ping = _ref.ping,
+    ping = _ref$ping === void 0 ? 30 : _ref$ping;
+  var _profilesApi$useConfi = profilesApi.useConfirmPhoneMutation(),
+    _profilesApi$useConfi2 = _slicedToArray(_profilesApi$useConfi, 2),
+    confirmEmail = _profilesApi$useConfi2[0],
+    _profilesApi$useConfi3 = _profilesApi$useConfi2[1],
+    isSuccess = _profilesApi$useConfi3.isSuccess,
+    error = _profilesApi$useConfi3.error,
+    data = _profilesApi$useConfi3.data,
+    isLoading = _profilesApi$useConfi3.isLoading;
+  var _profilesApi$useSendP = profilesApi.useSendPhoneConfirmationMutation(),
+    _profilesApi$useSendP2 = _slicedToArray(_profilesApi$useSendP, 2),
+    sendPhoneConfirmation = _profilesApi$useSendP2[0],
+    _profilesApi$useSendP3 = _profilesApi$useSendP2[1],
+    resendPhoneConfirmationError = _profilesApi$useSendP3.error,
+    resendPhoneConfirmationIsLoading = _profilesApi$useSendP3.isLoading,
+    resendPhoneConfirmationIsSuccess = _profilesApi$useSendP3.isSuccess,
+    resendPhoneConfirmationData = _profilesApi$useSendP3.data;
+  var _useState = React.useState(ping),
+    _useState2 = _slicedToArray(_useState, 2),
+    counter = _useState2[0],
+    setCounter = _useState2[1];
+  React.useEffect(function () {
+    var timer = counter > 0 && setInterval(function () {
+      return setCounter(counter - 1);
+    }, 1000);
+    return function () {
+      return clearInterval(timer);
+    };
+  }, [counter]);
+  var submitFunc = function submitFunc(_ref2) {
+    var inputs = _ref2.inputs;
+    confirmEmail({
+      data: inputs
+    });
+  };
+  var memoInputsConfig = React.useMemo(function () {
+    return inputsConfig;
+  }, [inputsConfig]);
+  var _useForm = useForm({
+      inputsConfig: memoInputsConfig,
+      submitFunc: submitFunc,
+      inputPropsType: "object"
+    }),
+    inputs = _useForm.inputs,
+    onSubmit = _useForm.onSubmit,
+    setInputsValues = _useForm.setInputsValues,
+    inputsValues = _useForm.inputsValues,
+    inputsErrors = _useForm.errors,
+    setInputsErrors = _useForm.setErrors;
+  var resendPhoneConfirmation = function resendPhoneConfirmation() {
+    if (!inputsValues.phone) {
+      console.error("Pass phone for resending code");
+      setInputsErrors(function (prev) {
+        var newErrors = _objectSpread$6({}, prev);
+        newErrors.phone = {
+          id: "ValidationError",
+          message: "Empty phone address"
+        };
+        return newErrors;
+      });
+      return;
+    }
+    sendPhoneConfirmation({
+      data: {
+        phone: inputsValues.phone
+      }
+    });
+  };
+  React.useEffect(function () {
+    if (typeof window !== "undefined") {
+      var _URLSearchParams, _URL, _window, _URLSearchParams2, _URL2, _window2;
+      var code = (_URLSearchParams = new URLSearchParams((_URL = new URL((_window = window) === null || _window === void 0 ? void 0 : _window.location)) === null || _URL === void 0 ? void 0 : _URL.search)) === null || _URLSearchParams === void 0 ? void 0 : _URLSearchParams.get("code");
+      var phone = (_URLSearchParams2 = new URLSearchParams((_URL2 = new URL((_window2 = window) === null || _window2 === void 0 ? void 0 : _window2.location)) === null || _URL2 === void 0 ? void 0 : _URL2.search)) === null || _URLSearchParams2 === void 0 ? void 0 : _URLSearchParams2.get("phone");
+      console.log("\uD83D\uDE80 ~ useEffect ~ phone", phone);
+      setInputsValues(_objectSpread$6(_objectSpread$6({}, inputsValues), {}, {
+        code: code,
+        phone: phone
+      }));
+    }
+  }, [window]);
+  return {
+    counter: counter,
+    resendPhoneConfirmation: resendPhoneConfirmation,
+    resendPhoneConfirmationError: resendPhoneConfirmationError,
+    resendPhoneConfirmationIsLoading: resendPhoneConfirmationIsLoading,
+    resendPhoneConfirmationIsSuccess: resendPhoneConfirmationIsSuccess,
+    resendPhoneConfirmationData: resendPhoneConfirmationData,
+    data: data,
+    isLoading: isLoading,
+    error: error,
+    inputs: inputs,
+    onSubmit: onSubmit,
+    isSuccess: isSuccess,
+    inputsErrors: inputsErrors,
+    setInputsErrors: setInputsErrors
+  };
+};
+var defaultInputsConfig$1 = [{
+  field: "phone",
+  checkerFuncs: ["checkRequiredField"],
+  type: "text",
+  placeholder: "Type your phone",
+  label: "Phone"
+}, {
+  title: "Code",
+  field: "code",
+  checkerFuncs: ["checkRequiredField"],
+  label: "Code",
+  placeholder: "Type code here",
+  type: "text"
+}];
 
 var sliceCreator = function (profilesApi) {
     var initialState = {
         id: null,
-        jwt: null,
+        jwt: typeof window !== "undefined" ? localStorage.getItem("jwt") : undefined,
         isAuthenticated: false,
         currentAuthFactor: "local",
     };
@@ -2651,36 +3319,22 @@ var sliceCreator = function (profilesApi) {
         extraReducers: function (builder) {
             builder
                 .addMatcher(profilesApi.endpoints.loginWithEmailAndPassword.matchFulfilled, function (state, action) {
-                var _a = action.payload, user = _a.user, jwt = _a.jwt, nextAuthFactor = _a.nextAuthFactor;
-                if (jwt) {
-                    state.id = user === null || user === void 0 ? void 0 : user.id;
-                    state.isAuthenticated = true;
-                    localStorage.setItem("jwt", jwt);
-                    return;
-                }
-                state.user = user;
-                state.currentAuthFactor = nextAuthFactor;
+                setUser(state, action);
             })
                 .addMatcher(profilesApi.endpoints.register.matchFulfilled, function (state, action) {
-                var _a = action.payload, user = _a.user, jwt = _a.jwt;
-                state.user = user;
-                state.currentAuthFactor = "email";
-                if (jwt) {
-                    state.id = user === null || user === void 0 ? void 0 : user.id;
-                    state.isAuthenticated = true;
-                    localStorage.setItem("jwt", jwt);
-                    return;
-                }
+                setUser(state, action);
+            })
+                .addMatcher(profilesApi.endpoints.checkOtp.matchFulfilled, function (state, action) {
+                setUser(state, action);
+            })
+                .addMatcher(profilesApi.endpoints.checkOtp.matchFulfilled, function (state, action) {
+                setUser(state, action);
             })
                 .addMatcher(profilesApi.endpoints.confirmEmail.matchFulfilled, function (state, action) {
-                var _a = action.payload, user = _a.user, jwt = _a.jwt, nextAuthFactor = _a.nextAuthFactor;
-                if (jwt) {
-                    state.id = user === null || user === void 0 ? void 0 : user.id;
-                    state.isAuthenticated = true;
-                    localStorage.setItem("jwt", jwt);
-                    return;
-                }
-                state.currentAuthFactor = nextAuthFactor;
+                setUser(state, action);
+            })
+                .addMatcher(profilesApi.endpoints.confirmPhone.matchFulfilled, function (state, action) {
+                setUser(state, action);
             })
                 .addMatcher(profilesApi.endpoints.getMe.matchFulfilled, function (state, action) {
                 state.id = action.payload.id;
@@ -2693,8 +3347,20 @@ var selectors = {
     selectIsAuthenticated: function (state) { return state.auth.isAuthenticated; },
     selectAccountId: function (state) { return state.auth.id; },
     selectJwt: function (state) { return state.auth.jwt; },
-    selectUser: function (state) { return state.auth.user; },
 };
+function setUser(state, action) {
+    var _a = action.payload, user = _a.user, jwt = _a.jwt, nextAuthFactor = _a.nextAuthFactor;
+    if (jwt) {
+        state.id = user.id;
+        state.isAuthenticated = true;
+        state.jwt = jwt;
+        localStorage.setItem("jwt", jwt);
+        return;
+    }
+    if (nextAuthFactor) {
+        state.currentAuthFactor = nextAuthFactor;
+    }
+}
 
 var authSlice = /*#__PURE__*/Object.freeze({
     __proto__: null,
@@ -2702,14 +3368,473 @@ var authSlice = /*#__PURE__*/Object.freeze({
     selectors: selectors
 });
 
+var useUpdateMe = function useUpdateMe(_ref) {
+  var profilesApi = _ref.profilesApi,
+    _ref$inputsConfig = _ref.inputsConfig,
+    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig : _ref$inputsConfig;
+  var _profilesApi$useUpdat = profilesApi.useUpdateMeMutation(),
+    _profilesApi$useUpdat2 = _slicedToArray(_profilesApi$useUpdat, 2),
+    updateMe = _profilesApi$useUpdat2[0],
+    _profilesApi$useUpdat3 = _profilesApi$useUpdat2[1],
+    isSuccess = _profilesApi$useUpdat3.isSuccess,
+    error = _profilesApi$useUpdat3.error,
+    data = _profilesApi$useUpdat3.data,
+    isLoading = _profilesApi$useUpdat3.isLoading;
+  var accountId = reactRedux.useSelector(selectors.selectAccountId); //?
+
+  var submitFunc = function submitFunc(_ref2) {
+    var inputs = _ref2.inputs;
+
+    updateMe({
+      id: accountId,
+      data: inputs
+    });
+  };
+  var memoInputsConfig = React.useMemo(function () {
+    return inputsConfig;
+  }, [inputsConfig]);
+  var _useForm = useForm({
+      inputsConfig: memoInputsConfig,
+      submitFunc: submitFunc,
+      inputPropsType: "object"
+    }),
+    inputs = _useForm.inputs,
+    onSubmit = _useForm.onSubmit,
+    inputsErrors = _useForm.errors,
+    setInputsErrors = _useForm.setErrors;
+  return {
+    data: data,
+    isLoading: isLoading,
+    error: error,
+    inputs: inputs,
+    onSubmit: onSubmit,
+    isSuccess: isSuccess,
+    inputsErrors: inputsErrors,
+    setInputsErrors: setInputsErrors
+  };
+};
+var defaultInputsConfig = [{
+  field: "username",
+  checkerFuncs: ["checkRequiredField"],
+  type: "text",
+  placeholder: "Type your username",
+  label: "Username"
+}];
+
+var useMyProfile = function (_a) {
+    var profilesApi = _a.profilesApi, populate = _a.populate;
+    var state = reactRedux.useSelector(function (state) {
+        return state;
+    });
+    console.log("\uD83D\uDE80 ~ useMyProfile ~ state", state);
+    var accountId = reactRedux.useSelector(selectors.selectAccountId);
+    var jwtToken = reactRedux.useSelector(selectors.selectJwt);
+    var _b = profilesApi.useGetMeQuery(undefined, { skip: !jwtToken }), myProfileByMe = _b.data, meError = _b.error, refetchMe = _b.refetch, isUninitialized = _b.isUninitialized;
+    var _c = profilesApi.useGetProfileByIdQuery({ id: accountId, populate: populate }, {
+        skip: !jwtToken || !accountId,
+        pollingInterval: 60000,
+    }), filledProfile = _c.data, refetchProfileById = _c.refetch;
+    // console.log(`🚀 ~ useMyProfile ~ accountId`, accountId, filledProfile);
+    React.useEffect(function () {
+        if (meError &&
+            ((meError === null || meError === void 0 ? void 0 : meError.status) !== 403 || (meError === null || meError === void 0 ? void 0 : meError.status) !== 401) &&
+            !isUninitialized) {
+            setTimeout(function () {
+                refetchMe();
+            }, 2000);
+            return;
+        }
+    }, [meError]);
+    var profile = React.useMemo(function () {
+        var me = accountId
+            ? __assign(__assign({}, (myProfileByMe || {})), (filledProfile || {})) : {};
+        var refetch = function () {
+            refetchMe();
+            refetchProfileById();
+        };
+        return { me: me, refetch: refetch };
+    }, [myProfileByMe, filledProfile, accountId, jwtToken]);
+    return profile;
+};
+
+var useAuth = {
+  useSendEmailConfirmation: useSendEmailConfirmation,
+  usePhoneConfirmation: usePhoneConfirmation,
+  useForgotPassword: useForgotPassword,
+  useLogin: useLogin,
+  useRegister: useRegister,
+  useResetPassword: useResetPassword,
+  useSendPhoneConfirmation: useSendPhoneConfirmation,
+  useConfirmEmail: useConfirmEmail,
+  useConfirmPhone: useConfirmPhone,
+  useUpdateMe: useUpdateMe,
+  useMyProfile: useMyProfile
+};
+
+function ownKeys$5(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$5(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$5(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$5(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+var hooks = _objectSpread$5({
+  useDetectMouseover: useDetectMouseover$1,
+  useDetectOutsideClick: useDetectOutsideClick$1,
+  useLookupTable: useLookupTable,
+  useBreakpoint: useBreakpoint$1,
+  useSetParentsInput: useSetParentsInput,
+  useStyleRewriter: useStyleRewriter$6,
+  useForm: useForm,
+  useChildForm: useChildForm,
+  useDomMeasure: useDomMeasure,
+  useDebounce: useDebounce
+}, useAuth);
+
+function _objectDestructuringEmpty(obj) {
+  if (obj == null) throw new TypeError("Cannot destructure " + obj);
+}
+
+// interface IStrapiParams {
+//   filters?: object;
+//   populate?: object;
+//   fields?: object;
+//   sort?: Array<string>;
+//   pagination?: object;
+// }
+
+// type IQueryParams = {
+//   id: string;
+//   filters?: object;
+//   populate?: object;
+//   fields?: object;
+//   sort?: Array<string>;
+//   pagination?: object;
+// };
+
+// type IUseGetQuery = UseQuery<
+//   QueryDefinition<
+//     any,
+//     BaseQueryFn<
+//       string | FetchArgs,
+//       unknown,
+//       FetchBaseQueryError,
+//       any,
+//       FetchBaseQueryMeta
+//     >,
+//     string,
+//     any,
+//     "backend"
+//   >
+// >;
+
+// type IUseMutation = UseMutation<
+//   MutationDefinition<
+//     any,
+//     BaseQueryFn<
+//       string | FetchArgs,
+//       unknown,
+//       FetchBaseQueryError,
+//       any,
+//       FetchBaseQueryMeta
+//     >,
+//     string,
+//     any,
+//     "backend"
+//   >
+// >;
+
+// type TBuild = EndpointBuilder<
+//   BaseQueryFn<
+//     string | FetchArgs,
+//     unknown,
+//     FetchBaseQueryError,
+//     any,
+//     FetchBaseQueryMeta
+//   >,
+//   string,
+//   "backend"
+// >;
+
+// type TProfilesHooks = {
+//   useGetMeQuery: IUseGetQuery;
+//   useLazyGetMeQuery: IUseGetQuery;
+//   useGetProfileByIdQuery: IUseGetQuery;
+//   useLazyGetProfileByIdQuery: IUseGetQuery;
+//   useConfirmPhoneMutation: IUseMutation;
+//   useLoginWithEmailAndPasswordMutation: IUseMutation;
+//   useSendConfirmPhoneMutation: IUseMutation;
+//   useConfirmEmailMutation: IUseMutation;
+//   useForgotPasswordMutation: IUseMutation;
+//   useResetPasswordMutation: IUseMutation;
+//   useCheckOtpMutation: IUseMutation;
+//   useSendEmailCodeMutation: IUseMutation;
+//   useUpdateMeMutation: IUseMutation;
+//   useRegisterMutation: IUseMutation;
+//   useGenerateOtpQuery: IUseGetQuery;
+// };
+
+// type TBackendServicApi = Api<
+//   BaseQueryFn<
+//     string | FetchArgs,
+//     unknown,
+//     FetchBaseQueryError,
+//     any,
+//     FetchBaseQueryMeta
+//   >,
+//   any,
+//   "backend",
+//   string,
+//   any
+// >;
+
+var prepareDataToSend = function prepareDataToSend(params) {
+  var data = params.data,
+    files = params.files;
+  var clearedData = removeEmptyFields({
+    data: data,
+    files: files
+  });
+  console.log("\uD83D\uDE80 ~ clearedData", clearedData);
+  var formData = new FormData();
+  formData.append("data", JSON.stringify(clearedData));
+  if (files) {
+    appendFilesToFormData(formData, files);
+  }
+  return formData;
+};
+function createProfilesApi(backendServiceApi) {
+  var profilesApi = backendServiceApi.injectEndpoints({
+    endpoints: function endpoints(build) {
+      return {
+        getMe: build.query({
+          query: function query() {
+            return {
+              url: "users/me"
+            };
+          },
+          transformResponse: transformResponseItem,
+          providesTags: function providesTags(result) {
+            return result ? [{
+              type: "Profile",
+              id: result.id
+            }] : [];
+          }
+        }),
+        loginWithEmailAndPassword: build.mutation({
+          query: function query(_ref) {
+            var identifier = _ref.identifier,
+              password = _ref.password;
+            return {
+              method: "POST",
+              url: "auth/local",
+              body: {
+                identifier: identifier,
+                password: password
+              }
+            };
+          },
+          transformResponse: function transformResponse(res) {
+            return transformResponseItem(res);
+          }
+        }),
+        checkOtp: build.mutation({
+          query: function query(params) {
+            var userId = params.userId,
+              code = params.code;
+            return {
+              url: "auth/check-otp/".concat(userId),
+              params: {
+                code: code
+              }
+            };
+          },
+          transformResponse: transformResponseItem
+        }),
+        sendEmailConfirmation: build.mutation({
+          query: function query(_ref2) {
+            var data = _ref2.data;
+            return {
+              url: "auth/send-email-confirmation",
+              method: "POST",
+              body: data
+            };
+          },
+          transformResponse: transformResponseItem
+        }),
+        confirmEmail: build.mutation({
+          query: function query(_ref3) {
+            var data = _ref3.data;
+            var stringifiedParams = qs__default["default"].stringify(data);
+            // console.log(
+            //   `🚀 ~ createProfilesApi ~ stringifiedParams`,
+            //   stringifiedParams
+            // );
+
+            return {
+              url: "auth/email-confirmation?".concat(stringifiedParams)
+            };
+          },
+          transformResponse: transformResponseItem
+        }),
+        sendPhoneConfirmation: build.mutation({
+          query: function query(_ref4) {
+            var data = _ref4.data;
+            return {
+              url: "auth/send-phone-confirmation",
+              method: "POST",
+              body: data
+            };
+          }
+        }),
+        confirmPhone: build.mutation({
+          query: function query(_ref5) {
+            var data = _ref5.data;
+            var stringifiedParams = qs__default["default"].stringify(data); //?
+
+            return {
+              url: "auth/phone-confirmation?".concat(stringifiedParams)
+            };
+          }
+        }),
+        forgotPassword: build.mutation({
+          query: function query(_ref6) {
+            var data = _ref6.data;
+            // console.log(`🚀 ~ createProfilesApi ~ data`, data);
+            return {
+              url: "auth/forgot-password",
+              method: "POST",
+              body: data
+            };
+          },
+          transformResponse: transformResponseItem
+        }),
+        resetPassword: build.mutation({
+          query: function query(_ref7) {
+            var data = _ref7.data;
+            console.log("\uD83D\uDE80 ~ createProfilesApi ~ data", data);
+            return {
+              url: "auth/reset-password",
+              method: "POST",
+              body: data
+            };
+          },
+          transformResponse: transformResponseItem
+        }),
+        register: build.mutation({
+          query: function query(_ref8) {
+            var data = _ref8.data;
+            return {
+              url: "auth/local/register",
+              method: "POST",
+              body: data
+            };
+          },
+          transformResponse: transformResponseItem
+        }),
+        updateMe: build.mutation({
+          query: function query(params) {
+            var id = params.id; //?
+
+            var formData = prepareDataToSend(params);
+            return {
+              url: "users/".concat(id),
+              method: "PUT",
+              body: formData
+            };
+          },
+          transformResponse: transformResponseItem,
+          invalidatesTags: function invalidatesTags(_result, _error, _ref9) {
+            var id = _ref9.id;
+            return [{
+              type: "Profile",
+              id: id
+            }];
+          }
+        }),
+        getProfileById: build.query({
+          query: function query(params) {
+            var id = params.id,
+              populate = params.populate;
+            return {
+              url: "users/".concat(id),
+              params: {
+                populate: populate
+              }
+            };
+          },
+          transformResponse: transformResponseItem,
+          providesTags: function providesTags(result, _error, id) {
+            return result ? [{
+              type: "Profile",
+              id: id
+            }] : [];
+          }
+        }),
+        generateOtp: build.query({
+          query: function query() {
+            var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+            _objectDestructuringEmpty(params);
+            return {
+              url: "auth/otp-secret"
+            };
+          },
+          transformResponse: transformResponseItem,
+          invalidatesTags: function invalidatesTags(_result, _error, _ref10) {
+            _ref10.id;
+            return [];
+          }
+        })
+      };
+    }
+  });
+  var useGetMeQuery = profilesApi.useGetMeQuery,
+    useLazyGetMeQuery = profilesApi.useLazyGetMeQuery,
+    useGetProfileByIdQuery = profilesApi.useGetProfileByIdQuery,
+    useLazyGetProfileByIdQuery = profilesApi.useLazyGetProfileByIdQuery,
+    useConfirmPhoneMutation = profilesApi.useConfirmPhoneMutation,
+    useConfirmEmailMutation = profilesApi.useConfirmEmailMutation,
+    useLoginWithEmailAndPasswordMutation = profilesApi.useLoginWithEmailAndPasswordMutation,
+    useSendPhoneConfitmationMutation = profilesApi.useSendPhoneConfitmationMutation,
+    useSendEmailConfirmationMutation = profilesApi.useSendEmailConfirmationMutation,
+    useForgotPasswordMutation = profilesApi.useForgotPasswordMutation,
+    useResetPasswordMutation = profilesApi.useResetPasswordMutation,
+    useCheckOtpMutation = profilesApi.useCheckOtpMutation,
+    useSendConfirmEmailMutation = profilesApi.useSendConfirmEmailMutation,
+    useUpdateMeMutation = profilesApi.useUpdateMeMutation,
+    useRegisterMutation = profilesApi.useRegisterMutation,
+    useGenerateOtpQuery = profilesApi.useGenerateOtpQuery;
+  return {
+    profilesApi: profilesApi,
+    hooks: {
+      useGetMeQuery: useGetMeQuery,
+      useLazyGetMeQuery: useLazyGetMeQuery,
+      useGetProfileByIdQuery: useGetProfileByIdQuery,
+      useLazyGetProfileByIdQuery: useLazyGetProfileByIdQuery,
+      useConfirmPhoneMutation: useConfirmPhoneMutation,
+      useConfirmEmailMutation: useConfirmEmailMutation,
+      useLoginWithEmailAndPasswordMutation: useLoginWithEmailAndPasswordMutation,
+      useSendPhoneConfitmationMutation: useSendPhoneConfitmationMutation,
+      useSendEmailConfirmationMutation: useSendEmailConfirmationMutation,
+      useForgotPasswordMutation: useForgotPasswordMutation,
+      useResetPasswordMutation: useResetPasswordMutation,
+      useCheckOtpMutation: useCheckOtpMutation,
+      useSendConfirmEmailMutation: useSendConfirmEmailMutation,
+      useUpdateMeMutation: useUpdateMeMutation,
+      useRegisterMutation: useRegisterMutation,
+      useGenerateOtpQuery: useGenerateOtpQuery
+    }
+  };
+}
+
 var redux = {
   slices: {
     authSlice: authSlice
+  },
+  queries: {
+    profiles: {
+      createProfilesApi: createProfilesApi
+    }
   }
 };
 
-function _extends$3() {
-  _extends_1 = _extends$3 = Object.assign || function (target) {
+function _extends() {
+  _extends = Object.assign ? Object.assign.bind() : function (target) {
     for (var i = 1; i < arguments.length; i++) {
       var source = arguments[i];
       for (var key in source) {
@@ -2720,11 +3845,8 @@ function _extends$3() {
     }
     return target;
   };
-  return _extends$3.apply(this, arguments);
+  return _extends.apply(this, arguments);
 }
-var _extends_1 = _extends$3;
-
-var _extends$4 = _extends_1;
 
 var useStyleRewriter$5 = hooks.useStyleRewriter;
 var DropdownContainer = function DropdownContainer(_ref) {
@@ -2780,7 +3902,7 @@ var Tooltip = function Tooltip(_ref) {
 };
 var baseClasses$1 = "\n    @pn absolute\n    @wh w-fit\n    @it left-0 top-0\n    @tta text-center \n    @bxsw shadow-400\n    @brw border\n    @brc border-true-gray-150\n    @bdc bg-white \n    @pg p-1 \n    @brr rounded-8px \n    @ttc text-black\n  ";
 
-var _excluded$8 = ["children", "SmartButtonRef"],
+var _excluded$7 = ["children", "SmartButtonRef"],
   _excluded2$1 = ["Link", "children", "className", "linkProps"];
 var useStyleRewriter$3 = hooks.useStyleRewriter,
   useDetectMouseover = hooks.useDetectMouseover,
@@ -2812,7 +3934,7 @@ var SmartButton = function SmartButton(_ref) {
   var dropdownRef = React.useRef(null);
   var SmartButtonRef = React.useRef(null);
   var _useDetectOutsideClic = useDetectOutsideClick(SmartButtonRef, false),
-    _useDetectOutsideClic2 = slicedToArray(_useDetectOutsideClic, 2),
+    _useDetectOutsideClic2 = _slicedToArray(_useDetectOutsideClic, 2),
     isDropdownOpen = _useDetectOutsideClic2[0],
     setIsDropdownOpen = _useDetectOutsideClic2[1];
   var onClick = function onClick(e) {
@@ -2823,7 +3945,7 @@ var SmartButton = function SmartButton(_ref) {
     return onClickCb && onClickCb(e);
   };
   var _useDetectMouseover = useDetectMouseover(SmartButtonRef, false),
-    _useDetectMouseover2 = slicedToArray(_useDetectMouseover, 1),
+    _useDetectMouseover2 = _slicedToArray(_useDetectMouseover, 1),
     isMouseOver = _useDetectMouseover2[0];
   var statusClassName = React.useMemo(function () {
     if (disabled) {
@@ -2842,20 +3964,20 @@ var SmartButton = function SmartButton(_ref) {
   } : {
     className: srClasses
   };
-  return /*#__PURE__*/React__default["default"].createElement(React.Fragment, null, /*#__PURE__*/React__default["default"].createElement(Element, _extends$4({
+  return /*#__PURE__*/React__default["default"].createElement(React.Fragment, null, /*#__PURE__*/React__default["default"].createElement(Element, _extends({
     SmartButtonRef: SmartButtonRef,
     onClick: disabled ? function () {} : onClick
   }, elementProps), typeof children === "function" ? children({
     isMouseOver: isMouseOver
-  }) : children, DropdownItems && /*#__PURE__*/React__default["default"].createElement(transitionComponent.Transition, _extends$4({
+  }) : children, DropdownItems && /*#__PURE__*/React__default["default"].createElement(transitionComponent.Transition, _extends({
     show: isDropdownOpen
   }, contentTransitionProps$2), /*#__PURE__*/React__default["default"].createElement(DropdownContainer, {
     containerClassName: dropdownContainerClassName,
     className: dropdownClassName,
     dropdownRef: dropdownRef
-  }, /*#__PURE__*/React__default["default"].createElement(DropdownItems, _extends$4({}, dropdownProps, {
+  }, /*#__PURE__*/React__default["default"].createElement(DropdownItems, _extends({}, dropdownProps, {
     setIsDropdownOpen: setIsDropdownOpen
-  })))), TooltipItems && /*#__PURE__*/React__default["default"].createElement(transitionComponent.Transition, _extends$4({
+  })))), TooltipItems && /*#__PURE__*/React__default["default"].createElement(transitionComponent.Transition, _extends({
     show: isMouseOver
   }, tooltipTransitionProps), /*#__PURE__*/React__default["default"].createElement(Tooltip, {
     tooltipPosition: tooltipPosition,
@@ -2867,8 +3989,8 @@ var baseButtonClassName = "\n  @pn relative\n  @cr cursor-pointer\n  @tndn durat
 var DivSmartButton = function DivSmartButton(_ref2) {
   var children = _ref2.children,
     SmartButtonRef = _ref2.SmartButtonRef,
-    props = objectWithoutProperties(_ref2, _excluded$8);
-  return /*#__PURE__*/React__default["default"].createElement("div", _extends$4({
+    props = _objectWithoutProperties(_ref2, _excluded$7);
+  return /*#__PURE__*/React__default["default"].createElement("div", _extends({
     ref: SmartButtonRef
   }, props), children);
 };
@@ -2879,7 +4001,7 @@ var LinkSmartButton = function LinkSmartButton(_ref3) {
     className = _ref3.className,
     _ref3$linkProps = _ref3.linkProps,
     linkProps = _ref3$linkProps === void 0 ? [] : _ref3$linkProps,
-    props = objectWithoutProperties(_ref3, _excluded2$1);
+    props = _objectWithoutProperties(_ref3, _excluded2$1);
   var linkAttributes = [];
   if (linkProps.length) {
     linkAttributes = linkProps.map(function (_ref4) {
@@ -2889,7 +4011,7 @@ var LinkSmartButton = function LinkSmartButton(_ref3) {
     });
     linkAttributes = Object.fromEntries(linkAttributes);
   }
-  return /*#__PURE__*/React__default["default"].createElement(Link, props, /*#__PURE__*/React__default["default"].createElement("a", _extends$4({}, linkAttributes, {
+  return /*#__PURE__*/React__default["default"].createElement(Link, props, /*#__PURE__*/React__default["default"].createElement("a", _extends({}, linkAttributes, {
     className: className
   }), children));
 };
@@ -2941,7 +4063,7 @@ var ModalComponent$1 = function ModalComponent(_ref) {
     _ref$hideCloseButton = _ref.hideCloseButton,
     hideCloseButton = _ref$hideCloseButton === void 0 ? false : _ref$hideCloseButton;
   var _useState = React.useState(show),
-    _useState2 = slicedToArray(_useState, 2),
+    _useState2 = _slicedToArray(_useState, 2),
     showLayout = _useState2[0],
     setShowLayout = _useState2[1];
   var srLayoutClasses = useStyleRewriter$2(baseLayoutClasses, layoutClasses);
@@ -3002,7 +4124,7 @@ var ModalComponent$1 = function ModalComponent(_ref) {
     transitionProps: contentTransitionProps$1
   }, /*#__PURE__*/React__default["default"].createElement("div", {
     className: srPopupWindowClasses
-  }, /*#__PURE__*/React__default["default"].createElement(RenderCard, _extends$4({}, renderCardProps, {
+  }, /*#__PURE__*/React__default["default"].createElement(RenderCard, _extends({}, renderCardProps, {
     show: show,
     setShow: _setShow
   })))), !hideCloseButton && show ? /*#__PURE__*/React__default["default"].createElement(CloseButton, {
@@ -3053,7 +4175,7 @@ var TransitionComponent = function TransitionComponent(_ref3) {
   var children = _ref3.children,
     show = _ref3.show,
     transitionProps = _ref3.transitionProps;
-  return /*#__PURE__*/React__default["default"].createElement(transitionComponent.Transition, _extends$4({
+  return /*#__PURE__*/React__default["default"].createElement(transitionComponent.Transition, _extends({
     show: show
   }, transitionProps), children);
 };
@@ -3074,13 +4196,13 @@ var PlainDiv = function PlainDiv(_ref4) {
   }, children);
 };
 
-var _excluded$7 = ["targetId"];
+var _excluded$6 = ["targetId"];
 var ModalPortal$1 = function ModalPortal(_ref) {
   var _ref$targetId = _ref.targetId,
     targetId = _ref$targetId === void 0 ? "modal" : _ref$targetId,
-    props = objectWithoutProperties(_ref, _excluded$7);
+    props = _objectWithoutProperties(_ref, _excluded$6);
   var _useState = React.useState(false),
-    _useState2 = slicedToArray(_useState, 2),
+    _useState2 = _slicedToArray(_useState, 2),
     domLoaded = _useState2[0],
     setDomLoaded = _useState2[1];
   React.useEffect(function () {
@@ -3091,20 +4213,20 @@ var ModalPortal$1 = function ModalPortal(_ref) {
   return domLoaded && /*#__PURE__*/require$$0.createPortal( /*#__PURE__*/React__default["default"].createElement(ModalComponent$1, props), document.querySelector("#".concat(targetId)));
 };
 
-var _excluded$6 = ["showEffect", "ArrayItem", "array", "getRenderCardProps"];
+var _excluded$5 = ["showEffect", "ArrayItem", "array", "getRenderCardProps"];
 var ModalArray = function ModalArray(_ref) {
   var _ref$showEffect = _ref.showEffect,
     showEffect = _ref$showEffect === void 0 ? function () {} : _ref$showEffect,
     ArrayItem = _ref.ArrayItem,
     array = _ref.array,
     getRenderCardProps = _ref.getRenderCardProps,
-    props = objectWithoutProperties(_ref, _excluded$6);
+    props = _objectWithoutProperties(_ref, _excluded$5);
   var _useState = React.useState(false),
-    _useState2 = slicedToArray(_useState, 2),
+    _useState2 = _slicedToArray(_useState, 2),
     show = _useState2[0],
     setShow = _useState2[1];
   var _useState3 = React.useState(0),
-    _useState4 = slicedToArray(_useState3, 2),
+    _useState4 = _slicedToArray(_useState3, 2),
     currentItem = _useState4[0],
     setCurrentItem = _useState4[1];
   var modalComponentId = React.useMemo(function () {
@@ -3128,7 +4250,7 @@ var ModalArray = function ModalArray(_ref) {
     setShow(true);
   };
   var renderCardProps = getRenderCardProps(array[currentItem], currentItem);
-  return /*#__PURE__*/React__default["default"].createElement(React__default["default"].Fragment, null, /*#__PURE__*/React__default["default"].createElement(ModalPortal$1, _extends$4({
+  return /*#__PURE__*/React__default["default"].createElement(React__default["default"].Fragment, null, /*#__PURE__*/React__default["default"].createElement(ModalPortal$1, _extends({
     modalComponentId: modalComponentId,
     renderCardProps: renderCardProps,
     setShow: setShow,
@@ -3143,3363 +4265,8 @@ var ModalArray = function ModalArray(_ref) {
   }));
 };
 
-let updateQueue = makeQueue();
-const raf = fn => schedule(fn, updateQueue);
-let writeQueue = makeQueue();
-raf.write = fn => schedule(fn, writeQueue);
-let onStartQueue = makeQueue();
-raf.onStart = fn => schedule(fn, onStartQueue);
-let onFrameQueue = makeQueue();
-raf.onFrame = fn => schedule(fn, onFrameQueue);
-let onFinishQueue = makeQueue();
-raf.onFinish = fn => schedule(fn, onFinishQueue);
-let timeouts = [];
-raf.setTimeout = (handler, ms) => {
-  let time = raf.now() + ms;
-  let cancel = () => {
-    let i = timeouts.findIndex(t => t.cancel == cancel);
-    if (~i) timeouts.splice(i, 1);
-    pendingCount -= ~i ? 1 : 0;
-  };
-  let timeout = {
-    time,
-    handler,
-    cancel
-  };
-  timeouts.splice(findTimeout(time), 0, timeout);
-  pendingCount += 1;
-  start();
-  return timeout;
-};
-let findTimeout = time => ~(~timeouts.findIndex(t => t.time > time) || ~timeouts.length);
-raf.cancel = fn => {
-  onStartQueue.delete(fn);
-  onFrameQueue.delete(fn);
-  onFinishQueue.delete(fn);
-  updateQueue.delete(fn);
-  writeQueue.delete(fn);
-};
-raf.sync = fn => {
-  sync = true;
-  raf.batchedUpdates(fn);
-  sync = false;
-};
-raf.throttle = fn => {
-  let lastArgs;
-  function queuedFn() {
-    try {
-      fn(...lastArgs);
-    } finally {
-      lastArgs = null;
-    }
-  }
-  function throttled(...args) {
-    lastArgs = args;
-    raf.onStart(queuedFn);
-  }
-  throttled.handler = fn;
-  throttled.cancel = () => {
-    onStartQueue.delete(queuedFn);
-    lastArgs = null;
-  };
-  return throttled;
-};
-let nativeRaf = typeof window != 'undefined' ? window.requestAnimationFrame : () => {};
-raf.use = impl => nativeRaf = impl;
-raf.now = typeof performance != 'undefined' ? () => performance.now() : Date.now;
-raf.batchedUpdates = fn => fn();
-raf.catch = console.error;
-raf.frameLoop = 'always';
-raf.advance = () => {
-  if (raf.frameLoop !== 'demand') {
-    console.warn('Cannot call the manual advancement of rafz whilst frameLoop is not set as demand');
-  } else {
-    update();
-  }
-};
-let ts = -1;
-let pendingCount = 0;
-let sync = false;
-function schedule(fn, queue) {
-  if (sync) {
-    queue.delete(fn);
-    fn(0);
-  } else {
-    queue.add(fn);
-    start();
-  }
-}
-function start() {
-  if (ts < 0) {
-    ts = 0;
-    if (raf.frameLoop !== 'demand') {
-      nativeRaf(loop);
-    }
-  }
-}
-function stop() {
-  ts = -1;
-}
-function loop() {
-  if (~ts) {
-    nativeRaf(loop);
-    raf.batchedUpdates(update);
-  }
-}
-function update() {
-  let prevTs = ts;
-  ts = raf.now();
-  let count = findTimeout(ts);
-  if (count) {
-    eachSafely(timeouts.splice(0, count), t => t.handler());
-    pendingCount -= count;
-  }
-  if (!pendingCount) {
-    stop();
-    return;
-  }
-  onStartQueue.flush();
-  updateQueue.flush(prevTs ? Math.min(64, ts - prevTs) : 16.667);
-  onFrameQueue.flush();
-  writeQueue.flush();
-  onFinishQueue.flush();
-}
-function makeQueue() {
-  let next = new Set();
-  let current = next;
-  return {
-    add(fn) {
-      pendingCount += current == next && !next.has(fn) ? 1 : 0;
-      next.add(fn);
-    },
-    delete(fn) {
-      pendingCount -= current == next && next.has(fn) ? 1 : 0;
-      return next.delete(fn);
-    },
-    flush(arg) {
-      if (current.size) {
-        next = new Set();
-        pendingCount -= current.size;
-        eachSafely(current, fn => fn(arg) && next.add(fn));
-        pendingCount += next.size;
-        current = next;
-      }
-    }
-  };
-}
-function eachSafely(values, each) {
-  values.forEach(value => {
-    try {
-      each(value);
-    } catch (e) {
-      raf.catch(e);
-    }
-  });
-}
-
-function noop() {}
-const defineHidden = (obj, key, value) => Object.defineProperty(obj, key, {
-  value,
-  writable: true,
-  configurable: true
-});
-const is = {
-  arr: Array.isArray,
-  obj: a => !!a && a.constructor.name === 'Object',
-  fun: a => typeof a === 'function',
-  str: a => typeof a === 'string',
-  num: a => typeof a === 'number',
-  und: a => a === undefined
-};
-function isEqual(a, b) {
-  if (is.arr(a)) {
-    if (!is.arr(b) || a.length !== b.length) return false;
-    for (let i = 0; i < a.length; i++) {
-      if (a[i] !== b[i]) return false;
-    }
-    return true;
-  }
-  return a === b;
-}
-const each = (obj, fn) => obj.forEach(fn);
-function eachProp(obj, fn, ctx) {
-  if (is.arr(obj)) {
-    for (let i = 0; i < obj.length; i++) {
-      fn.call(ctx, obj[i], `${i}`);
-    }
-    return;
-  }
-  for (const key in obj) {
-    if (obj.hasOwnProperty(key)) {
-      fn.call(ctx, obj[key], key);
-    }
-  }
-}
-const toArray = a => is.und(a) ? [] : is.arr(a) ? a : [a];
-function flush(queue, iterator) {
-  if (queue.size) {
-    const items = Array.from(queue);
-    queue.clear();
-    each(items, iterator);
-  }
-}
-const flushCalls = (queue, ...args) => flush(queue, fn => fn(...args));
-const isSSR = () => typeof window === 'undefined' || !window.navigator || /ServerSideRendering|^Deno\//.test(window.navigator.userAgent);
-let createStringInterpolator$1;
-let to;
-let colors$1 = null;
-let skipAnimation = false;
-let willAdvance = noop;
-const assign = globals => {
-  if (globals.to) to = globals.to;
-  if (globals.now) raf.now = globals.now;
-  if (globals.colors !== undefined) colors$1 = globals.colors;
-  if (globals.skipAnimation != null) skipAnimation = globals.skipAnimation;
-  if (globals.createStringInterpolator) createStringInterpolator$1 = globals.createStringInterpolator;
-  if (globals.requestAnimationFrame) raf.use(globals.requestAnimationFrame);
-  if (globals.batchedUpdates) raf.batchedUpdates = globals.batchedUpdates;
-  if (globals.willAdvance) willAdvance = globals.willAdvance;
-  if (globals.frameLoop) raf.frameLoop = globals.frameLoop;
-};
-var globals = /*#__PURE__*/Object.freeze({
-  __proto__: null,
-  get createStringInterpolator() {
-    return createStringInterpolator$1;
-  },
-  get to() {
-    return to;
-  },
-  get colors() {
-    return colors$1;
-  },
-  get skipAnimation() {
-    return skipAnimation;
-  },
-  get willAdvance() {
-    return willAdvance;
-  },
-  assign: assign
-});
-const startQueue = new Set();
-let currentFrame = [];
-let prevFrame = [];
-let priority = 0;
-const frameLoop = {
-  get idle() {
-    return !startQueue.size && !currentFrame.length;
-  },
-  start(animation) {
-    if (priority > animation.priority) {
-      startQueue.add(animation);
-      raf.onStart(flushStartQueue);
-    } else {
-      startSafely(animation);
-      raf(advance);
-    }
-  },
-  advance,
-  sort(animation) {
-    if (priority) {
-      raf.onFrame(() => frameLoop.sort(animation));
-    } else {
-      const prevIndex = currentFrame.indexOf(animation);
-      if (~prevIndex) {
-        currentFrame.splice(prevIndex, 1);
-        startUnsafely(animation);
-      }
-    }
-  },
-  clear() {
-    currentFrame = [];
-    startQueue.clear();
-  }
-};
-function flushStartQueue() {
-  startQueue.forEach(startSafely);
-  startQueue.clear();
-  raf(advance);
-}
-function startSafely(animation) {
-  if (!currentFrame.includes(animation)) startUnsafely(animation);
-}
-function startUnsafely(animation) {
-  currentFrame.splice(findIndex(currentFrame, other => other.priority > animation.priority), 0, animation);
-}
-function advance(dt) {
-  const nextFrame = prevFrame;
-  for (let i = 0; i < currentFrame.length; i++) {
-    const animation = currentFrame[i];
-    priority = animation.priority;
-    if (!animation.idle) {
-      willAdvance(animation);
-      animation.advance(dt);
-      if (!animation.idle) {
-        nextFrame.push(animation);
-      }
-    }
-  }
-  priority = 0;
-  prevFrame = currentFrame;
-  prevFrame.length = 0;
-  currentFrame = nextFrame;
-  return currentFrame.length > 0;
-}
-function findIndex(arr, test) {
-  const index = arr.findIndex(test);
-  return index < 0 ? arr.length : index;
-}
-const colors = {
-  transparent: 0x00000000,
-  aliceblue: 0xf0f8ffff,
-  antiquewhite: 0xfaebd7ff,
-  aqua: 0x00ffffff,
-  aquamarine: 0x7fffd4ff,
-  azure: 0xf0ffffff,
-  beige: 0xf5f5dcff,
-  bisque: 0xffe4c4ff,
-  black: 0x000000ff,
-  blanchedalmond: 0xffebcdff,
-  blue: 0x0000ffff,
-  blueviolet: 0x8a2be2ff,
-  brown: 0xa52a2aff,
-  burlywood: 0xdeb887ff,
-  burntsienna: 0xea7e5dff,
-  cadetblue: 0x5f9ea0ff,
-  chartreuse: 0x7fff00ff,
-  chocolate: 0xd2691eff,
-  coral: 0xff7f50ff,
-  cornflowerblue: 0x6495edff,
-  cornsilk: 0xfff8dcff,
-  crimson: 0xdc143cff,
-  cyan: 0x00ffffff,
-  darkblue: 0x00008bff,
-  darkcyan: 0x008b8bff,
-  darkgoldenrod: 0xb8860bff,
-  darkgray: 0xa9a9a9ff,
-  darkgreen: 0x006400ff,
-  darkgrey: 0xa9a9a9ff,
-  darkkhaki: 0xbdb76bff,
-  darkmagenta: 0x8b008bff,
-  darkolivegreen: 0x556b2fff,
-  darkorange: 0xff8c00ff,
-  darkorchid: 0x9932ccff,
-  darkred: 0x8b0000ff,
-  darksalmon: 0xe9967aff,
-  darkseagreen: 0x8fbc8fff,
-  darkslateblue: 0x483d8bff,
-  darkslategray: 0x2f4f4fff,
-  darkslategrey: 0x2f4f4fff,
-  darkturquoise: 0x00ced1ff,
-  darkviolet: 0x9400d3ff,
-  deeppink: 0xff1493ff,
-  deepskyblue: 0x00bfffff,
-  dimgray: 0x696969ff,
-  dimgrey: 0x696969ff,
-  dodgerblue: 0x1e90ffff,
-  firebrick: 0xb22222ff,
-  floralwhite: 0xfffaf0ff,
-  forestgreen: 0x228b22ff,
-  fuchsia: 0xff00ffff,
-  gainsboro: 0xdcdcdcff,
-  ghostwhite: 0xf8f8ffff,
-  gold: 0xffd700ff,
-  goldenrod: 0xdaa520ff,
-  gray: 0x808080ff,
-  green: 0x008000ff,
-  greenyellow: 0xadff2fff,
-  grey: 0x808080ff,
-  honeydew: 0xf0fff0ff,
-  hotpink: 0xff69b4ff,
-  indianred: 0xcd5c5cff,
-  indigo: 0x4b0082ff,
-  ivory: 0xfffff0ff,
-  khaki: 0xf0e68cff,
-  lavender: 0xe6e6faff,
-  lavenderblush: 0xfff0f5ff,
-  lawngreen: 0x7cfc00ff,
-  lemonchiffon: 0xfffacdff,
-  lightblue: 0xadd8e6ff,
-  lightcoral: 0xf08080ff,
-  lightcyan: 0xe0ffffff,
-  lightgoldenrodyellow: 0xfafad2ff,
-  lightgray: 0xd3d3d3ff,
-  lightgreen: 0x90ee90ff,
-  lightgrey: 0xd3d3d3ff,
-  lightpink: 0xffb6c1ff,
-  lightsalmon: 0xffa07aff,
-  lightseagreen: 0x20b2aaff,
-  lightskyblue: 0x87cefaff,
-  lightslategray: 0x778899ff,
-  lightslategrey: 0x778899ff,
-  lightsteelblue: 0xb0c4deff,
-  lightyellow: 0xffffe0ff,
-  lime: 0x00ff00ff,
-  limegreen: 0x32cd32ff,
-  linen: 0xfaf0e6ff,
-  magenta: 0xff00ffff,
-  maroon: 0x800000ff,
-  mediumaquamarine: 0x66cdaaff,
-  mediumblue: 0x0000cdff,
-  mediumorchid: 0xba55d3ff,
-  mediumpurple: 0x9370dbff,
-  mediumseagreen: 0x3cb371ff,
-  mediumslateblue: 0x7b68eeff,
-  mediumspringgreen: 0x00fa9aff,
-  mediumturquoise: 0x48d1ccff,
-  mediumvioletred: 0xc71585ff,
-  midnightblue: 0x191970ff,
-  mintcream: 0xf5fffaff,
-  mistyrose: 0xffe4e1ff,
-  moccasin: 0xffe4b5ff,
-  navajowhite: 0xffdeadff,
-  navy: 0x000080ff,
-  oldlace: 0xfdf5e6ff,
-  olive: 0x808000ff,
-  olivedrab: 0x6b8e23ff,
-  orange: 0xffa500ff,
-  orangered: 0xff4500ff,
-  orchid: 0xda70d6ff,
-  palegoldenrod: 0xeee8aaff,
-  palegreen: 0x98fb98ff,
-  paleturquoise: 0xafeeeeff,
-  palevioletred: 0xdb7093ff,
-  papayawhip: 0xffefd5ff,
-  peachpuff: 0xffdab9ff,
-  peru: 0xcd853fff,
-  pink: 0xffc0cbff,
-  plum: 0xdda0ddff,
-  powderblue: 0xb0e0e6ff,
-  purple: 0x800080ff,
-  rebeccapurple: 0x663399ff,
-  red: 0xff0000ff,
-  rosybrown: 0xbc8f8fff,
-  royalblue: 0x4169e1ff,
-  saddlebrown: 0x8b4513ff,
-  salmon: 0xfa8072ff,
-  sandybrown: 0xf4a460ff,
-  seagreen: 0x2e8b57ff,
-  seashell: 0xfff5eeff,
-  sienna: 0xa0522dff,
-  silver: 0xc0c0c0ff,
-  skyblue: 0x87ceebff,
-  slateblue: 0x6a5acdff,
-  slategray: 0x708090ff,
-  slategrey: 0x708090ff,
-  snow: 0xfffafaff,
-  springgreen: 0x00ff7fff,
-  steelblue: 0x4682b4ff,
-  tan: 0xd2b48cff,
-  teal: 0x008080ff,
-  thistle: 0xd8bfd8ff,
-  tomato: 0xff6347ff,
-  turquoise: 0x40e0d0ff,
-  violet: 0xee82eeff,
-  wheat: 0xf5deb3ff,
-  white: 0xffffffff,
-  whitesmoke: 0xf5f5f5ff,
-  yellow: 0xffff00ff,
-  yellowgreen: 0x9acd32ff
-};
-const NUMBER = '[-+]?\\d*\\.?\\d+';
-const PERCENTAGE = NUMBER + '%';
-function call(...parts) {
-  return '\\(\\s*(' + parts.join(')\\s*,\\s*(') + ')\\s*\\)';
-}
-const rgb = new RegExp('rgb' + call(NUMBER, NUMBER, NUMBER));
-const rgba = new RegExp('rgba' + call(NUMBER, NUMBER, NUMBER, NUMBER));
-const hsl = new RegExp('hsl' + call(NUMBER, PERCENTAGE, PERCENTAGE));
-const hsla = new RegExp('hsla' + call(NUMBER, PERCENTAGE, PERCENTAGE, NUMBER));
-const hex3 = /^#([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})$/;
-const hex4 = /^#([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})$/;
-const hex6 = /^#([0-9a-fA-F]{6})$/;
-const hex8 = /^#([0-9a-fA-F]{8})$/;
-function normalizeColor(color) {
-  let match;
-  if (typeof color === 'number') {
-    return color >>> 0 === color && color >= 0 && color <= 0xffffffff ? color : null;
-  }
-  if (match = hex6.exec(color)) return parseInt(match[1] + 'ff', 16) >>> 0;
-  if (colors$1 && colors$1[color] !== undefined) {
-    return colors$1[color];
-  }
-  if (match = rgb.exec(color)) {
-    return (parse255(match[1]) << 24 | parse255(match[2]) << 16 | parse255(match[3]) << 8 | 0x000000ff) >>> 0;
-  }
-  if (match = rgba.exec(color)) {
-    return (parse255(match[1]) << 24 | parse255(match[2]) << 16 | parse255(match[3]) << 8 | parse1(match[4])) >>> 0;
-  }
-  if (match = hex3.exec(color)) {
-    return parseInt(match[1] + match[1] + match[2] + match[2] + match[3] + match[3] + 'ff', 16) >>> 0;
-  }
-  if (match = hex8.exec(color)) return parseInt(match[1], 16) >>> 0;
-  if (match = hex4.exec(color)) {
-    return parseInt(match[1] + match[1] + match[2] + match[2] + match[3] + match[3] + match[4] + match[4], 16) >>> 0;
-  }
-  if (match = hsl.exec(color)) {
-    return (hslToRgb(parse360(match[1]), parsePercentage(match[2]), parsePercentage(match[3])) | 0x000000ff) >>> 0;
-  }
-  if (match = hsla.exec(color)) {
-    return (hslToRgb(parse360(match[1]), parsePercentage(match[2]), parsePercentage(match[3])) | parse1(match[4])) >>> 0;
-  }
-  return null;
-}
-function hue2rgb(p, q, t) {
-  if (t < 0) t += 1;
-  if (t > 1) t -= 1;
-  if (t < 1 / 6) return p + (q - p) * 6 * t;
-  if (t < 1 / 2) return q;
-  if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
-  return p;
-}
-function hslToRgb(h, s, l) {
-  const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-  const p = 2 * l - q;
-  const r = hue2rgb(p, q, h + 1 / 3);
-  const g = hue2rgb(p, q, h);
-  const b = hue2rgb(p, q, h - 1 / 3);
-  return Math.round(r * 255) << 24 | Math.round(g * 255) << 16 | Math.round(b * 255) << 8;
-}
-function parse255(str) {
-  const int = parseInt(str, 10);
-  if (int < 0) return 0;
-  if (int > 255) return 255;
-  return int;
-}
-function parse360(str) {
-  const int = parseFloat(str);
-  return (int % 360 + 360) % 360 / 360;
-}
-function parse1(str) {
-  const num = parseFloat(str);
-  if (num < 0) return 0;
-  if (num > 1) return 255;
-  return Math.round(num * 255);
-}
-function parsePercentage(str) {
-  const int = parseFloat(str);
-  if (int < 0) return 0;
-  if (int > 100) return 1;
-  return int / 100;
-}
-function colorToRgba(input) {
-  let int32Color = normalizeColor(input);
-  if (int32Color === null) return input;
-  int32Color = int32Color || 0;
-  let r = (int32Color & 0xff000000) >>> 24;
-  let g = (int32Color & 0x00ff0000) >>> 16;
-  let b = (int32Color & 0x0000ff00) >>> 8;
-  let a = (int32Color & 0x000000ff) / 255;
-  return `rgba(${r}, ${g}, ${b}, ${a})`;
-}
-const createInterpolator = (range, output, extrapolate) => {
-  if (is.fun(range)) {
-    return range;
-  }
-  if (is.arr(range)) {
-    return createInterpolator({
-      range,
-      output: output,
-      extrapolate
-    });
-  }
-  if (is.str(range.output[0])) {
-    return createStringInterpolator$1(range);
-  }
-  const config = range;
-  const outputRange = config.output;
-  const inputRange = config.range || [0, 1];
-  const extrapolateLeft = config.extrapolateLeft || config.extrapolate || 'extend';
-  const extrapolateRight = config.extrapolateRight || config.extrapolate || 'extend';
-  const easing = config.easing || (t => t);
-  return input => {
-    const range = findRange(input, inputRange);
-    return interpolate(input, inputRange[range], inputRange[range + 1], outputRange[range], outputRange[range + 1], easing, extrapolateLeft, extrapolateRight, config.map);
-  };
-};
-function interpolate(input, inputMin, inputMax, outputMin, outputMax, easing, extrapolateLeft, extrapolateRight, map) {
-  let result = map ? map(input) : input;
-  if (result < inputMin) {
-    if (extrapolateLeft === 'identity') return result;else if (extrapolateLeft === 'clamp') result = inputMin;
-  }
-  if (result > inputMax) {
-    if (extrapolateRight === 'identity') return result;else if (extrapolateRight === 'clamp') result = inputMax;
-  }
-  if (outputMin === outputMax) return outputMin;
-  if (inputMin === inputMax) return input <= inputMin ? outputMin : outputMax;
-  if (inputMin === -Infinity) result = -result;else if (inputMax === Infinity) result = result - inputMin;else result = (result - inputMin) / (inputMax - inputMin);
-  result = easing(result);
-  if (outputMin === -Infinity) result = -result;else if (outputMax === Infinity) result = result + outputMin;else result = result * (outputMax - outputMin) + outputMin;
-  return result;
-}
-function findRange(input, inputRange) {
-  for (var i = 1; i < inputRange.length - 1; ++i) if (inputRange[i] >= input) break;
-  return i - 1;
-}
-function _extends$2() {
-  _extends$2 = Object.assign ? Object.assign.bind() : function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
-    }
-    return target;
-  };
-  return _extends$2.apply(this, arguments);
-}
-const $get = Symbol.for('FluidValue.get');
-const $observers = Symbol.for('FluidValue.observers');
-const hasFluidValue = arg => Boolean(arg && arg[$get]);
-const getFluidValue = arg => arg && arg[$get] ? arg[$get]() : arg;
-const getFluidObservers = target => target[$observers] || null;
-function callFluidObserver(observer, event) {
-  if (observer.eventObserved) {
-    observer.eventObserved(event);
-  } else {
-    observer(event);
-  }
-}
-function callFluidObservers(target, event) {
-  let observers = target[$observers];
-  if (observers) {
-    observers.forEach(observer => {
-      callFluidObserver(observer, event);
-    });
-  }
-}
-class FluidValue {
-  constructor(get) {
-    this[$get] = void 0;
-    this[$observers] = void 0;
-    if (!get && !(get = this.get)) {
-      throw Error('Unknown getter');
-    }
-    setFluidGetter(this, get);
-  }
-}
-const setFluidGetter = (target, get) => setHidden(target, $get, get);
-function addFluidObserver(target, observer) {
-  if (target[$get]) {
-    let observers = target[$observers];
-    if (!observers) {
-      setHidden(target, $observers, observers = new Set());
-    }
-    if (!observers.has(observer)) {
-      observers.add(observer);
-      if (target.observerAdded) {
-        target.observerAdded(observers.size, observer);
-      }
-    }
-  }
-  return observer;
-}
-function removeFluidObserver(target, observer) {
-  let observers = target[$observers];
-  if (observers && observers.has(observer)) {
-    const count = observers.size - 1;
-    if (count) {
-      observers.delete(observer);
-    } else {
-      target[$observers] = null;
-    }
-    if (target.observerRemoved) {
-      target.observerRemoved(count, observer);
-    }
-  }
-}
-const setHidden = (target, key, value) => Object.defineProperty(target, key, {
-  value,
-  writable: true,
-  configurable: true
-});
-const numberRegex = /[+\-]?(?:0|[1-9]\d*)(?:\.\d*)?(?:[eE][+\-]?\d+)?/g;
-const colorRegex = /(#(?:[0-9a-f]{2}){2,4}|(#[0-9a-f]{3})|(rgb|hsl)a?\((-?\d+%?[,\s]+){2,3}\s*[\d\.]+%?\))/gi;
-const unitRegex = new RegExp(`(${numberRegex.source})(%|[a-z]+)`, 'i');
-const rgbaRegex = /rgba\(([0-9\.-]+), ([0-9\.-]+), ([0-9\.-]+), ([0-9\.-]+)\)/gi;
-const cssVariableRegex = /var\((--[a-zA-Z0-9-_]+),? ?([a-zA-Z0-9 ()%#.,-]+)?\)/;
-const variableToRgba = input => {
-  const [token, fallback] = parseCSSVariable(input);
-  if (!token || isSSR()) {
-    return input;
-  }
-  const value = window.getComputedStyle(document.documentElement).getPropertyValue(token);
-  if (value) {
-    return value.trim();
-  } else if (fallback && fallback.startsWith('--')) {
-    const _value = window.getComputedStyle(document.documentElement).getPropertyValue(fallback);
-    if (_value) {
-      return _value;
-    } else {
-      return input;
-    }
-  } else if (fallback && cssVariableRegex.test(fallback)) {
-    return variableToRgba(fallback);
-  } else if (fallback) {
-    return fallback;
-  }
-  return input;
-};
-const parseCSSVariable = current => {
-  const match = cssVariableRegex.exec(current);
-  if (!match) return [,];
-  const [, token, fallback] = match;
-  return [token, fallback];
-};
-let namedColorRegex;
-const rgbaRound = (_, p1, p2, p3, p4) => `rgba(${Math.round(p1)}, ${Math.round(p2)}, ${Math.round(p3)}, ${p4})`;
-const createStringInterpolator = config => {
-  if (!namedColorRegex) namedColorRegex = colors$1 ? new RegExp(`(${Object.keys(colors$1).join('|')})(?!\\w)`, 'g') : /^\b$/;
-  const output = config.output.map(value => {
-    return getFluidValue(value).replace(cssVariableRegex, variableToRgba).replace(colorRegex, colorToRgba).replace(namedColorRegex, colorToRgba);
-  });
-  const keyframes = output.map(value => value.match(numberRegex).map(Number));
-  const outputRanges = keyframes[0].map((_, i) => keyframes.map(values => {
-    if (!(i in values)) {
-      throw Error('The arity of each "output" value must be equal');
-    }
-    return values[i];
-  }));
-  const interpolators = outputRanges.map(output => createInterpolator(_extends$2({}, config, {
-    output
-  })));
-  return input => {
-    var _output$find;
-    const missingUnit = !unitRegex.test(output[0]) && ((_output$find = output.find(value => unitRegex.test(value))) == null ? void 0 : _output$find.replace(numberRegex, ''));
-    let i = 0;
-    return output[0].replace(numberRegex, () => `${interpolators[i++](input)}${missingUnit || ''}`).replace(rgbaRegex, rgbaRound);
-  };
-};
-const prefix$1 = 'react-spring: ';
-const once = fn => {
-  const func = fn;
-  let called = false;
-  if (typeof func != 'function') {
-    throw new TypeError(`${prefix$1}once requires a function parameter`);
-  }
-  return (...args) => {
-    if (!called) {
-      func(...args);
-      called = true;
-    }
-  };
-};
-const warnInterpolate = once(console.warn);
-function deprecateInterpolate() {
-  warnInterpolate(`${prefix$1}The "interpolate" function is deprecated in v9 (use "to" instead)`);
-}
-const warnDirectCall = once(console.warn);
-function deprecateDirectCall() {
-  warnDirectCall(`${prefix$1}Directly calling start instead of using the api object is deprecated in v9 (use ".start" instead), this will be removed in later 0.X.0 versions`);
-}
-function isAnimatedString(value) {
-  return is.str(value) && (value[0] == '#' || /\d/.test(value) || !isSSR() && cssVariableRegex.test(value) || value in (colors$1 || {}));
-}
-const useIsomorphicLayoutEffect = isSSR() ? React.useEffect : React.useLayoutEffect;
-const useIsMounted = () => {
-  const isMounted = React.useRef(false);
-  useIsomorphicLayoutEffect(() => {
-    isMounted.current = true;
-    return () => {
-      isMounted.current = false;
-    };
-  }, []);
-  return isMounted;
-};
-function useForceUpdate() {
-  const update = React.useState()[1];
-  const isMounted = useIsMounted();
-  return () => {
-    if (isMounted.current) {
-      update(Math.random());
-    }
-  };
-}
-function useMemoOne(getResult, inputs) {
-  const [initial] = React.useState(() => ({
-    inputs,
-    result: getResult()
-  }));
-  const committed = React.useRef();
-  const prevCache = committed.current;
-  let cache = prevCache;
-  if (cache) {
-    const useCache = Boolean(inputs && cache.inputs && areInputsEqual(inputs, cache.inputs));
-    if (!useCache) {
-      cache = {
-        inputs,
-        result: getResult()
-      };
-    }
-  } else {
-    cache = initial;
-  }
-  React.useEffect(() => {
-    committed.current = cache;
-    if (prevCache == initial) {
-      initial.inputs = initial.result = undefined;
-    }
-  }, [cache]);
-  return cache.result;
-}
-function areInputsEqual(next, prev) {
-  if (next.length !== prev.length) {
-    return false;
-  }
-  for (let i = 0; i < next.length; i++) {
-    if (next[i] !== prev[i]) {
-      return false;
-    }
-  }
-  return true;
-}
-const useOnce = effect => React.useEffect(effect, emptyDeps);
-const emptyDeps = [];
-function usePrev(value) {
-  const prevRef = React.useRef();
-  React.useEffect(() => {
-    prevRef.current = value;
-  });
-  return prevRef.current;
-}
-
-const $node = Symbol.for('Animated:node');
-const isAnimated = value => !!value && value[$node] === value;
-const getAnimated = owner => owner && owner[$node];
-const setAnimated = (owner, node) => defineHidden(owner, $node, node);
-const getPayload = owner => owner && owner[$node] && owner[$node].getPayload();
-class Animated {
-  constructor() {
-    this.payload = void 0;
-    setAnimated(this, this);
-  }
-  getPayload() {
-    return this.payload || [];
-  }
-}
-class AnimatedValue extends Animated {
-  constructor(_value) {
-    super();
-    this.done = true;
-    this.elapsedTime = void 0;
-    this.lastPosition = void 0;
-    this.lastVelocity = void 0;
-    this.v0 = void 0;
-    this.durationProgress = 0;
-    this._value = _value;
-    if (is.num(this._value)) {
-      this.lastPosition = this._value;
-    }
-  }
-  static create(value) {
-    return new AnimatedValue(value);
-  }
-  getPayload() {
-    return [this];
-  }
-  getValue() {
-    return this._value;
-  }
-  setValue(value, step) {
-    if (is.num(value)) {
-      this.lastPosition = value;
-      if (step) {
-        value = Math.round(value / step) * step;
-        if (this.done) {
-          this.lastPosition = value;
-        }
-      }
-    }
-    if (this._value === value) {
-      return false;
-    }
-    this._value = value;
-    return true;
-  }
-  reset() {
-    const {
-      done
-    } = this;
-    this.done = false;
-    if (is.num(this._value)) {
-      this.elapsedTime = 0;
-      this.durationProgress = 0;
-      this.lastPosition = this._value;
-      if (done) this.lastVelocity = null;
-      this.v0 = null;
-    }
-  }
-}
-class AnimatedString extends AnimatedValue {
-  constructor(value) {
-    super(0);
-    this._string = null;
-    this._toString = void 0;
-    this._toString = createInterpolator({
-      output: [value, value]
-    });
-  }
-  static create(value) {
-    return new AnimatedString(value);
-  }
-  getValue() {
-    let value = this._string;
-    return value == null ? this._string = this._toString(this._value) : value;
-  }
-  setValue(value) {
-    if (is.str(value)) {
-      if (value == this._string) {
-        return false;
-      }
-      this._string = value;
-      this._value = 1;
-    } else if (super.setValue(value)) {
-      this._string = null;
-    } else {
-      return false;
-    }
-    return true;
-  }
-  reset(goal) {
-    if (goal) {
-      this._toString = createInterpolator({
-        output: [this.getValue(), goal]
-      });
-    }
-    this._value = 0;
-    super.reset();
-  }
-}
-const TreeContext = {
-  dependencies: null
-};
-class AnimatedObject extends Animated {
-  constructor(source) {
-    super();
-    this.source = source;
-    this.setValue(source);
-  }
-  getValue(animated) {
-    const values = {};
-    eachProp(this.source, (source, key) => {
-      if (isAnimated(source)) {
-        values[key] = source.getValue(animated);
-      } else if (hasFluidValue(source)) {
-        values[key] = getFluidValue(source);
-      } else if (!animated) {
-        values[key] = source;
-      }
-    });
-    return values;
-  }
-  setValue(source) {
-    this.source = source;
-    this.payload = this._makePayload(source);
-  }
-  reset() {
-    if (this.payload) {
-      each(this.payload, node => node.reset());
-    }
-  }
-  _makePayload(source) {
-    if (source) {
-      const payload = new Set();
-      eachProp(source, this._addToPayload, payload);
-      return Array.from(payload);
-    }
-  }
-  _addToPayload(source) {
-    if (TreeContext.dependencies && hasFluidValue(source)) {
-      TreeContext.dependencies.add(source);
-    }
-    const payload = getPayload(source);
-    if (payload) {
-      each(payload, node => this.add(node));
-    }
-  }
-}
-class AnimatedArray extends AnimatedObject {
-  constructor(source) {
-    super(source);
-  }
-  static create(source) {
-    return new AnimatedArray(source);
-  }
-  getValue() {
-    return this.source.map(node => node.getValue());
-  }
-  setValue(source) {
-    const payload = this.getPayload();
-    if (source.length == payload.length) {
-      return payload.map((node, i) => node.setValue(source[i])).some(Boolean);
-    }
-    super.setValue(source.map(makeAnimated));
-    return true;
-  }
-}
-function makeAnimated(value) {
-  const nodeType = isAnimatedString(value) ? AnimatedString : AnimatedValue;
-  return nodeType.create(value);
-}
-function getAnimatedType(value) {
-  const parentNode = getAnimated(value);
-  return parentNode ? parentNode.constructor : is.arr(value) ? AnimatedArray : isAnimatedString(value) ? AnimatedString : AnimatedValue;
-}
-function _extends$1() {
-  _extends$1 = Object.assign ? Object.assign.bind() : function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
-    }
-    return target;
-  };
-  return _extends$1.apply(this, arguments);
-}
-const withAnimated = (Component, host) => {
-  const hasInstance = !is.fun(Component) || Component.prototype && Component.prototype.isReactComponent;
-  return React.forwardRef((givenProps, givenRef) => {
-    const instanceRef = React.useRef(null);
-    const ref = hasInstance && React.useCallback(value => {
-      instanceRef.current = updateRef(givenRef, value);
-    }, [givenRef]);
-    const [props, deps] = getAnimatedState(givenProps, host);
-    const forceUpdate = useForceUpdate();
-    const callback = () => {
-      const instance = instanceRef.current;
-      if (hasInstance && !instance) {
-        return;
-      }
-      const didUpdate = instance ? host.applyAnimatedValues(instance, props.getValue(true)) : false;
-      if (didUpdate === false) {
-        forceUpdate();
-      }
-    };
-    const observer = new PropsObserver(callback, deps);
-    const observerRef = React.useRef();
-    useIsomorphicLayoutEffect(() => {
-      observerRef.current = observer;
-      each(deps, dep => addFluidObserver(dep, observer));
-      return () => {
-        if (observerRef.current) {
-          each(observerRef.current.deps, dep => removeFluidObserver(dep, observerRef.current));
-          raf.cancel(observerRef.current.update);
-        }
-      };
-    });
-    React.useEffect(callback, []);
-    useOnce(() => () => {
-      const observer = observerRef.current;
-      each(observer.deps, dep => removeFluidObserver(dep, observer));
-    });
-    const usedProps = host.getComponentProps(props.getValue());
-    return React__namespace.createElement(Component, _extends$1({}, usedProps, {
-      ref: ref
-    }));
-  });
-};
-class PropsObserver {
-  constructor(update, deps) {
-    this.update = update;
-    this.deps = deps;
-  }
-  eventObserved(event) {
-    if (event.type == 'change') {
-      raf.write(this.update);
-    }
-  }
-}
-function getAnimatedState(props, host) {
-  const dependencies = new Set();
-  TreeContext.dependencies = dependencies;
-  if (props.style) props = _extends$1({}, props, {
-    style: host.createAnimatedStyle(props.style)
-  });
-  props = new AnimatedObject(props);
-  TreeContext.dependencies = null;
-  return [props, dependencies];
-}
-function updateRef(ref, value) {
-  if (ref) {
-    if (is.fun(ref)) ref(value);else ref.current = value;
-  }
-  return value;
-}
-const cacheKey = Symbol.for('AnimatedComponent');
-const createHost = (components, {
-  applyAnimatedValues: _applyAnimatedValues = () => false,
-  createAnimatedStyle: _createAnimatedStyle = style => new AnimatedObject(style),
-  getComponentProps: _getComponentProps = props => props
-} = {}) => {
-  const hostConfig = {
-    applyAnimatedValues: _applyAnimatedValues,
-    createAnimatedStyle: _createAnimatedStyle,
-    getComponentProps: _getComponentProps
-  };
-  const animated = Component => {
-    const displayName = getDisplayName(Component) || 'Anonymous';
-    if (is.str(Component)) {
-      Component = animated[Component] || (animated[Component] = withAnimated(Component, hostConfig));
-    } else {
-      Component = Component[cacheKey] || (Component[cacheKey] = withAnimated(Component, hostConfig));
-    }
-    Component.displayName = `Animated(${displayName})`;
-    return Component;
-  };
-  eachProp(components, (Component, key) => {
-    if (is.arr(components)) {
-      key = getDisplayName(Component);
-    }
-    animated[key] = animated(Component);
-  });
-  return {
-    animated
-  };
-};
-const getDisplayName = arg => is.str(arg) ? arg : arg && is.str(arg.displayName) ? arg.displayName : is.fun(arg) && arg.name || null;
-
-function _extends() {
-  _extends = Object.assign ? Object.assign.bind() : function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
-    }
-    return target;
-  };
-  return _extends.apply(this, arguments);
-}
-function callProp(value, ...args) {
-  return is.fun(value) ? value(...args) : value;
-}
-const matchProp = (value, key) => value === true || !!(key && value && (is.fun(value) ? value(key) : toArray(value).includes(key)));
-const resolveProp = (prop, key) => is.obj(prop) ? key && prop[key] : prop;
-const getDefaultProp = (props, key) => props.default === true ? props[key] : props.default ? props.default[key] : undefined;
-const noopTransform = value => value;
-const getDefaultProps = (props, transform = noopTransform) => {
-  let keys = DEFAULT_PROPS;
-  if (props.default && props.default !== true) {
-    props = props.default;
-    keys = Object.keys(props);
-  }
-  const defaults = {};
-  for (const key of keys) {
-    const value = transform(props[key], key);
-    if (!is.und(value)) {
-      defaults[key] = value;
-    }
-  }
-  return defaults;
-};
-const DEFAULT_PROPS = ['config', 'onProps', 'onStart', 'onChange', 'onPause', 'onResume', 'onRest'];
-const RESERVED_PROPS = {
-  config: 1,
-  from: 1,
-  to: 1,
-  ref: 1,
-  loop: 1,
-  reset: 1,
-  pause: 1,
-  cancel: 1,
-  reverse: 1,
-  immediate: 1,
-  default: 1,
-  delay: 1,
-  onProps: 1,
-  onStart: 1,
-  onChange: 1,
-  onPause: 1,
-  onResume: 1,
-  onRest: 1,
-  onResolve: 1,
-  items: 1,
-  trail: 1,
-  sort: 1,
-  expires: 1,
-  initial: 1,
-  enter: 1,
-  update: 1,
-  leave: 1,
-  children: 1,
-  onDestroyed: 1,
-  keys: 1,
-  callId: 1,
-  parentId: 1
-};
-function getForwardProps(props) {
-  const forward = {};
-  let count = 0;
-  eachProp(props, (value, prop) => {
-    if (!RESERVED_PROPS[prop]) {
-      forward[prop] = value;
-      count++;
-    }
-  });
-  if (count) {
-    return forward;
-  }
-}
-function inferTo(props) {
-  const to = getForwardProps(props);
-  if (to) {
-    const out = {
-      to
-    };
-    eachProp(props, (val, key) => key in to || (out[key] = val));
-    return out;
-  }
-  return _extends({}, props);
-}
-function computeGoal(value) {
-  value = getFluidValue(value);
-  return is.arr(value) ? value.map(computeGoal) : isAnimatedString(value) ? globals.createStringInterpolator({
-    range: [0, 1],
-    output: [value, value]
-  })(1) : value;
-}
-function hasProps(props) {
-  for (const _ in props) return true;
-  return false;
-}
-function isAsyncTo(to) {
-  return is.fun(to) || is.arr(to) && is.obj(to[0]);
-}
-function detachRefs(ctrl, ref) {
-  var _ctrl$ref;
-  (_ctrl$ref = ctrl.ref) == null ? void 0 : _ctrl$ref.delete(ctrl);
-  ref == null ? void 0 : ref.delete(ctrl);
-}
-function replaceRef(ctrl, ref) {
-  if (ref && ctrl.ref !== ref) {
-    var _ctrl$ref2;
-    (_ctrl$ref2 = ctrl.ref) == null ? void 0 : _ctrl$ref2.delete(ctrl);
-    ref.add(ctrl);
-    ctrl.ref = ref;
-  }
-}
-const config = {
-  default: {
-    tension: 170,
-    friction: 26
-  },
-  gentle: {
-    tension: 120,
-    friction: 14
-  },
-  wobbly: {
-    tension: 180,
-    friction: 12
-  },
-  stiff: {
-    tension: 210,
-    friction: 20
-  },
-  slow: {
-    tension: 280,
-    friction: 60
-  },
-  molasses: {
-    tension: 280,
-    friction: 120
-  }
-};
-const c1 = 1.70158;
-const c2 = c1 * 1.525;
-const c3 = c1 + 1;
-const c4 = 2 * Math.PI / 3;
-const c5 = 2 * Math.PI / 4.5;
-const bounceOut = x => {
-  const n1 = 7.5625;
-  const d1 = 2.75;
-  if (x < 1 / d1) {
-    return n1 * x * x;
-  } else if (x < 2 / d1) {
-    return n1 * (x -= 1.5 / d1) * x + 0.75;
-  } else if (x < 2.5 / d1) {
-    return n1 * (x -= 2.25 / d1) * x + 0.9375;
-  } else {
-    return n1 * (x -= 2.625 / d1) * x + 0.984375;
-  }
-};
-const easings = {
-  linear: x => x,
-  easeInQuad: x => x * x,
-  easeOutQuad: x => 1 - (1 - x) * (1 - x),
-  easeInOutQuad: x => x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2,
-  easeInCubic: x => x * x * x,
-  easeOutCubic: x => 1 - Math.pow(1 - x, 3),
-  easeInOutCubic: x => x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2,
-  easeInQuart: x => x * x * x * x,
-  easeOutQuart: x => 1 - Math.pow(1 - x, 4),
-  easeInOutQuart: x => x < 0.5 ? 8 * x * x * x * x : 1 - Math.pow(-2 * x + 2, 4) / 2,
-  easeInQuint: x => x * x * x * x * x,
-  easeOutQuint: x => 1 - Math.pow(1 - x, 5),
-  easeInOutQuint: x => x < 0.5 ? 16 * x * x * x * x * x : 1 - Math.pow(-2 * x + 2, 5) / 2,
-  easeInSine: x => 1 - Math.cos(x * Math.PI / 2),
-  easeOutSine: x => Math.sin(x * Math.PI / 2),
-  easeInOutSine: x => -(Math.cos(Math.PI * x) - 1) / 2,
-  easeInExpo: x => x === 0 ? 0 : Math.pow(2, 10 * x - 10),
-  easeOutExpo: x => x === 1 ? 1 : 1 - Math.pow(2, -10 * x),
-  easeInOutExpo: x => x === 0 ? 0 : x === 1 ? 1 : x < 0.5 ? Math.pow(2, 20 * x - 10) / 2 : (2 - Math.pow(2, -20 * x + 10)) / 2,
-  easeInCirc: x => 1 - Math.sqrt(1 - Math.pow(x, 2)),
-  easeOutCirc: x => Math.sqrt(1 - Math.pow(x - 1, 2)),
-  easeInOutCirc: x => x < 0.5 ? (1 - Math.sqrt(1 - Math.pow(2 * x, 2))) / 2 : (Math.sqrt(1 - Math.pow(-2 * x + 2, 2)) + 1) / 2,
-  easeInBack: x => c3 * x * x * x - c1 * x * x,
-  easeOutBack: x => 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2),
-  easeInOutBack: x => x < 0.5 ? Math.pow(2 * x, 2) * ((c2 + 1) * 2 * x - c2) / 2 : (Math.pow(2 * x - 2, 2) * ((c2 + 1) * (x * 2 - 2) + c2) + 2) / 2,
-  easeInElastic: x => x === 0 ? 0 : x === 1 ? 1 : -Math.pow(2, 10 * x - 10) * Math.sin((x * 10 - 10.75) * c4),
-  easeOutElastic: x => x === 0 ? 0 : x === 1 ? 1 : Math.pow(2, -10 * x) * Math.sin((x * 10 - 0.75) * c4) + 1,
-  easeInOutElastic: x => x === 0 ? 0 : x === 1 ? 1 : x < 0.5 ? -(Math.pow(2, 20 * x - 10) * Math.sin((20 * x - 11.125) * c5)) / 2 : Math.pow(2, -20 * x + 10) * Math.sin((20 * x - 11.125) * c5) / 2 + 1,
-  easeInBounce: x => 1 - bounceOut(1 - x),
-  easeOutBounce: bounceOut,
-  easeInOutBounce: x => x < 0.5 ? (1 - bounceOut(1 - 2 * x)) / 2 : (1 + bounceOut(2 * x - 1)) / 2
-};
-const defaults = _extends({}, config.default, {
-  mass: 1,
-  damping: 1,
-  easing: easings.linear,
-  clamp: false
-});
-class AnimationConfig {
-  constructor() {
-    this.tension = void 0;
-    this.friction = void 0;
-    this.frequency = void 0;
-    this.damping = void 0;
-    this.mass = void 0;
-    this.velocity = 0;
-    this.restVelocity = void 0;
-    this.precision = void 0;
-    this.progress = void 0;
-    this.duration = void 0;
-    this.easing = void 0;
-    this.clamp = void 0;
-    this.bounce = void 0;
-    this.decay = void 0;
-    this.round = void 0;
-    Object.assign(this, defaults);
-  }
-}
-function mergeConfig(config, newConfig, defaultConfig) {
-  if (defaultConfig) {
-    defaultConfig = _extends({}, defaultConfig);
-    sanitizeConfig(defaultConfig, newConfig);
-    newConfig = _extends({}, defaultConfig, newConfig);
-  }
-  sanitizeConfig(config, newConfig);
-  Object.assign(config, newConfig);
-  for (const key in defaults) {
-    if (config[key] == null) {
-      config[key] = defaults[key];
-    }
-  }
-  let {
-    mass,
-    frequency,
-    damping
-  } = config;
-  if (!is.und(frequency)) {
-    if (frequency < 0.01) frequency = 0.01;
-    if (damping < 0) damping = 0;
-    config.tension = Math.pow(2 * Math.PI / frequency, 2) * mass;
-    config.friction = 4 * Math.PI * damping * mass / frequency;
-  }
-  return config;
-}
-function sanitizeConfig(config, props) {
-  if (!is.und(props.decay)) {
-    config.duration = undefined;
-  } else {
-    const isTensionConfig = !is.und(props.tension) || !is.und(props.friction);
-    if (isTensionConfig || !is.und(props.frequency) || !is.und(props.damping) || !is.und(props.mass)) {
-      config.duration = undefined;
-      config.decay = undefined;
-    }
-    if (isTensionConfig) {
-      config.frequency = undefined;
-    }
-  }
-}
-const emptyArray = [];
-class Animation {
-  constructor() {
-    this.changed = false;
-    this.values = emptyArray;
-    this.toValues = null;
-    this.fromValues = emptyArray;
-    this.to = void 0;
-    this.from = void 0;
-    this.config = new AnimationConfig();
-    this.immediate = false;
-  }
-}
-function scheduleProps(callId, {
-  key,
-  props,
-  defaultProps,
-  state,
-  actions
-}) {
-  return new Promise((resolve, reject) => {
-    var _props$cancel;
-    let delay;
-    let timeout;
-    let cancel = matchProp((_props$cancel = props.cancel) != null ? _props$cancel : defaultProps == null ? void 0 : defaultProps.cancel, key);
-    if (cancel) {
-      onStart();
-    } else {
-      if (!is.und(props.pause)) {
-        state.paused = matchProp(props.pause, key);
-      }
-      let pause = defaultProps == null ? void 0 : defaultProps.pause;
-      if (pause !== true) {
-        pause = state.paused || matchProp(pause, key);
-      }
-      delay = callProp(props.delay || 0, key);
-      if (pause) {
-        state.resumeQueue.add(onResume);
-        actions.pause();
-      } else {
-        actions.resume();
-        onResume();
-      }
-    }
-    function onPause() {
-      state.resumeQueue.add(onResume);
-      state.timeouts.delete(timeout);
-      timeout.cancel();
-      delay = timeout.time - raf.now();
-    }
-    function onResume() {
-      if (delay > 0 && !globals.skipAnimation) {
-        state.delayed = true;
-        timeout = raf.setTimeout(onStart, delay);
-        state.pauseQueue.add(onPause);
-        state.timeouts.add(timeout);
-      } else {
-        onStart();
-      }
-    }
-    function onStart() {
-      if (state.delayed) {
-        state.delayed = false;
-      }
-      state.pauseQueue.delete(onPause);
-      state.timeouts.delete(timeout);
-      if (callId <= (state.cancelId || 0)) {
-        cancel = true;
-      }
-      try {
-        actions.start(_extends({}, props, {
-          callId,
-          cancel
-        }), resolve);
-      } catch (err) {
-        reject(err);
-      }
-    }
-  });
-}
-const getCombinedResult = (target, results) => results.length == 1 ? results[0] : results.some(result => result.cancelled) ? getCancelledResult(target.get()) : results.every(result => result.noop) ? getNoopResult(target.get()) : getFinishedResult(target.get(), results.every(result => result.finished));
-const getNoopResult = value => ({
-  value,
-  noop: true,
-  finished: true,
-  cancelled: false
-});
-const getFinishedResult = (value, finished, cancelled = false) => ({
-  value,
-  finished,
-  cancelled
-});
-const getCancelledResult = value => ({
-  value,
-  cancelled: true,
-  finished: false
-});
-function runAsync(to, props, state, target) {
-  const {
-    callId,
-    parentId,
-    onRest
-  } = props;
-  const {
-    asyncTo: prevTo,
-    promise: prevPromise
-  } = state;
-  if (!parentId && to === prevTo && !props.reset) {
-    return prevPromise;
-  }
-  return state.promise = (async () => {
-    state.asyncId = callId;
-    state.asyncTo = to;
-    const defaultProps = getDefaultProps(props, (value, key) => key === 'onRest' ? undefined : value);
-    let preventBail;
-    let bail;
-    const bailPromise = new Promise((resolve, reject) => (preventBail = resolve, bail = reject));
-    const bailIfEnded = bailSignal => {
-      const bailResult = callId <= (state.cancelId || 0) && getCancelledResult(target) || callId !== state.asyncId && getFinishedResult(target, false);
-      if (bailResult) {
-        bailSignal.result = bailResult;
-        bail(bailSignal);
-        throw bailSignal;
-      }
-    };
-    const animate = (arg1, arg2) => {
-      const bailSignal = new BailSignal();
-      const skipAnimationSignal = new SkipAniamtionSignal();
-      return (async () => {
-        if (globals.skipAnimation) {
-          stopAsync(state);
-          skipAnimationSignal.result = getFinishedResult(target, false);
-          bail(skipAnimationSignal);
-          throw skipAnimationSignal;
-        }
-        bailIfEnded(bailSignal);
-        const props = is.obj(arg1) ? _extends({}, arg1) : _extends({}, arg2, {
-          to: arg1
-        });
-        props.parentId = callId;
-        eachProp(defaultProps, (value, key) => {
-          if (is.und(props[key])) {
-            props[key] = value;
-          }
-        });
-        const result = await target.start(props);
-        bailIfEnded(bailSignal);
-        if (state.paused) {
-          await new Promise(resume => {
-            state.resumeQueue.add(resume);
-          });
-        }
-        return result;
-      })();
-    };
-    let result;
-    if (globals.skipAnimation) {
-      stopAsync(state);
-      return getFinishedResult(target, false);
-    }
-    try {
-      let animating;
-      if (is.arr(to)) {
-        animating = (async queue => {
-          for (const props of queue) {
-            await animate(props);
-          }
-        })(to);
-      } else {
-        animating = Promise.resolve(to(animate, target.stop.bind(target)));
-      }
-      await Promise.all([animating.then(preventBail), bailPromise]);
-      result = getFinishedResult(target.get(), true, false);
-    } catch (err) {
-      if (err instanceof BailSignal) {
-        result = err.result;
-      } else if (err instanceof SkipAniamtionSignal) {
-        result = err.result;
-      } else {
-        throw err;
-      }
-    } finally {
-      if (callId == state.asyncId) {
-        state.asyncId = parentId;
-        state.asyncTo = parentId ? prevTo : undefined;
-        state.promise = parentId ? prevPromise : undefined;
-      }
-    }
-    if (is.fun(onRest)) {
-      raf.batchedUpdates(() => {
-        onRest(result, target, target.item);
-      });
-    }
-    return result;
-  })();
-}
-function stopAsync(state, cancelId) {
-  flush(state.timeouts, t => t.cancel());
-  state.pauseQueue.clear();
-  state.resumeQueue.clear();
-  state.asyncId = state.asyncTo = state.promise = undefined;
-  if (cancelId) state.cancelId = cancelId;
-}
-class BailSignal extends Error {
-  constructor() {
-    super('An async animation has been interrupted. You see this error because you ' + 'forgot to use `await` or `.catch(...)` on its returned promise.');
-    this.result = void 0;
-  }
-}
-class SkipAniamtionSignal extends Error {
-  constructor() {
-    super('SkipAnimationSignal');
-    this.result = void 0;
-  }
-}
-const isFrameValue = value => value instanceof FrameValue;
-let nextId$1 = 1;
-class FrameValue extends FluidValue {
-  constructor(...args) {
-    super(...args);
-    this.id = nextId$1++;
-    this.key = void 0;
-    this._priority = 0;
-  }
-  get priority() {
-    return this._priority;
-  }
-  set priority(priority) {
-    if (this._priority != priority) {
-      this._priority = priority;
-      this._onPriorityChange(priority);
-    }
-  }
-  get() {
-    const node = getAnimated(this);
-    return node && node.getValue();
-  }
-  to(...args) {
-    return globals.to(this, args);
-  }
-  interpolate(...args) {
-    deprecateInterpolate();
-    return globals.to(this, args);
-  }
-  toJSON() {
-    return this.get();
-  }
-  observerAdded(count) {
-    if (count == 1) this._attach();
-  }
-  observerRemoved(count) {
-    if (count == 0) this._detach();
-  }
-  _attach() {}
-  _detach() {}
-  _onChange(value, idle = false) {
-    callFluidObservers(this, {
-      type: 'change',
-      parent: this,
-      value,
-      idle
-    });
-  }
-  _onPriorityChange(priority) {
-    if (!this.idle) {
-      frameLoop.sort(this);
-    }
-    callFluidObservers(this, {
-      type: 'priority',
-      parent: this,
-      priority
-    });
-  }
-}
-const $P = Symbol.for('SpringPhase');
-const HAS_ANIMATED = 1;
-const IS_ANIMATING = 2;
-const IS_PAUSED = 4;
-const hasAnimated = target => (target[$P] & HAS_ANIMATED) > 0;
-const isAnimating = target => (target[$P] & IS_ANIMATING) > 0;
-const isPaused = target => (target[$P] & IS_PAUSED) > 0;
-const setActiveBit = (target, active) => active ? target[$P] |= IS_ANIMATING | HAS_ANIMATED : target[$P] &= ~IS_ANIMATING;
-const setPausedBit = (target, paused) => paused ? target[$P] |= IS_PAUSED : target[$P] &= ~IS_PAUSED;
-class SpringValue extends FrameValue {
-  constructor(arg1, arg2) {
-    super();
-    this.key = void 0;
-    this.animation = new Animation();
-    this.queue = void 0;
-    this.defaultProps = {};
-    this._state = {
-      paused: false,
-      delayed: false,
-      pauseQueue: new Set(),
-      resumeQueue: new Set(),
-      timeouts: new Set()
-    };
-    this._pendingCalls = new Set();
-    this._lastCallId = 0;
-    this._lastToId = 0;
-    this._memoizedDuration = 0;
-    if (!is.und(arg1) || !is.und(arg2)) {
-      const props = is.obj(arg1) ? _extends({}, arg1) : _extends({}, arg2, {
-        from: arg1
-      });
-      if (is.und(props.default)) {
-        props.default = true;
-      }
-      this.start(props);
-    }
-  }
-  get idle() {
-    return !(isAnimating(this) || this._state.asyncTo) || isPaused(this);
-  }
-  get goal() {
-    return getFluidValue(this.animation.to);
-  }
-  get velocity() {
-    const node = getAnimated(this);
-    return node instanceof AnimatedValue ? node.lastVelocity || 0 : node.getPayload().map(node => node.lastVelocity || 0);
-  }
-  get hasAnimated() {
-    return hasAnimated(this);
-  }
-  get isAnimating() {
-    return isAnimating(this);
-  }
-  get isPaused() {
-    return isPaused(this);
-  }
-  get isDelayed() {
-    return this._state.delayed;
-  }
-  advance(dt) {
-    let idle = true;
-    let changed = false;
-    const anim = this.animation;
-    let {
-      config,
-      toValues
-    } = anim;
-    const payload = getPayload(anim.to);
-    if (!payload && hasFluidValue(anim.to)) {
-      toValues = toArray(getFluidValue(anim.to));
-    }
-    anim.values.forEach((node, i) => {
-      if (node.done) return;
-      const to = node.constructor == AnimatedString ? 1 : payload ? payload[i].lastPosition : toValues[i];
-      let finished = anim.immediate;
-      let position = to;
-      if (!finished) {
-        position = node.lastPosition;
-        if (config.tension <= 0) {
-          node.done = true;
-          return;
-        }
-        let elapsed = node.elapsedTime += dt;
-        const from = anim.fromValues[i];
-        const v0 = node.v0 != null ? node.v0 : node.v0 = is.arr(config.velocity) ? config.velocity[i] : config.velocity;
-        let velocity;
-        const precision = config.precision || (from == to ? 0.005 : Math.min(1, Math.abs(to - from) * 0.001));
-        if (!is.und(config.duration)) {
-          let p = 1;
-          if (config.duration > 0) {
-            if (this._memoizedDuration !== config.duration) {
-              this._memoizedDuration = config.duration;
-              if (node.durationProgress > 0) {
-                node.elapsedTime = config.duration * node.durationProgress;
-                elapsed = node.elapsedTime += dt;
-              }
-            }
-            p = (config.progress || 0) + elapsed / this._memoizedDuration;
-            p = p > 1 ? 1 : p < 0 ? 0 : p;
-            node.durationProgress = p;
-          }
-          position = from + config.easing(p) * (to - from);
-          velocity = (position - node.lastPosition) / dt;
-          finished = p == 1;
-        } else if (config.decay) {
-          const decay = config.decay === true ? 0.998 : config.decay;
-          const e = Math.exp(-(1 - decay) * elapsed);
-          position = from + v0 / (1 - decay) * (1 - e);
-          finished = Math.abs(node.lastPosition - position) <= precision;
-          velocity = v0 * e;
-        } else {
-          velocity = node.lastVelocity == null ? v0 : node.lastVelocity;
-          const restVelocity = config.restVelocity || precision / 10;
-          const bounceFactor = config.clamp ? 0 : config.bounce;
-          const canBounce = !is.und(bounceFactor);
-          const isGrowing = from == to ? node.v0 > 0 : from < to;
-          let isMoving;
-          let isBouncing = false;
-          const step = 1;
-          const numSteps = Math.ceil(dt / step);
-          for (let n = 0; n < numSteps; ++n) {
-            isMoving = Math.abs(velocity) > restVelocity;
-            if (!isMoving) {
-              finished = Math.abs(to - position) <= precision;
-              if (finished) {
-                break;
-              }
-            }
-            if (canBounce) {
-              isBouncing = position == to || position > to == isGrowing;
-              if (isBouncing) {
-                velocity = -velocity * bounceFactor;
-                position = to;
-              }
-            }
-            const springForce = -config.tension * 0.000001 * (position - to);
-            const dampingForce = -config.friction * 0.001 * velocity;
-            const acceleration = (springForce + dampingForce) / config.mass;
-            velocity = velocity + acceleration * step;
-            position = position + velocity * step;
-          }
-        }
-        node.lastVelocity = velocity;
-        if (Number.isNaN(position)) {
-          console.warn(`Got NaN while animating:`, this);
-          finished = true;
-        }
-      }
-      if (payload && !payload[i].done) {
-        finished = false;
-      }
-      if (finished) {
-        node.done = true;
-      } else {
-        idle = false;
-      }
-      if (node.setValue(position, config.round)) {
-        changed = true;
-      }
-    });
-    const node = getAnimated(this);
-    const currVal = node.getValue();
-    if (idle) {
-      const finalVal = getFluidValue(anim.to);
-      if ((currVal !== finalVal || changed) && !config.decay) {
-        node.setValue(finalVal);
-        this._onChange(finalVal);
-      } else if (changed && config.decay) {
-        this._onChange(currVal);
-      }
-      this._stop();
-    } else if (changed) {
-      this._onChange(currVal);
-    }
-  }
-  set(value) {
-    raf.batchedUpdates(() => {
-      this._stop();
-      this._focus(value);
-      this._set(value);
-    });
-    return this;
-  }
-  pause() {
-    this._update({
-      pause: true
-    });
-  }
-  resume() {
-    this._update({
-      pause: false
-    });
-  }
-  finish() {
-    if (isAnimating(this)) {
-      const {
-        to,
-        config
-      } = this.animation;
-      raf.batchedUpdates(() => {
-        this._onStart();
-        if (!config.decay) {
-          this._set(to, false);
-        }
-        this._stop();
-      });
-    }
-    return this;
-  }
-  update(props) {
-    const queue = this.queue || (this.queue = []);
-    queue.push(props);
-    return this;
-  }
-  start(to, arg2) {
-    let queue;
-    if (!is.und(to)) {
-      queue = [is.obj(to) ? to : _extends({}, arg2, {
-        to
-      })];
-    } else {
-      queue = this.queue || [];
-      this.queue = [];
-    }
-    return Promise.all(queue.map(props => {
-      const up = this._update(props);
-      return up;
-    })).then(results => getCombinedResult(this, results));
-  }
-  stop(cancel) {
-    const {
-      to
-    } = this.animation;
-    this._focus(this.get());
-    stopAsync(this._state, cancel && this._lastCallId);
-    raf.batchedUpdates(() => this._stop(to, cancel));
-    return this;
-  }
-  reset() {
-    this._update({
-      reset: true
-    });
-  }
-  eventObserved(event) {
-    if (event.type == 'change') {
-      this._start();
-    } else if (event.type == 'priority') {
-      this.priority = event.priority + 1;
-    }
-  }
-  _prepareNode(props) {
-    const key = this.key || '';
-    let {
-      to,
-      from
-    } = props;
-    to = is.obj(to) ? to[key] : to;
-    if (to == null || isAsyncTo(to)) {
-      to = undefined;
-    }
-    from = is.obj(from) ? from[key] : from;
-    if (from == null) {
-      from = undefined;
-    }
-    const range = {
-      to,
-      from
-    };
-    if (!hasAnimated(this)) {
-      if (props.reverse) [to, from] = [from, to];
-      from = getFluidValue(from);
-      if (!is.und(from)) {
-        this._set(from);
-      } else if (!getAnimated(this)) {
-        this._set(to);
-      }
-    }
-    return range;
-  }
-  _update(_ref, isLoop) {
-    let props = _extends({}, _ref);
-    const {
-      key,
-      defaultProps
-    } = this;
-    if (props.default) Object.assign(defaultProps, getDefaultProps(props, (value, prop) => /^on/.test(prop) ? resolveProp(value, key) : value));
-    mergeActiveFn(this, props, 'onProps');
-    sendEvent(this, 'onProps', props, this);
-    const range = this._prepareNode(props);
-    if (Object.isFrozen(this)) {
-      throw Error('Cannot animate a `SpringValue` object that is frozen. ' + 'Did you forget to pass your component to `animated(...)` before animating its props?');
-    }
-    const state = this._state;
-    return scheduleProps(++this._lastCallId, {
-      key,
-      props,
-      defaultProps,
-      state,
-      actions: {
-        pause: () => {
-          if (!isPaused(this)) {
-            setPausedBit(this, true);
-            flushCalls(state.pauseQueue);
-            sendEvent(this, 'onPause', getFinishedResult(this, checkFinished(this, this.animation.to)), this);
-          }
-        },
-        resume: () => {
-          if (isPaused(this)) {
-            setPausedBit(this, false);
-            if (isAnimating(this)) {
-              this._resume();
-            }
-            flushCalls(state.resumeQueue);
-            sendEvent(this, 'onResume', getFinishedResult(this, checkFinished(this, this.animation.to)), this);
-          }
-        },
-        start: this._merge.bind(this, range)
-      }
-    }).then(result => {
-      if (props.loop && result.finished && !(isLoop && result.noop)) {
-        const nextProps = createLoopUpdate(props);
-        if (nextProps) {
-          return this._update(nextProps, true);
-        }
-      }
-      return result;
-    });
-  }
-  _merge(range, props, resolve) {
-    if (props.cancel) {
-      this.stop(true);
-      return resolve(getCancelledResult(this));
-    }
-    const hasToProp = !is.und(range.to);
-    const hasFromProp = !is.und(range.from);
-    if (hasToProp || hasFromProp) {
-      if (props.callId > this._lastToId) {
-        this._lastToId = props.callId;
-      } else {
-        return resolve(getCancelledResult(this));
-      }
-    }
-    const {
-      key,
-      defaultProps,
-      animation: anim
-    } = this;
-    const {
-      to: prevTo,
-      from: prevFrom
-    } = anim;
-    let {
-      to = prevTo,
-      from = prevFrom
-    } = range;
-    if (hasFromProp && !hasToProp && (!props.default || is.und(to))) {
-      to = from;
-    }
-    if (props.reverse) [to, from] = [from, to];
-    const hasFromChanged = !isEqual(from, prevFrom);
-    if (hasFromChanged) {
-      anim.from = from;
-    }
-    from = getFluidValue(from);
-    const hasToChanged = !isEqual(to, prevTo);
-    if (hasToChanged) {
-      this._focus(to);
-    }
-    const hasAsyncTo = isAsyncTo(props.to);
-    const {
-      config
-    } = anim;
-    const {
-      decay,
-      velocity
-    } = config;
-    if (hasToProp || hasFromProp) {
-      config.velocity = 0;
-    }
-    if (props.config && !hasAsyncTo) {
-      mergeConfig(config, callProp(props.config, key), props.config !== defaultProps.config ? callProp(defaultProps.config, key) : void 0);
-    }
-    let node = getAnimated(this);
-    if (!node || is.und(to)) {
-      return resolve(getFinishedResult(this, true));
-    }
-    const reset = is.und(props.reset) ? hasFromProp && !props.default : !is.und(from) && matchProp(props.reset, key);
-    const value = reset ? from : this.get();
-    const goal = computeGoal(to);
-    const isAnimatable = is.num(goal) || is.arr(goal) || isAnimatedString(goal);
-    const immediate = !hasAsyncTo && (!isAnimatable || matchProp(defaultProps.immediate || props.immediate, key));
-    if (hasToChanged) {
-      const nodeType = getAnimatedType(to);
-      if (nodeType !== node.constructor) {
-        if (immediate) {
-          node = this._set(goal);
-        } else throw Error(`Cannot animate between ${node.constructor.name} and ${nodeType.name}, as the "to" prop suggests`);
-      }
-    }
-    const goalType = node.constructor;
-    let started = hasFluidValue(to);
-    let finished = false;
-    if (!started) {
-      const hasValueChanged = reset || !hasAnimated(this) && hasFromChanged;
-      if (hasToChanged || hasValueChanged) {
-        finished = isEqual(computeGoal(value), goal);
-        started = !finished;
-      }
-      if (!isEqual(anim.immediate, immediate) && !immediate || !isEqual(config.decay, decay) || !isEqual(config.velocity, velocity)) {
-        started = true;
-      }
-    }
-    if (finished && isAnimating(this)) {
-      if (anim.changed && !reset) {
-        started = true;
-      } else if (!started) {
-        this._stop(prevTo);
-      }
-    }
-    if (!hasAsyncTo) {
-      if (started || hasFluidValue(prevTo)) {
-        anim.values = node.getPayload();
-        anim.toValues = hasFluidValue(to) ? null : goalType == AnimatedString ? [1] : toArray(goal);
-      }
-      if (anim.immediate != immediate) {
-        anim.immediate = immediate;
-        if (!immediate && !reset) {
-          this._set(prevTo);
-        }
-      }
-      if (started) {
-        const {
-          onRest
-        } = anim;
-        each(ACTIVE_EVENTS, type => mergeActiveFn(this, props, type));
-        const result = getFinishedResult(this, checkFinished(this, prevTo));
-        flushCalls(this._pendingCalls, result);
-        this._pendingCalls.add(resolve);
-        if (anim.changed) raf.batchedUpdates(() => {
-          anim.changed = !reset;
-          onRest == null ? void 0 : onRest(result, this);
-          if (reset) {
-            callProp(defaultProps.onRest, result);
-          } else {
-            anim.onStart == null ? void 0 : anim.onStart(result, this);
-          }
-        });
-      }
-    }
-    if (reset) {
-      this._set(value);
-    }
-    if (hasAsyncTo) {
-      resolve(runAsync(props.to, props, this._state, this));
-    } else if (started) {
-      this._start();
-    } else if (isAnimating(this) && !hasToChanged) {
-      this._pendingCalls.add(resolve);
-    } else {
-      resolve(getNoopResult(value));
-    }
-  }
-  _focus(value) {
-    const anim = this.animation;
-    if (value !== anim.to) {
-      if (getFluidObservers(this)) {
-        this._detach();
-      }
-      anim.to = value;
-      if (getFluidObservers(this)) {
-        this._attach();
-      }
-    }
-  }
-  _attach() {
-    let priority = 0;
-    const {
-      to
-    } = this.animation;
-    if (hasFluidValue(to)) {
-      addFluidObserver(to, this);
-      if (isFrameValue(to)) {
-        priority = to.priority + 1;
-      }
-    }
-    this.priority = priority;
-  }
-  _detach() {
-    const {
-      to
-    } = this.animation;
-    if (hasFluidValue(to)) {
-      removeFluidObserver(to, this);
-    }
-  }
-  _set(arg, idle = true) {
-    const value = getFluidValue(arg);
-    if (!is.und(value)) {
-      const oldNode = getAnimated(this);
-      if (!oldNode || !isEqual(value, oldNode.getValue())) {
-        const nodeType = getAnimatedType(value);
-        if (!oldNode || oldNode.constructor != nodeType) {
-          setAnimated(this, nodeType.create(value));
-        } else {
-          oldNode.setValue(value);
-        }
-        if (oldNode) {
-          raf.batchedUpdates(() => {
-            this._onChange(value, idle);
-          });
-        }
-      }
-    }
-    return getAnimated(this);
-  }
-  _onStart() {
-    const anim = this.animation;
-    if (!anim.changed) {
-      anim.changed = true;
-      sendEvent(this, 'onStart', getFinishedResult(this, checkFinished(this, anim.to)), this);
-    }
-  }
-  _onChange(value, idle) {
-    if (!idle) {
-      this._onStart();
-      callProp(this.animation.onChange, value, this);
-    }
-    callProp(this.defaultProps.onChange, value, this);
-    super._onChange(value, idle);
-  }
-  _start() {
-    const anim = this.animation;
-    getAnimated(this).reset(getFluidValue(anim.to));
-    if (!anim.immediate) {
-      anim.fromValues = anim.values.map(node => node.lastPosition);
-    }
-    if (!isAnimating(this)) {
-      setActiveBit(this, true);
-      if (!isPaused(this)) {
-        this._resume();
-      }
-    }
-  }
-  _resume() {
-    if (globals.skipAnimation) {
-      this.finish();
-    } else {
-      frameLoop.start(this);
-    }
-  }
-  _stop(goal, cancel) {
-    if (isAnimating(this)) {
-      setActiveBit(this, false);
-      const anim = this.animation;
-      each(anim.values, node => {
-        node.done = true;
-      });
-      if (anim.toValues) {
-        anim.onChange = anim.onPause = anim.onResume = undefined;
-      }
-      callFluidObservers(this, {
-        type: 'idle',
-        parent: this
-      });
-      const result = cancel ? getCancelledResult(this.get()) : getFinishedResult(this.get(), checkFinished(this, goal != null ? goal : anim.to));
-      flushCalls(this._pendingCalls, result);
-      if (anim.changed) {
-        anim.changed = false;
-        sendEvent(this, 'onRest', result, this);
-      }
-    }
-  }
-}
-function checkFinished(target, to) {
-  const goal = computeGoal(to);
-  const value = computeGoal(target.get());
-  return isEqual(value, goal);
-}
-function createLoopUpdate(props, loop = props.loop, to = props.to) {
-  let loopRet = callProp(loop);
-  if (loopRet) {
-    const overrides = loopRet !== true && inferTo(loopRet);
-    const reverse = (overrides || props).reverse;
-    const reset = !overrides || overrides.reset;
-    return createUpdate(_extends({}, props, {
-      loop,
-      default: false,
-      pause: undefined,
-      to: !reverse || isAsyncTo(to) ? to : undefined,
-      from: reset ? props.from : undefined,
-      reset
-    }, overrides));
-  }
-}
-function createUpdate(props) {
-  const {
-    to,
-    from
-  } = props = inferTo(props);
-  const keys = new Set();
-  if (is.obj(to)) findDefined(to, keys);
-  if (is.obj(from)) findDefined(from, keys);
-  props.keys = keys.size ? Array.from(keys) : null;
-  return props;
-}
-function declareUpdate(props) {
-  const update = createUpdate(props);
-  if (is.und(update.default)) {
-    update.default = getDefaultProps(update);
-  }
-  return update;
-}
-function findDefined(values, keys) {
-  eachProp(values, (value, key) => value != null && keys.add(key));
-}
-const ACTIVE_EVENTS = ['onStart', 'onRest', 'onChange', 'onPause', 'onResume'];
-function mergeActiveFn(target, props, type) {
-  target.animation[type] = props[type] !== getDefaultProp(props, type) ? resolveProp(props[type], target.key) : undefined;
-}
-function sendEvent(target, type, ...args) {
-  var _target$animation$typ, _target$animation, _target$defaultProps$, _target$defaultProps;
-  (_target$animation$typ = (_target$animation = target.animation)[type]) == null ? void 0 : _target$animation$typ.call(_target$animation, ...args);
-  (_target$defaultProps$ = (_target$defaultProps = target.defaultProps)[type]) == null ? void 0 : _target$defaultProps$.call(_target$defaultProps, ...args);
-}
-const BATCHED_EVENTS = ['onStart', 'onChange', 'onRest'];
-let nextId = 1;
-class Controller {
-  constructor(props, flush) {
-    this.id = nextId++;
-    this.springs = {};
-    this.queue = [];
-    this.ref = void 0;
-    this._flush = void 0;
-    this._initialProps = void 0;
-    this._lastAsyncId = 0;
-    this._active = new Set();
-    this._changed = new Set();
-    this._started = false;
-    this._item = void 0;
-    this._state = {
-      paused: false,
-      pauseQueue: new Set(),
-      resumeQueue: new Set(),
-      timeouts: new Set()
-    };
-    this._events = {
-      onStart: new Map(),
-      onChange: new Map(),
-      onRest: new Map()
-    };
-    this._onFrame = this._onFrame.bind(this);
-    if (flush) {
-      this._flush = flush;
-    }
-    if (props) {
-      this.start(_extends({
-        default: true
-      }, props));
-    }
-  }
-  get idle() {
-    return !this._state.asyncTo && Object.values(this.springs).every(spring => {
-      return spring.idle && !spring.isDelayed && !spring.isPaused;
-    });
-  }
-  get item() {
-    return this._item;
-  }
-  set item(item) {
-    this._item = item;
-  }
-  get() {
-    const values = {};
-    this.each((spring, key) => values[key] = spring.get());
-    return values;
-  }
-  set(values) {
-    for (const key in values) {
-      const value = values[key];
-      if (!is.und(value)) {
-        this.springs[key].set(value);
-      }
-    }
-  }
-  update(props) {
-    if (props) {
-      this.queue.push(createUpdate(props));
-    }
-    return this;
-  }
-  start(props) {
-    let {
-      queue
-    } = this;
-    if (props) {
-      queue = toArray(props).map(createUpdate);
-    } else {
-      this.queue = [];
-    }
-    if (this._flush) {
-      return this._flush(this, queue);
-    }
-    prepareKeys(this, queue);
-    return flushUpdateQueue(this, queue);
-  }
-  stop(arg, keys) {
-    if (arg !== !!arg) {
-      keys = arg;
-    }
-    if (keys) {
-      const springs = this.springs;
-      each(toArray(keys), key => springs[key].stop(!!arg));
-    } else {
-      stopAsync(this._state, this._lastAsyncId);
-      this.each(spring => spring.stop(!!arg));
-    }
-    return this;
-  }
-  pause(keys) {
-    if (is.und(keys)) {
-      this.start({
-        pause: true
-      });
-    } else {
-      const springs = this.springs;
-      each(toArray(keys), key => springs[key].pause());
-    }
-    return this;
-  }
-  resume(keys) {
-    if (is.und(keys)) {
-      this.start({
-        pause: false
-      });
-    } else {
-      const springs = this.springs;
-      each(toArray(keys), key => springs[key].resume());
-    }
-    return this;
-  }
-  each(iterator) {
-    eachProp(this.springs, iterator);
-  }
-  _onFrame() {
-    const {
-      onStart,
-      onChange,
-      onRest
-    } = this._events;
-    const active = this._active.size > 0;
-    const changed = this._changed.size > 0;
-    if (active && !this._started || changed && !this._started) {
-      this._started = true;
-      flush(onStart, ([onStart, result]) => {
-        result.value = this.get();
-        onStart(result, this, this._item);
-      });
-    }
-    const idle = !active && this._started;
-    const values = changed || idle && onRest.size ? this.get() : null;
-    if (changed && onChange.size) {
-      flush(onChange, ([onChange, result]) => {
-        result.value = values;
-        onChange(result, this, this._item);
-      });
-    }
-    if (idle) {
-      this._started = false;
-      flush(onRest, ([onRest, result]) => {
-        result.value = values;
-        onRest(result, this, this._item);
-      });
-    }
-  }
-  eventObserved(event) {
-    if (event.type == 'change') {
-      this._changed.add(event.parent);
-      if (!event.idle) {
-        this._active.add(event.parent);
-      }
-    } else if (event.type == 'idle') {
-      this._active.delete(event.parent);
-    } else return;
-    raf.onFrame(this._onFrame);
-  }
-}
-function flushUpdateQueue(ctrl, queue) {
-  return Promise.all(queue.map(props => flushUpdate(ctrl, props))).then(results => getCombinedResult(ctrl, results));
-}
-async function flushUpdate(ctrl, props, isLoop) {
-  const {
-    keys,
-    to,
-    from,
-    loop,
-    onRest,
-    onResolve
-  } = props;
-  const defaults = is.obj(props.default) && props.default;
-  if (loop) {
-    props.loop = false;
-  }
-  if (to === false) props.to = null;
-  if (from === false) props.from = null;
-  const asyncTo = is.arr(to) || is.fun(to) ? to : undefined;
-  if (asyncTo) {
-    props.to = undefined;
-    props.onRest = undefined;
-    if (defaults) {
-      defaults.onRest = undefined;
-    }
-  } else {
-    each(BATCHED_EVENTS, key => {
-      const handler = props[key];
-      if (is.fun(handler)) {
-        const queue = ctrl['_events'][key];
-        props[key] = ({
-          finished,
-          cancelled
-        }) => {
-          const result = queue.get(handler);
-          if (result) {
-            if (!finished) result.finished = false;
-            if (cancelled) result.cancelled = true;
-          } else {
-            queue.set(handler, {
-              value: null,
-              finished: finished || false,
-              cancelled: cancelled || false
-            });
-          }
-        };
-        if (defaults) {
-          defaults[key] = props[key];
-        }
-      }
-    });
-  }
-  const state = ctrl['_state'];
-  if (props.pause === !state.paused) {
-    state.paused = props.pause;
-    flushCalls(props.pause ? state.pauseQueue : state.resumeQueue);
-  } else if (state.paused) {
-    props.pause = true;
-  }
-  const promises = (keys || Object.keys(ctrl.springs)).map(key => ctrl.springs[key].start(props));
-  const cancel = props.cancel === true || getDefaultProp(props, 'cancel') === true;
-  if (asyncTo || cancel && state.asyncId) {
-    promises.push(scheduleProps(++ctrl['_lastAsyncId'], {
-      props,
-      state,
-      actions: {
-        pause: noop,
-        resume: noop,
-        start(props, resolve) {
-          if (cancel) {
-            stopAsync(state, ctrl['_lastAsyncId']);
-            resolve(getCancelledResult(ctrl));
-          } else {
-            props.onRest = onRest;
-            resolve(runAsync(asyncTo, props, state, ctrl));
-          }
-        }
-      }
-    }));
-  }
-  if (state.paused) {
-    await new Promise(resume => {
-      state.resumeQueue.add(resume);
-    });
-  }
-  const result = getCombinedResult(ctrl, await Promise.all(promises));
-  if (loop && result.finished && !(isLoop && result.noop)) {
-    const nextProps = createLoopUpdate(props, loop, to);
-    if (nextProps) {
-      prepareKeys(ctrl, [nextProps]);
-      return flushUpdate(ctrl, nextProps, true);
-    }
-  }
-  if (onResolve) {
-    raf.batchedUpdates(() => onResolve(result, ctrl, ctrl.item));
-  }
-  return result;
-}
-function getSprings(ctrl, props) {
-  const springs = _extends({}, ctrl.springs);
-  if (props) {
-    each(toArray(props), props => {
-      if (is.und(props.keys)) {
-        props = createUpdate(props);
-      }
-      if (!is.obj(props.to)) {
-        props = _extends({}, props, {
-          to: undefined
-        });
-      }
-      prepareSprings(springs, props, key => {
-        return createSpring(key);
-      });
-    });
-  }
-  setSprings(ctrl, springs);
-  return springs;
-}
-function setSprings(ctrl, springs) {
-  eachProp(springs, (spring, key) => {
-    if (!ctrl.springs[key]) {
-      ctrl.springs[key] = spring;
-      addFluidObserver(spring, ctrl);
-    }
-  });
-}
-function createSpring(key, observer) {
-  const spring = new SpringValue();
-  spring.key = key;
-  if (observer) {
-    addFluidObserver(spring, observer);
-  }
-  return spring;
-}
-function prepareSprings(springs, props, create) {
-  if (props.keys) {
-    each(props.keys, key => {
-      const spring = springs[key] || (springs[key] = create(key));
-      spring['_prepareNode'](props);
-    });
-  }
-}
-function prepareKeys(ctrl, queue) {
-  each(queue, props => {
-    prepareSprings(ctrl.springs, props, key => {
-      return createSpring(key, ctrl);
-    });
-  });
-}
-function _objectWithoutPropertiesLoose$1(source, excluded) {
-  if (source == null) return {};
-  var target = {};
-  var sourceKeys = Object.keys(source);
-  var key, i;
-  for (i = 0; i < sourceKeys.length; i++) {
-    key = sourceKeys[i];
-    if (excluded.indexOf(key) >= 0) continue;
-    target[key] = source[key];
-  }
-  return target;
-}
-const _excluded$3$1 = ["children"];
-const SpringContext = _ref => {
-  let {
-      children
-    } = _ref,
-    props = _objectWithoutPropertiesLoose$1(_ref, _excluded$3$1);
-  const inherited = React.useContext(ctx);
-  const pause = props.pause || !!inherited.pause,
-    immediate = props.immediate || !!inherited.immediate;
-  props = useMemoOne(() => ({
-    pause,
-    immediate
-  }), [pause, immediate]);
-  const {
-    Provider
-  } = ctx;
-  return React__namespace.createElement(Provider, {
-    value: props
-  }, children);
-};
-const ctx = makeContext(SpringContext, {});
-SpringContext.Provider = ctx.Provider;
-SpringContext.Consumer = ctx.Consumer;
-function makeContext(target, init) {
-  Object.assign(target, React__namespace.createContext(init));
-  target.Provider._context = target;
-  target.Consumer._context = target;
-  return target;
-}
-const SpringRef = () => {
-  const current = [];
-  const SpringRef = function SpringRef(props) {
-    deprecateDirectCall();
-    const results = [];
-    each(current, (ctrl, i) => {
-      if (is.und(props)) {
-        results.push(ctrl.start());
-      } else {
-        const update = _getProps(props, ctrl, i);
-        if (update) {
-          results.push(ctrl.start(update));
-        }
-      }
-    });
-    return results;
-  };
-  SpringRef.current = current;
-  SpringRef.add = function (ctrl) {
-    if (!current.includes(ctrl)) {
-      current.push(ctrl);
-    }
-  };
-  SpringRef.delete = function (ctrl) {
-    const i = current.indexOf(ctrl);
-    if (~i) current.splice(i, 1);
-  };
-  SpringRef.pause = function () {
-    each(current, ctrl => ctrl.pause(...arguments));
-    return this;
-  };
-  SpringRef.resume = function () {
-    each(current, ctrl => ctrl.resume(...arguments));
-    return this;
-  };
-  SpringRef.set = function (values) {
-    each(current, ctrl => ctrl.set(values));
-  };
-  SpringRef.start = function (props) {
-    const results = [];
-    each(current, (ctrl, i) => {
-      if (is.und(props)) {
-        results.push(ctrl.start());
-      } else {
-        const update = this._getProps(props, ctrl, i);
-        if (update) {
-          results.push(ctrl.start(update));
-        }
-      }
-    });
-    return results;
-  };
-  SpringRef.stop = function () {
-    each(current, ctrl => ctrl.stop(...arguments));
-    return this;
-  };
-  SpringRef.update = function (props) {
-    each(current, (ctrl, i) => ctrl.update(this._getProps(props, ctrl, i)));
-    return this;
-  };
-  const _getProps = function _getProps(arg, ctrl, index) {
-    return is.fun(arg) ? arg(index, ctrl) : arg;
-  };
-  SpringRef._getProps = _getProps;
-  return SpringRef;
-};
-function useSprings(length, props, deps) {
-  const propsFn = is.fun(props) && props;
-  if (propsFn && !deps) deps = [];
-  const ref = React.useMemo(() => propsFn || arguments.length == 3 ? SpringRef() : void 0, []);
-  const layoutId = React.useRef(0);
-  const forceUpdate = useForceUpdate();
-  const state = React.useMemo(() => ({
-    ctrls: [],
-    queue: [],
-    flush(ctrl, updates) {
-      const springs = getSprings(ctrl, updates);
-      const canFlushSync = layoutId.current > 0 && !state.queue.length && !Object.keys(springs).some(key => !ctrl.springs[key]);
-      return canFlushSync ? flushUpdateQueue(ctrl, updates) : new Promise(resolve => {
-        setSprings(ctrl, springs);
-        state.queue.push(() => {
-          resolve(flushUpdateQueue(ctrl, updates));
-        });
-        forceUpdate();
-      });
-    }
-  }), []);
-  const ctrls = React.useRef([...state.ctrls]);
-  const updates = [];
-  const prevLength = usePrev(length) || 0;
-  React.useMemo(() => {
-    each(ctrls.current.slice(length, prevLength), ctrl => {
-      detachRefs(ctrl, ref);
-      ctrl.stop(true);
-    });
-    ctrls.current.length = length;
-    declareUpdates(prevLength, length);
-  }, [length]);
-  React.useMemo(() => {
-    declareUpdates(0, Math.min(prevLength, length));
-  }, deps);
-  function declareUpdates(startIndex, endIndex) {
-    for (let i = startIndex; i < endIndex; i++) {
-      const ctrl = ctrls.current[i] || (ctrls.current[i] = new Controller(null, state.flush));
-      const update = propsFn ? propsFn(i, ctrl) : props[i];
-      if (update) {
-        updates[i] = declareUpdate(update);
-      }
-    }
-  }
-  const springs = ctrls.current.map((ctrl, i) => getSprings(ctrl, updates[i]));
-  const context = React.useContext(SpringContext);
-  const prevContext = usePrev(context);
-  const hasContext = context !== prevContext && hasProps(context);
-  useIsomorphicLayoutEffect(() => {
-    layoutId.current++;
-    state.ctrls = ctrls.current;
-    const {
-      queue
-    } = state;
-    if (queue.length) {
-      state.queue = [];
-      each(queue, cb => cb());
-    }
-    each(ctrls.current, (ctrl, i) => {
-      ref == null ? void 0 : ref.add(ctrl);
-      if (hasContext) {
-        ctrl.start({
-          default: context
-        });
-      }
-      const update = updates[i];
-      if (update) {
-        replaceRef(ctrl, update.ref);
-        if (ctrl.ref) {
-          ctrl.queue.push(update);
-        } else {
-          ctrl.start(update);
-        }
-      }
-    });
-  });
-  useOnce(() => () => {
-    each(state.ctrls, ctrl => ctrl.stop(true));
-  });
-  const values = springs.map(x => _extends({}, x));
-  return ref ? [values, ref] : values;
-}
-function useSpring(props, deps) {
-  const isFn = is.fun(props);
-  const [[values], ref] = useSprings(1, isFn ? props : [props], isFn ? deps || [] : deps);
-  return isFn || arguments.length == 2 ? [values, ref] : values;
-}
-let TransitionPhase;
-(function (TransitionPhase) {
-  TransitionPhase["MOUNT"] = "mount";
-  TransitionPhase["ENTER"] = "enter";
-  TransitionPhase["UPDATE"] = "update";
-  TransitionPhase["LEAVE"] = "leave";
-})(TransitionPhase || (TransitionPhase = {}));
-function useTransition(data, props, deps) {
-  const propsFn = is.fun(props) && props;
-  const {
-    reset,
-    sort,
-    trail = 0,
-    expires = true,
-    exitBeforeEnter = false,
-    onDestroyed,
-    ref: propsRef,
-    config: propsConfig
-  } = propsFn ? propsFn() : props;
-  const ref = React.useMemo(() => propsFn || arguments.length == 3 ? SpringRef() : void 0, []);
-  const items = toArray(data);
-  const transitions = [];
-  const usedTransitions = React.useRef(null);
-  const prevTransitions = reset ? null : usedTransitions.current;
-  useIsomorphicLayoutEffect(() => {
-    usedTransitions.current = transitions;
-  });
-  useOnce(() => {
-    each(transitions, t => {
-      ref == null ? void 0 : ref.add(t.ctrl);
-      t.ctrl.ref = ref;
-    });
-    return () => {
-      each(usedTransitions.current, t => {
-        if (t.expired) {
-          clearTimeout(t.expirationId);
-        }
-        detachRefs(t.ctrl, ref);
-        t.ctrl.stop(true);
-      });
-    };
-  });
-  const keys = getKeys(items, propsFn ? propsFn() : props, prevTransitions);
-  const expired = reset && usedTransitions.current || [];
-  useIsomorphicLayoutEffect(() => each(expired, ({
-    ctrl,
-    item,
-    key
-  }) => {
-    detachRefs(ctrl, ref);
-    callProp(onDestroyed, item, key);
-  }));
-  const reused = [];
-  if (prevTransitions) each(prevTransitions, (t, i) => {
-    if (t.expired) {
-      clearTimeout(t.expirationId);
-      expired.push(t);
-    } else {
-      i = reused[i] = keys.indexOf(t.key);
-      if (~i) transitions[i] = t;
-    }
-  });
-  each(items, (item, i) => {
-    if (!transitions[i]) {
-      transitions[i] = {
-        key: keys[i],
-        item,
-        phase: TransitionPhase.MOUNT,
-        ctrl: new Controller()
-      };
-      transitions[i].ctrl.item = item;
-    }
-  });
-  if (reused.length) {
-    let i = -1;
-    const {
-      leave
-    } = propsFn ? propsFn() : props;
-    each(reused, (keyIndex, prevIndex) => {
-      const t = prevTransitions[prevIndex];
-      if (~keyIndex) {
-        i = transitions.indexOf(t);
-        transitions[i] = _extends({}, t, {
-          item: items[keyIndex]
-        });
-      } else if (leave) {
-        transitions.splice(++i, 0, t);
-      }
-    });
-  }
-  if (is.fun(sort)) {
-    transitions.sort((a, b) => sort(a.item, b.item));
-  }
-  let delay = -trail;
-  const forceUpdate = useForceUpdate();
-  const defaultProps = getDefaultProps(props);
-  const changes = new Map();
-  const exitingTransitions = React.useRef(new Map());
-  const forceChange = React.useRef(false);
-  each(transitions, (t, i) => {
-    const key = t.key;
-    const prevPhase = t.phase;
-    const p = propsFn ? propsFn() : props;
-    let to;
-    let phase;
-    let propsDelay = callProp(p.delay || 0, key);
-    if (prevPhase == TransitionPhase.MOUNT) {
-      to = p.enter;
-      phase = TransitionPhase.ENTER;
-    } else {
-      const isLeave = keys.indexOf(key) < 0;
-      if (prevPhase != TransitionPhase.LEAVE) {
-        if (isLeave) {
-          to = p.leave;
-          phase = TransitionPhase.LEAVE;
-        } else if (to = p.update) {
-          phase = TransitionPhase.UPDATE;
-        } else return;
-      } else if (!isLeave) {
-        to = p.enter;
-        phase = TransitionPhase.ENTER;
-      } else return;
-    }
-    to = callProp(to, t.item, i);
-    to = is.obj(to) ? inferTo(to) : {
-      to
-    };
-    if (!to.config) {
-      const config = propsConfig || defaultProps.config;
-      to.config = callProp(config, t.item, i, phase);
-    }
-    delay += trail;
-    const payload = _extends({}, defaultProps, {
-      delay: propsDelay + delay,
-      ref: propsRef,
-      immediate: p.immediate,
-      reset: false
-    }, to);
-    if (phase == TransitionPhase.ENTER && is.und(payload.from)) {
-      const _p = propsFn ? propsFn() : props;
-      const from = is.und(_p.initial) || prevTransitions ? _p.from : _p.initial;
-      payload.from = callProp(from, t.item, i);
-    }
-    const {
-      onResolve
-    } = payload;
-    payload.onResolve = result => {
-      callProp(onResolve, result);
-      const transitions = usedTransitions.current;
-      const t = transitions.find(t => t.key === key);
-      if (!t) return;
-      if (result.cancelled && t.phase != TransitionPhase.UPDATE) {
-        return;
-      }
-      if (t.ctrl.idle) {
-        const idle = transitions.every(t => t.ctrl.idle);
-        if (t.phase == TransitionPhase.LEAVE) {
-          const expiry = callProp(expires, t.item);
-          if (expiry !== false) {
-            const expiryMs = expiry === true ? 0 : expiry;
-            t.expired = true;
-            if (!idle && expiryMs > 0) {
-              if (expiryMs <= 0x7fffffff) t.expirationId = setTimeout(forceUpdate, expiryMs);
-              return;
-            }
-          }
-        }
-        if (idle && transitions.some(t => t.expired)) {
-          exitingTransitions.current.delete(t);
-          if (exitBeforeEnter) {
-            forceChange.current = true;
-          }
-          forceUpdate();
-        }
-      }
-    };
-    const springs = getSprings(t.ctrl, payload);
-    if (phase === TransitionPhase.LEAVE && exitBeforeEnter) {
-      exitingTransitions.current.set(t, {
-        phase,
-        springs,
-        payload
-      });
-    } else {
-      changes.set(t, {
-        phase,
-        springs,
-        payload
-      });
-    }
-  });
-  const context = React.useContext(SpringContext);
-  const prevContext = usePrev(context);
-  const hasContext = context !== prevContext && hasProps(context);
-  useIsomorphicLayoutEffect(() => {
-    if (hasContext) {
-      each(transitions, t => {
-        t.ctrl.start({
-          default: context
-        });
-      });
-    }
-  }, [context]);
-  each(changes, (_, t) => {
-    if (exitingTransitions.current.size) {
-      const ind = transitions.findIndex(state => state.key === t.key);
-      transitions.splice(ind, 1);
-    }
-  });
-  useIsomorphicLayoutEffect(() => {
-    each(exitingTransitions.current.size ? exitingTransitions.current : changes, ({
-      phase,
-      payload
-    }, t) => {
-      const {
-        ctrl
-      } = t;
-      t.phase = phase;
-      ref == null ? void 0 : ref.add(ctrl);
-      if (hasContext && phase == TransitionPhase.ENTER) {
-        ctrl.start({
-          default: context
-        });
-      }
-      if (payload) {
-        replaceRef(ctrl, payload.ref);
-        if ((ctrl.ref || ref) && !forceChange.current) {
-          ctrl.update(payload);
-        } else {
-          ctrl.start(payload);
-          if (forceChange.current) {
-            forceChange.current = false;
-          }
-        }
-      }
-    });
-  }, reset ? void 0 : deps);
-  const renderTransitions = render => React__namespace.createElement(React__namespace.Fragment, null, transitions.map((t, i) => {
-    const {
-      springs
-    } = changes.get(t) || t.ctrl;
-    const elem = render(_extends({}, springs), t.item, t, i);
-    return elem && elem.type ? React__namespace.createElement(elem.type, _extends({}, elem.props, {
-      key: is.str(t.key) || is.num(t.key) ? t.key : t.ctrl.id,
-      ref: elem.ref
-    })) : elem;
-  }));
-  return ref ? [renderTransitions, ref] : renderTransitions;
-}
-let nextKey = 1;
-function getKeys(items, {
-  key,
-  keys = key
-}, prevTransitions) {
-  if (keys === null) {
-    const reused = new Set();
-    return items.map(item => {
-      const t = prevTransitions && prevTransitions.find(t => t.item === item && t.phase !== TransitionPhase.LEAVE && !reused.has(t));
-      if (t) {
-        reused.add(t);
-        return t.key;
-      }
-      return nextKey++;
-    });
-  }
-  return is.und(keys) ? items : is.fun(keys) ? items.map(keys) : toArray(keys);
-}
-class Interpolation extends FrameValue {
-  constructor(source, args) {
-    super();
-    this.key = void 0;
-    this.idle = true;
-    this.calc = void 0;
-    this._active = new Set();
-    this.source = source;
-    this.calc = createInterpolator(...args);
-    const value = this._get();
-    const nodeType = getAnimatedType(value);
-    setAnimated(this, nodeType.create(value));
-  }
-  advance(_dt) {
-    const value = this._get();
-    const oldValue = this.get();
-    if (!isEqual(value, oldValue)) {
-      getAnimated(this).setValue(value);
-      this._onChange(value, this.idle);
-    }
-    if (!this.idle && checkIdle(this._active)) {
-      becomeIdle(this);
-    }
-  }
-  _get() {
-    const inputs = is.arr(this.source) ? this.source.map(getFluidValue) : toArray(getFluidValue(this.source));
-    return this.calc(...inputs);
-  }
-  _start() {
-    if (this.idle && !checkIdle(this._active)) {
-      this.idle = false;
-      each(getPayload(this), node => {
-        node.done = false;
-      });
-      if (globals.skipAnimation) {
-        raf.batchedUpdates(() => this.advance());
-        becomeIdle(this);
-      } else {
-        frameLoop.start(this);
-      }
-    }
-  }
-  _attach() {
-    let priority = 1;
-    each(toArray(this.source), source => {
-      if (hasFluidValue(source)) {
-        addFluidObserver(source, this);
-      }
-      if (isFrameValue(source)) {
-        if (!source.idle) {
-          this._active.add(source);
-        }
-        priority = Math.max(priority, source.priority + 1);
-      }
-    });
-    this.priority = priority;
-    this._start();
-  }
-  _detach() {
-    each(toArray(this.source), source => {
-      if (hasFluidValue(source)) {
-        removeFluidObserver(source, this);
-      }
-    });
-    this._active.clear();
-    becomeIdle(this);
-  }
-  eventObserved(event) {
-    if (event.type == 'change') {
-      if (event.idle) {
-        this.advance();
-      } else {
-        this._active.add(event.parent);
-        this._start();
-      }
-    } else if (event.type == 'idle') {
-      this._active.delete(event.parent);
-    } else if (event.type == 'priority') {
-      this.priority = toArray(this.source).reduce((highest, parent) => Math.max(highest, (isFrameValue(parent) ? parent.priority : 0) + 1), 0);
-    }
-  }
-}
-function isIdle(source) {
-  return source.idle !== false;
-}
-function checkIdle(active) {
-  return !active.size || Array.from(active).every(isIdle);
-}
-function becomeIdle(self) {
-  if (!self.idle) {
-    self.idle = true;
-    each(getPayload(self), node => {
-      node.done = true;
-    });
-    callFluidObservers(self, {
-      type: 'idle',
-      parent: self
-    });
-  }
-}
-globals.assign({
-  createStringInterpolator,
-  to: (source, args) => new Interpolation(source, args)
-});
-
-function _objectWithoutPropertiesLoose(source, excluded) {
-  if (source == null) return {};
-  var target = {};
-  var sourceKeys = Object.keys(source);
-  var key, i;
-  for (i = 0; i < sourceKeys.length; i++) {
-    key = sourceKeys[i];
-    if (excluded.indexOf(key) >= 0) continue;
-    target[key] = source[key];
-  }
-  return target;
-}
-const _excluded$2$1 = ["style", "children", "scrollTop", "scrollLeft"];
-const isCustomPropRE = /^--/;
-function dangerousStyleValue(name, value) {
-  if (value == null || typeof value === 'boolean' || value === '') return '';
-  if (typeof value === 'number' && value !== 0 && !isCustomPropRE.test(name) && !(isUnitlessNumber.hasOwnProperty(name) && isUnitlessNumber[name])) return value + 'px';
-  return ('' + value).trim();
-}
-const attributeCache = {};
-function applyAnimatedValues(instance, props) {
-  if (!instance.nodeType || !instance.setAttribute) {
-    return false;
-  }
-  const isFilterElement = instance.nodeName === 'filter' || instance.parentNode && instance.parentNode.nodeName === 'filter';
-  const _ref = props,
-    {
-      style,
-      children,
-      scrollTop,
-      scrollLeft
-    } = _ref,
-    attributes = _objectWithoutPropertiesLoose(_ref, _excluded$2$1);
-  const values = Object.values(attributes);
-  const names = Object.keys(attributes).map(name => isFilterElement || instance.hasAttribute(name) ? name : attributeCache[name] || (attributeCache[name] = name.replace(/([A-Z])/g, n => '-' + n.toLowerCase())));
-  if (children !== void 0) {
-    instance.textContent = children;
-  }
-  for (let name in style) {
-    if (style.hasOwnProperty(name)) {
-      const value = dangerousStyleValue(name, style[name]);
-      if (isCustomPropRE.test(name)) {
-        instance.style.setProperty(name, value);
-      } else {
-        instance.style[name] = value;
-      }
-    }
-  }
-  names.forEach((name, i) => {
-    instance.setAttribute(name, values[i]);
-  });
-  if (scrollTop !== void 0) {
-    instance.scrollTop = scrollTop;
-  }
-  if (scrollLeft !== void 0) {
-    instance.scrollLeft = scrollLeft;
-  }
-}
-let isUnitlessNumber = {
-  animationIterationCount: true,
-  borderImageOutset: true,
-  borderImageSlice: true,
-  borderImageWidth: true,
-  boxFlex: true,
-  boxFlexGroup: true,
-  boxOrdinalGroup: true,
-  columnCount: true,
-  columns: true,
-  flex: true,
-  flexGrow: true,
-  flexPositive: true,
-  flexShrink: true,
-  flexNegative: true,
-  flexOrder: true,
-  gridRow: true,
-  gridRowEnd: true,
-  gridRowSpan: true,
-  gridRowStart: true,
-  gridColumn: true,
-  gridColumnEnd: true,
-  gridColumnSpan: true,
-  gridColumnStart: true,
-  fontWeight: true,
-  lineClamp: true,
-  lineHeight: true,
-  opacity: true,
-  order: true,
-  orphans: true,
-  tabSize: true,
-  widows: true,
-  zIndex: true,
-  zoom: true,
-  fillOpacity: true,
-  floodOpacity: true,
-  stopOpacity: true,
-  strokeDasharray: true,
-  strokeDashoffset: true,
-  strokeMiterlimit: true,
-  strokeOpacity: true,
-  strokeWidth: true
-};
-const prefixKey = (prefix, key) => prefix + key.charAt(0).toUpperCase() + key.substring(1);
-const prefixes = ['Webkit', 'Ms', 'Moz', 'O'];
-isUnitlessNumber = Object.keys(isUnitlessNumber).reduce((acc, prop) => {
-  prefixes.forEach(prefix => acc[prefixKey(prefix, prop)] = acc[prop]);
-  return acc;
-}, isUnitlessNumber);
-const _excluded$1$1 = ["x", "y", "z"];
-const domTransforms = /^(matrix|translate|scale|rotate|skew)/;
-const pxTransforms = /^(translate)/;
-const degTransforms = /^(rotate|skew)/;
-const addUnit = (value, unit) => is.num(value) && value !== 0 ? value + unit : value;
-const isValueIdentity = (value, id) => is.arr(value) ? value.every(v => isValueIdentity(v, id)) : is.num(value) ? value === id : parseFloat(value) === id;
-class AnimatedStyle extends AnimatedObject {
-  constructor(_ref) {
-    let {
-        x,
-        y,
-        z
-      } = _ref,
-      style = _objectWithoutPropertiesLoose(_ref, _excluded$1$1);
-    const inputs = [];
-    const transforms = [];
-    if (x || y || z) {
-      inputs.push([x || 0, y || 0, z || 0]);
-      transforms.push(xyz => [`translate3d(${xyz.map(v => addUnit(v, 'px')).join(',')})`, isValueIdentity(xyz, 0)]);
-    }
-    eachProp(style, (value, key) => {
-      if (key === 'transform') {
-        inputs.push([value || '']);
-        transforms.push(transform => [transform, transform === '']);
-      } else if (domTransforms.test(key)) {
-        delete style[key];
-        if (is.und(value)) return;
-        const unit = pxTransforms.test(key) ? 'px' : degTransforms.test(key) ? 'deg' : '';
-        inputs.push(toArray(value));
-        transforms.push(key === 'rotate3d' ? ([x, y, z, deg]) => [`rotate3d(${x},${y},${z},${addUnit(deg, unit)})`, isValueIdentity(deg, 0)] : input => [`${key}(${input.map(v => addUnit(v, unit)).join(',')})`, isValueIdentity(input, key.startsWith('scale') ? 1 : 0)]);
-      }
-    });
-    if (inputs.length) {
-      style.transform = new FluidTransform(inputs, transforms);
-    }
-    super(style);
-  }
-}
-class FluidTransform extends FluidValue {
-  constructor(inputs, transforms) {
-    super();
-    this._value = null;
-    this.inputs = inputs;
-    this.transforms = transforms;
-  }
-  get() {
-    return this._value || (this._value = this._get());
-  }
-  _get() {
-    let transform = '';
-    let identity = true;
-    each(this.inputs, (input, i) => {
-      const arg1 = getFluidValue(input[0]);
-      const [t, id] = this.transforms[i](is.arr(arg1) ? arg1 : input.map(getFluidValue));
-      transform += ' ' + t;
-      identity = identity && id;
-    });
-    return identity ? 'none' : transform;
-  }
-  observerAdded(count) {
-    if (count == 1) each(this.inputs, input => each(input, value => hasFluidValue(value) && addFluidObserver(value, this)));
-  }
-  observerRemoved(count) {
-    if (count == 0) each(this.inputs, input => each(input, value => hasFluidValue(value) && removeFluidObserver(value, this)));
-  }
-  eventObserved(event) {
-    if (event.type == 'change') {
-      this._value = null;
-    }
-    callFluidObservers(this, event);
-  }
-}
-const primitives = ['a', 'abbr', 'address', 'area', 'article', 'aside', 'audio', 'b', 'base', 'bdi', 'bdo', 'big', 'blockquote', 'body', 'br', 'button', 'canvas', 'caption', 'cite', 'code', 'col', 'colgroup', 'data', 'datalist', 'dd', 'del', 'details', 'dfn', 'dialog', 'div', 'dl', 'dt', 'em', 'embed', 'fieldset', 'figcaption', 'figure', 'footer', 'form', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'head', 'header', 'hgroup', 'hr', 'html', 'i', 'iframe', 'img', 'input', 'ins', 'kbd', 'keygen', 'label', 'legend', 'li', 'link', 'main', 'map', 'mark', 'menu', 'menuitem', 'meta', 'meter', 'nav', 'noscript', 'object', 'ol', 'optgroup', 'option', 'output', 'p', 'param', 'picture', 'pre', 'progress', 'q', 'rp', 'rt', 'ruby', 's', 'samp', 'script', 'section', 'select', 'small', 'source', 'span', 'strong', 'style', 'sub', 'summary', 'sup', 'table', 'tbody', 'td', 'textarea', 'tfoot', 'th', 'thead', 'time', 'title', 'tr', 'track', 'u', 'ul', 'var', 'video', 'wbr', 'circle', 'clipPath', 'defs', 'ellipse', 'foreignObject', 'g', 'image', 'line', 'linearGradient', 'mask', 'path', 'pattern', 'polygon', 'polyline', 'radialGradient', 'rect', 'stop', 'svg', 'text', 'tspan'];
-const _excluded$5 = ["scrollTop", "scrollLeft"];
-globals.assign({
-  batchedUpdates: require$$0.unstable_batchedUpdates,
-  createStringInterpolator,
-  colors
-});
-const host = createHost(primitives, {
-  applyAnimatedValues,
-  createAnimatedStyle: style => new AnimatedStyle(style),
-  getComponentProps: _ref => {
-    let props = _objectWithoutPropertiesLoose(_ref, _excluded$5);
-    return props;
-  }
-});
-const animated = host.animated;
-
 function ownKeys$4(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread$4(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$4(Object(source), !0).forEach(function (key) { defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$4(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _objectSpread$4(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$4(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$4(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 var useStyleRewriter$1 = hooks.useStyleRewriter;
 var ModalComponent = function ModalComponent(_ref) {
   var _ref$show = _ref.show,
@@ -6521,26 +4288,26 @@ var ModalComponent = function ModalComponent(_ref) {
     _ref$zIndex = _ref.zIndex,
     zIndex = _ref$zIndex === void 0 ? 50 : _ref$zIndex;
   var _useState = React.useState(false),
-    _useState2 = slicedToArray(_useState, 2),
+    _useState2 = _slicedToArray(_useState, 2),
     isOpen = _useState2[0],
     setIsOpen = _useState2[1];
   var _useState3 = React.useState(window.innerHeight),
-    _useState4 = slicedToArray(_useState3, 2),
+    _useState4 = _slicedToArray(_useState3, 2),
     screenHeight = _useState4[0],
     setScreenHeight = _useState4[1];
   var _useState5 = React.useState(false),
-    _useState6 = slicedToArray(_useState5, 2);
+    _useState6 = _slicedToArray(_useState5, 2);
     _useState6[0];
     var setScrollActive = _useState6[1];
   var srPopupWindowClasses = useStyleRewriter$1("fixed z-40 w-full h-95vh bg-white", popupWindowClasses);
   var srRenderCardContainerClasses = useStyleRewriter$1("w-full h-full mt-1 overflow-visible", renderCardContainerClasses);
   var modalHeight = screenHeight ? screenHeight * 0.9 : 0;
-  var _useSpring = useSpring(function () {
+  var _useSpring = web.useSpring(function () {
       return {
         y: modalHeight
       };
     }),
-    _useSpring2 = slicedToArray(_useSpring, 2),
+    _useSpring2 = _slicedToArray(_useSpring, 2),
     y = _useSpring2[0].y,
     set = _useSpring2[1];
   var open = function open(_ref2) {
@@ -6549,7 +4316,7 @@ var ModalComponent = function ModalComponent(_ref) {
     set({
       y: 0,
       immediate: false,
-      config: canceled ? config.wobbly : config.stiff
+      config: canceled ? web.config.wobbly : web.config.stiff
     });
     document.querySelector("body").style.overflow = "hidden";
   };
@@ -6561,7 +4328,7 @@ var ModalComponent = function ModalComponent(_ref) {
     set({
       y: modalHeight,
       immediate: false,
-      config: _objectSpread$4(_objectSpread$4({}, config.stiff), {}, {
+      config: _objectSpread$4(_objectSpread$4({}, web.config.stiff), {}, {
         velocity: velocity
       })
     });
@@ -6629,11 +4396,11 @@ var ModalComponent = function ModalComponent(_ref) {
   if (!isOpen) return null;
   return /*#__PURE__*/React__default["default"].createElement("div", {
     className: "relative"
-  }, /*#__PURE__*/React__default["default"].createElement(animated.div, {
+  }, /*#__PURE__*/React__default["default"].createElement(web.a.div, {
     onClick: close,
     className: "fixed inset-0 bg-zinc-900 opacity-50",
     style: bgStyle
-  }), /*#__PURE__*/React__default["default"].createElement(animated.div, _extends$4({
+  }), /*#__PURE__*/React__default["default"].createElement(web.a.div, _extends({
     className: srPopupWindowClasses
   }, bind(), {
     style: {
@@ -6662,7 +4429,7 @@ var ModalComponent = function ModalComponent(_ref) {
     onMouseLeave: function onMouseLeave() {
       return setScrollActive(false);
     }
-  }, /*#__PURE__*/React__default["default"].createElement(RenderCard, _extends$4({
+  }, /*#__PURE__*/React__default["default"].createElement(RenderCard, _extends({
     setShow: setShow,
     show: show
   }, renderCardProps))))));
@@ -6681,7 +4448,7 @@ var _excluded$4 = ["targetId"];
 var ModalPortal = function ModalPortal(_ref) {
   var _ref$targetId = _ref.targetId,
     targetId = _ref$targetId === void 0 ? "modal" : _ref$targetId,
-    props = objectWithoutProperties(_ref, _excluded$4);
+    props = _objectWithoutProperties(_ref, _excluded$4);
   return document.querySelector("#".concat(targetId)) ? /*#__PURE__*/require$$0.createPortal( /*#__PURE__*/React__default["default"].createElement(ModalComponent, props), document.querySelector("#".concat(targetId))) : null;
 };
 
@@ -6692,9 +4459,9 @@ var Modal = function Modal(_ref) {
   var children = _ref.children,
     _ref$showEffect = _ref.showEffect,
     showEffect = _ref$showEffect === void 0 ? function () {} : _ref$showEffect,
-    props = objectWithoutProperties(_ref, _excluded$3);
+    props = _objectWithoutProperties(_ref, _excluded$3);
   var _useState = React.useState(false),
-    _useState2 = slicedToArray(_useState, 2),
+    _useState2 = _slicedToArray(_useState, 2),
     show = _useState2[0],
     setShow = _useState2[1];
   var srChildContainerClasses = useStyleRewriter("@cr cursor-pointer @wh w-full @ht h-full", props.childContainerClasses);
@@ -6713,7 +4480,7 @@ var Modal = function Modal(_ref) {
   }, [children ? show : props.show, props]);
   var useDesktopModal = useBreakpoint("md");
   var Component = useDesktopModal ? ModalPortal$1 : ModalPortal;
-  return /*#__PURE__*/React__default["default"].createElement(React.Fragment, null, /*#__PURE__*/React__default["default"].createElement(Component, _extends$4({
+  return /*#__PURE__*/React__default["default"].createElement(React.Fragment, null, /*#__PURE__*/React__default["default"].createElement(Component, _extends({
     modalComponentId: props.modalComponentId ? props.modalComponentId : modalComponentId,
     setShow: children ? setShow : props.setShow,
     show: children ? show : props.show
@@ -6778,7 +4545,7 @@ var CheckboxInput = function CheckboxInput(props) {
     Icon = props.Icon,
     InnerComponent = props.InnerComponent;
   var _useState = React.useState(value),
-    _useState2 = slicedToArray(_useState, 2),
+    _useState2 = _slicedToArray(_useState, 2),
     localValue = _useState2[0],
     setLocalValue = _useState2[1];
   var srInputContainerClassName = useStyleRewriter$6(baseInputContainerClassName$3, inputContainerClassName);
@@ -6805,7 +4572,7 @@ var CheckboxInput = function CheckboxInput(props) {
     e.target.id = id;
     onChange(e);
   };
-  return /*#__PURE__*/React__default["default"].createElement(InputOverlay, _extends$4({}, props, {
+  return /*#__PURE__*/React__default["default"].createElement(InputOverlay, _extends({}, props, {
     label: null,
     error: error
   }), /*#__PURE__*/React__default["default"].createElement("div", {
@@ -6813,7 +4580,7 @@ var CheckboxInput = function CheckboxInput(props) {
   }, /*#__PURE__*/React__default["default"].createElement("label", {
     htmlFor: id,
     className: resInputlassName
-  }, typeof Icon === "function" ? /*#__PURE__*/React__default["default"].createElement(Icon, _extends$4({}, props, {
+  }, typeof Icon === "function" ? /*#__PURE__*/React__default["default"].createElement(Icon, _extends({}, props, {
     isChecked: localValue
   })) : null, /*#__PURE__*/React__default["default"].createElement("input", {
     type: "checkbox",
@@ -6824,7 +4591,7 @@ var CheckboxInput = function CheckboxInput(props) {
       return setLocalValue(!localValue);
     },
     checked: localValue
-  })), typeof InnerComponent === "function" ? /*#__PURE__*/React__default["default"].createElement(InnerComponent, _extends$4({}, props, {
+  })), typeof InnerComponent === "function" ? /*#__PURE__*/React__default["default"].createElement(InnerComponent, _extends({}, props, {
     onClick: function onClick() {
       return setLocalValue(!localValue);
     },
@@ -6877,7 +4644,7 @@ var Input = /*#__PURE__*/React.forwardRef(function (_ref, ref) {
   var dropdownRef = React.useRef(null);
   var inputContainerRef = React.useRef(null);
   var _useDetectOutsideClic = useDetectOutsideClick$1(inputContainerRef, false),
-    _useDetectOutsideClic2 = slicedToArray(_useDetectOutsideClic, 2),
+    _useDetectOutsideClic2 = _slicedToArray(_useDetectOutsideClic, 2),
     isDropdownOpen = _useDetectOutsideClic2[0],
     setIsDropdownOpen = _useDetectOutsideClic2[1];
   var onClick = function onClick(e) {
@@ -6944,7 +4711,7 @@ var TextInput = /*#__PURE__*/React.forwardRef(function (props, ref) {
     inputDisabledClassName = props.inputDisabledClassName,
     inputContainerClassName = props.inputContainerClassName,
     error = props.error;
-  return /*#__PURE__*/React__default["default"].createElement(InputOverlay, _extends$4({}, props, {
+  return /*#__PURE__*/React__default["default"].createElement(InputOverlay, _extends({}, props, {
     PairComponent: enableTypeChanging && ChangeInputTypeButton ? ChangeInputTypeButton : null
   }), /*#__PURE__*/React__default["default"].createElement(Input, {
     ref: ref,
@@ -7015,7 +4782,7 @@ var RangeInput = function RangeInput(props) {
       left: "".concat(value / maxValue * 100 <= maxLimit / maxValue * 100 ? value / maxValue * 100 : maxLimit / maxValue * 100, "%")
     };
   }, [value]);
-  return /*#__PURE__*/React__default["default"].createElement(InputOverlay, _extends$4({}, props, {
+  return /*#__PURE__*/React__default["default"].createElement(InputOverlay, _extends({}, props, {
     label: label,
     error: error
   }), /*#__PURE__*/React__default["default"].createElement("div", {
@@ -7120,7 +4887,7 @@ function usePrevious(value) {
 function SingleOTPInputComponent(props) {
   var focus = props.focus,
     autoFocus = props.autoFocus,
-    rest = objectWithoutProperties(props, _excluded$2);
+    rest = _objectWithoutProperties(props, _excluded$2);
   var inputRef = React.useRef(null);
   var prevFocus = usePrevious(!!focus);
   React.useEffect(function () {
@@ -7134,7 +4901,7 @@ function SingleOTPInputComponent(props) {
       }
     }
   }, [autoFocus, focus, prevFocus]);
-  return /*#__PURE__*/React__default["default"].createElement("input", _extends$4({
+  return /*#__PURE__*/React__default["default"].createElement("input", _extends({
     ref: inputRef
   }, rest));
 }
@@ -7154,11 +4921,11 @@ var OtpInput = function OtpInput(props) {
     error = props.error,
     id = props.id;
   var _useState = React.useState(autoFocus ? 0 : undefined),
-    _useState2 = slicedToArray(_useState, 2),
+    _useState2 = _slicedToArray(_useState, 2),
     activeInput = _useState2[0],
     setActiveInput = _useState2[1];
   var _useState3 = React.useState(Array(length).fill("")),
-    _useState4 = slicedToArray(_useState3, 2),
+    _useState4 = _slicedToArray(_useState3, 2),
     otpValues = _useState4[0],
     setOTPValues = _useState4[1];
 
@@ -7181,7 +4948,7 @@ var OtpInput = function OtpInput(props) {
 
   // Change OTP value at focussing input
   var changeCodeAtFocus = React.useCallback(function (e, str) {
-    var updatedOTPValues = toConsumableArray(otpValues);
+    var updatedOTPValues = _toConsumableArray(otpValues);
     updatedOTPValues[activeInput] = str[0] || "";
     setOTPValues(updatedOTPValues);
     handleOtpChange(e, updatedOTPValues);
@@ -7197,7 +4964,7 @@ var OtpInput = function OtpInput(props) {
     if (activeInput <= 0) return;
     focusInput(activeInput - 1);
     if (clean) {
-      var updatedOTPValues = toConsumableArray(otpValues);
+      var updatedOTPValues = _toConsumableArray(otpValues);
       updatedOTPValues[activeInput - 1] = "";
       setOTPValues(updatedOTPValues);
     }
@@ -7270,7 +5037,7 @@ var OtpInput = function OtpInput(props) {
     var pastedData = e.clipboardData.getData("text/plain").trim().slice(0, length - activeInput).split("");
     if (pastedData) {
       var nextFocusIndex = 0;
-      var updatedOTPValues = toConsumableArray(otpValues);
+      var updatedOTPValues = _toConsumableArray(otpValues);
       updatedOTPValues.forEach(function (val, index) {
         if (index >= activeInput) {
           var changedValue = getRightValue(pastedData.shift() || val);
@@ -7334,8 +5101,8 @@ var TextArea = /*#__PURE__*/React.forwardRef(function (_ref, ref) {
     disabled = _ref.disabled,
     _ref$id = _ref.id,
     id = _ref$id === void 0 ? null : _ref$id,
-    props = objectWithoutProperties(_ref, _excluded$1);
-  return /*#__PURE__*/React__default["default"].createElement("textarea", _extends$4({}, props, {
+    props = _objectWithoutProperties(_ref, _excluded$1);
+  return /*#__PURE__*/React__default["default"].createElement("textarea", _extends({}, props, {
     value: value,
     placeholder: placeholder,
     onChange: onChange,
@@ -7375,7 +5142,7 @@ var TextAreaInput = /*#__PURE__*/React.forwardRef(function (props, ref) {
 var baseInputClassName$2 = "\n  @wh w-full\n  @bdc bg-transparent\n  @tndn duration-200\n  @oe outline-none focus:outline-none hover:outline-none\n  @dy flex\n  @pn relative\n";
 
 function ownKeys$3(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread$3(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$3(Object(source), !0).forEach(function (key) { defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$3(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _objectSpread$3(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$3(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$3(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 var UploadFileInput = function UploadFileInput(props) {
   var _props$uploadTitle = props.uploadTitle,
     uploadTitle = _props$uploadTitle === void 0 ? "Click here to upload a file" : _props$uploadTitle,
@@ -7486,7 +5253,7 @@ var UploadFileInput = function UploadFileInput(props) {
 
   var srInputClassName = useStyleRewriter$6(baseInputClassName$1, inputClassName);
   var srInputContainerClassName = useStyleRewriter$6(baseInputContainerClassName$2, containerClassName);
-  return /*#__PURE__*/React__default["default"].createElement(InputOverlay, _extends$4({}, props, {
+  return /*#__PURE__*/React__default["default"].createElement(InputOverlay, _extends({}, props, {
     error: error
   }), /*#__PURE__*/React__default["default"].createElement("div", {
     className: srInputContainerClassName
@@ -7513,7 +5280,7 @@ var UploadFileInput = function UploadFileInput(props) {
     accept: accept,
     onChange: handleUploadImage,
     className: "hidden"
-  }), typeof InnerComponent === "function" ? /*#__PURE__*/React__default["default"].createElement(InnerComponent, _extends$4({}, props, {
+  }), typeof InnerComponent === "function" ? /*#__PURE__*/React__default["default"].createElement(InnerComponent, _extends({}, props, {
     handleUploadImage: handleUploadImage
   })) : uploadTitle ? /*#__PURE__*/React__default["default"].createElement("p", {
     className: uploadTitleClassName
@@ -7640,7 +5407,7 @@ var SelectInput = function SelectInput(props) {
     baseItemClassName = props.baseItemClassName,
     InnerComponent = props.InnerComponent;
   var srInputContainerClassName = useStyleRewriter$6(baseInputContainerClassName$1, inputContainerClassName);
-  return /*#__PURE__*/React__default["default"].createElement(InputOverlay, _extends$4({
+  return /*#__PURE__*/React__default["default"].createElement(InputOverlay, _extends({
     label: label,
     error: error
   }, props), /*#__PURE__*/React__default["default"].createElement("div", {
@@ -7654,7 +5421,7 @@ var SelectInput = function SelectInput(props) {
         e.target.id = id;
         onChange(e);
       }
-    }, typeof InnerComponent === "function" ? /*#__PURE__*/React__default["default"].createElement(InnerComponent, _extends$4({
+    }, typeof InnerComponent === "function" ? /*#__PURE__*/React__default["default"].createElement(InnerComponent, _extends({
       isSelected: activeMatcher(item, value)
     }, props, {
       item: item
@@ -7686,12 +5453,12 @@ var DropdownInput = function DropdownInput(props) {
     Icon = props.Icon,
     InnerComponent = props.InnerComponent;
   var _useState = React.useState(false),
-    _useState2 = slicedToArray(_useState, 2),
+    _useState2 = _slicedToArray(_useState, 2),
     isDropdownOpen = _useState2[0],
     setDropdownOpen = _useState2[1];
   var srInputClassName = useStyleRewriter$6(baseInputClassName, inputClassName, false);
   var _useState3 = React.useState(),
-    _useState4 = slicedToArray(_useState3, 2),
+    _useState4 = _slicedToArray(_useState3, 2),
     activeItem = _useState4[0],
     setActiveItem = _useState4[1];
   React.useEffect(function () {
@@ -7703,7 +5470,7 @@ var DropdownInput = function DropdownInput(props) {
   React.useEffect(function () {
     onDropdownOpenChange(isDropdownOpen);
   }, [isDropdownOpen]);
-  return /*#__PURE__*/React__default["default"].createElement(InputOverlay, _extends$4({}, props, {
+  return /*#__PURE__*/React__default["default"].createElement(InputOverlay, _extends({}, props, {
     label: label,
     error: error
   }), /*#__PURE__*/React__default["default"].createElement(SmartButton, {
@@ -7720,7 +5487,7 @@ var DropdownInput = function DropdownInput(props) {
             onChange(e);
           },
           className: activeMatcher(item, value) ? activeItemClassName : baseItemClassName
-        }, typeof InnerComponent === "function" ? /*#__PURE__*/React__default["default"].createElement(InnerComponent, _extends$4({}, props, {
+        }, typeof InnerComponent === "function" ? /*#__PURE__*/React__default["default"].createElement(InnerComponent, _extends({}, props, {
           isSelected: activeMatcher(item, value),
           item: item
         })) : item === null || item === void 0 ? void 0 : item.title);
@@ -7729,9 +5496,9 @@ var DropdownInput = function DropdownInput(props) {
     dropdownClassName: dropdownClassName,
     dropdownContainerClassName: inputContainerClassName,
     className: srInputClassName
-  }, typeof InnerComponent === "function" && activeItem ? /*#__PURE__*/React__default["default"].createElement(InnerComponent, _extends$4({}, props, {
+  }, typeof InnerComponent === "function" && activeItem ? /*#__PURE__*/React__default["default"].createElement(InnerComponent, _extends({}, props, {
     item: activeItem
-  })) : activeItem !== null && activeItem !== void 0 && activeItem.title ? activeItem === null || activeItem === void 0 ? void 0 : activeItem.title : placeholder, typeof Icon === "function" ? /*#__PURE__*/React__default["default"].createElement(Icon, _extends$4({}, props, {
+  })) : activeItem !== null && activeItem !== void 0 && activeItem.title ? activeItem === null || activeItem === void 0 ? void 0 : activeItem.title : placeholder, typeof Icon === "function" ? /*#__PURE__*/React__default["default"].createElement(Icon, _extends({}, props, {
     isDropdownOpen: isDropdownOpen
   })) : null));
 };
@@ -7752,7 +5519,7 @@ var PopupCalendar = function PopupCalendar(_ref) {
     className: srContainerClassName
   }, /*#__PURE__*/React__default["default"].createElement("div", {
     className: "px-2 flex flex-col items-center text-black"
-  }, /*#__PURE__*/React__default["default"].createElement(Calendar__default["default"], _extends$4({}, calendarSettings, {
+  }, /*#__PURE__*/React__default["default"].createElement(Calendar__default["default"], _extends({}, calendarSettings, {
     nextLabel: nextButtonChild,
     prevLabel: prevButtonChild,
     next2AriaLabel: null,
@@ -7811,23 +5578,23 @@ var DateCalendar = /*#__PURE__*/React.forwardRef(function (props, ref) {
     DividerComponent = props.DividerComponent;
   var buttonRef = React.useRef();
   var _useState = React.useState(null),
-    _useState2 = slicedToArray(_useState, 2),
+    _useState2 = _slicedToArray(_useState, 2),
     localValue = _useState2[0],
     setLocalValue = _useState2[1];
   var _useState3 = React.useState(),
-    _useState4 = slicedToArray(_useState3, 2),
+    _useState4 = _slicedToArray(_useState3, 2),
     inputValues = _useState4[0],
     setInputValues = _useState4[1];
   var _useState5 = React.useState(error),
-    _useState6 = slicedToArray(_useState5, 2),
+    _useState6 = _slicedToArray(_useState5, 2),
     localError = _useState6[0],
     setLocalError = _useState6[1];
   var _useState7 = React.useState(false),
-    _useState8 = slicedToArray(_useState7, 2),
+    _useState8 = _slicedToArray(_useState7, 2),
     isDropdownOpen = _useState8[0],
     setIsDropdownOpen = _useState8[1];
   var _useState9 = React.useState("Custom"),
-    _useState10 = slicedToArray(_useState9, 2),
+    _useState10 = _slicedToArray(_useState9, 2),
     activeTimeframe = _useState10[0],
     setActiveTimeframe = _useState10[1];
   useOutsideClick(buttonRef, setIsDropdownOpen);
@@ -7853,7 +5620,7 @@ var DateCalendar = /*#__PURE__*/React.forwardRef(function (props, ref) {
         _step;
       try {
         for (_iterator.s(); !(_step = _iterator.n()).done;) {
-          var _step$value = slicedToArray(_step.value, 2),
+          var _step$value = _slicedToArray(_step.value, 2),
             index = _step$value[0],
             _value = _step$value[1];
           if (!_value) {
@@ -7908,7 +5675,7 @@ var DateCalendar = /*#__PURE__*/React.forwardRef(function (props, ref) {
     }
   }, [localValue]);
   var srInputContainerClassName = useStyleRewriter$6(baseInputContainerClassName, inputContainerClassName);
-  return /*#__PURE__*/React__default["default"].createElement(InputOverlay, _extends$4({}, props, {
+  return /*#__PURE__*/React__default["default"].createElement(InputOverlay, _extends({}, props, {
     error: localError
   }), /*#__PURE__*/React__default["default"].createElement("div", {
     className: srInputContainerClassName,
@@ -7925,7 +5692,7 @@ var DateCalendar = /*#__PURE__*/React.forwardRef(function (props, ref) {
       return setIsDropdownOpen(!isDropdownOpen);
     },
     DividerComponent: DividerComponent
-  }), /*#__PURE__*/React__default["default"].createElement(transitionComponent.Transition, _extends$4({
+  }), /*#__PURE__*/React__default["default"].createElement(transitionComponent.Transition, _extends({
     show: isDropdownOpen
   }, contentTransitionProps), /*#__PURE__*/React__default["default"].createElement(PopupCalendar, {
     containerClassName: calendarContainerClassName,
@@ -7960,15 +5727,15 @@ var DateInput = function DateInput(_ref) {
     onClick = _ref$onClick === void 0 ? function () {} : _ref$onClick;
     _ref.error;
   var _useState11 = React.useState(value[0]),
-    _useState12 = slicedToArray(_useState11, 2),
+    _useState12 = _slicedToArray(_useState11, 2),
     date = _useState12[0],
     setDate = _useState12[1];
   var _useState13 = React.useState(value[1]),
-    _useState14 = slicedToArray(_useState13, 2),
+    _useState14 = _slicedToArray(_useState13, 2),
     month = _useState14[0],
     setMonth = _useState14[1];
   var _useState15 = React.useState(value[2]),
-    _useState16 = slicedToArray(_useState15, 2),
+    _useState16 = _slicedToArray(_useState15, 2),
     year = _useState16[0],
     setYear = _useState16[1];
   React.useEffect(function () {
@@ -8049,7 +5816,7 @@ var FormInput = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var type = props.type,
     Comp = props.Comp;
   var InputType = Comp || inputComponents[type] || TextInput;
-  return /*#__PURE__*/React__default["default"].createElement(InputType, _extends$4({}, props, {
+  return /*#__PURE__*/React__default["default"].createElement(InputType, _extends({}, props, {
     ref: ref
   }));
 });
@@ -8070,7 +5837,6 @@ function _classCallCheck(instance, Constructor) {
     throw new TypeError("Cannot call a class as a function");
   }
 }
-var classCallCheck = _classCallCheck;
 
 function _defineProperties(target, props) {
   for (var i = 0; i < props.length; i++) {
@@ -8084,9 +5850,11 @@ function _defineProperties(target, props) {
 function _createClass(Constructor, protoProps, staticProps) {
   if (protoProps) _defineProperties(Constructor.prototype, protoProps);
   if (staticProps) _defineProperties(Constructor, staticProps);
+  Object.defineProperty(Constructor, "prototype", {
+    writable: false
+  });
   return Constructor;
 }
-var createClass = _createClass;
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
   try {
@@ -8118,74 +5886,65 @@ function _asyncToGenerator(fn) {
     });
   };
 }
-var asyncToGenerator = _asyncToGenerator;
 
-var regenerator = {exports: {}};
+var regeneratorRuntime$1 = {exports: {}};
 
-var runtime = {exports: {}};
-
-/**
- * Copyright (c) 2014-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
+var _typeof = {exports: {}};
 
 (function (module) {
-	var runtime = function (exports) {
+	function _typeof(obj) {
+	  "@babel/helpers - typeof";
 
-	  var Op = Object.prototype;
-	  var hasOwn = Op.hasOwnProperty;
-	  var defineProperty = Object.defineProperty || function (obj, key, desc) {
-	    obj[key] = desc.value;
-	  };
-	  var undefined$1; // More compressible than void 0.
-	  var $Symbol = typeof Symbol === "function" ? Symbol : {};
-	  var iteratorSymbol = $Symbol.iterator || "@@iterator";
-	  var asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator";
-	  var toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag";
+	  return (module.exports = _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) {
+	    return typeof obj;
+	  } : function (obj) {
+	    return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+	  }, module.exports.__esModule = true, module.exports["default"] = module.exports), _typeof(obj);
+	}
+	module.exports = _typeof, module.exports.__esModule = true, module.exports["default"] = module.exports;
+} (_typeof));
+
+(function (module) {
+	var _typeof$1 = _typeof.exports["default"];
+	function _regeneratorRuntime() {
+
+	  /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */
+	  module.exports = _regeneratorRuntime = function _regeneratorRuntime() {
+	    return exports;
+	  }, module.exports.__esModule = true, module.exports["default"] = module.exports;
+	  var exports = {},
+	    Op = Object.prototype,
+	    hasOwn = Op.hasOwnProperty,
+	    defineProperty = Object.defineProperty || function (obj, key, desc) {
+	      obj[key] = desc.value;
+	    },
+	    $Symbol = "function" == typeof Symbol ? Symbol : {},
+	    iteratorSymbol = $Symbol.iterator || "@@iterator",
+	    asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator",
+	    toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag";
 	  function define(obj, key, value) {
-	    Object.defineProperty(obj, key, {
+	    return Object.defineProperty(obj, key, {
 	      value: value,
-	      enumerable: true,
-	      configurable: true,
-	      writable: true
-	    });
-	    return obj[key];
+	      enumerable: !0,
+	      configurable: !0,
+	      writable: !0
+	    }), obj[key];
 	  }
 	  try {
-	    // IE 8 has a broken Object.defineProperty that only works on DOM objects.
 	    define({}, "");
 	  } catch (err) {
-	    define = function (obj, key, value) {
+	    define = function define(obj, key, value) {
 	      return obj[key] = value;
 	    };
 	  }
 	  function wrap(innerFn, outerFn, self, tryLocsList) {
-	    // If outerFn provided and outerFn.prototype is a Generator, then outerFn.prototype instanceof Generator.
-	    var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator;
-	    var generator = Object.create(protoGenerator.prototype);
-	    var context = new Context(tryLocsList || []);
-
-	    // The ._invoke method unifies the implementations of the .next,
-	    // .throw, and .return methods.
-	    defineProperty(generator, "_invoke", {
+	    var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator,
+	      generator = Object.create(protoGenerator.prototype),
+	      context = new Context(tryLocsList || []);
+	    return defineProperty(generator, "_invoke", {
 	      value: makeInvokeMethod(innerFn, self, context)
-	    });
-	    return generator;
+	    }), generator;
 	  }
-	  exports.wrap = wrap;
-
-	  // Try/catch helper to minimize deoptimizations. Returns a completion
-	  // record like context.tryEntries[i].completion. This interface could
-	  // have been (and was previously) designed to take a closure to be
-	  // invoked without arguments, but in all the cases we care about we
-	  // already have an existing method we want to call, so there's no need
-	  // to create a new function object. We can even get away with assuming
-	  // the method takes exactly one argument, since that happens to be true
-	  // in every case, so we don't have to touch the arguments object. The
-	  // only additional allocation required is the completion record, which
-	  // has a stable shape and so hopefully should be cheap to allocate.
 	  function tryCatch(fn, obj, arg) {
 	    try {
 	      return {
@@ -8199,50 +5958,19 @@ var runtime = {exports: {}};
 	      };
 	    }
 	  }
-	  var GenStateSuspendedStart = "suspendedStart";
-	  var GenStateSuspendedYield = "suspendedYield";
-	  var GenStateExecuting = "executing";
-	  var GenStateCompleted = "completed";
-
-	  // Returning this object from the innerFn has the same effect as
-	  // breaking out of the dispatch switch statement.
+	  exports.wrap = wrap;
 	  var ContinueSentinel = {};
-
-	  // Dummy constructor functions that we use as the .constructor and
-	  // .constructor.prototype properties for functions that return Generator
-	  // objects. For full spec compliance, you may wish to configure your
-	  // minifier not to mangle the names of these two functions.
 	  function Generator() {}
 	  function GeneratorFunction() {}
 	  function GeneratorFunctionPrototype() {}
-
-	  // This is a polyfill for %IteratorPrototype% for environments that
-	  // don't natively support it.
 	  var IteratorPrototype = {};
 	  define(IteratorPrototype, iteratorSymbol, function () {
 	    return this;
 	  });
-	  var getProto = Object.getPrototypeOf;
-	  var NativeIteratorPrototype = getProto && getProto(getProto(values([])));
-	  if (NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol)) {
-	    // This environment has a native %IteratorPrototype%; use it instead
-	    // of the polyfill.
-	    IteratorPrototype = NativeIteratorPrototype;
-	  }
+	  var getProto = Object.getPrototypeOf,
+	    NativeIteratorPrototype = getProto && getProto(getProto(values([])));
+	  NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype);
 	  var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype);
-	  GeneratorFunction.prototype = GeneratorFunctionPrototype;
-	  defineProperty(Gp, "constructor", {
-	    value: GeneratorFunctionPrototype,
-	    configurable: true
-	  });
-	  defineProperty(GeneratorFunctionPrototype, "constructor", {
-	    value: GeneratorFunction,
-	    configurable: true
-	  });
-	  GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction");
-
-	  // Helper for defining the .next, .throw, and .return methods of the
-	  // Iterator interface in terms of a single ._invoke method.
 	  function defineIteratorMethods(prototype) {
 	    ["next", "throw", "return"].forEach(function (method) {
 	      define(prototype, method, function (arg) {
@@ -8250,128 +5978,45 @@ var runtime = {exports: {}};
 	      });
 	    });
 	  }
-	  exports.isGeneratorFunction = function (genFun) {
-	    var ctor = typeof genFun === "function" && genFun.constructor;
-	    return ctor ? ctor === GeneratorFunction ||
-	    // For the native GeneratorFunction constructor, the best we can
-	    // do is to check its .name property.
-	    (ctor.displayName || ctor.name) === "GeneratorFunction" : false;
-	  };
-	  exports.mark = function (genFun) {
-	    if (Object.setPrototypeOf) {
-	      Object.setPrototypeOf(genFun, GeneratorFunctionPrototype);
-	    } else {
-	      genFun.__proto__ = GeneratorFunctionPrototype;
-	      define(genFun, toStringTagSymbol, "GeneratorFunction");
-	    }
-	    genFun.prototype = Object.create(Gp);
-	    return genFun;
-	  };
-
-	  // Within the body of any async function, `await x` is transformed to
-	  // `yield regeneratorRuntime.awrap(x)`, so that the runtime can test
-	  // `hasOwn.call(value, "__await")` to determine if the yielded value is
-	  // meant to be awaited.
-	  exports.awrap = function (arg) {
-	    return {
-	      __await: arg
-	    };
-	  };
 	  function AsyncIterator(generator, PromiseImpl) {
 	    function invoke(method, arg, resolve, reject) {
 	      var record = tryCatch(generator[method], generator, arg);
-	      if (record.type === "throw") {
-	        reject(record.arg);
-	      } else {
-	        var result = record.arg;
-	        var value = result.value;
-	        if (value && typeof value === "object" && hasOwn.call(value, "__await")) {
-	          return PromiseImpl.resolve(value.__await).then(function (value) {
-	            invoke("next", value, resolve, reject);
-	          }, function (err) {
-	            invoke("throw", err, resolve, reject);
-	          });
-	        }
-	        return PromiseImpl.resolve(value).then(function (unwrapped) {
-	          // When a yielded Promise is resolved, its final value becomes
-	          // the .value of the Promise<{value,done}> result for the
-	          // current iteration.
-	          result.value = unwrapped;
-	          resolve(result);
+	      if ("throw" !== record.type) {
+	        var result = record.arg,
+	          value = result.value;
+	        return value && "object" == _typeof$1(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) {
+	          invoke("next", value, resolve, reject);
+	        }, function (err) {
+	          invoke("throw", err, resolve, reject);
+	        }) : PromiseImpl.resolve(value).then(function (unwrapped) {
+	          result.value = unwrapped, resolve(result);
 	        }, function (error) {
-	          // If a rejected Promise was yielded, throw the rejection back
-	          // into the async generator function so it can be handled there.
 	          return invoke("throw", error, resolve, reject);
 	        });
 	      }
+	      reject(record.arg);
 	    }
 	    var previousPromise;
-	    function enqueue(method, arg) {
-	      function callInvokeWithMethodAndArg() {
-	        return new PromiseImpl(function (resolve, reject) {
-	          invoke(method, arg, resolve, reject);
-	        });
-	      }
-	      return previousPromise =
-	      // If enqueue has been called before, then we want to wait until
-	      // all previous Promises have been resolved before calling invoke,
-	      // so that results are always delivered in the correct order. If
-	      // enqueue has not been called before, then it is important to
-	      // call invoke immediately, without waiting on a callback to fire,
-	      // so that the async generator function has the opportunity to do
-	      // any necessary setup in a predictable way. This predictability
-	      // is why the Promise constructor synchronously invokes its
-	      // executor callback, and why async functions synchronously
-	      // execute code before the first await. Since we implement simple
-	      // async functions in terms of async generators, it is especially
-	      // important to get this right, even though it requires care.
-	      previousPromise ? previousPromise.then(callInvokeWithMethodAndArg,
-	      // Avoid propagating failures to Promises returned by later
-	      // invocations of the iterator.
-	      callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg();
-	    }
-
-	    // Define the unified helper method that is used to implement .next,
-	    // .throw, and .return (see defineIteratorMethods).
 	    defineProperty(this, "_invoke", {
-	      value: enqueue
+	      value: function value(method, arg) {
+	        function callInvokeWithMethodAndArg() {
+	          return new PromiseImpl(function (resolve, reject) {
+	            invoke(method, arg, resolve, reject);
+	          });
+	        }
+	        return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg();
+	      }
 	    });
 	  }
-	  defineIteratorMethods(AsyncIterator.prototype);
-	  define(AsyncIterator.prototype, asyncIteratorSymbol, function () {
-	    return this;
-	  });
-	  exports.AsyncIterator = AsyncIterator;
-
-	  // Note that simple async functions are implemented on top of
-	  // AsyncIterator objects; they just return a Promise for the value of
-	  // the final result produced by the iterator.
-	  exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) {
-	    if (PromiseImpl === void 0) PromiseImpl = Promise;
-	    var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl);
-	    return exports.isGeneratorFunction(outerFn) ? iter // If outerFn is a generator, return the full iterator.
-	    : iter.next().then(function (result) {
-	      return result.done ? result.value : iter.next();
-	    });
-	  };
 	  function makeInvokeMethod(innerFn, self, context) {
-	    var state = GenStateSuspendedStart;
-	    return function invoke(method, arg) {
-	      if (state === GenStateExecuting) {
-	        throw new Error("Generator is already running");
-	      }
-	      if (state === GenStateCompleted) {
-	        if (method === "throw") {
-	          throw arg;
-	        }
-
-	        // Be forgiving, per 25.3.3.3.3 of the spec:
-	        // https://people.mozilla.org/~jorendorff/es6-draft.html#sec-generatorresume
+	    var state = "suspendedStart";
+	    return function (method, arg) {
+	      if ("executing" === state) throw new Error("Generator is already running");
+	      if ("completed" === state) {
+	        if ("throw" === method) throw arg;
 	        return doneResult();
 	      }
-	      context.method = method;
-	      context.arg = arg;
-	      while (true) {
+	      for (context.method = method, context.arg = arg;;) {
 	        var delegate = context.delegate;
 	        if (delegate) {
 	          var delegateResult = maybeInvokeDelegate(delegate, context);
@@ -8380,310 +6025,157 @@ var runtime = {exports: {}};
 	            return delegateResult;
 	          }
 	        }
-	        if (context.method === "next") {
-	          // Setting context._sent for legacy support of Babel's
-	          // function.sent implementation.
-	          context.sent = context._sent = context.arg;
-	        } else if (context.method === "throw") {
-	          if (state === GenStateSuspendedStart) {
-	            state = GenStateCompleted;
-	            throw context.arg;
-	          }
+	        if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) {
+	          if ("suspendedStart" === state) throw state = "completed", context.arg;
 	          context.dispatchException(context.arg);
-	        } else if (context.method === "return") {
-	          context.abrupt("return", context.arg);
-	        }
-	        state = GenStateExecuting;
+	        } else "return" === context.method && context.abrupt("return", context.arg);
+	        state = "executing";
 	        var record = tryCatch(innerFn, self, context);
-	        if (record.type === "normal") {
-	          // If an exception is thrown from innerFn, we leave state ===
-	          // GenStateExecuting and loop back for another invocation.
-	          state = context.done ? GenStateCompleted : GenStateSuspendedYield;
-	          if (record.arg === ContinueSentinel) {
-	            continue;
-	          }
+	        if ("normal" === record.type) {
+	          if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue;
 	          return {
 	            value: record.arg,
 	            done: context.done
 	          };
-	        } else if (record.type === "throw") {
-	          state = GenStateCompleted;
-	          // Dispatch the exception by looping back around to the
-	          // context.dispatchException(context.arg) call above.
-	          context.method = "throw";
-	          context.arg = record.arg;
 	        }
+	        "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg);
 	      }
 	    };
 	  }
-
-	  // Call delegate.iterator[context.method](context.arg) and handle the
-	  // result, either by returning a { value, done } result from the
-	  // delegate iterator, or by modifying context.method and context.arg,
-	  // setting context.delegate to null, and returning the ContinueSentinel.
 	  function maybeInvokeDelegate(delegate, context) {
-	    var methodName = context.method;
-	    var method = delegate.iterator[methodName];
-	    if (method === undefined$1) {
-	      // A .throw or .return when the delegate iterator has no .throw
-	      // method, or a missing .next mehtod, always terminate the
-	      // yield* loop.
-	      context.delegate = null;
-
-	      // Note: ["return"] must be used for ES3 parsing compatibility.
-	      if (methodName === "throw" && delegate.iterator["return"]) {
-	        // If the delegate iterator has a return method, give it a
-	        // chance to clean up.
-	        context.method = "return";
-	        context.arg = undefined$1;
-	        maybeInvokeDelegate(delegate, context);
-	        if (context.method === "throw") {
-	          // If maybeInvokeDelegate(context) changed context.method from
-	          // "return" to "throw", let that override the TypeError below.
-	          return ContinueSentinel;
-	        }
-	      }
-	      if (methodName !== "return") {
-	        context.method = "throw";
-	        context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method");
+	    var method = delegate.iterator[context.method];
+	    if (undefined === method) {
+	      if (context.delegate = null, "throw" === context.method) {
+	        if (delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method)) return ContinueSentinel;
+	        context.method = "throw", context.arg = new TypeError("The iterator does not provide a 'throw' method");
 	      }
 	      return ContinueSentinel;
 	    }
 	    var record = tryCatch(method, delegate.iterator, context.arg);
-	    if (record.type === "throw") {
-	      context.method = "throw";
-	      context.arg = record.arg;
-	      context.delegate = null;
-	      return ContinueSentinel;
-	    }
+	    if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel;
 	    var info = record.arg;
-	    if (!info) {
-	      context.method = "throw";
-	      context.arg = new TypeError("iterator result is not an object");
-	      context.delegate = null;
-	      return ContinueSentinel;
-	    }
-	    if (info.done) {
-	      // Assign the result of the finished delegate to the temporary
-	      // variable specified by delegate.resultName (see delegateYield).
-	      context[delegate.resultName] = info.value;
-
-	      // Resume execution at the desired location (see delegateYield).
-	      context.next = delegate.nextLoc;
-
-	      // If context.method was "throw" but the delegate handled the
-	      // exception, let the outer generator proceed normally. If
-	      // context.method was "next", forget context.arg since it has been
-	      // "consumed" by the delegate iterator. If context.method was
-	      // "return", allow the original .return call to continue in the
-	      // outer generator.
-	      if (context.method !== "return") {
-	        context.method = "next";
-	        context.arg = undefined$1;
-	      }
-	    } else {
-	      // Re-yield the result returned by the delegate method.
-	      return info;
-	    }
-
-	    // The delegate iterator is finished, so forget it and continue with
-	    // the outer generator.
-	    context.delegate = null;
-	    return ContinueSentinel;
+	    return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel);
 	  }
-
-	  // Define Generator.prototype.{next,throw,return} in terms of the
-	  // unified ._invoke helper method.
-	  defineIteratorMethods(Gp);
-	  define(Gp, toStringTagSymbol, "Generator");
-
-	  // A Generator should always return itself as the iterator object when the
-	  // @@iterator function is called on it. Some browsers' implementations of the
-	  // iterator prototype chain incorrectly implement this, causing the Generator
-	  // object to not be returned from this call. This ensures that doesn't happen.
-	  // See https://github.com/facebook/regenerator/issues/274 for more details.
-	  define(Gp, iteratorSymbol, function () {
-	    return this;
-	  });
-	  define(Gp, "toString", function () {
-	    return "[object Generator]";
-	  });
 	  function pushTryEntry(locs) {
 	    var entry = {
 	      tryLoc: locs[0]
 	    };
-	    if (1 in locs) {
-	      entry.catchLoc = locs[1];
-	    }
-	    if (2 in locs) {
-	      entry.finallyLoc = locs[2];
-	      entry.afterLoc = locs[3];
-	    }
-	    this.tryEntries.push(entry);
+	    1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry);
 	  }
 	  function resetTryEntry(entry) {
 	    var record = entry.completion || {};
-	    record.type = "normal";
-	    delete record.arg;
-	    entry.completion = record;
+	    record.type = "normal", delete record.arg, entry.completion = record;
 	  }
 	  function Context(tryLocsList) {
-	    // The root entry object (effectively a try statement without a catch
-	    // or a finally block) gives us a place to store values thrown from
-	    // locations where there is no enclosing try statement.
 	    this.tryEntries = [{
 	      tryLoc: "root"
-	    }];
-	    tryLocsList.forEach(pushTryEntry, this);
-	    this.reset(true);
+	    }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0);
 	  }
-	  exports.keys = function (val) {
-	    var object = Object(val);
-	    var keys = [];
-	    for (var key in object) {
-	      keys.push(key);
-	    }
-	    keys.reverse();
-
-	    // Rather than returning an object with a next method, we keep
-	    // things simple and return the next function itself.
-	    return function next() {
-	      while (keys.length) {
-	        var key = keys.pop();
-	        if (key in object) {
-	          next.value = key;
-	          next.done = false;
-	          return next;
-	        }
-	      }
-
-	      // To avoid creating an additional object, we just hang the .value
-	      // and .done properties off the next function object itself. This
-	      // also ensures that the minifier will not anonymize the function.
-	      next.done = true;
-	      return next;
-	    };
-	  };
 	  function values(iterable) {
 	    if (iterable) {
 	      var iteratorMethod = iterable[iteratorSymbol];
-	      if (iteratorMethod) {
-	        return iteratorMethod.call(iterable);
-	      }
-	      if (typeof iterable.next === "function") {
-	        return iterable;
-	      }
+	      if (iteratorMethod) return iteratorMethod.call(iterable);
+	      if ("function" == typeof iterable.next) return iterable;
 	      if (!isNaN(iterable.length)) {
 	        var i = -1,
 	          next = function next() {
-	            while (++i < iterable.length) {
-	              if (hasOwn.call(iterable, i)) {
-	                next.value = iterable[i];
-	                next.done = false;
-	                return next;
-	              }
+	            for (; ++i < iterable.length;) {
+	              if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next;
 	            }
-	            next.value = undefined$1;
-	            next.done = true;
-	            return next;
+	            return next.value = undefined, next.done = !0, next;
 	          };
 	        return next.next = next;
 	      }
 	    }
-
-	    // Return an iterator with no values.
 	    return {
 	      next: doneResult
 	    };
 	  }
-	  exports.values = values;
 	  function doneResult() {
 	    return {
-	      value: undefined$1,
-	      done: true
+	      value: undefined,
+	      done: !0
 	    };
 	  }
-	  Context.prototype = {
+	  return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", {
+	    value: GeneratorFunctionPrototype,
+	    configurable: !0
+	  }), defineProperty(GeneratorFunctionPrototype, "constructor", {
+	    value: GeneratorFunction,
+	    configurable: !0
+	  }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) {
+	    var ctor = "function" == typeof genFun && genFun.constructor;
+	    return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name));
+	  }, exports.mark = function (genFun) {
+	    return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun;
+	  }, exports.awrap = function (arg) {
+	    return {
+	      __await: arg
+	    };
+	  }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () {
+	    return this;
+	  }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) {
+	    void 0 === PromiseImpl && (PromiseImpl = Promise);
+	    var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl);
+	    return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) {
+	      return result.done ? result.value : iter.next();
+	    });
+	  }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () {
+	    return this;
+	  }), define(Gp, "toString", function () {
+	    return "[object Generator]";
+	  }), exports.keys = function (val) {
+	    var object = Object(val),
+	      keys = [];
+	    for (var key in object) {
+	      keys.push(key);
+	    }
+	    return keys.reverse(), function next() {
+	      for (; keys.length;) {
+	        var key = keys.pop();
+	        if (key in object) return next.value = key, next.done = !1, next;
+	      }
+	      return next.done = !0, next;
+	    };
+	  }, exports.values = values, Context.prototype = {
 	    constructor: Context,
-	    reset: function (skipTempReset) {
-	      this.prev = 0;
-	      this.next = 0;
-	      // Resetting context._sent for legacy support of Babel's
-	      // function.sent implementation.
-	      this.sent = this._sent = undefined$1;
-	      this.done = false;
-	      this.delegate = null;
-	      this.method = "next";
-	      this.arg = undefined$1;
-	      this.tryEntries.forEach(resetTryEntry);
-	      if (!skipTempReset) {
-	        for (var name in this) {
-	          // Not sure about the optimal order of these conditions:
-	          if (name.charAt(0) === "t" && hasOwn.call(this, name) && !isNaN(+name.slice(1))) {
-	            this[name] = undefined$1;
-	          }
-	        }
+	    reset: function reset(skipTempReset) {
+	      if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) {
+	        "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined);
 	      }
 	    },
-	    stop: function () {
-	      this.done = true;
-	      var rootEntry = this.tryEntries[0];
-	      var rootRecord = rootEntry.completion;
-	      if (rootRecord.type === "throw") {
-	        throw rootRecord.arg;
-	      }
+	    stop: function stop() {
+	      this.done = !0;
+	      var rootRecord = this.tryEntries[0].completion;
+	      if ("throw" === rootRecord.type) throw rootRecord.arg;
 	      return this.rval;
 	    },
-	    dispatchException: function (exception) {
-	      if (this.done) {
-	        throw exception;
-	      }
+	    dispatchException: function dispatchException(exception) {
+	      if (this.done) throw exception;
 	      var context = this;
 	      function handle(loc, caught) {
-	        record.type = "throw";
-	        record.arg = exception;
-	        context.next = loc;
-	        if (caught) {
-	          // If the dispatched exception was caught by a catch block,
-	          // then let that catch block handle the exception normally.
-	          context.method = "next";
-	          context.arg = undefined$1;
-	        }
-	        return !!caught;
+	        return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught;
 	      }
 	      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-	        var entry = this.tryEntries[i];
-	        var record = entry.completion;
-	        if (entry.tryLoc === "root") {
-	          // Exception thrown outside of any try block that could handle
-	          // it, so set the completion value of the entire function to
-	          // throw the exception.
-	          return handle("end");
-	        }
+	        var entry = this.tryEntries[i],
+	          record = entry.completion;
+	        if ("root" === entry.tryLoc) return handle("end");
 	        if (entry.tryLoc <= this.prev) {
-	          var hasCatch = hasOwn.call(entry, "catchLoc");
-	          var hasFinally = hasOwn.call(entry, "finallyLoc");
+	          var hasCatch = hasOwn.call(entry, "catchLoc"),
+	            hasFinally = hasOwn.call(entry, "finallyLoc");
 	          if (hasCatch && hasFinally) {
-	            if (this.prev < entry.catchLoc) {
-	              return handle(entry.catchLoc, true);
-	            } else if (this.prev < entry.finallyLoc) {
-	              return handle(entry.finallyLoc);
-	            }
+	            if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0);
+	            if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc);
 	          } else if (hasCatch) {
-	            if (this.prev < entry.catchLoc) {
-	              return handle(entry.catchLoc, true);
-	            }
-	          } else if (hasFinally) {
-	            if (this.prev < entry.finallyLoc) {
-	              return handle(entry.finallyLoc);
-	            }
+	            if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0);
 	          } else {
-	            throw new Error("try statement without catch or finally");
+	            if (!hasFinally) throw new Error("try statement without catch or finally");
+	            if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc);
 	          }
 	        }
 	      }
 	    },
-	    abrupt: function (type, arg) {
+	    abrupt: function abrupt(type, arg) {
 	      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
 	        var entry = this.tryEntries[i];
 	        if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) {
@@ -8691,118 +6183,64 @@ var runtime = {exports: {}};
 	          break;
 	        }
 	      }
-	      if (finallyEntry && (type === "break" || type === "continue") && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc) {
-	        // Ignore the finally entry if control is not jumping to a
-	        // location outside the try/catch block.
-	        finallyEntry = null;
-	      }
+	      finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null);
 	      var record = finallyEntry ? finallyEntry.completion : {};
-	      record.type = type;
-	      record.arg = arg;
-	      if (finallyEntry) {
-	        this.method = "next";
-	        this.next = finallyEntry.finallyLoc;
-	        return ContinueSentinel;
-	      }
-	      return this.complete(record);
+	      return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record);
 	    },
-	    complete: function (record, afterLoc) {
-	      if (record.type === "throw") {
-	        throw record.arg;
-	      }
-	      if (record.type === "break" || record.type === "continue") {
-	        this.next = record.arg;
-	      } else if (record.type === "return") {
-	        this.rval = this.arg = record.arg;
-	        this.method = "return";
-	        this.next = "end";
-	      } else if (record.type === "normal" && afterLoc) {
-	        this.next = afterLoc;
-	      }
-	      return ContinueSentinel;
+	    complete: function complete(record, afterLoc) {
+	      if ("throw" === record.type) throw record.arg;
+	      return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel;
 	    },
-	    finish: function (finallyLoc) {
+	    finish: function finish(finallyLoc) {
 	      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
 	        var entry = this.tryEntries[i];
-	        if (entry.finallyLoc === finallyLoc) {
-	          this.complete(entry.completion, entry.afterLoc);
-	          resetTryEntry(entry);
-	          return ContinueSentinel;
-	        }
+	        if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel;
 	      }
 	    },
-	    "catch": function (tryLoc) {
+	    "catch": function _catch(tryLoc) {
 	      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
 	        var entry = this.tryEntries[i];
 	        if (entry.tryLoc === tryLoc) {
 	          var record = entry.completion;
-	          if (record.type === "throw") {
+	          if ("throw" === record.type) {
 	            var thrown = record.arg;
 	            resetTryEntry(entry);
 	          }
 	          return thrown;
 	        }
 	      }
-
-	      // The context.catch method must only be called with a location
-	      // argument that corresponds to a known catch block.
 	      throw new Error("illegal catch attempt");
 	    },
-	    delegateYield: function (iterable, resultName, nextLoc) {
-	      this.delegate = {
+	    delegateYield: function delegateYield(iterable, resultName, nextLoc) {
+	      return this.delegate = {
 	        iterator: values(iterable),
 	        resultName: resultName,
 	        nextLoc: nextLoc
-	      };
-	      if (this.method === "next") {
-	        // Deliberately forget the last sent value so that we don't
-	        // accidentally pass it on to the delegate.
-	        this.arg = undefined$1;
-	      }
-	      return ContinueSentinel;
+	      }, "next" === this.method && (this.arg = undefined), ContinueSentinel;
 	    }
-	  };
-
-	  // Regardless of whether this script is executing as a CommonJS module
-	  // or not, return the runtime object so that we can declare the variable
-	  // regeneratorRuntime in the outer scope, which allows this module to be
-	  // injected easily by `bin/regenerator --include-runtime script.js`.
-	  return exports;
-	}(
-	// If this script is executing as a CommonJS module, use module.exports
-	// as the regeneratorRuntime namespace. Otherwise create a new empty
-	// object. Either way, the resulting object will be used to initialize
-	// the regeneratorRuntime variable at the top of this file.
-	module.exports );
-	try {
-	  regeneratorRuntime = runtime;
-	} catch (accidentalStrictMode) {
-	  // This module should not be running in strict mode, so the above
-	  // assignment should always work unless something is misconfigured. Just
-	  // in case runtime.js accidentally runs in strict mode, in modern engines
-	  // we can explicitly access globalThis. In older engines we can escape
-	  // strict mode using a global Function call. This could conceivably fail
-	  // if a Content Security Policy forbids using Function, but in that case
-	  // the proper solution is to fix the accidental strict mode problem. If
-	  // you've misconfigured your bundler to force strict mode and applied a
-	  // CSP to forbid Function, and you're not willing to fix either of those
-	  // problems, please detail your unique predicament in a GitHub issue.
-	  if (typeof globalThis === "object") {
-	    globalThis.regeneratorRuntime = runtime;
-	  } else {
-	    Function("r", "regeneratorRuntime = r")(runtime);
-	  }
+	  }, exports;
 	}
-} (runtime));
+	module.exports = _regeneratorRuntime, module.exports.__esModule = true, module.exports["default"] = module.exports;
+} (regeneratorRuntime$1));
 
-(function (module) {
-	module.exports = runtime.exports;
-} (regenerator));
+// TODO(Babel 8): Remove this file.
 
-var _regeneratorRuntime = /*@__PURE__*/getDefaultExportFromCjs(regenerator.exports);
+var runtime = regeneratorRuntime$1.exports();
+var regenerator = runtime;
+
+// Copied from https://github.com/facebook/regenerator/blob/main/packages/runtime/runtime.js#L736=
+try {
+  regeneratorRuntime = runtime;
+} catch (accidentalStrictMode) {
+  if (typeof globalThis === "object") {
+    globalThis.regeneratorRuntime = runtime;
+  } else {
+    Function("r", "regeneratorRuntime = r")(runtime);
+  }
+}
 
 function ownKeys$2(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread$2(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$2(Object(source), !0).forEach(function (key) { defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$2(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _objectSpread$2(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$2(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$2(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 // use forwardRef here to access alert *content* div height
 // used to animate *container* div height from 0 <-> auto during enter / leave transition
@@ -8835,7 +6273,7 @@ var Notification = /*#__PURE__*/React__default["default"].forwardRef(function (p
   } : function (props) {
     return /*#__PURE__*/React__default["default"].createElement(CloseButton, props);
   };
-  return /*#__PURE__*/React__default["default"].createElement(animated.div, {
+  return /*#__PURE__*/React__default["default"].createElement(web.animated.div, {
     className: srContainerClassName,
     style: _objectSpread$2({}, styles)
   }, /*#__PURE__*/React__default["default"].createElement("div", {
@@ -8896,9 +6334,9 @@ var Overlay = function Overlay(_ref) {
     },
     enter: function enter(item) {
       return /*#__PURE__*/function () {
-        var _ref2 = asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee(next) {
+        var _ref2 = _asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(next) {
           var minHeight, offsetHeight;
-          return _regeneratorRuntime.wrap(function _callee$(_context) {
+          return regenerator.wrap(function _callee$(_context) {
             while (1) {
               switch (_context.prev = _context.next) {
                 case 0:
@@ -8925,9 +6363,9 @@ var Overlay = function Overlay(_ref) {
     },
     update: function update(item) {
       return /*#__PURE__*/function () {
-        var _ref3 = asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee2(next) {
+        var _ref3 = _asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2(next) {
           var minHeight, offsetHeight;
-          return _regeneratorRuntime.wrap(function _callee2$(_context2) {
+          return regenerator.wrap(function _callee2$(_context2) {
             while (1) {
               switch (_context2.prev = _context2.next) {
                 case 0:
@@ -8951,8 +6389,8 @@ var Overlay = function Overlay(_ref) {
     },
     leave: function leave() {
       return /*#__PURE__*/function () {
-        var _ref4 = asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee3(next) {
-          return _regeneratorRuntime.wrap(function _callee3$(_context3) {
+        var _ref4 = _asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee3(next) {
+          return regenerator.wrap(function _callee3$(_context3) {
             while (1) {
               switch (_context3.prev = _context3.next) {
                 case 0:
@@ -8976,11 +6414,11 @@ var Overlay = function Overlay(_ref) {
       }();
     }
   };
-  var transitions = useTransition(notifications, transitionConfigWithHeightAnimation);
+  var transitions = web.useTransition(notifications, transitionConfigWithHeightAnimation);
   return /*#__PURE__*/React__default["default"].createElement("div", {
     className: "".concat(notificationsContainerClassName, " ").concat(isFromTop ? "top-0 mt-4" : "bottom-0 mb-4")
   }, transitions(function (styles, item) {
-    return /*#__PURE__*/React__default["default"].createElement(Notification, _extends$4({
+    return /*#__PURE__*/React__default["default"].createElement(Notification, _extends({
       key: item.id,
       styles: styles,
       ref: function ref(_ref5) {
@@ -9014,7 +6452,7 @@ if (process.env.NODE_ENV === 'production') {
 var _excluded = ["duration"],
   _excluded2 = ["duration"];
 function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$1(Object(source), !0).forEach(function (key) { defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$1(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 var NotificationsContext = /*#__PURE__*/React.createContext({
   add: function add() {
     return null;
@@ -9027,7 +6465,7 @@ var isBrowser = (typeof window === "undefined" ? "undefined" : _typeof$1(window)
 var NotificationsWrapper = function NotificationsWrapper(_ref) {
   var children = _ref.children;
   var _useState = React.useState([]),
-    _useState2 = slicedToArray(_useState, 2),
+    _useState2 = _slicedToArray(_useState, 2),
     notifications = _useState2[0],
     setNotifications = _useState2[1];
 
@@ -9042,14 +6480,14 @@ var NotificationsWrapper = function NotificationsWrapper(_ref) {
   var add = function add(_ref2) {
     var _ref2$duration = _ref2.duration,
       duration = _ref2$duration === void 0 ? 8000 : _ref2$duration,
-      props = objectWithoutProperties(_ref2, _excluded);
+      props = _objectWithoutProperties(_ref2, _excluded);
     // use creation timestamp as psuedo-unique alert object ID
     var newNotificationId = new Date().getTime();
     var newNotification = _objectSpread$1({
       id: newNotificationId
     }, props);
     setNotifications(function (alertNotifications) {
-      return [].concat(toConsumableArray(alertNotifications), [newNotification]);
+      return [].concat(_toConsumableArray(alertNotifications), [newNotification]);
     });
     if (duration !== 0) {
       setTimeout(function () {
@@ -9081,7 +6519,7 @@ var OverlayWrapper = function OverlayWrapper(_ref3) {
     notify = _ref3$notify === void 0 ? function () {} : _ref3$notify;
   var isFromTop = isBrowser && window.innerWidth < 540;
   var _useState3 = React.useState([]),
-    _useState4 = slicedToArray(_useState3, 2),
+    _useState4 = _slicedToArray(_useState3, 2),
     notifications = _useState4[0],
     setNotifications = _useState4[1];
   // use state fns to avoid passing stale alerts array to showAlert and removeAlert functions
@@ -9095,14 +6533,14 @@ var OverlayWrapper = function OverlayWrapper(_ref3) {
   var add = function add(_ref4) {
     var _ref4$duration = _ref4.duration,
       duration = _ref4$duration === void 0 ? 8000 : _ref4$duration,
-      props = objectWithoutProperties(_ref4, _excluded2);
+      props = _objectWithoutProperties(_ref4, _excluded2);
     // use creation timestamp as psuedo-unique alert object ID
     var newNotificationId = new Date().getTime();
     var newNotification = _objectSpread$1({
       id: newNotificationId
     }, props);
     setNotifications(function (alertNotifications) {
-      return isFromTop ? [newNotification].concat(toConsumableArray(alertNotifications)) : [].concat(toConsumableArray(alertNotifications), [newNotification]);
+      return isFromTop ? [newNotification].concat(_toConsumableArray(alertNotifications)) : [].concat(_toConsumableArray(alertNotifications), [newNotification]);
     });
     if (duration !== 0) {
       setTimeout(function () {
@@ -9123,8 +6561,8 @@ var notificationPortalId = "notification-portal";
 var NotifiactionsManager = /*#__PURE__*/function () {
   function NotifiactionsManager() {
     var _this = this;
-    classCallCheck(this, NotifiactionsManager);
-    defineProperty(this, "bindNotify", function (add) {
+    _classCallCheck(this, NotifiactionsManager);
+    _defineProperty(this, "bindNotify", function (add) {
       _this.createNotificationFn = add;
     });
     if (typeof window === "undefined") return;
@@ -9143,7 +6581,7 @@ var NotifiactionsManager = /*#__PURE__*/function () {
       notify: this.bindNotify
     }));
   }
-  createClass(NotifiactionsManager, [{
+  _createClass(NotifiactionsManager, [{
     key: "createNotification",
     value: function createNotification(message) {
       if (this.createNotificationFn) {
@@ -9193,7 +6631,7 @@ function ReactSpringGallery(_ref) {
   var srVideoItemClassName = useStyleRewriter$6(baseVideoItemClassName, videoItemClassName);
   var isDesktop = useBreakpoint$1("md");
   var _useState = React.useState(),
-    _useState2 = slicedToArray(_useState, 2),
+    _useState2 = _slicedToArray(_useState, 2),
     width = _useState2[0],
     setWidth = _useState2[1];
   React.useEffect(function () {
@@ -9207,20 +6645,20 @@ function ReactSpringGallery(_ref) {
     }
   }, [isDesktop]);
   var ref = React.useRef(activeSlide);
-  var _useSprings = useSprings(media.length, function (i) {
+  var _useSprings = web.useSprings(media.length, function (i) {
       return {
         x: i === activeSlide ? 0 : width * (i - activeSlide),
         display: i === activeSlide ? "block" : "none"
       };
     }),
-    _useSprings2 = slicedToArray(_useSprings, 2),
+    _useSprings2 = _slicedToArray(_useSprings, 2),
     props = _useSprings2[0],
     api = _useSprings2[1];
   var bind = react.useDrag(function (_ref2) {
     var active = _ref2.active,
-      _ref2$movement = slicedToArray(_ref2.movement, 1),
+      _ref2$movement = _slicedToArray(_ref2.movement, 1),
       mx = _ref2$movement[0],
-      _ref2$direction = slicedToArray(_ref2.direction, 1),
+      _ref2$direction = _slicedToArray(_ref2.direction, 1),
       xDir = _ref2$direction[0],
       cancel = _ref2.cancel;
     if (active && Math.abs(mx) > width / 10) {
@@ -9286,7 +6724,7 @@ function ReactSpringGallery(_ref) {
     var x = item.x,
       display = item.display;
     var mediaObj = media[index];
-    return /*#__PURE__*/React__default["default"].createElement(animated.div, _extends$4({}, bind(), {
+    return /*#__PURE__*/React__default["default"].createElement(web.animated.div, _extends({}, bind(), {
       key: "".concat(mediaObj.id, "-").concat(index),
       className: srMediaItemClassName,
       style: {
@@ -9370,7 +6808,7 @@ var ChevronIcon = function ChevronIcon(_ref4) {
 };
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 var MediaGallery = function MediaGallery(_ref) {
   var media = _ref.media,
     _ref$containerClassNa = _ref.containerClassName,
@@ -9386,11 +6824,11 @@ var MediaGallery = function MediaGallery(_ref) {
     galleryClassName = _ref.galleryClassName,
     MediaItemComponent = _ref.MediaItemComponent;
   var _useState = React.useState(false),
-    _useState2 = slicedToArray(_useState, 2);
+    _useState2 = _slicedToArray(_useState, 2);
     _useState2[0];
     var setShow = _useState2[1];
   var _useState3 = React.useState(0),
-    _useState4 = slicedToArray(_useState3, 2),
+    _useState4 = _slicedToArray(_useState3, 2),
     activeSlideIndex = _useState4[0],
     setActiveSlideIndex = _useState4[1];
   var localMedia = React.useMemo(function () {
@@ -9435,7 +6873,7 @@ var CopyButton = function CopyButton(props) {
     _props$CopyButtonComp = props.CopyButtonComponent,
     CopyButtonComponent = _props$CopyButtonComp === void 0 ? function () {} : _props$CopyButtonComp;
   var _useState = React.useState(false),
-    _useState2 = slicedToArray(_useState, 2),
+    _useState2 = _slicedToArray(_useState, 2),
     copied = _useState2[0],
     setCopied = _useState2[1];
   var handleClick = function handleClick() {
@@ -9449,7 +6887,7 @@ var CopyButton = function CopyButton(props) {
       return setCopied(false);
     }, 7000);
   };
-  return /*#__PURE__*/React__default["default"].createElement(CopyButtonComponent, _extends$4({}, props, {
+  return /*#__PURE__*/React__default["default"].createElement(CopyButtonComponent, _extends({}, props, {
     onClick: handleClick,
     copied: copied
   }));

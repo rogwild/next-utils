@@ -1,6 +1,6 @@
 export interface IProfileState {
-    id: string | null;
-    jwt: string | null;
+    id: string | undefined;
+    jwt: string | undefined;
     isAuthenticated: boolean;
     currentAuthFactor: "local" | "otp" | "email" | "phone";
     user?: any;
@@ -12,5 +12,4 @@ export declare const selectors: {
     selectIsAuthenticated: (state: any) => any;
     selectAccountId: (state: any) => any;
     selectJwt: (state: any) => any;
-    selectUser: (state: any) => any;
 };

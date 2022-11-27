@@ -22,12 +22,12 @@ export default {
   ],
   plugins: [
     resolve(),
+    typescript(),
     babel({
       babelHelpers: "runtime",
       skipPreflightCheck: true,
     }),
     commonjs(),
-    typescript(),
   ],
   external: [
     "react",
@@ -42,5 +42,7 @@ export default {
     "react-calendar",
     "@use-gesture/react",
     "@reduxjs/toolkit",
+    "react-redux",
+    "@react-spring/web",
   ],
 };

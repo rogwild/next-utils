@@ -4,13 +4,14 @@ export declare const profilesApi: any, hooks: {
     useGetProfileByIdQuery: any;
     useLazyGetProfileByIdQuery: any;
     useConfirmPhoneMutation: any;
-    useLoginWithEmailAndPasswordMutation: any;
-    useSendConfirmPhoneMutation: any;
     useConfirmEmailMutation: any;
+    useLoginWithEmailAndPasswordMutation: any;
+    useSendPhoneConfitmationMutation: any;
+    useSendEmailConfirmationMutation: any;
     useForgotPasswordMutation: any;
     useResetPasswordMutation: any;
     useCheckOtpMutation: any;
-    useSendEmailCodeMutation: any;
+    useSendConfirmEmailMutation: any;
     useUpdateMeMutation: any;
     useRegisterMutation: any;
     useGenerateOtpQuery: any;

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import FormInput from "../../../../src/components/input";
-import { useRegister } from "../../../../src/hooks/use-auth";
+import useAuth from "../../../../src/hooks/use-auth";
 import { profilesApi } from "../../../redux/services/backend/profiles";
 import { blackButtonProps, textInputProps } from "../../../utils/vanilla";
 
@@ -11,7 +11,7 @@ const Register = () => {
     data,
     isLoading,
   }: { inputs: any; onSubmit: any; data: any; isLoading: boolean } =
-    useRegister({
+    useAuth.useRegister({
       profilesApi,
     });
 

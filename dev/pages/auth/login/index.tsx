@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import FormInput from "../../../../src/components/input";
-import { useLogin } from "../../../../src/hooks/use-auth";
+import useAuth from "../../../../src/hooks/use-auth";
 import { profilesApi } from "../../../redux/services/backend/profiles";
 import { blackButtonProps, textInputProps } from "../../../utils/vanilla";
 
@@ -11,9 +11,10 @@ const Login = () => {
     onSubmit,
     data,
     isLoading,
-  }: { inputs: any; onSubmit: any; data: any; isLoading: boolean } = useLogin({
-    profilesApi,
-  });
+  }: { inputs: any; onSubmit: any; data: any; isLoading: boolean } =
+    useAuth.useLogin({
+      profilesApi,
+    });
 
   useEffect(() => {
     console.log(`🚀 ~ Login ~ data`, data, isLoading);

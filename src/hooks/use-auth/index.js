@@ -10,7 +10,7 @@ import useConfirmPhone from "./use-confirm-phone";
 import useUpdateMe from "./use-update-me";
 import useMyProfile from "./use-my-profile";
 
-export {
+const useAuth = {
   useSendEmailConfirmation,
   usePhoneConfirmation,
   useForgotPassword,
@@ -23,3 +23,5 @@ export {
   useUpdateMe,
   useMyProfile,
 };
+
+export default useAuth;

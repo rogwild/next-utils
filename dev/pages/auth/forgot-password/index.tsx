@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import FormInput from "../../../../src/components/input";
-import { useForgotPassword } from "../../../../src/hooks/use-auth";
+import useAuth from "../../../../src/hooks/use-auth";
 import { profilesApi } from "../../../redux/services/backend/profiles";
 import { blackButtonProps, textInputProps } from "../../../utils/vanilla";
 import { authSlice } from "../../../redux/authSlice";
@@ -12,7 +12,7 @@ const ForgotPassword = () => {
     data,
     isLoading,
   }: { inputs: any; onSubmit: any; data: any; isLoading: boolean } =
-    useForgotPassword({
+    useAuth.useForgotPassword({
       profilesApi,
       authSlice,
     });

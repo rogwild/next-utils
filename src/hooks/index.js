@@ -8,6 +8,7 @@ import useForm from "./use-form";
 import useChildForm from "./use-form/use-child-form";
 import useDomMeasure from "./use-dom-measure";
 import useDebounce from "./use-debounce";
+import useAuth from "./use-auth";
 
 const hooks = {
   useDetectMouseover,
@@ -20,6 +21,7 @@ const hooks = {
   useChildForm,
   useDomMeasure,
   useDebounce,
+  ...useAuth,
 };
 
 export default hooks;

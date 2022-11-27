@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import FormInput from "../../../../src/components/input";
-import { useConfirmEmail } from "../../../../src/hooks/use-auth";
+import useAuth from "../../../../src/hooks/use-auth";
 import { profilesApi } from "../../../redux/services/backend/profiles";
 import {
   blackButtonProps,
@@ -23,7 +23,7 @@ const ConfirmEmail = () => {
     isLoading: boolean;
     counter: number;
     resendEmailConfirmation: any;
-  } = useConfirmEmail({
+  } = useAuth.useConfirmEmail({
     profilesApi,
     ping: 5,
   });

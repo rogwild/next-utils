@@ -2,13 +2,19 @@ import { useEffect, useMemo } from "react";
 import { useSelector } from "react-redux";
 import { selectors } from "../../../redux/slices/authSlice";
 
-interface IUseMyProfile {
+export interface IUseMyProfile {
   profilesApi: any;
   populate?: any;
   authSlice: any;
 }
 
 const useMyProfile = ({ profilesApi, populate }: IUseMyProfile) => {
+  const state = useSelector((state) => {
+    return state;
+  });
+
+  console.log(`🚀 ~ useMyProfile ~ state`, state);
+
   const accountId = useSelector(selectors.selectAccountId);
   const jwtToken = useSelector(selectors.selectJwt);
 

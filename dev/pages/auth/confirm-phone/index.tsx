@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import FormInput from "../../../../src/components/input";
-import { useConfirmPhone } from "../../../../src/hooks/use-auth";
+import useAuth from "../../../../src/hooks/use-auth";
 import { profilesApi } from "../../../redux/services/backend/profiles";
 import {
   blackButtonProps,
@@ -25,7 +25,7 @@ const ConfirmPhone = () => {
     onSubmit: any;
     data: any;
     isLoading: boolean;
-  } = useConfirmPhone({
+  } = useAuth.useConfirmPhone({
     profilesApi,
     ping: 5,
   });
