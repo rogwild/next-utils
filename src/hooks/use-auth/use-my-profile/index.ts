@@ -1,14 +1,18 @@
 import { useEffect, useMemo } from "react";
-import { useSelector } from "react-redux";
 import { selectors } from "../../../redux/slices/authSlice";
 
 export interface IUseMyProfile {
   profilesApi: any;
   populate?: any;
   authSlice: any;
+  useSelector: any;
 }
 
-const useMyProfile = ({ profilesApi, populate }: IUseMyProfile) => {
+const useMyProfile = ({
+  profilesApi,
+  populate,
+  useSelector,
+}: IUseMyProfile) => {
   const state = useSelector((state) => {
     return state;
   });

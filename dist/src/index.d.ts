@@ -322,7 +322,7 @@ declare const _default: {
             inputsErrors: {};
             setInputsErrors: import("react").Dispatch<import("react").SetStateAction<{}>>;
         };
-        useMyProfile: ({ profilesApi, populate }: import("./hooks/use-auth/use-my-profile").IUseMyProfile) => {
+        useMyProfile: ({ profilesApi, populate, useSelector, }: import("./hooks/use-auth/use-my-profile").IUseMyProfile) => {
             me: any;
             refetch: () => void;
         };

@@ -3422,13 +3422,13 @@ var defaultInputsConfig = [{
 }];
 
 var useMyProfile = function (_a) {
-    var profilesApi = _a.profilesApi, populate = _a.populate;
-    var state = reactRedux.useSelector(function (state) {
+    var profilesApi = _a.profilesApi, populate = _a.populate, useSelector = _a.useSelector;
+    var state = useSelector(function (state) {
         return state;
     });
     console.log("\uD83D\uDE80 ~ useMyProfile ~ state", state);
-    var accountId = reactRedux.useSelector(selectors.selectAccountId);
-    var jwtToken = reactRedux.useSelector(selectors.selectJwt);
+    var accountId = useSelector(selectors.selectAccountId);
+    var jwtToken = useSelector(selectors.selectJwt);
     var _b = profilesApi.useGetMeQuery(undefined, { skip: !jwtToken }), myProfileByMe = _b.data, meError = _b.error, refetchMe = _b.refetch, isUninitialized = _b.isUninitialized;
     var _c = profilesApi.useGetProfileByIdQuery({ id: accountId, populate: populate }, {
         skip: !jwtToken || !accountId,

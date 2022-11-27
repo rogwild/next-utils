@@ -5,7 +5,7 @@ import { authSlice } from "../../redux/authSlice";
 import { profilesApi } from "../../redux/services/backend/profiles";
 import { blackButtonProps, redButtonProps } from "../../utils/vanilla";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const ProfilePage = () => {
   const dispatch = useDispatch();
@@ -13,6 +13,7 @@ const ProfilePage = () => {
   const { me }: { me: any } = useMyProfile({
     profilesApi,
     authSlice,
+    useSelector,
   });
 
   useEffect(() => {
