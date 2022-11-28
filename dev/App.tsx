@@ -1,12 +1,5 @@
 import React from "react";
-import { Provider } from "react-redux";
-import {
-  createBrowserRouter,
-  createRoutesFromElements,
-  Link,
-  Route,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Main from "./pages";
 import ConfirmEmail from "./pages/auth/confirm-email";
 import ConfirmPhone from "./pages/auth/confirm-phone";
@@ -18,7 +11,6 @@ import SendEmailConfirmation from "./pages/auth/send-email-confirmation";
 import SendPhoneConfirmation from "./pages/auth/send-phone-confirmation";
 import ProfilePage from "./pages/profile";
 import ProfileEdit from "./pages/profile/edit";
-import store from "./redux";
 
 const router = createBrowserRouter([
   {
@@ -70,11 +62,7 @@ const router = createBrowserRouter([
 ]);
 
 const App = () => {
-  return (
-    <Provider store={store}>
-      <RouterProvider router={router} />
-    </Provider>
-  );
+  return <RouterProvider router={router} />;
 };
 
 export default App;

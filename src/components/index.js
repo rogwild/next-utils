@@ -7,6 +7,7 @@ import ModalArray from "./modal/modal-array";
 import SpringNotification from "./spring-notification";
 import MediaGallery from "./media-gallery";
 import CopyButton from "./copy-button";
+import AuthWrapper from "./auth-wrapper";
 
 const components = {
   SmartButton,
@@ -18,6 +19,7 @@ const components = {
   SpringNotification,
   MediaGallery,
   CopyButton,
+  AuthWrapper,
 };
 
 export default components;
