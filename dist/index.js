@@ -2906,7 +2906,7 @@ var useResetPassword = function useResetPassword(_ref) {
         code: code
       }));
     }
-  }, [window]);
+  }, []);
   return {
     data: data,
     isLoading: isLoading,
@@ -3150,7 +3150,7 @@ var useConfirmEmail = function useConfirmEmail(_ref) {
         email: email
       }));
     }
-  }, [window]);
+  }, []);
   return {
     counter: counter,
     resendEmailConfirmation: resendEmailConfirmation,
@@ -3269,7 +3269,7 @@ var useConfirmPhone = function useConfirmPhone(_ref) {
         phone: phone
       }));
     }
-  }, [window]);
+  }, []);
   return {
     counter: counter,
     resendPhoneConfirmation: resendPhoneConfirmation,
@@ -3425,21 +3425,24 @@ var defaultInputsConfig = [{
 
 var useMyProfileCreator = function (_a) {
     var profilesApi = _a.profilesApi, populate = _a.populate, useSelector = _a.useSelector;
+    React.useEffect(function () {
+        console.log("\uD83D\uDE80 new useMyProfile");
+    }, []);
     var accountId = useSelector(selectors.selectAccountId);
     var jwtToken = useSelector(selectors.selectJwt);
-    var _b = profilesApi.useGetMeQuery(undefined, { skip: !jwtToken }), myProfileByMe = _b.data, meError = _b.error, refetchMe = _b.refetch, isUninitialized = _b.isUninitialized;
+    var _b = profilesApi.useGetMeQuery("", { skip: !jwtToken }), myProfileByMe = _b.data, meError = _b.error, refetchMe = _b.refetch, isUninitialized = _b.isUninitialized;
     var _c = profilesApi.useGetProfileByIdQuery({ id: accountId, populate: populate }, {
-        skip: !jwtToken || !accountId,
+        skip: !myProfileByMe,
         pollingInterval: 60000,
     }), filledProfile = _c.data, refetchProfileById = _c.refetch;
-    // console.log(`🚀 ~ useMyProfile ~ accountId`, accountId, filledProfile);
     React.useEffect(function () {
-        if (meError &&
-            ((meError === null || meError === void 0 ? void 0 : meError.status) !== 403 || (meError === null || meError === void 0 ? void 0 : meError.status) !== 401) &&
-            !isUninitialized) {
-            setTimeout(function () {
-                refetchMe();
-            }, 2000);
+        if (!isUninitialized &&
+            meError &&
+            ((meError === null || meError === void 0 ? void 0 : meError.status) !== 403 || (meError === null || meError === void 0 ? void 0 : meError.status) !== 401)) {
+            // const refetchTm = setTimeout(() => {
+            //   refetchMe();
+            //   clearTimeout(refetchTm);
+            // }, 2000);
             return;
         }
     }, [meError]);
@@ -3451,7 +3454,7 @@ var useMyProfileCreator = function (_a) {
             refetchProfileById();
         };
         return { me: me, refetch: refetch };
-    }, [myProfileByMe, filledProfile, accountId, jwtToken]);
+    }, [myProfileByMe, filledProfile]);
     return profile;
 };
 
@@ -3602,11 +3605,15 @@ function createProfilesApi(backendServiceApi) {
       return {
         getMe: build.query({
           query: function query() {
+            console.log("\uD83D\uDE80 ~ createProfilesApi ~ \"getMe\"", "getMe");
             return {
               url: "users/me"
             };
           },
-          transformResponse: transformResponseItem,
+          transformResponse: function transformResponse(item) {
+            console.log("\uD83D\uDE80 ~ createProfilesApi ~ item transformResponse", item);
+            return transformResponseItem(item);
+          },
           providesTags: function providesTags(result) {
             return result ? [{
               type: "Profile",
@@ -6892,49 +6899,32 @@ var CopyButton = function CopyButton(props) {
 };
 
 var AuthWrapper = function (_a) {
-    var isAuthRoute = _a.isAuthRoute, children = _a.children, _b = _a.isPublic, isPublic = _b === void 0 ? false : _b, useRouter = _a.useRouter, _c = _a.Loader, Loader = _c === void 0 ? function () { return React__default["default"].createElement(React__default["default"].Fragment, null); } : _c, useMyProfile = _a.useMyProfile;
+    var isAuthRoute = _a.isAuthRoute, children = _a.children, _b = _a.isPublic, isPublic = _b === void 0 ? false : _b, useRouter = _a.useRouter, user = _a.user; _a.useMyProfile; var redirectTo = _a.redirectTo;
+    // const { me: user } = useMyProfile();
     var router = useRouter();
     var initPath = router.query.initPath;
-    var user = useMyProfile().me;
+    var _c = __read(React.useState(initPath || ""), 2); _c[0]; _c[1];
+    React.useEffect(function () {
+        console.log("\uD83D\uDE80 ~ useEffect ~ \"new render\"", "new render");
+    }, []);
+    // useEffect(() => {
+    //   setCachedInitPath((prev) => {
+    //     if (initPath !== "" && prev === "") {
+    //       return initPath;
+    //     }
+    //     return prev;
+    //   });
+    // }, [initPath]);
+    // useEffect(() => {
+    //   console.log(`🚀 ~ useEffect ~ cachedInitPath`, cachedInitPath);
+    // }, [cachedInitPath]);
     var _d = __read(React.useState(false), 2), passed = _d[0], setPassed = _d[1];
-    var _e = __read(React.useState(false), 2), hideLoader = _e[0], setHideLoader = _e[1];
-    var _f = __read(React.useState(false), 2), closeLoader = _f[0], setCloseLoader = _f[1];
     React.useEffect(function () {
-        var loaderTm;
-        var hideLoaderTm;
-        if (passed) {
-            setCloseLoader(true);
-            hideLoaderTm = setTimeout(function () {
-                setHideLoader(true);
-            }, 3000);
-        }
-        return function () {
-            clearTimeout(loaderTm);
-            clearTimeout(hideLoaderTm);
-        };
-    }, [passed]);
-    var fromLoaderStyles = {
-        opacity: 1,
-    };
-    var toLoaderStyles = {
-        opacity: 0,
-    };
-    var loaderStyles = web.useSpring({
-        from: fromLoaderStyles,
-        to: closeLoader ? toLoaderStyles : fromLoaderStyles,
-        delay: 2000,
-        config: {
-            duration: 500,
-        },
-    });
-    React.useEffect(function () {
-        // console.log(`🚀 ~ useEffect ~ router.pathname`);
-        console.log("\uD83D\uDE80 ~ useEffect ~ router.push", router.push);
-        // console.log(`🚀 ~ useEffect ~ user`, user);
+        var _a;
         if (user.id) {
             setPassed(true);
-            if (router.pathname == "/auth/login") {
-                router.push(typeof initPath === "string" ? initPath : "/dashboard");
+            if ((_a = router.pathname) === null || _a === void 0 ? void 0 : _a.includes("/auth")) {
+                router.push(redirectTo);
             }
             return;
         }
@@ -6950,11 +6940,8 @@ var AuthWrapper = function (_a) {
         else if (isAuthRoute) {
             setPassed(true);
         }
-    }, [user, isAuthRoute, router]);
-    return (React__default["default"].createElement(React__default["default"].Fragment, null,
-        React__default["default"].createElement(web.animated.div, { className: "fixed bg-black-primary inset-0 h-screen w-screen overflow-hidden ".concat(hideLoader ? "-z-1 hidden" : "z-[200] flex-center"), style: loaderStyles },
-            React__default["default"].createElement(Loader, null)),
-        passed ? children : null));
+    }, [user, router]);
+    return (React__default["default"].createElement(React__default["default"].Fragment, null, passed ? children : null));
 };
 
 var components = {

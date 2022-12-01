@@ -48,7 +48,7 @@ const useResetPassword = ({
       );
       setInputsValues({ ...inputsValues, code: code });
     }
-  }, [window]);
+  }, []);
 
   return {
     data,

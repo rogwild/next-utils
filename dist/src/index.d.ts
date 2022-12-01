@@ -425,13 +425,14 @@ declare const _default: {
             MediaItemComponent: any;
         }) => JSX.Element;
         CopyButton: (props: any) => JSX.Element;
-        AuthWrapper: ({ isAuthRoute, children, isPublic, useRouter, Loader, useMyProfile, }: {
+        AuthWrapper: ({ isAuthRoute, children, isPublic, useRouter, user, useMyProfile, redirectTo, }: {
             isAuthRoute?: boolean;
             children: import("react").ReactNode;
             isPublic?: boolean;
-            Loader?: import("react").FC<{}>;
-            useRouter: any;
+            useRouter?: any;
             useMyProfile: any;
+            user?: any;
+            redirectTo?: string;
         }) => JSX.Element;
     };
     redux: {

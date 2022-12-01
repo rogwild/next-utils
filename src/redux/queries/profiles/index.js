@@ -134,12 +134,16 @@ export function createProfilesApi(backendServiceApi) {
     endpoints: (build) => ({
       getMe: build.query({
         query: () => {
+          console.log(`🚀 ~ createProfilesApi ~ "getMe"`, "getMe");
           return {
             url: `users/me`,
           };
         },
 
-        transformResponse: transformResponseItem,
+        transformResponse: (item) => {
+          console.log(`🚀 ~ createProfilesApi ~ item transformResponse`, item);
+          return transformResponseItem(item);
+        },
 
         providesTags: (result) =>
           result ? [{ type: `Profile`, id: result.id }] : [],

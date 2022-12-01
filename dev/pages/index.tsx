@@ -58,8 +58,8 @@ const Main = () => {
     <Provider store={store}>
       <AuthWrapper
         isPublic={isPublic}
-        isAuthRoute={isAuth}
         useRouter={useRouter}
+        isAuthRoute={isAuth}
         useMyProfile={useMyProfile}
       >
         <div className="w-full">

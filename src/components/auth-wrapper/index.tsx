@@ -1,13 +1,14 @@
-import React, { useEffect, useState, FC, ReactNode } from "react";
+import React, { useEffect, useState, FC, ReactNode, useMemo } from "react";
 import { useSpring, animated } from "@react-spring/web";
 
 type TAuthWrapperProps = {
   isAuthRoute?: boolean;
   children: ReactNode;
   isPublic?: boolean;
-  Loader?: FC;
-  useRouter: any;
+  useRouter?: any;
   useMyProfile: any;
+  user?: any;
+  redirectTo?: string;
 };
 
 const AuthWrapper = ({
@@ -15,64 +16,44 @@ const AuthWrapper = ({
   children,
   isPublic = false,
   useRouter,
-  Loader = () => <></>,
+  user,
   useMyProfile,
+  redirectTo,
 }: TAuthWrapperProps) => {
+  // const { me: user } = useMyProfile();
   const router = useRouter();
   const {
     query: { initPath },
   } = router;
-  const { me: user } = useMyProfile();
+
+  const [cachedInitPath, setCachedInitPath] = useState(initPath || "");
+
+  useEffect(() => {
+    console.log(`🚀 ~ useEffect ~ "new render"`, "new render");
+  }, []);
+
+  // useEffect(() => {
+  //   setCachedInitPath((prev) => {
+  //     if (initPath !== "" && prev === "") {
+  //       return initPath;
+  //     }
+
+  //     return prev;
+  //   });
+  // }, [initPath]);
+
+  // useEffect(() => {
+  //   console.log(`🚀 ~ useEffect ~ cachedInitPath`, cachedInitPath);
+  // }, [cachedInitPath]);
 
   const [passed, setPassed] = useState(false);
-  const [hideLoader, setHideLoader] = useState(false);
-  const [closeLoader, setCloseLoader] = useState(false);
 
   useEffect(() => {
-    let loaderTm: undefined | ReturnType<typeof setTimeout>;
-    let hideLoaderTm: undefined | ReturnType<typeof setTimeout>;
-
-    if (passed) {
-      setCloseLoader(true);
-
-      hideLoaderTm = setTimeout(() => {
-        setHideLoader(true);
-      }, 3000);
-    }
-
-    return () => {
-      clearTimeout(loaderTm);
-      clearTimeout(hideLoaderTm);
-    };
-  }, [passed]);
-
-  const fromLoaderStyles = {
-    opacity: 1,
-  };
-
-  const toLoaderStyles = {
-    opacity: 0,
-  };
-
-  const loaderStyles = useSpring({
-    from: fromLoaderStyles,
-    to: closeLoader ? toLoaderStyles : fromLoaderStyles,
-    delay: 2000,
-    config: {
-      duration: 500,
-    },
-  });
-
-  useEffect(() => {
-    // console.log(`🚀 ~ useEffect ~ router.pathname`);
-    console.log(`🚀 ~ useEffect ~ router.push`, router.push);
-    // console.log(`🚀 ~ useEffect ~ user`, user);
-
     if (user.id) {
       setPassed(true);
 
-      if (router.pathname == `/auth/login`) {
-        router.push(typeof initPath === `string` ? initPath : `/dashboard`);
+      if (router.pathname?.includes("/auth")) {
+        router.push(redirectTo);
       }
 
       return;
@@ -91,18 +72,18 @@ const AuthWrapper = ({
     } else if (isAuthRoute) {
       setPassed(true);
     }
-  }, [user, isAuthRoute, router]);
+  }, [user, router]);
 
   return (
     <>
-      <animated.div
+      {/* <animated.div
         className={`fixed bg-black-primary inset-0 h-screen w-screen overflow-hidden ${
           hideLoader ? `-z-1 hidden` : `z-[200] flex-center`
         }`}
         style={loaderStyles}
       >
         <Loader />
-      </animated.div>
+      </animated.div> */}
       {passed ? children : null}
     </>
   );

@@ -83,7 +83,7 @@ const useConfirmPhone = ({
       console.log(`🚀 ~ useEffect ~ phone`, phone);
       setInputsValues({ ...inputsValues, code: code, phone: phone });
     }
-  }, [window]);
+  }, []);
 
   return {
     counter,

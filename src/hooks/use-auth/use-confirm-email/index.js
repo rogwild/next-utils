@@ -82,7 +82,7 @@ const useConfirmEmail = ({
       );
       setInputsValues({ ...inputsValues, code: code, email: email });
     }
-  }, [window]);
+  }, []);
 
   return {
     counter,

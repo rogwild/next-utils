@@ -12,6 +12,10 @@ const useMyProfileCreator = ({
   populate,
   useSelector,
 }: IUseMyProfile) => {
+  useEffect(() => {
+    console.log(`🚀 new useMyProfile`);
+  }, []);
+
   const accountId = useSelector(selectors.selectAccountId);
   const jwtToken = useSelector(selectors.selectJwt);
 
@@ -31,17 +35,16 @@ const useMyProfileCreator = ({
       }
     );
 
-  // console.log(`🚀 ~ useMyProfile ~ accountId`, accountId, filledProfile);
-
   useEffect(() => {
     if (
+      !isUninitialized &&
       meError &&
-      (meError?.status !== 403 || meError?.status !== 401) &&
-      !isUninitialized
+      (meError?.status !== 403 || meError?.status !== 401)
     ) {
-      setTimeout(() => {
-        refetchMe();
-      }, 2000);
+      // const refetchTm = setTimeout(() => {
+      //   refetchMe();
+      //   clearTimeout(refetchTm);
+      // }, 2000);
       return;
     }
   }, [meError]);
@@ -57,7 +60,7 @@ const useMyProfileCreator = ({
     };
 
     return { me, refetch };
-  }, [myProfileByMe, filledProfile, accountId, jwtToken]);
+  }, [myProfileByMe, filledProfile]);
 
   return profile;
 };
