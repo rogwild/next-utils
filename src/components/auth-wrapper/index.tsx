@@ -24,8 +24,6 @@ const AuthWrapper = ({
   } = router;
   const { me: user } = useMyProfile();
 
-  console.log(`🚀 ~ AuthWrapper ~ user`, user);
-
   const [passed, setPassed] = useState(false);
   const [hideLoader, setHideLoader] = useState(false);
   const [closeLoader, setCloseLoader] = useState(false);
@@ -66,6 +64,10 @@ const AuthWrapper = ({
   });
 
   useEffect(() => {
+    // console.log(`🚀 ~ useEffect ~ router.pathname`);
+    console.log(`🚀 ~ useEffect ~ router.push`, router.push);
+    // console.log(`🚀 ~ useEffect ~ user`, user);
+
     if (user.id) {
       setPassed(true);
 
@@ -83,11 +85,13 @@ const AuthWrapper = ({
 
       const pathQuery = !initPath ? `?initPath=${router.asPath}` : ``;
 
+      // console.log(`🚀 ~ useEffect ~ pathQuery`, pathQuery);
+
       router.push(`/auth/login${pathQuery}`);
     } else if (isAuthRoute) {
       setPassed(true);
     }
-  }, [user, router]);
+  }, [user, isAuthRoute, router]);
 
   return (
     <>

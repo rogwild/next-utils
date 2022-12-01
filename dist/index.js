@@ -6891,6 +6891,72 @@ var CopyButton = function CopyButton(props) {
   }));
 };
 
+var AuthWrapper = function (_a) {
+    var isAuthRoute = _a.isAuthRoute, children = _a.children, _b = _a.isPublic, isPublic = _b === void 0 ? false : _b, useRouter = _a.useRouter, _c = _a.Loader, Loader = _c === void 0 ? function () { return React__default["default"].createElement(React__default["default"].Fragment, null); } : _c, useMyProfile = _a.useMyProfile;
+    var router = useRouter();
+    var initPath = router.query.initPath;
+    var user = useMyProfile().me;
+    var _d = __read(React.useState(false), 2), passed = _d[0], setPassed = _d[1];
+    var _e = __read(React.useState(false), 2), hideLoader = _e[0], setHideLoader = _e[1];
+    var _f = __read(React.useState(false), 2), closeLoader = _f[0], setCloseLoader = _f[1];
+    React.useEffect(function () {
+        var loaderTm;
+        var hideLoaderTm;
+        if (passed) {
+            setCloseLoader(true);
+            hideLoaderTm = setTimeout(function () {
+                setHideLoader(true);
+            }, 3000);
+        }
+        return function () {
+            clearTimeout(loaderTm);
+            clearTimeout(hideLoaderTm);
+        };
+    }, [passed]);
+    var fromLoaderStyles = {
+        opacity: 1,
+    };
+    var toLoaderStyles = {
+        opacity: 0,
+    };
+    var loaderStyles = web.useSpring({
+        from: fromLoaderStyles,
+        to: closeLoader ? toLoaderStyles : fromLoaderStyles,
+        delay: 2000,
+        config: {
+            duration: 500,
+        },
+    });
+    React.useEffect(function () {
+        // console.log(`🚀 ~ useEffect ~ router.pathname`);
+        console.log("\uD83D\uDE80 ~ useEffect ~ router.push", router.push);
+        // console.log(`🚀 ~ useEffect ~ user`, user);
+        if (user.id) {
+            setPassed(true);
+            if (router.pathname == "/auth/login") {
+                router.push(typeof initPath === "string" ? initPath : "/dashboard");
+            }
+            return;
+        }
+        else if (!isAuthRoute) {
+            if (isPublic) {
+                setPassed(true);
+                return;
+            }
+            var pathQuery = !initPath ? "?initPath=".concat(router.asPath) : "";
+            // console.log(`🚀 ~ useEffect ~ pathQuery`, pathQuery);
+            router.push("/auth/login".concat(pathQuery));
+        }
+        else if (isAuthRoute) {
+            setPassed(true);
+        }
+    }, [user, isAuthRoute, router]);
+    return (React__default["default"].createElement(React__default["default"].Fragment, null,
+        React__default["default"].createElement(web.animated.div, { className: "fixed bg-black-primary inset-0 h-screen w-screen overflow-hidden ".concat(hideLoader ? "-z-1 hidden" : "z-[200] flex-center"), style: loaderStyles },
+            React__default["default"].createElement(Loader, null)),
+        passed ? children : null));
+};
+
 var components = {
   SmartButton: SmartButton,
   Modal: Modal,
@@ -6900,7 +6966,8 @@ var components = {
   DropdownInput: DropdownInput,
   SpringNotification: SpringNotification,
   MediaGallery: MediaGallery,
-  CopyButton: CopyButton
+  CopyButton: CopyButton,
+  AuthWrapper: AuthWrapper
 };
 
 var index = {

@@ -1,6 +1,12 @@
 import React, { useCallback, useMemo, Fragment, useEffect } from "react";
 import { Provider } from "react-redux";
-import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import {
+  Link,
+  Outlet,
+  redirect,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import utils from "~utils";
 const { AuthWrapper } = utils.components;
 import store from "../redux";
@@ -19,11 +25,19 @@ const routes = {
     isAuth: true,
     Layout: Fragment,
   },
+  "/auth/register": {
+    isAuth: true,
+    Layout: Fragment,
+  },
+  "/profile/edit": {
+    isPublic: false,
+    Layout: Fragment,
+  },
 };
 
 const Main = () => {
-  const navigate = useNavigate();
   const location = useLocation();
+  const navigate = useNavigate();
   const useRouter = useCallback(() => {
     return {
       push: navigate,
@@ -31,6 +45,7 @@ const Main = () => {
         initPath: "/",
       },
       pathname: location.pathname,
+      asPath: location.pathname,
     };
   }, [navigate, location.pathname]);
 
