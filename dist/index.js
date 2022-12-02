@@ -7190,7 +7190,6 @@ const ModalComponent = ({
       bottom: `calc(-100vh + ${modalHeight}px)`,
       touchAction: `none`,
       height: `100vh`,
-      zIndex: `110`,
       y
     }
   }), /*#__PURE__*/React__default["default"].createElement("div", {

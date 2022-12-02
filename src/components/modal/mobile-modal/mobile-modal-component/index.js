@@ -125,7 +125,6 @@ const ModalComponent = ({
           bottom: `calc(-100vh + ${modalHeight}px)`,
           touchAction: `none`,
           height: `100vh`,
-          zIndex: `110`,
           y,
         }}
       >
