@@ -19,7 +19,7 @@ const ModalComponent = ({
   const [screenHeight, setScreenHeight] = useState(window.innerHeight);
   const [scrollActive, setScrollActive] = useState(false);
   const srPopupWindowClasses = useStyleRewriter(
-    `fixed z-40 w-full h-95vh bg-white`,
+    `fixed z-[210] w-full h-95vh bg-white`,
     popupWindowClasses
   );
   const srRenderCardContainerClasses = useStyleRewriter(

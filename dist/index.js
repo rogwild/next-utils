@@ -7083,7 +7083,7 @@ const ModalComponent = ({
   const [isOpen, setIsOpen] = React.useState(false);
   const [screenHeight, setScreenHeight] = React.useState(window.innerHeight);
   const [scrollActive, setScrollActive] = React.useState(false);
-  const srPopupWindowClasses = useStyleRewriter$1(`fixed z-40 w-full h-95vh bg-white`, popupWindowClasses);
+  const srPopupWindowClasses = useStyleRewriter$1(`fixed z-[210] w-full h-95vh bg-white`, popupWindowClasses);
   const srRenderCardContainerClasses = useStyleRewriter$1(`w-full h-full mt-1 overflow-visible`, renderCardContainerClasses);
   const modalHeight = screenHeight ? screenHeight * 0.9 : 0;
   const [{
