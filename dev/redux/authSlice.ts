@@ -1,4 +1,4 @@
-import utils from "../../src";
+import utils from "../../lib";
 const {
   authSlice: { sliceCreator },
 } = utils.redux.slices;

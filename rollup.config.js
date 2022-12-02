@@ -10,7 +10,7 @@ import { babel } from "@rollup/plugin-babel";
 import pkg from "./package.json";
 
 export default {
-  input: "src/index.ts",
+  input: "lib/index.ts",
   output: [
     {
       file: pkg.main,

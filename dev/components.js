@@ -1,20 +1,20 @@
 import React, { useEffect, useMemo, useState } from "react";
 import * as ReactDOM from "react-dom/client";
-import Input from "../src/components/input";
-import MediaGallery from "../src/components/media-gallery";
-import CopyButton from "../src/components/copy-button";
+import Input from "../lib/components/input";
+import MediaGallery from "../lib/components/media-gallery";
+import CopyButton from "../lib/components/copy-button";
 // import Modal from "./src/components/modal";
 
 // const { NotificationsWrapper, useNotifications } = SpringNotification;
-import springNotification from "../src/components/spring-notification";
+import springNotification from "../lib/components/spring-notification";
 const {
   NotificationsWrapper,
   useNotifications,
   notificationPortalId,
   createNotification,
 } = springNotification;
-import SmartButton from "../src/components/smart-button";
-import useForm from "../src/hooks/use-form";
+import SmartButton from "../lib/components/smart-button";
+import useForm from "../lib/hooks/use-form";
 
 const App = () => {
   return (

@@ -1,5 +1,5 @@
 import { backendServiceApi } from "..";
-import utils from "../../../../../src";
+import utils from "../../../../../lib";
 const { createProfilesApi } = utils.redux.queries.profiles;
 
 export const { profilesApi, hooks } = createProfilesApi(backendServiceApi);

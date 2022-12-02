@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import utils from "../../../../../src";
+import utils from "../../../../../lib";
 const { useMyProfileCreator } = utils.hooks;
 import { profilesApi } from "./index";
 

@@ -3430,9 +3430,9 @@ var useMyProfileCreator = function (_a) {
     }, []);
     var accountId = useSelector(selectors.selectAccountId);
     var jwtToken = useSelector(selectors.selectJwt);
-    var _b = profilesApi.useGetMeQuery("", { skip: !jwtToken }), myProfileByMe = _b.data, meError = _b.error, refetchMe = _b.refetch, isUninitialized = _b.isUninitialized;
+    var _b = profilesApi.useGetMeQuery(undefined, { skip: !jwtToken }), myProfileByMe = _b.data, meError = _b.error, refetchMe = _b.refetch, isUninitialized = _b.isUninitialized;
     var _c = profilesApi.useGetProfileByIdQuery({ id: accountId, populate: populate }, {
-        skip: !myProfileByMe,
+        skip: !jwtToken || !accountId,
         pollingInterval: 60000,
     }), filledProfile = _c.data, refetchProfileById = _c.refetch;
     React.useEffect(function () {
