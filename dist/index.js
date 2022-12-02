@@ -2458,7 +2458,7 @@ const sliceCreator = profilesApi => {
         } = action.payload;
 
         if (jwt) {
-          state.id = user?.id;
+          state.id = user.id;
           state.isAuthenticated = true;
           localStorage.setItem("jwt", jwt);
           return;
@@ -2853,7 +2853,7 @@ const ModalComponent$1 = ({
   }, []);
   const TransitionElement = removeFromDom ? TransitionComponent : PlainDiv;
   return /*#__PURE__*/React__default["default"].createElement("div", {
-    className: `${showLayout ? `z-30 block` : `-z-1`} ${srContainerClasses} `
+    className: `${showLayout ? `z-[200] block` : `-z-1`} ${srContainerClasses}`
   }, /*#__PURE__*/React__default["default"].createElement(TransitionElement, {
     baseClasses: `fixed inset-0 pointer-events-auto duration-${duration} transition z-10`,
     show: show,
@@ -2881,14 +2881,13 @@ const ModalComponent$1 = ({
 };
 
 const DefaultCloseButton = ({
-  setShow,
-  closeButtonClasses
+  setShow
 }) => {
   return /*#__PURE__*/React__default["default"].createElement(SmartButton, {
     onClick: () => setShow(false),
     className: "@pn absolute @it right-[20px] top-[20px] @ttc text-white hover:text-neutral-550 @wh w-12 @zi z-50 @cr cursor-pointer"
   }, /*#__PURE__*/React__default["default"].createElement("svg", {
-    className: `fill-current w-12 h-12`,
+    className: "fill-current w-12 h-12",
     viewBox: "0 0 20 20",
     fill: "none",
     xmlns: "http://www.w3.org/2000/svg"
@@ -7079,7 +7078,7 @@ const ModalComponent = ({
   renderCardContainerClasses = ``,
   renderCardProps = {},
   onCloseModalCb = () => {},
-  zIndex = 50
+  zIndex = 200
 }) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [screenHeight, setScreenHeight] = React.useState(window.innerHeight);

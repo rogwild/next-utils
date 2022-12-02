@@ -13,7 +13,7 @@ const ModalComponent = ({
   renderCardContainerClasses = ``,
   renderCardProps = {},
   onCloseModalCb = () => {},
-  zIndex = 50,
+  zIndex = 200,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [screenHeight, setScreenHeight] = useState(window.innerHeight);
