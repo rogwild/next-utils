@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { authSlice } from "~redux/authSlice";
 import { blackButtonProps, redButtonProps } from "~utils/vanilla";
-import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import useMyProfile from "~backend/models/profiles/useMyProfile";
+import Link from "next/link";
 
 const ProfilePage = () => {
   const dispatch = useDispatch();
@@ -20,7 +20,7 @@ const ProfilePage = () => {
       <h4 className="font-bold">You're logged as {me?.username}</h4>
 
       <div className="flex items-center gap-2">
-        <Link to="/auth/login" {...blackButtonProps}>
+        <Link href="/auth/login" {...blackButtonProps}>
           Login
         </Link>
         <button

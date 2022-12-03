@@ -2,7 +2,7 @@ import React, { useEffect, useState, FC, ReactNode, useMemo } from "react";
 import { useSpring, animated } from "@react-spring/web";
 
 type TAuthWrapperProps = {
-  isAuthRoute?: boolean;
+  isAuth?: boolean;
   children: ReactNode;
   isPublic?: boolean;
   useRouter?: any;
@@ -12,25 +12,21 @@ type TAuthWrapperProps = {
 };
 
 const AuthWrapper = ({
-  isAuthRoute,
+  isAuth,
   children,
   isPublic = false,
   useRouter,
-  user,
+  // user,
   useMyProfile,
   redirectTo,
 }: TAuthWrapperProps) => {
-  // const { me: user } = useMyProfile();
+  const { me: user } = useMyProfile();
   const router = useRouter();
   const {
     query: { initPath },
   } = router;
 
   const [cachedInitPath, setCachedInitPath] = useState(initPath || "");
-
-  useEffect(() => {
-    console.log(`🚀 ~ useEffect ~ "new render"`, "new render");
-  }, []);
 
   // useEffect(() => {
   //   setCachedInitPath((prev) => {
@@ -49,6 +45,8 @@ const AuthWrapper = ({
   const [passed, setPassed] = useState(false);
 
   useEffect(() => {
+    console.log(`🚀 ~ useEffect ~ user`, user);
+
     if (user.id) {
       setPassed(true);
 
@@ -57,7 +55,7 @@ const AuthWrapper = ({
       }
 
       return;
-    } else if (!isAuthRoute) {
+    } else if (!isAuth) {
       if (isPublic) {
         setPassed(true);
 
@@ -69,7 +67,7 @@ const AuthWrapper = ({
       // console.log(`🚀 ~ useEffect ~ pathQuery`, pathQuery);
 
       router.push(`/auth/login${pathQuery}`);
-    } else if (isAuthRoute) {
+    } else if (isAuth) {
       setPassed(true);
     }
   }, [user, router]);

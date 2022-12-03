@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 
 export interface IProfileState {
   id: string | undefined;
@@ -21,9 +21,14 @@ export const sliceCreator = (profilesApi) => {
     name: `auth`,
     initialState,
     reducers: {
-      logout: () => {
+      logout: (state) => {
         localStorage.removeItem(`jwt`);
-        return initialState;
+        state.id = null;
+        state.currentAuthFactor = "local";
+        state.jwt = undefined;
+        state.isAuthenticated = false;
+
+        return;
       },
     },
     extraReducers: (builder) => {

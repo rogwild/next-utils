@@ -35,6 +35,7 @@ export default {
     commonjs(),
   ],
   external: [
+    "next",
     "react",
     "react-table",
     "axios",
@@ -43,7 +44,6 @@ export default {
     "react-spring",
     "react-dom",
     "prop-types",
-    "react-markdown",
     "react-calendar",
     "@use-gesture/react",
     "@reduxjs/toolkit",

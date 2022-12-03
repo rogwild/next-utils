@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 type TAuthWrapperProps = {
-    isAuthRoute?: boolean;
+    isAuth?: boolean;
     children: ReactNode;
     isPublic?: boolean;
     useRouter?: any;
@@ -8,5 +8,5 @@ type TAuthWrapperProps = {
     user?: any;
     redirectTo?: string;
 };
-declare const AuthWrapper: ({ isAuthRoute, children, isPublic, useRouter, user, useMyProfile, redirectTo, }: TAuthWrapperProps) => JSX.Element;
+declare const AuthWrapper: ({ isAuth, children, isPublic, useRouter, useMyProfile, redirectTo, }: TAuthWrapperProps) => JSX.Element;
 export default AuthWrapper;

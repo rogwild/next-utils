@@ -49,7 +49,7 @@ function App({ Component, pageProps }: AppProps) {
     <div>
       <MetaBlock />
       <Provider store={store}>
-        <AuthWrapper isPublic={isPublic} isAuthRoute={isAuth}>
+        <AuthWrapper isPublic={isPublic} isAuth={isAuth}>
           <>
             <Component {...pageProps} />
             <div id="modal" />

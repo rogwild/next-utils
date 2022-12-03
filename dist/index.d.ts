@@ -425,8 +425,8 @@ declare const _default: {
             MediaItemComponent: any;
         }) => JSX.Element;
         CopyButton: (props: any) => JSX.Element;
-        AuthWrapper: ({ isAuthRoute, children, isPublic, useRouter, user, useMyProfile, redirectTo, }: {
-            isAuthRoute?: boolean;
+        AuthWrapper: ({ isAuth, children, isPublic, useRouter, useMyProfile, redirectTo, }: {
+            isAuth?: boolean;
             children: import("react").ReactNode;
             isPublic?: boolean;
             useRouter?: any;

@@ -22,7 +22,7 @@ const baseQuery = fetchBaseQuery({
   },
 });
 
-const tagTypes = [`Profiles`];
+const tagTypes = [`Profile`];
 
 export const backendServiceApi = createApi({
   baseQuery,
