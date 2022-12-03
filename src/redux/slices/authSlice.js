@@ -102,6 +102,7 @@ export const sliceCreator = (profilesApi) => {
           (state, action) => {
             state.jwt = localStorage.jwt;
             state.id = action.payload.id;
+            state.user = action.payload;
 
             state.isAuthenticated = true;
           }
