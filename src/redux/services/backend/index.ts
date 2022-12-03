@@ -24,7 +24,7 @@ const baseQuery = fetchBaseQuery({
   },
 });
 
-const tagTypes = [`Products`];
+const tagTypes = [`Profiles`];
 
 export const backendServiceApi = createApi({
   baseQuery,
