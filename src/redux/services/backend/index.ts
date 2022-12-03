@@ -18,8 +18,6 @@ const baseQuery = fetchBaseQuery({
       );
     }
 
-    headers.set(`Prefer`, `dynamic=true`);
-
     return headers;
   },
 });
