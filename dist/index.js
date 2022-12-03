@@ -2530,6 +2530,7 @@ const sliceCreator = profilesApi => {
       }).addMatcher(profilesApi.endpoints.getMe.matchFulfilled, (state, action) => {
         state.jwt = localStorage.jwt;
         state.id = action.payload.id;
+        state.user = action.payload;
         state.isAuthenticated = true;
       });
     }
