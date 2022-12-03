@@ -3,7 +3,7 @@ import {
   transformResponseItem,
   getImageUrl,
   ApiClient,
-} from "../src/api";
+} from "../lib/api";
 
 describe.skip("API UTILS", () => {
   describe("getImageUrl", () => {

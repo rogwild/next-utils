@@ -22,10 +22,15 @@ export default {
   ],
   plugins: [
     resolve(),
-    typescript(),
+    typescript({
+      tsconfig: "tsconfig.lib.json",
+      module: "esnext",
+    }),
     babel({
       babelHelpers: "runtime",
       skipPreflightCheck: true,
+      plugins: [],
+      presets: ["next/babel"],
     }),
     commonjs(),
   ],

@@ -3,7 +3,7 @@ import { fireEvent, screen, waitFor } from "@testing-library/react";
 import Register from "./index";
 import { rest } from "msw";
 import { setupServer } from "msw/node";
-import { renderApp } from "../../../utils/testing";
+import { renderApp } from "~utils/testing";
 
 const server = setupServer(
   rest.post(

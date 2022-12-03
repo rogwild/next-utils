@@ -2,7 +2,7 @@ import React from "react";
 import { fireEvent, screen, waitFor } from "@testing-library/react";
 import { rest } from "msw";
 import { setupServer } from "msw/node";
-import { renderApp } from "../../../utils/testing";
+import { renderApp } from "~utils/testing";
 import SendPhoneConfirmation from "./index";
 
 const server = setupServer(

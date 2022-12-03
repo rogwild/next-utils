@@ -36,15 +36,17 @@ LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
 OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
 PERFORMANCE OF THIS SOFTWARE.
 ***************************************************************************** */
-var __assign = function () {
-  __assign = Object.assign || function __assign(t) {
+var _assign = function __assign() {
+  _assign = Object.assign || function __assign(t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
       s = arguments[i];
-      for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
     }
     return t;
   };
-  return __assign.apply(this, arguments);
+  return _assign.apply(this, arguments);
 };
 function __awaiter(thisArg, _arguments, P, generator) {
   function adopt(value) {
@@ -76,7 +78,7 @@ function __awaiter(thisArg, _arguments, P, generator) {
 function __generator(thisArg, body) {
   var _ = {
       label: 0,
-      sent: function () {
+      sent: function sent() {
         if (t[0] & 1) throw t[1];
         return t[1];
       },
@@ -101,58 +103,60 @@ function __generator(thisArg, body) {
   }
   function step(op) {
     if (f) throw new TypeError("Generator is already executing.");
-    while (g && (g = 0, op[0] && (_ = 0)), _) try {
-      if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-      if (y = 0, t) op = [op[0] & 2, t.value];
-      switch (op[0]) {
-        case 0:
-        case 1:
-          t = op;
-          break;
-        case 4:
-          _.label++;
-          return {
-            value: op[1],
-            done: false
-          };
-        case 5:
-          _.label++;
-          y = op[1];
-          op = [0];
-          continue;
-        case 7:
-          op = _.ops.pop();
-          _.trys.pop();
-          continue;
-        default:
-          if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
-            _ = 0;
-            continue;
-          }
-          if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
-            _.label = op[1];
-            break;
-          }
-          if (op[0] === 6 && _.label < t[1]) {
-            _.label = t[1];
+    while (g && (g = 0, op[0] && (_ = 0)), _) {
+      try {
+        if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+        if (y = 0, t) op = [op[0] & 2, t.value];
+        switch (op[0]) {
+          case 0:
+          case 1:
             t = op;
             break;
-          }
-          if (t && _.label < t[2]) {
-            _.label = t[2];
-            _.ops.push(op);
-            break;
-          }
-          if (t[2]) _.ops.pop();
-          _.trys.pop();
-          continue;
+          case 4:
+            _.label++;
+            return {
+              value: op[1],
+              done: false
+            };
+          case 5:
+            _.label++;
+            y = op[1];
+            op = [0];
+            continue;
+          case 7:
+            op = _.ops.pop();
+            _.trys.pop();
+            continue;
+          default:
+            if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+              _ = 0;
+              continue;
+            }
+            if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+              _.label = op[1];
+              break;
+            }
+            if (op[0] === 6 && _.label < t[1]) {
+              _.label = t[1];
+              t = op;
+              break;
+            }
+            if (t && _.label < t[2]) {
+              _.label = t[2];
+              _.ops.push(op);
+              break;
+            }
+            if (t[2]) _.ops.pop();
+            _.trys.pop();
+            continue;
+        }
+        op = body.call(thisArg, _);
+      } catch (e) {
+        op = [6, e];
+        y = 0;
+      } finally {
+        f = t = 0;
       }
-      op = body.call(thisArg, _);
-    } catch (e) {
-      op = [6, e];
-      y = 0;
-    } finally {
-      f = t = 0;
     }
     if (op[0] & 5) throw op[1];
     return {
@@ -167,7 +171,7 @@ function __values(o) {
     i = 0;
   if (m) return m.call(o);
   if (o && typeof o.length === "number") return {
-    next: function () {
+    next: function next() {
       if (o && i >= o.length) o = void 0;
       return {
         value: o && o[i++],
@@ -185,7 +189,9 @@ function __read(o, n) {
     ar = [],
     e;
   try {
-    while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+    while ((n === void 0 || n-- > 0) && !(r = i.next()).done) {
+      ar.push(r.value);
+    }
   } catch (error) {
     e = {
       error: error
@@ -229,7 +235,7 @@ var snakeToCamel = function (str) {
 var flatItemAttributes = function (data) {
     if (!(data === null || data === void 0 ? void 0 : data.attributes))
         return data;
-    return __assign({ id: data === null || data === void 0 ? void 0 : data.id }, data.attributes);
+    return _assign({ id: data === null || data === void 0 ? void 0 : data.id }, data.attributes);
 };
 var transformEntriesInObj = function (item) {
     if (isObject(item) && !isArray(item)) {
@@ -284,7 +290,7 @@ var Api = /** @class */ (function () {
         var stringifiedQuery = qs.stringify(query, {
             encodeValuesOnly: true,
         });
-        var passHeaders = __assign(__assign({}, headers), combineHeaders({ withAuth: withAuth }));
+        var passHeaders = _assign(_assign({}, headers), combineHeaders({ withAuth: withAuth }));
         return axios__default["default"]({
             url: "".concat(this.baseUrl, "/api/").concat(model, "/").concat(id, "?").concat(stringifiedQuery),
             headers: passHeaders,
@@ -461,7 +467,7 @@ var removeEmptyFields = function (_a) {
 (_a = {},
     _a["page-blocks.main-block"] = function (block) {
         var _a;
-        return __assign(__assign({}, block), { images: ((_a = block === null || block === void 0 ? void 0 : block.images) === null || _a === void 0 ? void 0 : _a.map(getImageUrl)) || null });
+        return _assign(_assign({}, block), { images: ((_a = block === null || block === void 0 ? void 0 : block.images) === null || _a === void 0 ? void 0 : _a.map(getImageUrl)) || null });
     },
     _a);
 /**
@@ -493,9 +499,9 @@ var getPageData = function (params) { return __awaiter(void 0, void 0, void 0, f
                         for (additionalBlocks_1 = __values(additionalBlocks), additionalBlocks_1_1 = additionalBlocks_1.next(); !additionalBlocks_1_1.done; additionalBlocks_1_1 = additionalBlocks_1.next()) {
                             block = additionalBlocks_1_1.value;
                             additionalPopulate[block] = {
-                                populate: __assign({}, keys.reduce(function (a, b) {
+                                populate: _assign({}, keys.reduce(function (a, b) {
                                     var _a;
-                                    return (__assign(__assign({}, a), (_a = {}, _a[b] = { populate: "*" }, _a)));
+                                    return (_assign(_assign({}, a), (_a = {}, _a[b] = { populate: "*" }, _a)));
                                 }, {})),
                             };
                         }
@@ -508,10 +514,10 @@ var getPageData = function (params) { return __awaiter(void 0, void 0, void 0, f
                         finally { if (e_6) throw e_6.error; }
                     }
                 }
-                filledQuery = __assign({ locale: locale, populate: __assign({ page_blocks: {
-                            populate: __assign({}, keys.reduce(function (a, b) {
+                filledQuery = _assign({ locale: locale, populate: _assign({ page_blocks: {
+                            populate: _assign({}, keys.reduce(function (a, b) {
                                 var _a;
-                                return (__assign(__assign({}, a), (_a = {}, _a[b] = { populate: "*" }, _a)));
+                                return (_assign(_assign({}, a), (_a = {}, _a[b] = { populate: "*" }, _a)));
                             }, {})),
                         } }, additionalPopulate) }, query);
                 return [4 /*yield*/, client.request({
@@ -530,7 +536,7 @@ var getPageData = function (params) { return __awaiter(void 0, void 0, void 0, f
                         block; //?
                         if (res[block]) {
                             res[block];
-                            additionalBlocksData[block] = transformPageBlock(__assign(__assign({}, res[block]), { _Component: block }), transformers);
+                            additionalBlocksData[block] = transformPageBlock(_assign(_assign({}, res[block]), { _Component: block }), transformers);
                         }
                     }
                 }
@@ -614,7 +620,34 @@ var formatters = /*#__PURE__*/Object.freeze({
     shortenAddress: shortenAddress
 });
 
+function _typeof$1(obj) {
+  "@babel/helpers - typeof";
+
+  return _typeof$1 = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) {
+    return typeof obj;
+  } : function (obj) {
+    return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+  }, _typeof$1(obj);
+}
+
+function _toPrimitive(input, hint) {
+  if (_typeof$1(input) !== "object" || input === null) return input;
+  var prim = input[Symbol.toPrimitive];
+  if (prim !== undefined) {
+    var res = prim.call(input, hint || "default");
+    if (_typeof$1(res) !== "object") return res;
+    throw new TypeError("@@toPrimitive must return a primitive value.");
+  }
+  return (hint === "string" ? String : Number)(input);
+}
+
+function _toPropertyKey(arg) {
+  var key = _toPrimitive(arg, "string");
+  return _typeof$1(key) === "symbol" ? key : String(key);
+}
+
 function _defineProperty(obj, key, value) {
+  key = _toPropertyKey(key);
   if (key in obj) {
     Object.defineProperty(obj, key, {
       value: value,
@@ -626,60 +659,6 @@ function _defineProperty(obj, key, value) {
     obj[key] = value;
   }
   return obj;
-}
-
-function _arrayWithHoles(arr) {
-  if (Array.isArray(arr)) return arr;
-}
-
-function _iterableToArrayLimit(arr, i) {
-  var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
-  if (_i == null) return;
-  var _arr = [];
-  var _n = true;
-  var _d = false;
-  var _s, _e;
-  try {
-    for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
-      _arr.push(_s.value);
-      if (i && _arr.length === i) break;
-    }
-  } catch (err) {
-    _d = true;
-    _e = err;
-  } finally {
-    try {
-      if (!_n && _i["return"] != null) _i["return"]();
-    } finally {
-      if (_d) throw _e;
-    }
-  }
-  return _arr;
-}
-
-function _arrayLikeToArray$3(arr, len) {
-  if (len == null || len > arr.length) len = arr.length;
-  for (var i = 0, arr2 = new Array(len); i < len; i++) {
-    arr2[i] = arr[i];
-  }
-  return arr2;
-}
-
-function _unsupportedIterableToArray$3(o, minLen) {
-  if (!o) return;
-  if (typeof o === "string") return _arrayLikeToArray$3(o, minLen);
-  var n = Object.prototype.toString.call(o).slice(8, -1);
-  if (n === "Object" && o.constructor) n = o.constructor.name;
-  if (n === "Map" || n === "Set") return Array.from(o);
-  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$3(o, minLen);
-}
-
-function _nonIterableRest() {
-  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-
-function _slicedToArray(arr, i) {
-  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray$3(arr, i) || _nonIterableRest();
 }
 
 function ownKeys$e(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
@@ -768,21 +747,17 @@ var useLookupTable = function useLookupTable(_ref) {
     return passedData;
   }, [memoUpdateFunc(passedData)]);
   var _useState = React.useState(config.sortBy),
-    _useState2 = _slicedToArray(_useState, 2),
-    sortBy = _useState2[0],
-    setSortBy = _useState2[1];
-  var _useState3 = React.useState(initialFiltersState),
-    _useState4 = _slicedToArray(_useState3, 2),
-    filters = _useState4[0],
-    setFilters = _useState4[1];
-  var _useState5 = React.useState(config.globalFilter || ""),
-    _useState6 = _slicedToArray(_useState5, 2),
-    localGlobalFilter = _useState6[0],
-    setLocalGlobalFilter = _useState6[1];
-  var _useState7 = React.useState(config.selectedRowIds || undefined),
-    _useState8 = _slicedToArray(_useState7, 2),
-    localSelectedRowIds = _useState8[0],
-    setLocalSelectedRowIds = _useState8[1];
+    sortBy = _useState[0],
+    setSortBy = _useState[1];
+  var _useState2 = React.useState(initialFiltersState),
+    filters = _useState2[0],
+    setFilters = _useState2[1];
+  var _useState3 = React.useState(config.globalFilter || ""),
+    localGlobalFilter = _useState3[0],
+    setLocalGlobalFilter = _useState3[1];
+  var _useState4 = React.useState(config.selectedRowIds || undefined),
+    localSelectedRowIds = _useState4[0],
+    setLocalSelectedRowIds = _useState4[1];
   React.useMemo(function () {
     var _config$useRowSelect;
     return (_config$useRowSelect = config.useRowSelect) !== null && _config$useRowSelect !== void 0 ? _config$useRowSelect : false;
@@ -887,10 +862,9 @@ var useLookupTable = function useLookupTable(_ref) {
     });
     if (!foundFiltered) setFilters([]);
   }, [rows]);
-  var _useState9 = React.useState(state.globalFilter),
-    _useState10 = _slicedToArray(_useState9, 2),
-    inputValue = _useState10[0],
-    setInputValue = _useState10[1];
+  var _useState5 = React.useState(state.globalFilter),
+    inputValue = _useState5[0],
+    setInputValue = _useState5[1];
   var onGlobalFilterChange = function onGlobalFilterChange(value) {
     setGlobalFilter(value || undefined);
   };
@@ -1098,7 +1072,7 @@ var useSetParentsInput = function (_a) {
                         var eq = objAreEq(updatedInputs[index_1], localStateItem);
                         if (!eq) {
                             updated = true;
-                            newState[index_1] = __assign(__assign({}, localStateItem), newState[index_1]);
+                            newState[index_1] = _assign(_assign({}, localStateItem), newState[index_1]);
                         }
                     }
                 }
@@ -1154,7 +1128,7 @@ var useSetParentsInput = function (_a) {
             }
             setLocalState(function (prev) {
                 var loc = __spreadArray([], __read(prev), false);
-                loc[index] = __assign(__assign({}, loc[index]), updatedInputs);
+                loc[index] = _assign(_assign({}, loc[index]), updatedInputs);
                 // console.log(`🚀 ~ setLocalState ~ prev`, prev);
                 // console.log(
                 //   `🚀 ~ setLocalState ~ loc[index]`,
@@ -1181,7 +1155,7 @@ var useSetParentsInput = function (_a) {
                     // console.log(`🚀 ~ changeFiles ~ newFiles-массив`, newFiles);
                     setLocalFiles(function (prev) {
                         var _a;
-                        return __assign(__assign({}, prev), (_a = {}, _a[updatedFileKey] = newFiles, _a));
+                        return _assign(_assign({}, prev), (_a = {}, _a[updatedFileKey] = newFiles, _a));
                     });
                     // Обнулить компонент с файлом, нужно в inputState передать пустой массив
                     if (parentKey && Array.isArray(localState) && !newFiles.length) {
@@ -1194,7 +1168,7 @@ var useSetParentsInput = function (_a) {
                             var newLocalState = localState.map(function (item, index) {
                                 var _a;
                                 if (index === parseInt(clearedKey_1[0])) {
-                                    return __assign(__assign({}, item), (_a = {}, _a[clearedKey_1[1]] = newFiles, _a));
+                                    return _assign(_assign({}, item), (_a = {}, _a[clearedKey_1[1]] = newFiles, _a));
                                 }
                                 return item;
                             });
@@ -1208,7 +1182,7 @@ var useSetParentsInput = function (_a) {
                     // console.log(`🚀 ~ changeFiles ~ newFiles-объект`, newFiles);
                     setLocalFiles(function (prev) {
                         var _a;
-                        return __assign(__assign({}, prev), (_a = {}, _a[updatedFileKey] = newFiles, _a));
+                        return _assign(_assign({}, prev), (_a = {}, _a[updatedFileKey] = newFiles, _a));
                     });
                     return "continue";
                 }
@@ -1217,7 +1191,7 @@ var useSetParentsInput = function (_a) {
                 // console.log(`🚀 ~ changeFiles ~ delete`, updatedFileKey);
                 // удалить этот файл
                 setLocalFiles(function (prev) {
-                    var newFiles = __assign({}, prev);
+                    var newFiles = _assign({}, prev);
                     delete newFiles[updatedFileKey];
                     return newFiles;
                 });
@@ -1244,7 +1218,7 @@ var useSetParentsInput = function (_a) {
         if (toDeleteFilesKeys.length) {
             setLocalFiles(function (prev) {
                 var e_4, _a;
-                var newFiles = __assign({}, prev);
+                var newFiles = _assign({}, prev);
                 try {
                     for (var toDeleteFilesKeys_1 = __values(toDeleteFilesKeys), toDeleteFilesKeys_1_1 = toDeleteFilesKeys_1.next(); !toDeleteFilesKeys_1_1.done; toDeleteFilesKeys_1_1 = toDeleteFilesKeys_1.next()) {
                         var toDeleteFilesKey = toDeleteFilesKeys_1_1.value;
@@ -1301,9 +1275,8 @@ var BREAKPOINTS = (_BREAKPOINTS = {
 }, _defineProperty(_BREAKPOINTS, "xl", 1280), _defineProperty(_BREAKPOINTS, "2xl", 1536), _BREAKPOINTS);
 var useBreakpoint$1 = function useBreakpoint(breakpoint) {
   var _useState = React.useState(undefined),
-    _useState2 = _slicedToArray(_useState, 2),
-    width = _useState2[0],
-    setWidth = _useState2[1];
+    width = _useState[0],
+    setWidth = _useState[1];
   React.useEffect(function () {
     var handleResize = function handleResize() {
       setWidth(window.innerWidth);
@@ -1718,9 +1691,8 @@ var setValue = function setValue(_ref) {
 
 var useDetectMouseover$1 = function useDetectMouseover(el, initialState) {
   var _useState = React.useState(initialState),
-    _useState2 = _slicedToArray(_useState, 2),
-    isActive = _useState2[0],
-    setIsActive = _useState2[1];
+    isActive = _useState[0],
+    setIsActive = _useState[1];
   var handleOver = React.useCallback(function (e) {
     setIsActive(true);
   }, [el.current]);
@@ -1744,9 +1716,8 @@ var useDetectMouseover$1 = function useDetectMouseover(el, initialState) {
 
 var useDetectOutsideClick$1 = function useDetectOutsideClick(trigger, initialState) {
   var _useState = React.useState(initialState),
-    _useState2 = _slicedToArray(_useState, 2),
-    isActive = _useState2[0],
-    setIsActive = _useState2[1];
+    isActive = _useState[0],
+    setIsActive = _useState[1];
   React.useEffect(function () {
     var pageClickEvent = function pageClickEvent(e) {
       if (trigger !== null && trigger !== void 0 && trigger.current && !trigger.current.contains(e.target)) {
@@ -1760,16 +1731,6 @@ var useDetectOutsideClick$1 = function useDetectOutsideClick(trigger, initialSta
   }, []);
   return [isActive, setIsActive];
 };
-
-function _typeof$1(obj) {
-  "@babel/helpers - typeof";
-
-  return _typeof$1 = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) {
-    return typeof obj;
-  } : function (obj) {
-    return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-  }, _typeof$1(obj);
-}
 
 function _objectWithoutPropertiesLoose(source, excluded) {
   if (source == null) return {};
@@ -1798,6 +1759,65 @@ function _objectWithoutProperties(source, excluded) {
     }
   }
   return target;
+}
+
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr;
+}
+
+function _iterableToArrayLimit(arr, i) {
+  var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"];
+  if (null != _i) {
+    var _s,
+      _e,
+      _x,
+      _r,
+      _arr = [],
+      _n = !0,
+      _d = !1;
+    try {
+      if (_x = (_i = _i.call(arr)).next, 0 === i) {
+        if (Object(_i) !== _i) return;
+        _n = !1;
+      } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0) {
+        ;
+      }
+    } catch (err) {
+      _d = !0, _e = err;
+    } finally {
+      try {
+        if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return;
+      } finally {
+        if (_d) throw _e;
+      }
+    }
+    return _arr;
+  }
+}
+
+function _arrayLikeToArray$3(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+  for (var i = 0, arr2 = new Array(len); i < len; i++) {
+    arr2[i] = arr[i];
+  }
+  return arr2;
+}
+
+function _unsupportedIterableToArray$3(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return _arrayLikeToArray$3(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(o);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$3(o, minLen);
+}
+
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+
+function _slicedToArray(arr, i) {
+  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray$3(arr, i) || _nonIterableRest();
 }
 
 function _arrayWithoutHoles(arr) {
@@ -1944,7 +1964,7 @@ var checkRequiredField = function checkRequiredField(_ref6) {
     errors = _ref6.errors;
   // Reset old required errors if exists
   // Add new require errors
-  if (value === undefined || value === null || _typeof$1(value) == "string" && value.trim() == "") {
+  if (value === undefined || value === null || typeof value == "string" && value.trim() == "") {
     addError({
       errors: errors,
       field: field,
@@ -2012,9 +2032,9 @@ var checkFields = function checkFields(_ref8) {
           config: config,
           inputsConfig: inputsConfig
         };
-        if (_typeof$1(checker) === "function") {
+        if (typeof checker === "function") {
           checker(checkerProps);
-        } else if (_typeof$1(checker) === "string") {
+        } else if (typeof checker === "string") {
           if (defualtCheckerFuncs[checker]) {
             defualtCheckerFuncs[checker](checkerProps);
           } else {
@@ -2235,25 +2255,20 @@ var useForm = function useForm(_ref) {
     initialBlocked = _useMemo.initialBlocked,
     initialFiles = _useMemo.initialFiles;
   var _useState = React.useState(initialInputs),
-    _useState2 = _slicedToArray(_useState, 2),
-    inputs = _useState2[0],
-    setInputs = _useState2[1];
-  var _useState3 = React.useState(initialFiles),
-    _useState4 = _slicedToArray(_useState3, 2),
-    files = _useState4[0],
-    setFiles = _useState4[1];
-  var _useState5 = React.useState(initialErrors),
-    _useState6 = _slicedToArray(_useState5, 2),
-    errors = _useState6[0],
-    setErrors = _useState6[1];
-  var _useState7 = React.useState(initialTypes),
-    _useState8 = _slicedToArray(_useState7, 2),
-    types = _useState8[0],
-    setTypes = _useState8[1];
-  var _useState9 = React.useState(initialBlocked),
-    _useState10 = _slicedToArray(_useState9, 2),
-    blockedInputs = _useState10[0],
-    setBlockedInputs = _useState10[1];
+    inputs = _useState[0],
+    setInputs = _useState[1];
+  var _useState2 = React.useState(initialFiles),
+    files = _useState2[0],
+    setFiles = _useState2[1];
+  var _useState3 = React.useState(initialErrors),
+    errors = _useState3[0],
+    setErrors = _useState3[1];
+  var _useState4 = React.useState(initialTypes),
+    types = _useState4[0],
+    setTypes = _useState4[1];
+  var _useState5 = React.useState(initialBlocked),
+    blockedInputs = _useState5[0],
+    setBlockedInputs = _useState5[1];
   React.useEffect(function () {
     setInputs(initialInputs);
     setErrors(initialErrors);
@@ -2420,7 +2435,7 @@ var selectFilesForDelete = function selectFilesForDelete(_ref5) {
         try {
           var _loop = function _loop() {
             var defaultFile = _step2.value;
-            if (_typeof$1(defaultFile) !== "object") {
+            if (typeof defaultFile !== "object") {
               return "continue";
             }
             if (!passedFiles.filter(function (passedFile) {
@@ -2440,10 +2455,10 @@ var selectFilesForDelete = function selectFilesForDelete(_ref5) {
         } finally {
           _iterator2.f();
         }
-      } else if (_typeof$1(config.defaultValue) === "object") {
+      } else if (typeof config.defaultValue === "object") {
         var passedFile = passedFiles;
         var defaultFile = config.defaultValue;
-        if (_typeof$1(defaultFile) !== "object" || defaultFile === null) {
+        if (typeof defaultFile !== "object" || defaultFile === null) {
           return;
         }
         if (defaultFile.url) {
@@ -2533,9 +2548,8 @@ var useDomMeasure = function useDomMeasure(ref) {
       width: 0,
       height: 0
     }),
-    _useState2 = _slicedToArray(_useState, 2),
-    domRect = _useState2[0],
-    setDomRect = _useState2[1];
+    domRect = _useState[0],
+    setDomRect = _useState[1];
   React.useEffect(function () {
     if (ref.current) {
       var elemDomRect = ref.current.getBoundingClientRect();
@@ -2951,9 +2965,8 @@ var usePhoneConfirmation = function usePhoneConfirmation(_ref) {
     authSlice = _ref.authSlice;
   var auth = reactRedux.useSelector(authSlice.selectors.auth);
   var _useState = React.useState(),
-    _useState2 = _slicedToArray(_useState, 2),
-    user = _useState2[0],
-    setUser = _useState2[1];
+    user = _useState[0],
+    setUser = _useState[1];
 
   // Without hard memoization sendPhoneConfirmSms calls twice
   React.useEffect(function () {
@@ -3096,9 +3109,8 @@ var useConfirmEmail = function useConfirmEmail(_ref) {
     resendEmailConfirmationIsSuccess = _profilesApi$useSendE3.isSuccess,
     resendEmailConfirmationData = _profilesApi$useSendE3.data;
   var _useState = React.useState(ping),
-    _useState2 = _slicedToArray(_useState, 2),
-    counter = _useState2[0],
-    setCounter = _useState2[1];
+    counter = _useState[0],
+    setCounter = _useState[1];
   React.useEffect(function () {
     var timer = counter > 0 && setInterval(function () {
       return setCounter(counter - 1);
@@ -3208,9 +3220,8 @@ var useConfirmPhone = function useConfirmPhone(_ref) {
     resendPhoneConfirmationIsSuccess = _profilesApi$useSendP3.isSuccess,
     resendPhoneConfirmationData = _profilesApi$useSendP3.data;
   var _useState = React.useState(ping),
-    _useState2 = _slicedToArray(_useState, 2),
-    counter = _useState2[0],
-    setCounter = _useState2[1];
+    counter = _useState[0],
+    setCounter = _useState[1];
   React.useEffect(function () {
     var timer = counter > 0 && setInterval(function () {
       return setCounter(counter - 1);
@@ -3448,7 +3459,7 @@ var useMyProfileCreator = function (_a) {
     }, [meError]);
     var profile = React.useMemo(function () {
         var me = accountId
-            ? __assign(__assign({}, (myProfileByMe || {})), (filledProfile || {})) : {};
+            ? _assign(_assign({}, (myProfileByMe || {})), (filledProfile || {})) : {};
         var refetch = function () {
             refetchMe();
             refetchProfileById();
@@ -3853,6 +3864,7 @@ function _extends() {
   return _extends.apply(this, arguments);
 }
 
+var __jsx$u = React__default["default"].createElement;
 var useStyleRewriter$5 = hooks.useStyleRewriter;
 var DropdownContainer = function DropdownContainer(_ref) {
   var children = _ref.children,
@@ -3861,16 +3873,17 @@ var DropdownContainer = function DropdownContainer(_ref) {
     dropdownRef = _ref.dropdownRef;
   var srClassName = useStyleRewriter$5(baseClasses$2, className);
   var srContainerClassName = useStyleRewriter$5(baseContainerClassName$5, containerClassName);
-  return /*#__PURE__*/React__default["default"].createElement("div", {
+  return __jsx$u("div", {
     ref: dropdownRef,
     className: srContainerClassName
-  }, /*#__PURE__*/React__default["default"].createElement("div", {
+  }, __jsx$u("div", {
     className: srClassName
   }, children));
 };
 var baseContainerClassName$5 = "\n  @pn absolute\n  @wh w-full\n  @mn mt-2\n  @zi z-50\n  @it top-full left-0\n";
 var baseClasses$2 = "\n  @dy flex\n  @fxd flex-col\n  @pn relative\n  @wh w-full\n";
 
+var __jsx$t = React__default["default"].createElement;
 var useStyleRewriter$4 = hooks.useStyleRewriter;
 var Tooltip = function Tooltip(_ref) {
   var children = _ref.children,
@@ -3900,7 +3913,7 @@ var Tooltip = function Tooltip(_ref) {
         return;
     }
   }, [tooltipPosition]);
-  return /*#__PURE__*/React__default["default"].createElement("div", {
+  return __jsx$t("div", {
     ref: tooltipRef,
     className: "".concat(visible ? "opacity-100 w-auto" : "opacity-0", " ").concat(srClasses, " ").concat(tooltipClasses)
   }, children);
@@ -3909,6 +3922,7 @@ var baseClasses$1 = "\n    @pn absolute\n    @wh w-fit\n    @it left-0 top-0\n  
 
 var _excluded$7 = ["children", "SmartButtonRef"],
   _excluded2$1 = ["Link", "children", "className", "linkProps"];
+var __jsx$s = React__default["default"].createElement;
 var useStyleRewriter$3 = hooks.useStyleRewriter,
   useDetectMouseover = hooks.useDetectMouseover,
   useDetectOutsideClick = hooks.useDetectOutsideClick;
@@ -3969,33 +3983,33 @@ var SmartButton = function SmartButton(_ref) {
   } : {
     className: srClasses
   };
-  return /*#__PURE__*/React__default["default"].createElement(React.Fragment, null, /*#__PURE__*/React__default["default"].createElement(Element, _extends({
+  return __jsx$s(React.Fragment, null, __jsx$s(Element, _extends({
     SmartButtonRef: SmartButtonRef,
     onClick: disabled ? function () {} : onClick
   }, elementProps), typeof children === "function" ? children({
     isMouseOver: isMouseOver
-  }) : children, DropdownItems && /*#__PURE__*/React__default["default"].createElement(transitionComponent.Transition, _extends({
+  }) : children, DropdownItems && __jsx$s(transitionComponent.Transition, _extends({
     show: isDropdownOpen
-  }, contentTransitionProps$2), /*#__PURE__*/React__default["default"].createElement(DropdownContainer, {
+  }, contentTransitionProps$2), __jsx$s(DropdownContainer, {
     containerClassName: dropdownContainerClassName,
     className: dropdownClassName,
     dropdownRef: dropdownRef
-  }, /*#__PURE__*/React__default["default"].createElement(DropdownItems, _extends({}, dropdownProps, {
+  }, __jsx$s(DropdownItems, _extends({}, dropdownProps, {
     setIsDropdownOpen: setIsDropdownOpen
-  })))), TooltipItems && /*#__PURE__*/React__default["default"].createElement(transitionComponent.Transition, _extends({
+  })))), TooltipItems && __jsx$s(transitionComponent.Transition, _extends({
     show: isMouseOver
-  }, tooltipTransitionProps), /*#__PURE__*/React__default["default"].createElement(Tooltip, {
+  }, tooltipTransitionProps), __jsx$s(Tooltip, {
     tooltipPosition: tooltipPosition,
     className: tooltipContainerClasses,
     visible: isMouseOver
-  }, /*#__PURE__*/React__default["default"].createElement(TooltipItems, null)))));
+  }, __jsx$s(TooltipItems, null)))));
 };
 var baseButtonClassName = "\n  @pn relative\n  @cr cursor-pointer\n  @tndn duration-200";
 var DivSmartButton = function DivSmartButton(_ref2) {
   var children = _ref2.children,
     SmartButtonRef = _ref2.SmartButtonRef,
     props = _objectWithoutProperties(_ref2, _excluded$7);
-  return /*#__PURE__*/React__default["default"].createElement("div", _extends({
+  return __jsx$s("div", _extends({
     ref: SmartButtonRef
   }, props), children);
 };
@@ -4016,7 +4030,7 @@ var LinkSmartButton = function LinkSmartButton(_ref3) {
     });
     linkAttributes = Object.fromEntries(linkAttributes);
   }
-  return /*#__PURE__*/React__default["default"].createElement(Link, props, /*#__PURE__*/React__default["default"].createElement("a", _extends({}, linkAttributes, {
+  return __jsx$s(Link, props, __jsx$s("a", _extends({}, linkAttributes, {
     className: className
   }), children));
 };
@@ -4037,6 +4051,7 @@ var tooltipTransitionProps = {
   leaveTo: "opacity-0 scale-50"
 };
 
+var __jsx$r = React__default["default"].createElement;
 var useStyleRewriter$2 = hooks.useStyleRewriter;
 var ModalComponent$1 = function ModalComponent(_ref) {
   var _ref$show = _ref.show,
@@ -4045,7 +4060,7 @@ var ModalComponent$1 = function ModalComponent(_ref) {
     _setShow = _ref$setShow === void 0 ? function () {} : _ref$setShow,
     _ref$RenderCard = _ref.RenderCard,
     RenderCard = _ref$RenderCard === void 0 ? function () {
-      return /*#__PURE__*/React__default["default"].createElement(React__default["default"].Fragment, null);
+      return __jsx$r(React__default["default"].Fragment, null);
     } : _ref$RenderCard,
     _ref$CloseButton = _ref.CloseButton,
     CloseButton = _ref$CloseButton === void 0 ? DefaultCloseButton : _ref$CloseButton,
@@ -4068,9 +4083,8 @@ var ModalComponent$1 = function ModalComponent(_ref) {
     _ref$hideCloseButton = _ref.hideCloseButton,
     hideCloseButton = _ref$hideCloseButton === void 0 ? false : _ref$hideCloseButton;
   var _useState = React.useState(show),
-    _useState2 = _slicedToArray(_useState, 2),
-    showLayout = _useState2[0],
-    setShowLayout = _useState2[1];
+    showLayout = _useState[0],
+    setShowLayout = _useState[1];
   var srLayoutClasses = useStyleRewriter$2(baseLayoutClasses, layoutClasses);
   var srPopupWindowClasses = useStyleRewriter$2("@pre pointer-events-auto @tnp transition @tm transform z-40 @pn relative", popupWindowClasses);
   var srContainerClasses = useStyleRewriter$2(baseContainerClasses, containerClasses);
@@ -4108,31 +4122,31 @@ var ModalComponent$1 = function ModalComponent(_ref) {
     };
   }, []);
   var TransitionElement = removeFromDom ? TransitionComponent : PlainDiv;
-  return /*#__PURE__*/React__default["default"].createElement("div", {
+  return __jsx$r("div", {
     className: "".concat(showLayout ? "z-30 block" : "-z-1", " ").concat(srContainerClasses, " ")
-  }, /*#__PURE__*/React__default["default"].createElement(TransitionElement, {
+  }, __jsx$r(TransitionElement, {
     baseClasses: "fixed inset-0 pointer-events-auto duration-".concat(duration, " transition z-10"),
     show: show,
     transitionProps: layoutTransitionProps
-  }, /*#__PURE__*/React__default["default"].createElement("div", {
+  }, __jsx$r("div", {
     className: "transition fixed inset-0"
-  }, /*#__PURE__*/React__default["default"].createElement("div", {
+  }, __jsx$r("div", {
     onClick: function onClick() {
       return _setShow(false);
     },
     className: srLayoutClasses
-  }))), /*#__PURE__*/React__default["default"].createElement(TransitionElement, {
+  }))), __jsx$r(TransitionElement, {
     baseClasses: "pointer-events-auto transition duration-".concat(duration, " transform z-40 relative"),
     show: show,
     id: "modal",
     changePopup: _setShow,
     transitionProps: contentTransitionProps$1
-  }, /*#__PURE__*/React__default["default"].createElement("div", {
+  }, __jsx$r("div", {
     className: srPopupWindowClasses
-  }, /*#__PURE__*/React__default["default"].createElement(RenderCard, _extends({}, renderCardProps, {
+  }, __jsx$r(RenderCard, _extends({}, renderCardProps, {
     show: show,
     setShow: _setShow
-  })))), !hideCloseButton && show ? /*#__PURE__*/React__default["default"].createElement(CloseButton, {
+  })))), !hideCloseButton && show ? __jsx$r(CloseButton, {
     setShow: function setShow(bool) {
       return _setShow(bool);
     },
@@ -4142,17 +4156,17 @@ var ModalComponent$1 = function ModalComponent(_ref) {
 var DefaultCloseButton = function DefaultCloseButton(_ref2) {
   var setShow = _ref2.setShow;
     _ref2.closeButtonClasses;
-  return /*#__PURE__*/React__default["default"].createElement(SmartButton, {
+  return __jsx$r(SmartButton, {
     onClick: function onClick() {
       return setShow(false);
     },
     className: "@pn absolute @it right-[20px] top-[20px] @ttc text-white hover:text-neutral-550 @wh w-12 @zi z-50 @cr cursor-pointer"
-  }, /*#__PURE__*/React__default["default"].createElement("svg", {
+  }, __jsx$r("svg", {
     className: "fill-current w-12 h-12",
     viewBox: "0 0 20 20",
     fill: "none",
     xmlns: "http://www.w3.org/2000/svg"
-  }, /*#__PURE__*/React__default["default"].createElement("path", {
+  }, __jsx$r("path", {
     fillRule: "evenodd",
     clipRule: "evenodd",
     d: "M13.5659 5.24616C13.8936 4.91762 14.4257 4.91762 14.7542 5.24616C15.0827 5.57391 15.0827 6.10671 14.7542 6.43442L11.1711 10.0175L14.7042 13.5506C15.0302 13.8758 15.0302 14.4037 14.7042 14.7297C14.379 15.0558 13.8511 15.0558 13.5251 14.7297L9.99199 11.1966L6.43466 14.7539C6.10696 15.0817 5.57493 15.0817 5.2464 14.7539C4.91787 14.4262 4.91787 13.8942 5.2464 13.5656L8.80368 10.0084L5.27056 6.47527C4.94451 6.1501 4.94451 5.62226 5.27056 5.29621C5.59573 4.97016 6.12357 4.97016 6.44962 5.29621L9.98275 8.8293L13.5659 5.24616Z"
@@ -4180,7 +4194,7 @@ var TransitionComponent = function TransitionComponent(_ref3) {
   var children = _ref3.children,
     show = _ref3.show,
     transitionProps = _ref3.transitionProps;
-  return /*#__PURE__*/React__default["default"].createElement(transitionComponent.Transition, _extends({
+  return __jsx$r(transitionComponent.Transition, _extends({
     show: show
   }, transitionProps), children);
 };
@@ -4192,7 +4206,7 @@ var PlainDiv = function PlainDiv(_ref4) {
     _ref4$changePopup = _ref4.changePopup,
     changePopup = _ref4$changePopup === void 0 ? function () {} : _ref4$changePopup,
     id = _ref4.id;
-  return /*#__PURE__*/React__default["default"].createElement("div", {
+  return __jsx$r("div", {
     id: id,
     onClick: function onClick(e) {
       return e.target.id === id ? changePopup(false) : null;
@@ -4202,23 +4216,24 @@ var PlainDiv = function PlainDiv(_ref4) {
 };
 
 var _excluded$6 = ["targetId"];
+var __jsx$q = React__default["default"].createElement;
 var ModalPortal$1 = function ModalPortal(_ref) {
   var _ref$targetId = _ref.targetId,
     targetId = _ref$targetId === void 0 ? "modal" : _ref$targetId,
     props = _objectWithoutProperties(_ref, _excluded$6);
   var _useState = React.useState(false),
-    _useState2 = _slicedToArray(_useState, 2),
-    domLoaded = _useState2[0],
-    setDomLoaded = _useState2[1];
+    domLoaded = _useState[0],
+    setDomLoaded = _useState[1];
   React.useEffect(function () {
-    if ((typeof window === "undefined" ? "undefined" : _typeof$1(window)) !== undefined && document.querySelector("#".concat(targetId))) {
+    if (typeof window !== undefined && document.querySelector("#".concat(targetId))) {
       setDomLoaded(true);
     }
   }, []);
-  return domLoaded && /*#__PURE__*/require$$0.createPortal( /*#__PURE__*/React__default["default"].createElement(ModalComponent$1, props), document.querySelector("#".concat(targetId)));
+  return domLoaded && /*#__PURE__*/require$$0.createPortal(__jsx$q(ModalComponent$1, props), document.querySelector("#".concat(targetId)));
 };
 
 var _excluded$5 = ["showEffect", "ArrayItem", "array", "getRenderCardProps"];
+var __jsx$p = React__default["default"].createElement;
 var ModalArray = function ModalArray(_ref) {
   var _ref$showEffect = _ref.showEffect,
     showEffect = _ref$showEffect === void 0 ? function () {} : _ref$showEffect,
@@ -4227,13 +4242,11 @@ var ModalArray = function ModalArray(_ref) {
     getRenderCardProps = _ref.getRenderCardProps,
     props = _objectWithoutProperties(_ref, _excluded$5);
   var _useState = React.useState(false),
-    _useState2 = _slicedToArray(_useState, 2),
-    show = _useState2[0],
-    setShow = _useState2[1];
-  var _useState3 = React.useState(0),
-    _useState4 = _slicedToArray(_useState3, 2),
-    currentItem = _useState4[0],
-    setCurrentItem = _useState4[1];
+    show = _useState[0],
+    setShow = _useState[1];
+  var _useState2 = React.useState(0),
+    currentItem = _useState2[0],
+    setCurrentItem = _useState2[1];
   var modalComponentId = React.useMemo(function () {
     if (props.modalComponentId) {
       return props.modalComponentId;
@@ -4255,13 +4268,13 @@ var ModalArray = function ModalArray(_ref) {
     setShow(true);
   };
   var renderCardProps = getRenderCardProps(array[currentItem], currentItem);
-  return /*#__PURE__*/React__default["default"].createElement(React__default["default"].Fragment, null, /*#__PURE__*/React__default["default"].createElement(ModalPortal$1, _extends({
+  return __jsx$p(React__default["default"].Fragment, null, __jsx$p(ModalPortal$1, _extends({
     modalComponentId: modalComponentId,
     renderCardProps: renderCardProps,
     setShow: setShow,
     show: show
   }, props)), array.map(function (item, index) {
-    return /*#__PURE__*/React__default["default"].createElement(ArrayItem, {
+    return __jsx$p(ArrayItem, {
       key: index,
       item: item,
       index: index,
@@ -4270,6 +4283,7 @@ var ModalArray = function ModalArray(_ref) {
   }));
 };
 
+var __jsx$o = React__default["default"].createElement;
 function ownKeys$4(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 function _objectSpread$4(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$4(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$4(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 var useStyleRewriter$1 = hooks.useStyleRewriter;
@@ -4280,7 +4294,7 @@ var ModalComponent = function ModalComponent(_ref) {
     setShow = _ref$setShow === void 0 ? function () {} : _ref$setShow,
     _ref$RenderCard = _ref.RenderCard,
     RenderCard = _ref$RenderCard === void 0 ? function () {
-      return /*#__PURE__*/React__default["default"].createElement(React__default["default"].Fragment, null);
+      return __jsx$o(React__default["default"].Fragment, null);
     } : _ref$RenderCard,
     _ref$popupWindowClass = _ref.popupWindowClasses,
     popupWindowClasses = _ref$popupWindowClass === void 0 ? "" : _ref$popupWindowClass,
@@ -4293,17 +4307,14 @@ var ModalComponent = function ModalComponent(_ref) {
     _ref$zIndex = _ref.zIndex,
     zIndex = _ref$zIndex === void 0 ? 50 : _ref$zIndex;
   var _useState = React.useState(false),
-    _useState2 = _slicedToArray(_useState, 2),
-    isOpen = _useState2[0],
-    setIsOpen = _useState2[1];
-  var _useState3 = React.useState(window.innerHeight),
-    _useState4 = _slicedToArray(_useState3, 2),
-    screenHeight = _useState4[0],
-    setScreenHeight = _useState4[1];
-  var _useState5 = React.useState(false),
-    _useState6 = _slicedToArray(_useState5, 2);
-    _useState6[0];
-    var setScrollActive = _useState6[1];
+    isOpen = _useState[0],
+    setIsOpen = _useState[1];
+  var _useState2 = React.useState(window.innerHeight),
+    screenHeight = _useState2[0],
+    setScreenHeight = _useState2[1];
+  var _useState3 = React.useState(false);
+    _useState3[0];
+    var setScrollActive = _useState3[1];
   var srPopupWindowClasses = useStyleRewriter$1("fixed z-40 w-full h-95vh bg-white", popupWindowClasses);
   var srRenderCardContainerClasses = useStyleRewriter$1("w-full h-full mt-1 overflow-visible", renderCardContainerClasses);
   var modalHeight = screenHeight ? screenHeight * 0.9 : 0;
@@ -4399,13 +4410,13 @@ var ModalComponent = function ModalComponent(_ref) {
     show ? open({}) : close();
   }, [show]);
   if (!isOpen) return null;
-  return /*#__PURE__*/React__default["default"].createElement("div", {
+  return __jsx$o("div", {
     className: "relative"
-  }, /*#__PURE__*/React__default["default"].createElement(web.a.div, {
+  }, __jsx$o(web.a.div, {
     onClick: close,
     className: "fixed inset-0 bg-zinc-900 opacity-50",
     style: bgStyle
-  }), /*#__PURE__*/React__default["default"].createElement(web.a.div, _extends({
+  }), __jsx$o(web.a.div, _extends({
     className: srPopupWindowClasses
   }, bind(), {
     style: {
@@ -4416,11 +4427,11 @@ var ModalComponent = function ModalComponent(_ref) {
       zIndex: "110",
       y: y
     }
-  }), /*#__PURE__*/React__default["default"].createElement("div", {
+  }), __jsx$o("div", {
     className: "relative w-screen h-[90vh] bg-white  rounded-t-2xl pt-5"
-  }, /*#__PURE__*/React__default["default"].createElement("div", {
+  }, __jsx$o("div", {
     className: "absolute bg-white w-12 h-2 -top-4 left-1/2 transform -translate-x-1/2 rounded-full"
-  }), /*#__PURE__*/React__default["default"].createElement("div", {
+  }), __jsx$o("div", {
     className: srRenderCardContainerClasses,
     onTouchStart: function onTouchStart() {
       return setScrollActive(true);
@@ -4434,7 +4445,7 @@ var ModalComponent = function ModalComponent(_ref) {
     onMouseLeave: function onMouseLeave() {
       return setScrollActive(false);
     }
-  }, /*#__PURE__*/React__default["default"].createElement(RenderCard, _extends({
+  }, __jsx$o(RenderCard, _extends({
     setShow: setShow,
     show: show
   }, renderCardProps))))));
@@ -4450,14 +4461,16 @@ var setRect = function setRect(_ref3) {
 // const baseContainerClasses = `@pre pointer-events-none @dy flex @pn fixed @ow overflow-hidden @it bottom-0 inset-0 @ani items-end @jyc justify-end`;
 
 var _excluded$4 = ["targetId"];
+var __jsx$n = React__default["default"].createElement;
 var ModalPortal = function ModalPortal(_ref) {
   var _ref$targetId = _ref.targetId,
     targetId = _ref$targetId === void 0 ? "modal" : _ref$targetId,
     props = _objectWithoutProperties(_ref, _excluded$4);
-  return document.querySelector("#".concat(targetId)) ? /*#__PURE__*/require$$0.createPortal( /*#__PURE__*/React__default["default"].createElement(ModalComponent, props), document.querySelector("#".concat(targetId))) : null;
+  return document.querySelector("#".concat(targetId)) ? /*#__PURE__*/require$$0.createPortal(__jsx$n(ModalComponent, props), document.querySelector("#".concat(targetId))) : null;
 };
 
 var _excluded$3 = ["children", "showEffect"];
+var __jsx$m = React__default["default"].createElement;
 var useStyleRewriter = hooks.useStyleRewriter,
   useBreakpoint = hooks.useBreakpoint;
 var Modal = function Modal(_ref) {
@@ -4466,9 +4479,8 @@ var Modal = function Modal(_ref) {
     showEffect = _ref$showEffect === void 0 ? function () {} : _ref$showEffect,
     props = _objectWithoutProperties(_ref, _excluded$3);
   var _useState = React.useState(false),
-    _useState2 = _slicedToArray(_useState, 2),
-    show = _useState2[0],
-    setShow = _useState2[1];
+    show = _useState[0],
+    setShow = _useState[1];
   var srChildContainerClasses = useStyleRewriter("@cr cursor-pointer @wh w-full @ht h-full", props.childContainerClasses);
   var modalComponentId = React.useMemo(function () {
     var name = props.RenderCard.name;
@@ -4485,11 +4497,11 @@ var Modal = function Modal(_ref) {
   }, [children ? show : props.show, props]);
   var useDesktopModal = useBreakpoint("md");
   var Component = useDesktopModal ? ModalPortal$1 : ModalPortal;
-  return /*#__PURE__*/React__default["default"].createElement(React.Fragment, null, /*#__PURE__*/React__default["default"].createElement(Component, _extends({
+  return __jsx$m(React.Fragment, null, __jsx$m(Component, _extends({
     modalComponentId: props.modalComponentId ? props.modalComponentId : modalComponentId,
     setShow: children ? setShow : props.setShow,
     show: children ? show : props.show
-  }, props)), children ? /*#__PURE__*/React__default["default"].createElement("div", {
+  }, props)), children ? __jsx$m("div", {
     className: srChildContainerClasses,
     onClick: function onClick() {
       return setShow(true);
@@ -4497,14 +4509,16 @@ var Modal = function Modal(_ref) {
   }, children) : null);
 };
 
+var __jsx$l = React__default["default"].createElement;
 var InputError = function InputError(_ref) {
   var error = _ref.error;
-  return error.message ? /*#__PURE__*/React__default["default"].createElement("p", {
+  return error.message ? __jsx$l("p", {
     className: baseClasses
   }, error.message) : null;
 };
 var baseClasses = "@ttc text-red-500 @fts text-[12px] @ttt normal-case @wh w-fit @leh leading-none text-left";
 
+var __jsx$k = React__default["default"].createElement;
 var InputOverlay = function InputOverlay(props) {
   var children = props.children,
     label = props.label,
@@ -4521,18 +4535,19 @@ var InputOverlay = function InputOverlay(props) {
   var srLabelContainerClassName = useStyleRewriter$6(baseLabelContainerClasses, labelContainerClassName);
   var srLabelClassName = useStyleRewriter$6(baseLabelClassName$1, labelClassName);
   var srLabelInputContainerClassName = useStyleRewriter$6(baseLabelInputContainerClassName, labelInputContainerClassName);
-  return /*#__PURE__*/React__default["default"].createElement("div", {
+  return __jsx$k("div", {
     className: srLabelContainerClassName
-  }, typeof LabelComponent === "function" && label ? /*#__PURE__*/React__default["default"].createElement(LabelComponent, props) : label ? /*#__PURE__*/React__default["default"].createElement("p", {
+  }, typeof LabelComponent === "function" && label ? __jsx$k(LabelComponent, props) : label ? __jsx$k("p", {
     className: srLabelClassName
-  }, label) : null, /*#__PURE__*/React__default["default"].createElement("div", {
+  }, label) : null, __jsx$k("div", {
     className: srLabelInputContainerClassName
-  }, children, typeof PairComponent === "function" ? /*#__PURE__*/React__default["default"].createElement(PairComponent, props) : null), typeof ErrorComponent === "function" && error ? /*#__PURE__*/React__default["default"].createElement(ErrorComponent, props) : error ? /*#__PURE__*/React__default["default"].createElement(InputError, props) : null);
+  }, children, typeof PairComponent === "function" ? __jsx$k(PairComponent, props) : null), typeof ErrorComponent === "function" && error ? __jsx$k(ErrorComponent, props) : error ? __jsx$k(InputError, props) : null);
 };
 var baseLabelContainerClasses = "\n  @pn relative\n  @dy flex\n  @gp gap-2\n  @fxd flex-col\n  @wh w-full\n";
 var baseLabelClassName$1 = "\n  @mn mb-0";
 var baseLabelInputContainerClassName = "\n  @wh w-full\n  @dy flex\n  @jyc justify-start\n  @ani items-center\n  @pn relative\n";
 
+var __jsx$j = React__default["default"].createElement;
 var CheckboxInput = function CheckboxInput(props) {
   var _props$value = props.value,
     value = _props$value === void 0 ? false : _props$value,
@@ -4550,9 +4565,8 @@ var CheckboxInput = function CheckboxInput(props) {
     Icon = props.Icon,
     InnerComponent = props.InnerComponent;
   var _useState = React.useState(value),
-    _useState2 = _slicedToArray(_useState, 2),
-    localValue = _useState2[0],
-    setLocalValue = _useState2[1];
+    localValue = _useState[0],
+    setLocalValue = _useState[1];
   var srInputContainerClassName = useStyleRewriter$6(baseInputContainerClassName$3, inputContainerClassName);
   var srLabelClassName = useStyleRewriter$6(baseLabelClassName, labelClassName);
   var srInputClassName = useStyleRewriter$6(baseInputClassName$5, inputClassName, false);
@@ -4577,17 +4591,17 @@ var CheckboxInput = function CheckboxInput(props) {
     e.target.id = id;
     onChange(e);
   };
-  return /*#__PURE__*/React__default["default"].createElement(InputOverlay, _extends({}, props, {
+  return __jsx$j(InputOverlay, _extends({}, props, {
     label: null,
     error: error
-  }), /*#__PURE__*/React__default["default"].createElement("div", {
+  }), __jsx$j("div", {
     className: srInputContainerClassName
-  }, /*#__PURE__*/React__default["default"].createElement("label", {
+  }, __jsx$j("label", {
     htmlFor: id,
     className: resInputlassName
-  }, typeof Icon === "function" ? /*#__PURE__*/React__default["default"].createElement(Icon, _extends({}, props, {
+  }, typeof Icon === "function" ? __jsx$j(Icon, _extends({}, props, {
     isChecked: localValue
-  })) : null, /*#__PURE__*/React__default["default"].createElement("input", {
+  })) : null, __jsx$j("input", {
     type: "checkbox",
     id: id,
     className: "hidden",
@@ -4596,12 +4610,12 @@ var CheckboxInput = function CheckboxInput(props) {
       return setLocalValue(!localValue);
     },
     checked: localValue
-  })), typeof InnerComponent === "function" ? /*#__PURE__*/React__default["default"].createElement(InnerComponent, _extends({}, props, {
+  })), typeof InnerComponent === "function" ? __jsx$j(InnerComponent, _extends({}, props, {
     onClick: function onClick() {
       return setLocalValue(!localValue);
     },
     isChecked: localValue
-  })) : label ? /*#__PURE__*/React__default["default"].createElement("p", {
+  })) : label ? __jsx$j("p", {
     onClick: function onClick() {
       return setLocalValue(!localValue);
     },
@@ -4612,6 +4626,7 @@ var baseInputContainerClassName$3 = "\n  @dy flex\n  @gp gap-2\n  @ani items-cen
 var baseInputClassName$5 = "\n  @dy flex\n  @fxsk shrink-0\n  @ani items-center\n  @jyc justify-center\n  @cr cursor-pointer\n";
 var baseLabelClassName = "\n  @cr cursor-pointer\n  @ttc text-black\n  @mn mb-0\n";
 
+var __jsx$i = React__default["default"].createElement;
 var Input = /*#__PURE__*/React.forwardRef(function (_ref, ref) {
   var children = _ref.children,
     DropdownItems = _ref.dropdownItems,
@@ -4663,10 +4678,10 @@ var Input = /*#__PURE__*/React.forwardRef(function (_ref, ref) {
   var srInputContainerClassName = useStyleRewriter$6(baseContainerClassName$4, inputContainerClassName);
   var baseDropdownContainerClasses = "@wh w-full @mn mt-1 @ht h-200px @ow overflow-y-scroll ".concat(dropdownPosition === "right" ? "@it left-auto right-0" : "@it inset-x-0");
   var srDropdownContainerClasses = useStyleRewriter$6(baseDropdownContainerClasses, dropdownContainerClasses, true);
-  return /*#__PURE__*/React__default["default"].createElement("div", {
+  return __jsx$i("div", {
     ref: inputContainerRef,
     className: srInputContainerClassName
-  }, /*#__PURE__*/React__default["default"].createElement("input", {
+  }, __jsx$i("input", {
     placeholder: placeholder,
     autoComplete: autoComplete,
     id: id,
@@ -4679,16 +4694,16 @@ var Input = /*#__PURE__*/React.forwardRef(function (_ref, ref) {
     ref: ref,
     maxLength: maxLength,
     name: name
-  }), _typeof$1(Icon) === "function" ? /*#__PURE__*/React__default["default"].createElement(Icon, {
+  }), typeof Icon === "function" ? __jsx$i(Icon, {
     onClick: onClick
-  }) : null, children ? /*#__PURE__*/React__default["default"].createElement("div", {
+  }) : null, children ? __jsx$i("div", {
     className: "absolute h-full right-0 top-0 cursor-pointer"
-  }, children) : null, DropdownItems ? /*#__PURE__*/React__default["default"].createElement("div", {
+  }, children) : null, DropdownItems ? __jsx$i("div", {
     className: "transition duration-200 ".concat(isDropdownOpen ? "opacity-100" : "pointer-events-none opacity-0")
-  }, /*#__PURE__*/React__default["default"].createElement(DropdownContainer, {
+  }, __jsx$i(DropdownContainer, {
     className: srDropdownContainerClasses,
     dropdownRef: dropdownRef
-  }, /*#__PURE__*/React__default["default"].createElement(DropdownItems, {
+  }, __jsx$i(DropdownItems, {
     setIsDropdownOpen: setIsDropdownOpen
   }))) : null);
 });
@@ -4699,6 +4714,7 @@ var classesByType = {
 var baseContainerClassName$4 = "w-full relative";
 var baseClassName = "\n  @bdc bg-transparent\n  @pn relative\n  @wh w-full\n  @brw border\n  @brs border-solid\n  @brc border-transparent\n  @tndn duration-200\n  @oe outline-none focus:outline-none hover:outline-none\n  @dy flex\n";
 
+var __jsx$h = React__default["default"].createElement;
 var TextInput = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var value = props.value,
     id = props.id,
@@ -4716,9 +4732,9 @@ var TextInput = /*#__PURE__*/React.forwardRef(function (props, ref) {
     inputDisabledClassName = props.inputDisabledClassName,
     inputContainerClassName = props.inputContainerClassName,
     error = props.error;
-  return /*#__PURE__*/React__default["default"].createElement(InputOverlay, _extends({}, props, {
+  return __jsx$h(InputOverlay, _extends({}, props, {
     PairComponent: enableTypeChanging && ChangeInputTypeButton ? ChangeInputTypeButton : null
-  }), /*#__PURE__*/React__default["default"].createElement(Input, {
+  }), __jsx$h(Input, {
     ref: ref,
     value: value,
     id: id,
@@ -4736,6 +4752,7 @@ var TextInput = /*#__PURE__*/React.forwardRef(function (props, ref) {
   }));
 });
 
+var __jsx$g = React__default["default"].createElement;
 var RangeInput = function RangeInput(props) {
   var _props$id = props.id,
     id = _props$id === void 0 ? Math.random() : _props$id,
@@ -4787,35 +4804,35 @@ var RangeInput = function RangeInput(props) {
       left: "".concat(value / maxValue * 100 <= maxLimit / maxValue * 100 ? value / maxValue * 100 : maxLimit / maxValue * 100, "%")
     };
   }, [value]);
-  return /*#__PURE__*/React__default["default"].createElement(InputOverlay, _extends({}, props, {
+  return __jsx$g(InputOverlay, _extends({}, props, {
     label: label,
     error: error
-  }), /*#__PURE__*/React__default["default"].createElement("div", {
+  }), __jsx$g("div", {
     className: srContainerClassName
-  }, /*#__PURE__*/React__default["default"].createElement("div", {
+  }, __jsx$g("div", {
     style: circleStyle,
     className: srRangeClassName
-  }, /*#__PURE__*/React__default["default"].createElement("div", {
+  }, __jsx$g("div", {
     style: {
       width: "".concat(value / maxValue * 100 <= maxLimit / maxValue * 100 ? value / maxValue * 100 : maxLimit / maxValue * 100, "%")
     },
     className: srActiveRangeClassName
-  }), typeof Comp === "function" ? /*#__PURE__*/React__default["default"].createElement(Comp, {
+  }), typeof Comp === "function" ? __jsx$g(Comp, {
     style: draggedItemStyle
-  }) : /*#__PURE__*/React__default["default"].createElement("div", {
+  }) : __jsx$g("div", {
     style: draggedItemStyle,
     className: srInputClassName
-  })), tooltip && /*#__PURE__*/React__default["default"].createElement("div", {
+  })), tooltip && __jsx$g("div", {
     className: "absolute left-0 z-50",
     style: circleStyle
-  }, /*#__PURE__*/React__default["default"].createElement("div", {
+  }, __jsx$g("div", {
     style: {
       left: "".concat(valueDividedByMaxValue, "%")
     },
     className: "opacity-0 group-hover:opacity-100 absolute -top-10 bg-primary-700 text-white text-xs left-1/2 -translate-x-1/2 p-1 rounded-4px pointer-events-none"
-  }, /*#__PURE__*/React__default["default"].createElement("div", {
+  }, __jsx$g("div", {
     className: "absolute -bottom-1 bg-primary-700 left-1/2 -translate-x-1/2 rotate-45 w-2 h-2 rounded-1px"
-  }), valueDividedByMaxValue || 0, "%")), /*#__PURE__*/React__default["default"].createElement("input", {
+  }), valueDividedByMaxValue || 0, "%")), __jsx$g("input", {
     disabled: disabled,
     list: id,
     ref: rangeRef,
@@ -4841,7 +4858,7 @@ var RangeInput = function RangeInput(props) {
       minWidth: "2%"
     },
     value: value
-  }), range && /*#__PURE__*/React__default["default"].createElement(Datalist, {
+  }), range && __jsx$g(Datalist, {
     id: id,
     value: value,
     range: range
@@ -4864,12 +4881,12 @@ var Datalist = function Datalist(_ref) {
   var id = _ref.id,
     range = _ref.range,
     value = _ref.value;
-  return /*#__PURE__*/React__default["default"].createElement("div", {
+  return __jsx$g("div", {
     className: "absolute flex justify-between left-0 w-full h-full top-0 z-0",
     id: id
   }, range.map(function (item, index) {
     var isAchived = value >= item;
-    return /*#__PURE__*/React__default["default"].createElement("div", {
+    return __jsx$g("div", {
       style: datalistStyle,
       className: "relative top-1/2 -translate-y-1/2 flex-shrink-0 ".concat(isAchived ? "bg-primary-700" : "bg-primary-200", " ").concat(isAchived ? "border-primary-700" : "border-primary-200"),
       key: index
@@ -4878,6 +4895,7 @@ var Datalist = function Datalist(_ref) {
 };
 
 var _excluded$2 = ["focus", "autoFocus"];
+var __jsx$f = React__default["default"].createElement;
 function usePrevious(value) {
   var ref = React.useRef();
 
@@ -4906,12 +4924,13 @@ function SingleOTPInputComponent(props) {
       }
     }
   }, [autoFocus, focus, prevFocus]);
-  return /*#__PURE__*/React__default["default"].createElement("input", _extends({
+  return __jsx$f("input", _extends({
     ref: inputRef
   }, rest));
 }
 var SingleOTPInput = /*#__PURE__*/React.memo(SingleOTPInputComponent);
 
+var __jsx$e = React__default["default"].createElement;
 var OtpInput = function OtpInput(props) {
   var _props$length = props.length,
     length = _props$length === void 0 ? 6 : _props$length,
@@ -4926,13 +4945,11 @@ var OtpInput = function OtpInput(props) {
     error = props.error,
     id = props.id;
   var _useState = React.useState(autoFocus ? 0 : undefined),
-    _useState2 = _slicedToArray(_useState, 2),
-    activeInput = _useState2[0],
-    setActiveInput = _useState2[1];
-  var _useState3 = React.useState(Array(length).fill("")),
-    _useState4 = _slicedToArray(_useState3, 2),
-    otpValues = _useState4[0],
-    setOTPValues = _useState4[1];
+    activeInput = _useState[0],
+    setActiveInput = _useState[1];
+  var _useState2 = React.useState(Array(length).fill("")),
+    otpValues = _useState2[0],
+    setOTPValues = _useState2[1];
 
   // Helper to return OTP from inputs
   var handleOtpChange = function handleOtpChange(e, otp) {
@@ -5064,10 +5081,10 @@ var OtpInput = function OtpInput(props) {
   var baseClasses = useStyleRewriter$6(baseInputClassName$3, inputClassName, false);
   var statusClasses = error ? inputErrorClassName : "";
   var srClasses = useStyleRewriter$6(baseClasses, statusClasses);
-  return /*#__PURE__*/React__default["default"].createElement(InputOverlay, props, /*#__PURE__*/React__default["default"].createElement("div", {
+  return __jsx$e(InputOverlay, props, __jsx$e("div", {
     className: srContainerClassName
   }, allInputs.map(function (_, index) {
-    return /*#__PURE__*/React__default["default"].createElement(SingleOTPInput, {
+    return __jsx$e(SingleOTPInput, {
       key: index,
       focus: activeInput === index,
       value: otpValues && otpValues[index],
@@ -5093,6 +5110,7 @@ var baseContainerClassName$2 = "\n  @dy flex gap-2\n  @jyc justify-center\n  @an
 var baseInputClassName$3 = "\n  @wh w-4/12\n  @tta text-center\n  @oe outline-none\n  @bdc bg-transparent\n";
 
 var _excluded$1 = ["value", "placeholder", "onChange", "className", "disabled", "id"];
+var __jsx$d = React__default["default"].createElement;
 var TextArea = /*#__PURE__*/React.forwardRef(function (_ref, ref) {
   var _ref$value = _ref.value,
     value = _ref$value === void 0 ? "" : _ref$value,
@@ -5107,7 +5125,7 @@ var TextArea = /*#__PURE__*/React.forwardRef(function (_ref, ref) {
     _ref$id = _ref.id,
     id = _ref$id === void 0 ? null : _ref$id,
     props = _objectWithoutProperties(_ref, _excluded$1);
-  return /*#__PURE__*/React__default["default"].createElement("textarea", _extends({}, props, {
+  return __jsx$d("textarea", _extends({}, props, {
     value: value,
     placeholder: placeholder,
     onChange: onChange,
@@ -5118,6 +5136,7 @@ var TextArea = /*#__PURE__*/React.forwardRef(function (_ref, ref) {
   }));
 });
 
+var __jsx$c = React__default["default"].createElement;
 var TextAreaInput = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var value = props.value,
     id = props.id,
@@ -5133,7 +5152,7 @@ var TextAreaInput = /*#__PURE__*/React.forwardRef(function (props, ref) {
     rows = _props$rows === void 0 ? 3 : _props$rows;
   var srInputClassName = useStyleRewriter$6(baseInputClassName$2, inputClassName, false);
   var srStatusClassName = useStyleRewriter$6(srInputClassName, error ? inputErrorClassName : "");
-  return /*#__PURE__*/React__default["default"].createElement(InputOverlay, props, /*#__PURE__*/React__default["default"].createElement(TextArea, {
+  return __jsx$c(InputOverlay, props, __jsx$c(TextArea, {
     disabled: disabled,
     ref: ref,
     value: value,
@@ -5146,6 +5165,7 @@ var TextAreaInput = /*#__PURE__*/React.forwardRef(function (props, ref) {
 });
 var baseInputClassName$2 = "\n  @wh w-full\n  @bdc bg-transparent\n  @tndn duration-200\n  @oe outline-none focus:outline-none hover:outline-none\n  @dy flex\n  @pn relative\n";
 
+var __jsx$b = React__default["default"].createElement;
 function ownKeys$3(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 function _objectSpread$3(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$3(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$3(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 var UploadFileInput = function UploadFileInput(props) {
@@ -5258,17 +5278,17 @@ var UploadFileInput = function UploadFileInput(props) {
 
   var srInputClassName = useStyleRewriter$6(baseInputClassName$1, inputClassName);
   var srInputContainerClassName = useStyleRewriter$6(baseInputContainerClassName$2, containerClassName);
-  return /*#__PURE__*/React__default["default"].createElement(InputOverlay, _extends({}, props, {
+  return __jsx$b(InputOverlay, _extends({}, props, {
     error: error
-  }), /*#__PURE__*/React__default["default"].createElement("div", {
+  }), __jsx$b("div", {
     className: srInputContainerClassName
-  }, files[id] && !multiple ? null : /*#__PURE__*/React__default["default"].createElement("label", {
+  }, files[id] && !multiple ? null : __jsx$b("label", {
     htmlFor: id,
     className: srInputClassName,
     onDrop: handleUploadImage,
     onDragOver: preventDefaultEvent,
     onDragEnter: preventDefaultEvent
-  }, multiple ? /*#__PURE__*/React__default["default"].createElement("input", {
+  }, multiple ? __jsx$b("input", {
     type: "file"
     // name="file"
     ,
@@ -5277,7 +5297,7 @@ var UploadFileInput = function UploadFileInput(props) {
     onChange: handleUploadImage,
     className: "hidden",
     multiple: true
-  }) : /*#__PURE__*/React__default["default"].createElement("input", {
+  }) : __jsx$b("input", {
     type: "file"
     // name="file"
     ,
@@ -5285,11 +5305,11 @@ var UploadFileInput = function UploadFileInput(props) {
     accept: accept,
     onChange: handleUploadImage,
     className: "hidden"
-  }), typeof InnerComponent === "function" ? /*#__PURE__*/React__default["default"].createElement(InnerComponent, _extends({}, props, {
+  }), typeof InnerComponent === "function" ? __jsx$b(InnerComponent, _extends({}, props, {
     handleUploadImage: handleUploadImage
-  })) : uploadTitle ? /*#__PURE__*/React__default["default"].createElement("p", {
+  })) : uploadTitle ? __jsx$b("p", {
     className: uploadTitleClassName
-  }, uploadTitle) : null), /*#__PURE__*/React__default["default"].createElement(FilesRow, {
+  }, uploadTitle) : null), __jsx$b(FilesRow, {
     handleUploadImage: handleUploadImage,
     handleDelete: function handleDelete(e, params) {
       return _handleDelete(e, params);
@@ -5327,7 +5347,7 @@ var FilesRow = function FilesRow(_ref) {
     }
   }, [files]);
   return (localFiles === null || localFiles === void 0 ? void 0 : localFiles.length) > 0 ? localFiles === null || localFiles === void 0 ? void 0 : localFiles.map(function (file, index) {
-    return /*#__PURE__*/React__default["default"].createElement(FileCard, {
+    return __jsx$b(FileCard, {
       handleDelete: function handleDelete(e) {
         return _handleDelete2(e, {
           index: index,
@@ -5374,16 +5394,16 @@ var FileCard = function FileCard(_ref2) {
   var srFileCardClassName = useStyleRewriter$6(baseFileCardClassName, fileCardClassName);
   var srFileCardImageClassName = useStyleRewriter$6(baseFileCardImageClassName, fileCardImageClassName);
   var srDeleteFileButtonCointainerClassName = useStyleRewriter$6(baseDeleteFileButtonCointainerClassName, deleteFileButtonCointainerClassName);
-  return /*#__PURE__*/React__default["default"].createElement("div", {
+  return __jsx$b("div", {
     className: srFileCardClassName
-  }, file !== null && file !== void 0 && (_file$type = file.type) !== null && _file$type !== void 0 && _file$type.includes("image/") || file !== null && file !== void 0 && (_file$mime = file.mime) !== null && _file$mime !== void 0 && _file$mime.includes("image/") ? /*#__PURE__*/React__default["default"].createElement("img", {
+  }, file !== null && file !== void 0 && (_file$type = file.type) !== null && _file$type !== void 0 && _file$type.includes("image/") || file !== null && file !== void 0 && (_file$mime = file.mime) !== null && _file$mime !== void 0 && _file$mime.includes("image/") ? __jsx$b("img", {
     src: src,
     className: srFileCardImageClassName
-  }) : typeof FileComponent === "function" ? /*#__PURE__*/React__default["default"].createElement(FileComponent, {
+  }) : typeof FileComponent === "function" ? __jsx$b(FileComponent, {
     file: file
-  }) : null, /*#__PURE__*/React__default["default"].createElement("div", {
+  }) : null, __jsx$b("div", {
     className: srDeleteFileButtonCointainerClassName
-  }, typeof DeleteFileButton === "function" ? /*#__PURE__*/React__default["default"].createElement(DeleteFileButton, {
+  }, typeof DeleteFileButton === "function" ? __jsx$b(DeleteFileButton, {
     onClick: handleDelete
   }) : null));
 };
@@ -5396,6 +5416,7 @@ var baseFileCardClassName = "\n  @pn relative\n  @tndn duration-200\n  @ow overf
 var baseFileCardImageClassName = "\n  @wh w-full\n  @ht h-full\n  @pn absolute\n  @it inset-0\n  @otf object-cover\n";
 var baseDeleteFileButtonCointainerClassName = "\n  @wh w-full\n  @ht h-full\n  @pn absolute\n  @dy flex\n  @ani items-center\n  @jyc justify-center\n  @it inset-0 \n  @oy opacity-0 hover:opacity-100\n  @tndn duration-200\n";
 
+var __jsx$a = React__default["default"].createElement;
 var SelectInput = function SelectInput(props) {
   var items = props.items,
     onChange = props.onChange,
@@ -5412,13 +5433,13 @@ var SelectInput = function SelectInput(props) {
     baseItemClassName = props.baseItemClassName,
     InnerComponent = props.InnerComponent;
   var srInputContainerClassName = useStyleRewriter$6(baseInputContainerClassName$1, inputContainerClassName);
-  return /*#__PURE__*/React__default["default"].createElement(InputOverlay, _extends({
+  return __jsx$a(InputOverlay, _extends({
     label: label,
     error: error
-  }, props), /*#__PURE__*/React__default["default"].createElement("div", {
+  }, props), __jsx$a("div", {
     className: srInputContainerClassName
   }, items.map(function (item, index) {
-    return /*#__PURE__*/React__default["default"].createElement(SmartButton, {
+    return __jsx$a(SmartButton, {
       className: activeMatcher(item, value) ? activeItemClassName : baseItemClassName,
       key: index,
       onClick: function onClick(e) {
@@ -5426,7 +5447,7 @@ var SelectInput = function SelectInput(props) {
         e.target.id = id;
         onChange(e);
       }
-    }, typeof InnerComponent === "function" ? /*#__PURE__*/React__default["default"].createElement(InnerComponent, _extends({
+    }, typeof InnerComponent === "function" ? __jsx$a(InnerComponent, _extends({
       isSelected: activeMatcher(item, value)
     }, props, {
       item: item
@@ -5435,6 +5456,7 @@ var SelectInput = function SelectInput(props) {
 };
 var baseInputContainerClassName$1 = "\n  @dy flex\n  @fxw flex-wrap\n  @gp gap-2";
 
+var __jsx$9 = React__default["default"].createElement;
 var DropdownInput = function DropdownInput(props) {
   var label = props.label,
     error = props.error,
@@ -5458,14 +5480,12 @@ var DropdownInput = function DropdownInput(props) {
     Icon = props.Icon,
     InnerComponent = props.InnerComponent;
   var _useState = React.useState(false),
-    _useState2 = _slicedToArray(_useState, 2),
-    isDropdownOpen = _useState2[0],
-    setDropdownOpen = _useState2[1];
+    isDropdownOpen = _useState[0],
+    setDropdownOpen = _useState[1];
   var srInputClassName = useStyleRewriter$6(baseInputClassName, inputClassName, false);
-  var _useState3 = React.useState(),
-    _useState4 = _slicedToArray(_useState3, 2),
-    activeItem = _useState4[0],
-    setActiveItem = _useState4[1];
+  var _useState2 = React.useState(),
+    activeItem = _useState2[0],
+    setActiveItem = _useState2[1];
   React.useEffect(function () {
     var active = items === null || items === void 0 ? void 0 : items.find(function (item) {
       return activeMatcher(item, value);
@@ -5475,16 +5495,16 @@ var DropdownInput = function DropdownInput(props) {
   React.useEffect(function () {
     onDropdownOpenChange(isDropdownOpen);
   }, [isDropdownOpen]);
-  return /*#__PURE__*/React__default["default"].createElement(InputOverlay, _extends({}, props, {
+  return __jsx$9(InputOverlay, _extends({}, props, {
     label: label,
     error: error
-  }), /*#__PURE__*/React__default["default"].createElement(SmartButton, {
+  }), __jsx$9(SmartButton, {
     onClick: function onClick() {
       return setDropdownOpen(!isDropdownOpen);
     },
     dropdownItems: items !== null && items !== void 0 && items.length ? function () {
       return items.map(function (item, index) {
-        return /*#__PURE__*/React__default["default"].createElement(SmartButton, {
+        return __jsx$9(SmartButton, {
           key: index,
           onClick: function onClick(e) {
             e.target.value = setter(item, index);
@@ -5492,7 +5512,7 @@ var DropdownInput = function DropdownInput(props) {
             onChange(e);
           },
           className: activeMatcher(item, value) ? activeItemClassName : baseItemClassName
-        }, typeof InnerComponent === "function" ? /*#__PURE__*/React__default["default"].createElement(InnerComponent, _extends({}, props, {
+        }, typeof InnerComponent === "function" ? __jsx$9(InnerComponent, _extends({}, props, {
           isSelected: activeMatcher(item, value),
           item: item
         })) : item === null || item === void 0 ? void 0 : item.title);
@@ -5501,14 +5521,15 @@ var DropdownInput = function DropdownInput(props) {
     dropdownClassName: dropdownClassName,
     dropdownContainerClassName: inputContainerClassName,
     className: srInputClassName
-  }, typeof InnerComponent === "function" && activeItem ? /*#__PURE__*/React__default["default"].createElement(InnerComponent, _extends({}, props, {
+  }, typeof InnerComponent === "function" && activeItem ? __jsx$9(InnerComponent, _extends({}, props, {
     item: activeItem
-  })) : activeItem !== null && activeItem !== void 0 && activeItem.title ? activeItem === null || activeItem === void 0 ? void 0 : activeItem.title : placeholder, typeof Icon === "function" ? /*#__PURE__*/React__default["default"].createElement(Icon, _extends({}, props, {
+  })) : activeItem !== null && activeItem !== void 0 && activeItem.title ? activeItem === null || activeItem === void 0 ? void 0 : activeItem.title : placeholder, typeof Icon === "function" ? __jsx$9(Icon, _extends({}, props, {
     isDropdownOpen: isDropdownOpen
   })) : null));
 };
 var baseInputClassName = "\n  @cr cursor-pointer\n  @fx flex\n  @wh w-full\n";
 
+var __jsx$8 = React__default["default"].createElement;
 var PopupCalendar = function PopupCalendar(_ref) {
   var setOpen = _ref.setOpen,
     _onClick = _ref.onClick,
@@ -5520,11 +5541,11 @@ var PopupCalendar = function PopupCalendar(_ref) {
     nextButtonChild = _ref.nextButtonChild,
     prevButtonChild = _ref.prevButtonChild;
   var srContainerClassName = useStyleRewriter$6(baseContainerClassName$1, containerClassName);
-  return /*#__PURE__*/React__default["default"].createElement("div", {
+  return __jsx$8("div", {
     className: srContainerClassName
-  }, /*#__PURE__*/React__default["default"].createElement("div", {
+  }, __jsx$8("div", {
     className: "px-2 flex flex-col items-center text-black"
-  }, /*#__PURE__*/React__default["default"].createElement(Calendar__default["default"], _extends({}, calendarSettings, {
+  }, __jsx$8(Calendar__default["default"], _extends({}, calendarSettings, {
     nextLabel: nextButtonChild,
     prevLabel: prevButtonChild,
     next2AriaLabel: null,
@@ -5535,23 +5556,23 @@ var PopupCalendar = function PopupCalendar(_ref) {
       setActiveTimeframe("Custom");
       setValue(value);
     }
-  })), /*#__PURE__*/React__default["default"].createElement("div", {
+  })), __jsx$8("div", {
     className: "flex flex-row items-center justify-end w-full mb-4 md:mb-7"
-  }, /*#__PURE__*/React__default["default"].createElement(SmartButton, {
+  }, __jsx$8(SmartButton, {
     className: "@ftf font-roboto @ftw font-medium @bdc bg-primary-900 hover:bg-primary-700 @ttc text-white @brr rounded-[4px] @mn mr-3 @pg px-5 py-1 @cr cursor-pointer @tndn duration-200",
     onClick: function onClick() {
       _onClick(value);
       setOpen(false);
     }
-  }, /*#__PURE__*/React__default["default"].createElement("h5", {
+  }, __jsx$8("h5", {
     className: "@ttc text-current"
-  }, "\u041F\u0440\u0438\u043C\u0435\u043D\u0438\u0442\u044C")), /*#__PURE__*/React__default["default"].createElement(SmartButton, {
+  }, "\u041F\u0440\u0438\u043C\u0435\u043D\u0438\u0442\u044C")), __jsx$8(SmartButton, {
     className: "@ftf font-roboto @ftw font-medium @bdc bg-primary-200 hover:bg-primary-700 @ttc text-primary hover:text-white @brr rounded-[4px] @pg px-5 py-1 @cr cursor-pointer @tndn duration-200",
     onClick: function onClick() {
       setValue();
       setOpen(false);
     }
-  }, /*#__PURE__*/React__default["default"].createElement("h5", {
+  }, __jsx$8("h5", {
     className: "@ttc text-current"
   }, "\u0421\u0431\u0440\u043E\u0441\u0438\u0442\u044C")))));
 };
@@ -5564,6 +5585,7 @@ var calendarSettings = {
 };
 var baseContainerClassName$1 = "\n  @pn absolute\n  @it left-0 top-full\n  @dy flex\n  @fxd flex-col md:flex-row\n  @bdc bg-white\n  @ow overflow-hidden\n  @pg p-0\n  @dew divide-x\n  @des divide-true-gray-150\n  @bxsw shadow-none\n  @brr rounded-[8px]\n  @zi z-40\n";
 
+var __jsx$7 = React__default["default"].createElement;
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
@@ -5583,28 +5605,23 @@ var DateCalendar = /*#__PURE__*/React.forwardRef(function (props, ref) {
     DividerComponent = props.DividerComponent;
   var buttonRef = React.useRef();
   var _useState = React.useState(null),
-    _useState2 = _slicedToArray(_useState, 2),
-    localValue = _useState2[0],
-    setLocalValue = _useState2[1];
-  var _useState3 = React.useState(),
-    _useState4 = _slicedToArray(_useState3, 2),
-    inputValues = _useState4[0],
-    setInputValues = _useState4[1];
-  var _useState5 = React.useState(error),
-    _useState6 = _slicedToArray(_useState5, 2),
-    localError = _useState6[0],
-    setLocalError = _useState6[1];
-  var _useState7 = React.useState(false),
-    _useState8 = _slicedToArray(_useState7, 2),
-    isDropdownOpen = _useState8[0],
-    setIsDropdownOpen = _useState8[1];
-  var _useState9 = React.useState("Custom"),
-    _useState10 = _slicedToArray(_useState9, 2),
-    activeTimeframe = _useState10[0],
-    setActiveTimeframe = _useState10[1];
+    localValue = _useState[0],
+    setLocalValue = _useState[1];
+  var _useState2 = React.useState(),
+    inputValues = _useState2[0],
+    setInputValues = _useState2[1];
+  var _useState3 = React.useState(error),
+    localError = _useState3[0],
+    setLocalError = _useState3[1];
+  var _useState4 = React.useState(false),
+    isDropdownOpen = _useState4[0],
+    setIsDropdownOpen = _useState4[1];
+  var _useState5 = React.useState("Custom"),
+    activeTimeframe = _useState5[0],
+    setActiveTimeframe = _useState5[1];
   useOutsideClick(buttonRef, setIsDropdownOpen);
   React.useEffect(function () {
-    if (value && value.length !== 0 && (!localValue || _typeof$1(localValue) === "string")) {
+    if (value && value.length !== 0 && (!localValue || typeof localValue === "string")) {
       var parsedDate = new Date(value).toISOString();
       setLocalValue(new Date(parsedDate));
     }
@@ -5666,7 +5683,7 @@ var DateCalendar = /*#__PURE__*/React.forwardRef(function (props, ref) {
     }
   }, [localValue]);
   React.useEffect(function () {
-    if (localValue && _typeof$1(localValue) === "object") {
+    if (localValue && typeof localValue === "object") {
       var date = new Date(localValue).getDate();
       var month = new Date(localValue).getMonth() + 1;
       var year = new Date(localValue).getFullYear();
@@ -5680,12 +5697,12 @@ var DateCalendar = /*#__PURE__*/React.forwardRef(function (props, ref) {
     }
   }, [localValue]);
   var srInputContainerClassName = useStyleRewriter$6(baseInputContainerClassName, inputContainerClassName);
-  return /*#__PURE__*/React__default["default"].createElement(InputOverlay, _extends({}, props, {
+  return __jsx$7(InputOverlay, _extends({}, props, {
     error: localError
-  }), /*#__PURE__*/React__default["default"].createElement("div", {
+  }), __jsx$7("div", {
     className: srInputContainerClassName,
     ref: buttonRef
-  }, /*#__PURE__*/React__default["default"].createElement(DateInput, {
+  }, __jsx$7(DateInput, {
     dateInputInputContainerClassName: dateInputInputContainerClassName,
     dateInputDateInputClassName: dateInputDateInputClassName,
     dateInputMonthInputClassName: dateInputMonthInputClassName,
@@ -5697,9 +5714,9 @@ var DateCalendar = /*#__PURE__*/React.forwardRef(function (props, ref) {
       return setIsDropdownOpen(!isDropdownOpen);
     },
     DividerComponent: DividerComponent
-  }), /*#__PURE__*/React__default["default"].createElement(transitionComponent.Transition, _extends({
+  }), __jsx$7(transitionComponent.Transition, _extends({
     show: isDropdownOpen
-  }, contentTransitionProps), /*#__PURE__*/React__default["default"].createElement(PopupCalendar, {
+  }, contentTransitionProps), __jsx$7(PopupCalendar, {
     containerClassName: calendarContainerClassName,
     value: localValue || new Date(),
     setValue: setLocalValue,
@@ -5731,18 +5748,15 @@ var DateInput = function DateInput(_ref) {
     _ref$onClick = _ref.onClick,
     onClick = _ref$onClick === void 0 ? function () {} : _ref$onClick;
     _ref.error;
-  var _useState11 = React.useState(value[0]),
-    _useState12 = _slicedToArray(_useState11, 2),
-    date = _useState12[0],
-    setDate = _useState12[1];
-  var _useState13 = React.useState(value[1]),
-    _useState14 = _slicedToArray(_useState13, 2),
-    month = _useState14[0],
-    setMonth = _useState14[1];
-  var _useState15 = React.useState(value[2]),
-    _useState16 = _slicedToArray(_useState15, 2),
-    year = _useState16[0],
-    setYear = _useState16[1];
+  var _useState6 = React.useState(value[0]),
+    date = _useState6[0],
+    setDate = _useState6[1];
+  var _useState7 = React.useState(value[1]),
+    month = _useState7[0],
+    setMonth = _useState7[1];
+  var _useState8 = React.useState(value[2]),
+    year = _useState8[0],
+    setYear = _useState8[1];
   React.useEffect(function () {
     setDate(value[0]);
     setMonth(value[1]);
@@ -5754,10 +5768,10 @@ var DateInput = function DateInput(_ref) {
     });
   }, [date, month, year]);
   var srInputContainerClassName = useStyleRewriter$6(baseDateInputInputContainerClassName, dateInputInputContainerClassName);
-  return /*#__PURE__*/React__default["default"].createElement("div", {
+  return __jsx$7("div", {
     onClick: onClick,
     className: srInputContainerClassName
-  }, /*#__PURE__*/React__default["default"].createElement(Input, {
+  }, __jsx$7(Input, {
     type: "number",
     value: date || "",
     onChange: function onChange(e) {
@@ -5769,7 +5783,7 @@ var DateInput = function DateInput(_ref) {
     },
     inputContainerClassName: "@wh w-fit",
     inputClassName: dateInputDateInputClassName
-  }), typeof DividerComponent === "function" ? /*#__PURE__*/React__default["default"].createElement(DividerComponent, null) : null, /*#__PURE__*/React__default["default"].createElement(Input, {
+  }), typeof DividerComponent === "function" ? __jsx$7(DividerComponent, null) : null, __jsx$7(Input, {
     type: "number",
     value: month || "",
     onChange: function onChange(e) {
@@ -5781,7 +5795,7 @@ var DateInput = function DateInput(_ref) {
     },
     inputContainerClassName: "@wh w-fit",
     inputClassName: dateInputMonthInputClassName
-  }), typeof DividerComponent === "function" ? /*#__PURE__*/React__default["default"].createElement(DividerComponent, null) : null, /*#__PURE__*/React__default["default"].createElement(Input, {
+  }), typeof DividerComponent === "function" ? __jsx$7(DividerComponent, null) : null, __jsx$7(Input, {
     type: "number",
     value: year || "",
     onChange: function onChange(e) {
@@ -5817,11 +5831,12 @@ var useOutsideClick = function useOutsideClick(ref, action) {
 var baseInputContainerClassName = "\n  @pn relative\n  @zi z-70\n  @wh w-full\n";
 var baseDateInputInputContainerClassName = "\n  @wh w-fit\n  @dy flex\n";
 
+var __jsx$6 = React__default["default"].createElement;
 var FormInput = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var type = props.type,
     Comp = props.Comp;
   var InputType = Comp || inputComponents[type] || TextInput;
-  return /*#__PURE__*/React__default["default"].createElement(InputType, _extends({}, props, {
+  return __jsx$6(InputType, _extends({}, props, {
     ref: ref
   }));
 });
@@ -5849,7 +5864,7 @@ function _defineProperties(target, props) {
     descriptor.enumerable = descriptor.enumerable || false;
     descriptor.configurable = true;
     if ("value" in descriptor) descriptor.writable = true;
-    Object.defineProperty(target, descriptor.key, descriptor);
+    Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor);
   }
 }
 function _createClass(Constructor, protoProps, staticProps) {
@@ -6048,14 +6063,9 @@ var _typeof = {exports: {}};
 	    };
 	  }
 	  function maybeInvokeDelegate(delegate, context) {
-	    var method = delegate.iterator[context.method];
-	    if (undefined === method) {
-	      if (context.delegate = null, "throw" === context.method) {
-	        if (delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method)) return ContinueSentinel;
-	        context.method = "throw", context.arg = new TypeError("The iterator does not provide a 'throw' method");
-	      }
-	      return ContinueSentinel;
-	    }
+	    var methodName = context.method,
+	      method = delegate.iterator[methodName];
+	    if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), ContinueSentinel;
 	    var record = tryCatch(method, delegate.iterator, context.arg);
 	    if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel;
 	    var info = record.arg;
@@ -6244,6 +6254,7 @@ try {
   }
 }
 
+var __jsx$5 = React__default["default"].createElement;
 function ownKeys$2(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 function _objectSpread$2(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$2(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$2(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 
@@ -6274,23 +6285,23 @@ var Notification = /*#__PURE__*/React__default["default"].forwardRef(function (p
   var srHeaderClassName = useStyleRewriter$6(alertHeaderClassName, headerClassName);
   var srBodyClassName = useStyleRewriter$6(alertBodyClassName, bodyClassName);
   var CloseIconComp = CloseIcon ? function (props) {
-    return /*#__PURE__*/React__default["default"].createElement(CloseIcon, props);
+    return __jsx$5(CloseIcon, props);
   } : function (props) {
-    return /*#__PURE__*/React__default["default"].createElement(CloseButton, props);
+    return __jsx$5(CloseButton, props);
   };
-  return /*#__PURE__*/React__default["default"].createElement(web.animated.div, {
+  return __jsx$5(web.animated.div, {
     className: srContainerClassName,
     style: _objectSpread$2({}, styles)
-  }, /*#__PURE__*/React__default["default"].createElement("div", {
+  }, __jsx$5("div", {
     className: srContentContainerClassName,
     ref: ref
-  }, Child ? /*#__PURE__*/React__default["default"].createElement(Child, props) : null, showDefault ? /*#__PURE__*/React__default["default"].createElement("div", {
+  }, Child ? __jsx$5(Child, props) : null, showDefault ? __jsx$5("div", {
     className: "flex flex-col items-start ".concat(message ? "gap-2" : "")
-  }, /*#__PURE__*/React__default["default"].createElement("div", {
+  }, __jsx$5("div", {
     className: "markdown ".concat(srHeaderClassName)
-  }, /*#__PURE__*/React__default["default"].createElement(ReactMarkdown__default["default"], null, title)), /*#__PURE__*/React__default["default"].createElement("div", {
+  }, __jsx$5(ReactMarkdown__default["default"], null, title)), __jsx$5("div", {
     className: "markdown ".concat(srBodyClassName)
-  }, /*#__PURE__*/React__default["default"].createElement(ReactMarkdown__default["default"], null, message))) : null, /*#__PURE__*/React__default["default"].createElement(CloseIconComp, {
+  }, __jsx$5(ReactMarkdown__default["default"], null, message))) : null, __jsx$5(CloseIconComp, {
     remove: remove
   })));
 });
@@ -6301,21 +6312,22 @@ var alertBodyClassName = "\n  @pg pl-2\n  @fts text-xs";
 var CloseButton = function CloseButton(_ref) {
   var _ref$remove = _ref.remove,
     remove = _ref$remove === void 0 ? function () {} : _ref$remove;
-  return /*#__PURE__*/React__default["default"].createElement(SmartButton, {
+  return __jsx$5(SmartButton, {
     onClick: remove,
     className: "@pn absolute @it right-1 top-1 @ttc text-black @wh w-3 @zi z-50 @cr cursor-pointer"
-  }, /*#__PURE__*/React__default["default"].createElement("svg", {
+  }, __jsx$5("svg", {
     className: "fill-current w-3",
     viewBox: "0 0 20 20",
     fill: "none",
     xmlns: "http://www.w3.org/2000/svg"
-  }, /*#__PURE__*/React__default["default"].createElement("path", {
+  }, __jsx$5("path", {
     fillRule: "evenodd",
     clipRule: "evenodd",
     d: "M13.5659 5.24616C13.8936 4.91762 14.4257 4.91762 14.7542 5.24616C15.0827 5.57391 15.0827 6.10671 14.7542 6.43442L11.1711 10.0175L14.7042 13.5506C15.0302 13.8758 15.0302 14.4037 14.7042 14.7297C14.379 15.0558 13.8511 15.0558 13.5251 14.7297L9.99199 11.1966L6.43466 14.7539C6.10696 15.0817 5.57493 15.0817 5.2464 14.7539C4.91787 14.4262 4.91787 13.8942 5.2464 13.5656L8.80368 10.0084L5.27056 6.47527C4.94451 6.1501 4.94451 5.62226 5.27056 5.29621C5.59573 4.97016 6.12357 4.97016 6.44962 5.29621L9.98275 8.8293L13.5659 5.24616Z"
   })));
 };
 
+var __jsx$4 = React__default["default"].createElement;
 var notificationsContainerClassName = "z-50 fixed right-0 flex items-end flex-col mx-4";
 var defaultNotificationHeight = 44;
 var Overlay = function Overlay(_ref) {
@@ -6420,10 +6432,10 @@ var Overlay = function Overlay(_ref) {
     }
   };
   var transitions = web.useTransition(notifications, transitionConfigWithHeightAnimation);
-  return /*#__PURE__*/React__default["default"].createElement("div", {
+  return __jsx$4("div", {
     className: "".concat(notificationsContainerClassName, " ").concat(isFromTop ? "top-0 mt-4" : "bottom-0 mb-4")
   }, transitions(function (styles, item) {
-    return /*#__PURE__*/React__default["default"].createElement(Notification, _extends({
+    return __jsx$4(Notification, _extends({
       key: item.id,
       styles: styles,
       ref: function ref(_ref5) {
@@ -6456,6 +6468,7 @@ if (process.env.NODE_ENV === 'production') {
 
 var _excluded = ["duration"],
   _excluded2 = ["duration"];
+var __jsx$3 = React__default["default"].createElement;
 function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$1(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 var NotificationsContext = /*#__PURE__*/React.createContext({
@@ -6466,13 +6479,12 @@ var NotificationsContext = /*#__PURE__*/React.createContext({
 var useNotifications = function useNotifications() {
   return React.useContext(NotificationsContext);
 };
-var isBrowser = (typeof window === "undefined" ? "undefined" : _typeof$1(window)) !== "undefined";
+var isBrowser = typeof window !== "undefined";
 var NotificationsWrapper = function NotificationsWrapper(_ref) {
   var children = _ref.children;
   var _useState = React.useState([]),
-    _useState2 = _slicedToArray(_useState, 2),
-    notifications = _useState2[0],
-    setNotifications = _useState2[1];
+    notifications = _useState[0],
+    setNotifications = _useState[1];
 
   // use state fns to avoid passing stale alerts array to showAlert and removeAlert functions
   var remove = function remove(timestampId) {
@@ -6509,11 +6521,11 @@ var NotificationsWrapper = function NotificationsWrapper(_ref) {
     });
   }, []);
   var isFromTop = isBrowser && window.innerWidth < 540;
-  return /*#__PURE__*/React__default["default"].createElement(NotificationsContext.Provider, {
+  return __jsx$3(NotificationsContext.Provider, {
     value: {
       add: add
     }
-  }, children, /*#__PURE__*/React__default["default"].createElement(Overlay, {
+  }, children, __jsx$3(Overlay, {
     notifications: notifications,
     remove: remove,
     isFromTop: isFromTop
@@ -6523,10 +6535,9 @@ var OverlayWrapper = function OverlayWrapper(_ref3) {
   var _ref3$notify = _ref3.notify,
     notify = _ref3$notify === void 0 ? function () {} : _ref3$notify;
   var isFromTop = isBrowser && window.innerWidth < 540;
-  var _useState3 = React.useState([]),
-    _useState4 = _slicedToArray(_useState3, 2),
-    notifications = _useState4[0],
-    setNotifications = _useState4[1];
+  var _useState2 = React.useState([]),
+    notifications = _useState2[0],
+    setNotifications = _useState2[1];
   // use state fns to avoid passing stale alerts array to showAlert and removeAlert functions
   var remove = function remove(timestampId) {
     setNotifications(function (alertNotifications) {
@@ -6556,7 +6567,7 @@ var OverlayWrapper = function OverlayWrapper(_ref3) {
   React.useEffect(function () {
     notify(add, remove);
   }, []);
-  return /*#__PURE__*/React__default["default"].createElement(Overlay, {
+  return __jsx$3(Overlay, {
     notifications: notifications,
     remove: remove,
     isFromTop: isFromTop
@@ -6582,7 +6593,7 @@ var NotifiactionsManager = /*#__PURE__*/function () {
       portalElement = element;
     }
     var portal = createRoot(portalElement);
-    portal.render( /*#__PURE__*/React__default["default"].createElement(OverlayWrapper, {
+    portal.render(__jsx$3(OverlayWrapper, {
       notify: this.bindNotify
     }));
   }
@@ -6607,6 +6618,7 @@ var SpringNotification = {
   createNotification: createNotification
 };
 
+var __jsx$2 = React__default["default"].createElement;
 function ReactSpringGallery(_ref) {
   var media = _ref.media,
     _ref$galleryClassName = _ref.galleryClassName,
@@ -6636,11 +6648,10 @@ function ReactSpringGallery(_ref) {
   var srVideoItemClassName = useStyleRewriter$6(baseVideoItemClassName, videoItemClassName);
   var isDesktop = useBreakpoint$1("md");
   var _useState = React.useState(),
-    _useState2 = _slicedToArray(_useState, 2),
-    width = _useState2[0],
-    setWidth = _useState2[1];
+    width = _useState[0],
+    setWidth = _useState[1];
   React.useEffect(function () {
-    if ((typeof window === "undefined" ? "undefined" : _typeof$1(window)) === "undefined") {
+    if (typeof window === "undefined") {
       return;
     }
     if (isDesktop) {
@@ -6707,15 +6718,15 @@ function ReactSpringGallery(_ref) {
       }
     }
   }, [activeSlide]);
-  return /*#__PURE__*/React__default["default"].createElement("div", {
+  return __jsx$2("div", {
     className: srGalleryClassName
-  }, mediaLength > 1 ? typeof PreviousNavItemComponent === "function" ? /*#__PURE__*/React__default["default"].createElement(PreviousNavItemComponent, {
+  }, mediaLength > 1 ? typeof PreviousNavItemComponent === "function" ? __jsx$2(PreviousNavItemComponent, {
     onClick: function onClick() {
       ref.current = ref.current ? ref.current - 1 : 0;
       setActiveSlide(ref.current);
       setSlidePosition();
     }
-  }) : /*#__PURE__*/React__default["default"].createElement(NavItem, {
+  }) : __jsx$2(NavItem, {
     next: false,
     navItemClassName: navItemClassName,
     onClick: function onClick() {
@@ -6723,37 +6734,37 @@ function ReactSpringGallery(_ref) {
       setActiveSlide(ref.current);
       setSlidePosition();
     }
-  }) : null, /*#__PURE__*/React__default["default"].createElement("div", {
+  }) : null, __jsx$2("div", {
     className: srMediaContainerClassName
   }, props.map(function (item, index) {
     var x = item.x,
       display = item.display;
     var mediaObj = media[index];
-    return /*#__PURE__*/React__default["default"].createElement(web.animated.div, _extends({}, bind(), {
+    return __jsx$2(web.animated.div, _extends({}, bind(), {
       key: "".concat(mediaObj.id, "-").concat(index),
       className: srMediaItemClassName,
       style: {
         display: display,
         x: x
       }
-    }), typeof MediaItemComponent === "function" ? /*#__PURE__*/React__default["default"].createElement(MediaItemComponent, {
+    }), typeof MediaItemComponent === "function" ? __jsx$2(MediaItemComponent, {
       mediaObj: mediaObj
-    }) : mediaObj.renderType === "image" ? /*#__PURE__*/React__default["default"].createElement("img", {
+    }) : mediaObj.renderType === "image" ? __jsx$2("img", {
       src: mediaObj.url,
       className: srImageItemClassName
-    }) : /*#__PURE__*/React__default["default"].createElement("video", {
+    }) : __jsx$2("video", {
       src: url,
       controls: true,
       className: srVideoItemClassName
     }));
-  })), mediaLength > 1 ? typeof NextNavItemComponent === "function" ? /*#__PURE__*/React__default["default"].createElement(NextNavItemComponent, {
+  })), mediaLength > 1 ? typeof NextNavItemComponent === "function" ? __jsx$2(NextNavItemComponent, {
     onClick: function onClick() {
       var lastItem = media.length - 1;
       ref.current = ref.current < lastItem ? ref.current + 1 : lastItem;
       setActiveSlide(ref.current);
       setSlidePosition();
     }
-  }) : /*#__PURE__*/React__default["default"].createElement(NavItem, {
+  }) : __jsx$2(NavItem, {
     next: true,
     navItemClassName: navItemClassName,
     onClick: function onClick() {
@@ -6783,12 +6794,12 @@ var NavItem = function NavItem(_ref3) {
     onClick = _ref3.onClick,
     navItemClassName = _ref3.navItemClassName;
   var srNavItemClassName = useStyleRewriter$6(baseNavItemClassName, navItemClassName);
-  return /*#__PURE__*/React__default["default"].createElement("div", {
+  return __jsx$2("div", {
     className: "z-10 absolute h-full top-0 ".concat(next ? "right-2" : "left-2", "  flex items-center")
-  }, /*#__PURE__*/React__default["default"].createElement("div", {
+  }, __jsx$2("div", {
     onClick: onClick,
     className: srNavItemClassName
-  }, /*#__PURE__*/React__default["default"].createElement(ChevronIcon, {
+  }, __jsx$2(ChevronIcon, {
     className: "w-[26px] ".concat(next ? "" : "rotate-180")
   })));
 };
@@ -6800,18 +6811,19 @@ var baseVideoItemClassName = "\n  @wh w-full\n  @ht h-full\n";
 var baseNavItemClassName = "\n  @dy flex\n  @jyc justify-center\n  @ani items-center\n  @wh w-[32px]\n  @ht h-[50px]\n  @brr rounded-full\n  @cr cursor-pointer\n  @bdc bg-black\n  @bdo bg-opacity-30\n  @ttc text-white";
 var ChevronIcon = function ChevronIcon(_ref4) {
   var className = _ref4.className;
-  return /*#__PURE__*/React__default["default"].createElement("svg", {
+  return __jsx$2("svg", {
     viewBox: "0 0 36 36",
     fill: "none",
     xmlns: "http://www.w3.org/2000/svg",
     className: "fill-current ".concat(className)
-  }, /*#__PURE__*/React__default["default"].createElement("path", {
+  }, __jsx$2("path", {
     fillRule: "evenodd",
     clipRule: "evenodd",
     d: "M24.3923 17.9512L10.106 4.81458L11.4102 3.61536L26.9999 17.9506L26.8933 18.0487L26.894 18.0493L11.3042 32.3845L10 31.1853L24.3923 17.9512Z"
   }));
 };
 
+var __jsx$1 = React__default["default"].createElement;
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 var MediaGallery = function MediaGallery(_ref) {
@@ -6828,14 +6840,12 @@ var MediaGallery = function MediaGallery(_ref) {
     NextNavItemComponent = _ref.NextNavItemComponent,
     galleryClassName = _ref.galleryClassName,
     MediaItemComponent = _ref.MediaItemComponent;
-  var _useState = React.useState(false),
-    _useState2 = _slicedToArray(_useState, 2);
-    _useState2[0];
-    var setShow = _useState2[1];
-  var _useState3 = React.useState(0),
-    _useState4 = _slicedToArray(_useState3, 2),
-    activeSlideIndex = _useState4[0],
-    setActiveSlideIndex = _useState4[1];
+  var _useState = React.useState(false);
+    _useState[0];
+    var setShow = _useState[1];
+  var _useState2 = React.useState(0),
+    activeSlideIndex = _useState2[0],
+    setActiveSlideIndex = _useState2[1];
   var localMedia = React.useMemo(function () {
     if (!media) {
       return;
@@ -6849,13 +6859,13 @@ var MediaGallery = function MediaGallery(_ref) {
   if (!localMedia) return null;
   var srContainerClassName = useStyleRewriter$6(baseContainerClassName, containerClassName);
   var srGalleryContainerClassName = useStyleRewriter$6(baseGalleryContainerClassName, galleryContainerClassName);
-  return /*#__PURE__*/React__default["default"].createElement("div", {
+  return __jsx$1("div", {
     className: srContainerClassName
-  }, /*#__PURE__*/React__default["default"].createElement("div", {
+  }, __jsx$1("div", {
     className: srGalleryContainerClassName
-  }, /*#__PURE__*/React__default["default"].createElement("div", {
+  }, __jsx$1("div", {
     className: "absolute w-full h-full inset-0"
-  }, /*#__PURE__*/React__default["default"].createElement(ReactSpringGallery, {
+  }, __jsx$1(ReactSpringGallery, {
     activeSlide: activeSlideIndex,
     galleryClassName: galleryClassName,
     mediaContainerClassName: mediaContainerClassName,
@@ -6873,14 +6883,14 @@ var MediaGallery = function MediaGallery(_ref) {
 var baseContainerClassName = "\n  @wh w-full\n  @ht h-full\n  @dy flex\n  @fxd flex-row\n  @ani items-center md:items-start\n  @jyc justify-center\n  @pn relative";
 var baseGalleryContainerClassName = "\n  @dy flex\n  @wh w-full\n  @pn relative";
 
+var __jsx = React__default["default"].createElement;
 var CopyButton = function CopyButton(props) {
   var textToCopy = props.textToCopy,
     _props$CopyButtonComp = props.CopyButtonComponent,
     CopyButtonComponent = _props$CopyButtonComp === void 0 ? function () {} : _props$CopyButtonComp;
   var _useState = React.useState(false),
-    _useState2 = _slicedToArray(_useState, 2),
-    copied = _useState2[0],
-    setCopied = _useState2[1];
+    copied = _useState[0],
+    setCopied = _useState[1];
   var handleClick = function handleClick() {
     if (!window.isSecureContext) {
       alert("Copying is not supported in your browser");
@@ -6892,7 +6902,7 @@ var CopyButton = function CopyButton(props) {
       return setCopied(false);
     }, 7000);
   };
-  return /*#__PURE__*/React__default["default"].createElement(CopyButtonComponent, _extends({}, props, {
+  return __jsx(CopyButtonComponent, _extends({}, props, {
     onClick: handleClick,
     copied: copied
   }));

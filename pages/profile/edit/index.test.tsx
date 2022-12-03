@@ -2,7 +2,7 @@ import React from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { rest } from "msw";
 import { setupServer } from "msw/node";
-import App from "../../../App";
+import Index from "../../../pages";
 
 const server = setupServer(
   rest.post(`http://localhost:1337/api/auth/local`, async (req, res, ctx) => {
@@ -44,7 +44,7 @@ afterAll(() => {
 
 describe("Edit profile hook", () => {
   it("should get data from inputs and send to‰ backend", async () => {
-    render(<App />);
+    render(<Index />);
 
     fireEvent.click(
       screen.getByRole("link", {

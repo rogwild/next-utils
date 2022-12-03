@@ -3,7 +3,7 @@ import { fireEvent, screen, waitFor } from "@testing-library/react";
 import { rest } from "msw";
 import { setupServer } from "msw/node";
 import Login from ".";
-import { renderApp } from "../../../utils/testing";
+import { renderApp } from "~utils/testing";
 
 const server = setupServer(
   rest.post("http://localhost:1337/api/auth/local", async (req, res, ctx) => {
