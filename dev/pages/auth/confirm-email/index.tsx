@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import utils from "~utils";
+import utils from "~next-utils";
 const { useConfirmEmail } = utils.hooks;
 const { Input } = utils.components;
 import { profilesApi } from "../../../redux/services/backend/profiles";
