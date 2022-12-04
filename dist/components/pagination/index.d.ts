@@ -1,9 +1,9 @@
 import { FC } from "react";
-declare type TOnNavBtnClickProps = {
+type TOnNavBtnClickProps = {
     isNext: boolean;
     isShiftToEdge: boolean;
 };
-export declare type TPaginationProps = {
+export type TPaginationProps = {
     currentPage: number;
     pagesCount: number;
     visiblePagesCount?: number;
