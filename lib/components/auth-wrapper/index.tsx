@@ -45,7 +45,7 @@ const AuthWrapper = ({
   const [passed, setPassed] = useState(false);
 
   useEffect(() => {
-    console.log(`🚀 ~ useEffect ~ user`, user);
+    // console.log(`🚀 ~ useEffect ~ user`, user);
 
     if (user.id) {
       setPassed(true);

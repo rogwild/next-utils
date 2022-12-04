@@ -3625,13 +3625,11 @@ function createProfilesApi(backendServiceApi) {
       return {
         getMe: build.query({
           query: function query() {
-            console.log("\uD83D\uDE80 ~ createProfilesApi ~ \"getMe\"", "getMe");
             return {
               url: "users/me"
             };
           },
           transformResponse: function transformResponse(item) {
-            console.log("\uD83D\uDE80 ~ createProfilesApi ~ item transformResponse", item);
             return transformResponseItem(item);
           },
           providesTags: function providesTags(result) {
@@ -21210,8 +21208,8 @@ var AuthWrapper = function (_a) {
     // }, [cachedInitPath]);
     var _d = __read(React.useState(false), 2), passed = _d[0], setPassed = _d[1];
     React.useEffect(function () {
+        // console.log(`🚀 ~ useEffect ~ user`, user);
         var _a;
-        console.log("\uD83D\uDE80 ~ useEffect ~ user", user);
         if (user.id) {
             setPassed(true);
             if ((_a = router.pathname) === null || _a === void 0 ? void 0 : _a.includes("/auth")) {
