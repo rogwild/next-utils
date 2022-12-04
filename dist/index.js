@@ -4132,7 +4132,7 @@ var ModalComponent$1 = function ModalComponent(_ref) {
   }, []);
   var TransitionElement = removeFromDom ? TransitionComponent : PlainDiv;
   return __jsx$r("div", {
-    className: "".concat(showLayout ? "z-30 block" : "-z-1", " ").concat(srContainerClasses, " ")
+    className: "".concat(showLayout ? "z-[200] block" : "-z-1", " ").concat(srContainerClasses)
   }, __jsx$r(TransitionElement, {
     baseClasses: "fixed inset-0 pointer-events-auto duration-".concat(duration, " transition z-10"),
     show: show,
@@ -4164,7 +4164,6 @@ var ModalComponent$1 = function ModalComponent(_ref) {
 };
 var DefaultCloseButton = function DefaultCloseButton(_ref2) {
   var setShow = _ref2.setShow;
-    _ref2.closeButtonClasses;
   return __jsx$r(SmartButton, {
     onClick: function onClick() {
       return setShow(false);
@@ -4314,7 +4313,7 @@ var ModalComponent = function ModalComponent(_ref) {
     _ref$onCloseModalCb = _ref.onCloseModalCb,
     onCloseModalCb = _ref$onCloseModalCb === void 0 ? function () {} : _ref$onCloseModalCb,
     _ref$zIndex = _ref.zIndex,
-    zIndex = _ref$zIndex === void 0 ? 50 : _ref$zIndex;
+    zIndex = _ref$zIndex === void 0 ? 200 : _ref$zIndex;
   var _useState = React.useState(false),
     isOpen = _useState[0],
     setIsOpen = _useState[1];
@@ -4324,7 +4323,7 @@ var ModalComponent = function ModalComponent(_ref) {
   var _useState3 = React.useState(false);
     _useState3[0];
     var setScrollActive = _useState3[1];
-  var srPopupWindowClasses = useStyleRewriter$1("fixed z-40 w-full h-95vh bg-white", popupWindowClasses);
+  var srPopupWindowClasses = useStyleRewriter$1("fixed z-[210] w-full h-95vh bg-white", popupWindowClasses);
   var srRenderCardContainerClasses = useStyleRewriter$1("w-full h-full mt-1 overflow-visible", renderCardContainerClasses);
   var modalHeight = screenHeight ? screenHeight * 0.9 : 0;
   var _useSpring = web.useSpring(function () {
@@ -4433,7 +4432,6 @@ var ModalComponent = function ModalComponent(_ref) {
       bottom: "calc(-100vh + ".concat(modalHeight, "px)"),
       touchAction: "none",
       height: "100vh",
-      zIndex: "110",
       y: y
     }
   }), __jsx$o("div", {
@@ -21237,6 +21235,46 @@ var AuthWrapper = function (_a) {
     return (React__default["default"].createElement(React__default["default"].Fragment, null, passed ? children : null));
 };
 
+var Pagination = function (_a) {
+    var currentPage = _a.currentPage, pagesCount = _a.pagesCount, _b = _a.visiblePagesCount, visiblePagesCount = _b === void 0 ? 3 : _b, onNavBtnClick = _a.onNavBtnClick, onPageBtnClick = _a.onPageBtnClick;
+    var _c = __read(React.useState([]), 2), pagesBtns = _c[0], setPagesBtns = _c[1];
+    React.useEffect(function () {
+        if (pagesBtns.includes(currentPage))
+            return;
+        var page = currentPage;
+        if (page + visiblePagesCount > pagesCount)
+            page = pagesCount - visiblePagesCount + 1;
+        var cb = function (_, index) { return page + index; };
+        var newBtns = new Array(visiblePagesCount).fill(0).map(cb);
+        setPagesBtns(newBtns);
+    }, [pagesCount, visiblePagesCount, currentPage]);
+    var showNavBtns = pagesCount > visiblePagesCount;
+    var isLeftEdge = pagesBtns[0] + visiblePagesCount <= pagesCount;
+    return (React__default["default"].createElement("div", { className: "flex justify-start items-center gap-2" },
+        showNavBtns ? (React__default["default"].createElement(React__default["default"].Fragment, null,
+            React__default["default"].createElement("div", { onClick: function () {
+                    return onNavBtnClick({ isNext: false, isShiftToEdge: true });
+                }, className: btn }, "<<"),
+            React__default["default"].createElement("div", { onClick: function () {
+                    return onNavBtnClick({ isNext: false, isShiftToEdge: false });
+                }, className: btn }, "<"))) : null,
+        React__default["default"].createElement("div", { className: "flex justify-center items-center gap-2" },
+            showNavBtns && !isLeftEdge ? React__default["default"].createElement("div", { className: btn }, "...") : null,
+            pagesBtns.map(function (page) { return (React__default["default"].createElement("div", { className: "flex cursor-pointer select-none leading-5 justify-center items-center rounded-xl min-w-[44px] min-h-[44px] p-3 ".concat(page === currentPage
+                    ? "bg-black border"
+                    : "bg-neutral-850 hover:border text-neutral-500", " border-white"), key: page, onClick: function () { return page !== currentPage && onPageBtnClick(page); } }, page)); }),
+            showNavBtns && isLeftEdge ? (React__default["default"].createElement("div", { className: "flex cursor-pointer leading-5 justify-center items-center rounded-xl min-w-[44px] min-h-[44px] p-3 bg-neutral-850 text-neutral-500" }, "...")) : null),
+        showNavBtns ? (React__default["default"].createElement(React__default["default"].Fragment, null,
+            React__default["default"].createElement("div", { onClick: function () {
+                    return onNavBtnClick({ isNext: true, isShiftToEdge: false });
+                }, className: btn }, "<"),
+            React__default["default"].createElement("div", { onClick: function () { return onNavBtnClick({ isNext: true, isShiftToEdge: true }); }, className: btn }, "<<"))) : null));
+};
+var btn = "flex cursor-pointer select-none leading-5 justify-center items-center rounded-xl min-w-[44px] min-h-[44px] p-3 bg-neutral-850 text-neutral-500";
+// const isFirst = currentPage === pagesBtns[0];
+// const isLast = currentPage === pagesBtns[pagesBtns.length - 1];
+// else if (isLast) page--;
+
 var components = {
   SmartButton: SmartButton,
   Modal: Modal,
@@ -21247,7 +21285,8 @@ var components = {
   SpringNotification: SpringNotification,
   MediaGallery: MediaGallery,
   CopyButton: CopyButton,
-  AuthWrapper: AuthWrapper
+  AuthWrapper: AuthWrapper,
+  Pagination: Pagination
 };
 
 var index = {

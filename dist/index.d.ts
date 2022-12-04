@@ -434,6 +434,7 @@ declare const _default: {
             user?: any;
             redirectTo?: string;
         }) => JSX.Element;
+        Pagination: import("react").FC<import("./components/pagination").TPaginationProps>;
     };
     redux: {
         slices: {
