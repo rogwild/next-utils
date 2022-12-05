@@ -3,6 +3,13 @@ export const textInputProps = {
     "@brw border @brc border-black @ttc text-black @pg px-2 py-1 @brr rounded-md",
 };
 
+export const otpInputProps = {
+  inputClassName:
+    "@wh w-8 @brw border @brc border-black @ttc text-black @pg px-2 py-1 @brr rounded-md",
+  containerClassName: "@mn mx-auto",
+  labelContainerClassName: "@wh w-60 @mn mx-auto",
+};
+
 const baseButtonClassName = `@wh w-full @pg py-2 px-3 @brr rounded-md @tta text-center`;
 
 export const blackButtonProps = {

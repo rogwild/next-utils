@@ -19,9 +19,12 @@ const ProfilePage = () => {
       <h1 className="mx-auto text-2xl font-bold">My profile</h1>
       <h4 className="font-bold">You're logged as {me?.username}</h4>
 
-      <div className="flex items-center gap-2">
-        <Link href="/auth/login" {...blackButtonProps}>
-          Login
+      <div className="flex items-center flex-col gap-2">
+        <Link href="/profile/edit" {...blackButtonProps}>
+          Edit
+        </Link>
+        <Link href="/profile/mfa" {...blackButtonProps}>
+          Multi Factor Authentification
         </Link>
         <button
           onClick={() => {

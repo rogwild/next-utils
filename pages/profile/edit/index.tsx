@@ -4,6 +4,7 @@ const { useUpdateMe } = utils.hooks;
 const { Input } = utils.components;
 import { profilesApi } from "~backend/models/profiles";
 import { blackButtonProps, textInputProps } from "~utils/vanilla";
+import { useSelector } from "react-redux";
 
 const ProfileEdit = () => {
   const {
@@ -14,6 +15,7 @@ const ProfileEdit = () => {
   }: { inputs: any; onSubmit: any; data: any; isLoading: boolean } =
     useUpdateMe({
       profilesApi,
+      useSelector,
     });
 
   console.log(`🚀 ~ ProfileEdit ~ inputs`, inputs);

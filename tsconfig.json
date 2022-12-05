@@ -32,7 +32,7 @@
       "~web3/*": ["./src/web3/*"],
       "~abi/*": ["./src/web3/configs/abi/*"],
       "~backend/*": ["./src/redux/services/backend/*"],
-      "~next-utils": ["./dist"]
+      "~next-utils": ["./lib"]
     },
     "typeRoots": ["./node_modules/@types", "types"]
   },
