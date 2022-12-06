@@ -18,7 +18,6 @@ const ProfileEdit = () => {
       useSelector,
     });
 
-  console.log(`🚀 ~ ProfileEdit ~ inputs`, inputs);
   useEffect(() => {
     console.log(`🚀 ~ ProfileEdit ~ data`, data, isLoading);
   }, [data]);

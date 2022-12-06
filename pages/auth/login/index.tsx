@@ -20,7 +20,7 @@ const Login = () => {
     <div className="w-1/2 mx-auto p-4 flex flex-col gap-4">
       <h1 className="mx-auto text-2xl font-bold">Login</h1>
       {data ? <h4>You are logged in</h4> : null}
-      <Input {...inputs.email} {...textInputProps} />
+      <Input {...inputs.identifier} {...textInputProps} />
       <Input {...inputs.password} {...textInputProps} />
       <button onClick={onSubmit} {...blackButtonProps}>
         Login
