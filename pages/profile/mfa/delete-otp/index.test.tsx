@@ -2,7 +2,7 @@ import React from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { rest } from "msw";
 import { setupServer } from "msw/node";
-import Index from "../..";
+import Index from "./index";
 
 const server = setupServer(
   rest.post(`http://localhost:1337/api/auth/local`, async (req, res, ctx) => {

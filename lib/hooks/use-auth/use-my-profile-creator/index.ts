@@ -12,10 +12,6 @@ const useMyProfileCreator = ({
   populate,
   useSelector,
 }: IUseMyProfile) => {
-  useEffect(() => {
-    console.log(`🚀 new useMyProfile`);
-  }, []);
-
   const accountId = useSelector(selectors.selectAccountId);
   const jwtToken = useSelector(selectors.selectJwt);
 
