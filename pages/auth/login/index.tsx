@@ -5,16 +5,37 @@ const { useLogin } = utils.hooks;
 const { Input } = utils.components;
 import { profilesApi } from "~backend/models/profiles";
 import { blackButtonProps, textInputProps } from "~utils/vanilla";
+import { useRouter } from "next/router";
 
 const Login = () => {
+  const router = useRouter();
+
   const {
     inputs,
     onSubmit,
     data,
     isLoading,
-  }: { inputs: any; onSubmit: any; data: any; isLoading: boolean } = useLogin({
+    inputsValues,
+  }: {
+    inputs: any;
+    onSubmit: any;
+    data: any;
+    isLoading: boolean;
+    inputsValues: any;
+  } = useLogin({
     profilesApi,
   });
+
+  useEffect(() => {
+    console.log(`🚀 ~ Login ~ data`, data);
+    if (!data) {
+      return;
+    }
+
+    if (data.nextAuthFactor) {
+      router.push(`/auth/confirm-email?email=${inputsValues.identifier}`);
+    }
+  }, [data]);
 
   return (
     <div className="w-1/2 mx-auto p-4 flex flex-col gap-4">

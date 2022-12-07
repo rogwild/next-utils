@@ -8,8 +8,11 @@ import {
   grayButtonProps,
   textInputProps,
 } from "~utils/vanilla";
+import { useRouter } from "next/router";
 
 const ConfirmEmail = () => {
+  const router = useRouter();
+
   const {
     inputs,
     onSubmit,
@@ -17,11 +20,13 @@ const ConfirmEmail = () => {
     isLoading,
     resendEmailConfirmation,
     counter,
+    inputsValues,
   }: {
     inputs: any;
     onSubmit: any;
     data: any;
     isLoading: boolean;
+    inputsValues: any;
     counter: number;
     resendEmailConfirmation: any;
   } = useConfirmEmail({
@@ -29,10 +34,15 @@ const ConfirmEmail = () => {
     ping: 5,
   });
 
-  console.log(`🚀 ~ useEffect ~ counter`, counter);
-
   useEffect(() => {
-    console.log(`🚀 ~ ConfirmEmail ~ data`, data, isLoading);
+    console.log(`🚀 ~ ConfirmEmail ~ data`, data);
+
+    if (!data) {
+      return;
+    }
+    if (data.nextAuthFactor) {
+      router.push("/auth/otp");
+    }
   }, [data]);
 
   return (

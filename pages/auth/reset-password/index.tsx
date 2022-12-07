@@ -29,7 +29,7 @@ const ResetPassword = () => {
       <h1 className="mx-auto text-2xl font-bold">Reset your password</h1>
       {data ? <h4>Password was reset</h4> : null}
       <Input {...inputs.password} {...textInputProps} />
-      <Input {...inputs.confirm_password} {...textInputProps} />
+      <Input {...inputs.passwordConfirmation} {...textInputProps} />
       <button onClick={onSubmit} {...blackButtonProps}>
         Reset password
       </button>

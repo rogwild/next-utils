@@ -90,8 +90,12 @@ export const selectors = {
 function setUser(state, action) {
   const { user, jwt, nextAuthFactor } = action.payload;
 
-  if (jwt) {
+  if (user) {
+    state.user = user;
     state.id = user.id;
+  }
+
+  if (jwt) {
     state.isAuthenticated = true;
     state.jwt = jwt;
     localStorage.setItem("jwt", jwt);

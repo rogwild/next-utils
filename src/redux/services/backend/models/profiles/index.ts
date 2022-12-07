@@ -22,4 +22,5 @@ export const {
   useRegisterMutation,
   useGenerateOtpSecretQuery,
   useSetOtpQuery,
+  useCheckOtpQuery,
 } = hooks;
