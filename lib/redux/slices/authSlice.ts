@@ -1,10 +1,11 @@
-import { createSlice, current } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 export interface IProfileState {
   id: string | undefined;
   jwt: string | undefined;
   isAuthenticated: boolean;
-  currentAuthFactor: "local" | "otp" | "email" | "phone";
+  nextAuthFactor: "local" | "otp" | "email" | "phone";
+  nextAuthFactorKey?: string;
   user?: any;
 }
 
@@ -14,7 +15,7 @@ export const sliceCreator = (profilesApi) => {
     jwt:
       typeof window !== "undefined" ? localStorage.getItem("jwt") : undefined,
     isAuthenticated: false,
-    currentAuthFactor: "local",
+    nextAuthFactor: "local",
   };
 
   return createSlice({
@@ -24,9 +25,10 @@ export const sliceCreator = (profilesApi) => {
       logout: (state) => {
         localStorage.removeItem(`jwt`);
         state.id = null;
-        state.currentAuthFactor = "local";
+        state.nextAuthFactor = "local";
         state.jwt = undefined;
         state.isAuthenticated = false;
+        state.nextAuthFactorKey = "";
 
         return;
       },
@@ -88,7 +90,7 @@ export const selectors = {
 };
 
 function setUser(state, action) {
-  const { user, jwt, nextAuthFactor } = action.payload;
+  const { user, jwt, nextAuthFactor, nextAuthFactorKey } = action.payload;
 
   if (user) {
     state.user = user;
@@ -98,11 +100,13 @@ function setUser(state, action) {
   if (jwt) {
     state.isAuthenticated = true;
     state.jwt = jwt;
+    state.nextAuthFactorKey = "";
     localStorage.setItem("jwt", jwt);
     return;
   }
 
   if (nextAuthFactor) {
-    state.currentAuthFactor = nextAuthFactor;
+    state.nextAuthFactorKey = nextAuthFactorKey;
+    state.nextAuthFactor = nextAuthFactor;
   }
 }

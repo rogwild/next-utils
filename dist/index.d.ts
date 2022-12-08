@@ -283,7 +283,7 @@ declare const _default: {
             inputsErrors: {};
             setInputsErrors: import("react").Dispatch<import("react").SetStateAction<{}>>;
         };
-        useConfirmPhone: ({ profilesApi, inputsConfig, ping, }: {
+        useConfirmPhone: ({ profilesApi, inputsConfig, ping, useSelector, }: {
             profilesApi: any;
             inputsConfig?: ({
                 field: string;
@@ -301,6 +301,7 @@ declare const _default: {
                 type: string;
             })[];
             ping?: number;
+            useSelector: any;
         }) => {
             counter: number;
             resendPhoneConfirmation: () => void;

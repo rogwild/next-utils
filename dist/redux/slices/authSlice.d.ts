@@ -2,7 +2,8 @@ export interface IProfileState {
     id: string | undefined;
     jwt: string | undefined;
     isAuthenticated: boolean;
-    currentAuthFactor: "local" | "otp" | "email" | "phone";
+    nextAuthFactor: "local" | "otp" | "email" | "phone";
+    nextAuthFactorKey?: string;
     user?: any;
 }
 export declare const sliceCreator: (profilesApi: any) => import("@reduxjs/toolkit").Slice<import("immer/dist/internal").WritableDraft<IProfileState>, {

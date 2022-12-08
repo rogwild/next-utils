@@ -3124,8 +3124,13 @@ var useConfirmEmail = function useConfirmEmail(_ref) {
     isLoading = _profilesApi$useConfi3.isLoading;
   var submitFunc = function submitFunc(_ref2) {
     var inputs = _ref2.inputs;
+    var headers = {
+      "Next-Auth-Factor-Key": user.nextAuthFactorKey
+    };
+    console.log("\uD83D\uDE80 ~ submitFunc ~ headers", headers, user);
     confirmEmail({
-      data: inputs
+      data: inputs,
+      headers: headers
     });
   };
   var _profilesApi$useSendE = profilesApi.useSendEmailConfirmationMutation(),
@@ -3182,7 +3187,6 @@ var useConfirmEmail = function useConfirmEmail(_ref) {
     });
   };
   React.useEffect(function () {
-    console.log("\uD83D\uDE80 ~ useEffect ~ user", user);
     if (user) {
       if (user.email) {
         setInputsValues(_objectSpread$e(_objectSpread$e({}, inputsValues), {}, {
@@ -3241,7 +3245,12 @@ var useConfirmPhone = function useConfirmPhone(_ref) {
     _ref$inputsConfig = _ref.inputsConfig,
     inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$4 : _ref$inputsConfig,
     _ref$ping = _ref.ping,
-    ping = _ref$ping === void 0 ? 30 : _ref$ping;
+    ping = _ref$ping === void 0 ? 30 : _ref$ping,
+    useSelector = _ref.useSelector;
+  var user = useSelector(function (state) {
+    var _state$auth;
+    return (_state$auth = state.auth) === null || _state$auth === void 0 ? void 0 : _state$auth.user;
+  }); //?
   var _profilesApi$useConfi = profilesApi.useConfirmPhoneMutation(),
     _profilesApi$useConfi2 = _slicedToArray(_profilesApi$useConfi, 2),
     confirmEmail = _profilesApi$useConfi2[0],
@@ -3309,17 +3318,22 @@ var useConfirmPhone = function useConfirmPhone(_ref) {
     });
   };
   React.useEffect(function () {
+    if (user) {
+      if (user.phone) {
+        setInputsValues(_objectSpread$d(_objectSpread$d({}, inputsValues), {}, {
+          phone: user.phone
+        }));
+        return;
+      }
+    }
     if (typeof window !== "undefined") {
-      var _URLSearchParams, _URL, _window, _URLSearchParams2, _URL2, _window2;
-      var code = (_URLSearchParams = new URLSearchParams((_URL = new URL((_window = window) === null || _window === void 0 ? void 0 : _window.location)) === null || _URL === void 0 ? void 0 : _URL.search)) === null || _URLSearchParams === void 0 ? void 0 : _URLSearchParams.get("code");
-      var phone = (_URLSearchParams2 = new URLSearchParams((_URL2 = new URL((_window2 = window) === null || _window2 === void 0 ? void 0 : _window2.location)) === null || _URL2 === void 0 ? void 0 : _URL2.search)) === null || _URLSearchParams2 === void 0 ? void 0 : _URLSearchParams2.get("phone");
-      console.log("\uD83D\uDE80 ~ useEffect ~ phone", phone);
+      var _URLSearchParams, _URL, _window;
+      var phone = (_URLSearchParams = new URLSearchParams((_URL = new URL((_window = window) === null || _window === void 0 ? void 0 : _window.location)) === null || _URL === void 0 ? void 0 : _URL.search)) === null || _URLSearchParams === void 0 ? void 0 : _URLSearchParams.get("phone");
       setInputsValues(_objectSpread$d(_objectSpread$d({}, inputsValues), {}, {
-        code: code,
         phone: phone
       }));
     }
-  }, []);
+  }, [user]);
   return {
     counter: counter,
     resendPhoneConfirmation: resendPhoneConfirmation,
@@ -3357,7 +3371,7 @@ var sliceCreator = function (profilesApi) {
         id: null,
         jwt: typeof window !== "undefined" ? localStorage.getItem("jwt") : undefined,
         isAuthenticated: false,
-        currentAuthFactor: "local",
+        nextAuthFactor: "local",
     };
     return toolkit.createSlice({
         name: "auth",
@@ -3366,9 +3380,10 @@ var sliceCreator = function (profilesApi) {
             logout: function (state) {
                 localStorage.removeItem("jwt");
                 state.id = null;
-                state.currentAuthFactor = "local";
+                state.nextAuthFactor = "local";
                 state.jwt = undefined;
                 state.isAuthenticated = false;
+                state.nextAuthFactorKey = "";
                 return;
             },
         },
@@ -3405,7 +3420,7 @@ var selectors = {
     selectJwt: function (state) { return state.auth.jwt; },
 };
 function setUser(state, action) {
-    var _a = action.payload, user = _a.user, jwt = _a.jwt, nextAuthFactor = _a.nextAuthFactor;
+    var _a = action.payload, user = _a.user, jwt = _a.jwt, nextAuthFactor = _a.nextAuthFactor, nextAuthFactorKey = _a.nextAuthFactorKey;
     if (user) {
         state.user = user;
         state.id = user.id;
@@ -3413,11 +3428,13 @@ function setUser(state, action) {
     if (jwt) {
         state.isAuthenticated = true;
         state.jwt = jwt;
+        state.nextAuthFactorKey = "";
         localStorage.setItem("jwt", jwt);
         return;
     }
     if (nextAuthFactor) {
-        state.currentAuthFactor = nextAuthFactor;
+        state.nextAuthFactorKey = nextAuthFactorKey;
+        state.nextAuthFactor = nextAuthFactor;
     }
 }
 
@@ -3935,7 +3952,8 @@ function createProfilesApi(backendServiceApi) {
         }),
         confirmEmail: build.mutation({
           query: function query(_ref) {
-            var data = _ref.data;
+            var data = _ref.data,
+              headers = _ref.headers;
             var stringifiedParams = qs__default["default"].stringify(data);
             // console.log(
             //   `🚀 ~ createProfilesApi ~ stringifiedParams`,
@@ -3943,7 +3961,9 @@ function createProfilesApi(backendServiceApi) {
             // );
 
             return {
-              url: "auth/email-confirmation?".concat(stringifiedParams)
+              url: "auth/email-confirmation?".concat(stringifiedParams),
+              mode: "cors",
+              headers: _objectSpread$9({}, headers)
             };
           },
           transformResponse: transformResponseItem
