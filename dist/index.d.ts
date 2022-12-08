@@ -22,6 +22,7 @@ declare const _default: {
             inputsErrors: {};
             inputsSetErrors: import("react").Dispatch<import("react").SetStateAction<{}>>;
             error: any;
+            inputsValues: {};
             onSubmit: (e: any, submitProps?: {}) => any;
             isLoading: any;
             isSuccess: any;
@@ -39,6 +40,7 @@ declare const _default: {
             authSlice: any;
         }) => {
             inputs: {};
+            inputsValues: {};
             onSubmit: (e: any, submitProps?: {}) => any;
             error: any;
             isSuccess: any;
@@ -61,6 +63,9 @@ declare const _default: {
             isLoading: any;
             data: any;
             isSuccess: any;
+            inputsValues: {};
+            setErrors: import("react").Dispatch<import("react").SetStateAction<{}>>;
+            setInputsValues: import("react").Dispatch<import("react").SetStateAction<{}>>;
             inputs: {};
             onSubmit: (e: any, submitProps?: {}) => any;
             setPassed: any;
@@ -99,6 +104,7 @@ declare const _default: {
             })[];
         }) => {
             inputs: {};
+            inputsValues: {};
             onSubmit: (e: any, submitProps?: {}) => any;
             changeBlockedInputs: (inputs: any) => void;
             clearInputs: () => void;
@@ -165,6 +171,7 @@ declare const _default: {
         }) => {
             data: any;
             inputs: {};
+            inputsValues: {};
             onSubmit: (e: any, submitProps?: {}) => any;
             isSuccess: any;
             isLoading: any;
@@ -212,6 +219,7 @@ declare const _default: {
             data: any;
             isLoading: any;
             error: any;
+            inputsValues: {};
             inputs: {};
             onSubmit: (e: any, submitProps?: {}) => any;
             isSuccess: any;
@@ -230,6 +238,7 @@ declare const _default: {
         }) => {
             inputs: {};
             inputsErrors: {};
+            inputsValues: {};
             inputsSetErrors: import("react").Dispatch<import("react").SetStateAction<{}>>;
             error: any;
             onSubmit: (e: any, submitProps?: {}) => any;
@@ -237,7 +246,7 @@ declare const _default: {
             isSuccess: any;
             data: any;
         };
-        useConfirmEmail: ({ profilesApi, inputsConfig, ping, }: {
+        useConfirmEmail: ({ profilesApi, inputsConfig, ping, initialPing, }: {
             profilesApi: any;
             inputsConfig?: ({
                 field: string;
@@ -255,6 +264,7 @@ declare const _default: {
                 type: string;
             })[];
             ping?: number;
+            initialPing?: number;
         }) => {
             counter: number;
             resendEmailConfirmation: () => void;
@@ -264,6 +274,7 @@ declare const _default: {
             resendEmailConfirmationData: any;
             data: any;
             isLoading: any;
+            inputsValues: {};
             error: any;
             inputs: {};
             onSubmit: (e: any, submitProps?: {}) => any;
@@ -305,7 +316,7 @@ declare const _default: {
             inputsErrors: {};
             setInputsErrors: import("react").Dispatch<import("react").SetStateAction<{}>>;
         };
-        useUpdateMe: ({ profilesApi, inputsConfig }: {
+        useUpdateMe: ({ profilesApi, inputsConfig, useSelector, }: {
             profilesApi: any;
             inputsConfig?: {
                 field: string;
@@ -314,9 +325,11 @@ declare const _default: {
                 placeholder: string;
                 label: string;
             }[];
+            useSelector: any;
         }) => {
             data: any;
             isLoading: any;
+            inputsValues: {};
             error: any;
             inputs: {};
             onSubmit: (e: any, submitProps?: {}) => any;
@@ -327,6 +340,78 @@ declare const _default: {
         useMyProfileCreator: ({ profilesApi, populate, useSelector, }: import("./hooks/use-auth/use-my-profile-creator").IUseMyProfile) => {
             me: any;
             refetch: () => void;
+        };
+        useSetOtp: ({ profilesApi, inputsConfig, useSelector, }: {
+            profilesApi: any;
+            inputsConfig?: {
+                title: string;
+                field: string;
+                checkerFuncs: string[];
+                label: string;
+                placeholder: string;
+                type: string;
+            }[];
+            useSelector: any;
+        }) => {
+            generateOtpSecretData: any;
+            generateOtpSecretIsLoading: any;
+            generateOtpSecretIsSuccess: any;
+            data: any;
+            inputsValues: {};
+            isLoading: any;
+            setInputsValues: import("react").Dispatch<import("react").SetStateAction<{}>>;
+            error: any;
+            inputs: {};
+            onSubmit: (e: any, submitProps?: {}) => any;
+            isSuccess: any;
+            inputsErrors: {};
+            setInputsErrors: import("react").Dispatch<import("react").SetStateAction<{}>>;
+        };
+        useDeleteOtp: ({ profilesApi, inputsConfig, useSelector, }: {
+            profilesApi: any;
+            inputsConfig?: {
+                title: string;
+                field: string;
+                checkerFuncs: string[];
+                label: string;
+                placeholder: string;
+                type: string;
+            }[];
+            useSelector: any;
+        }) => {
+            data: any;
+            isLoading: any;
+            setInputsValues: import("react").Dispatch<import("react").SetStateAction<{}>>;
+            inputsValues: {};
+            error: any;
+            inputs: {};
+            onSubmit: (e: any, submitProps?: {}) => any;
+            isSuccess: any;
+            inputsErrors: {};
+            setInputsErrors: import("react").Dispatch<import("react").SetStateAction<{}>>;
+        };
+        useCheckOtp: ({ profilesApi, inputsConfig, useSelector, }: {
+            profilesApi: any;
+            inputsConfig?: {
+                title: string;
+                field: string;
+                checkerFuncs: string[];
+                label: string;
+                placeholder: string;
+                type: string;
+            }[];
+            useSelector: any;
+        }) => {
+            data: any;
+            isLoading: any;
+            inputsValues: {};
+            setInputsValues: import("react").Dispatch<import("react").SetStateAction<{}>>;
+            error: any;
+            inputs: {};
+            onSubmit: (e: any, submitProps?: {}) => any;
+            isSuccess: any;
+            inputsErrors: {};
+            setInputsErrors: import("react").Dispatch<import("react").SetStateAction<{}>>;
         };
         useDetectMouseover: (el: any, initialState: any) => any[];
         useDetectOutsideClick: (trigger: any, initialState: any) => any[];

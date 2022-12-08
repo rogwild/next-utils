@@ -666,8 +666,8 @@ function _defineProperty(obj, key, value) {
   return obj;
 }
 
-function ownKeys$i(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread$i(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$i(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$i(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function ownKeys$k(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$k(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$k(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$k(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 /**
  * Filter function by text content
@@ -780,7 +780,7 @@ var useLookupTable = function useLookupTable(_ref) {
     return state;
   }, [sortBy, filters, localSelectedRowIds]);
   var filterTypes = React.useMemo(function () {
-    return _objectSpread$i(_objectSpread$i({}, baseFilters), config.filterTypes);
+    return _objectSpread$k(_objectSpread$k({}, baseFilters), config.filterTypes);
   }, []);
   React.useEffect(function () {
     if (data.length && config.selectedRowIds) {
@@ -999,7 +999,7 @@ var returnDoc = createArgDocumentation({
 ({
   component: useLookupTable,
   title: "Hooks/useLookupTable",
-  argTypes: _objectSpread$i(_objectSpread$i(_objectSpread$i(_objectSpread$i({}, columnsDoc), dataDoc), configDoc), returnDoc),
+  argTypes: _objectSpread$k(_objectSpread$k(_objectSpread$k(_objectSpread$k({}, columnsDoc), dataDoc), configDoc), returnDoc),
   parameters: {
     docs: {
       description: {
@@ -1630,14 +1630,14 @@ var shortByFull = (_shortByFull = {
 //   }
 // });
 
-function ownKeys$h(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread$h(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$h(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$h(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function ownKeys$j(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$j(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$j(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$j(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 var useStyleRewriter$6 = function useStyleRewriter(baseClassName, className) {
   var cleared = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
   return React.useMemo(function () {
     var styleObj = getStyleObj("@base ".concat(baseClassName), cleared);
     var styleObjProps = getStyleObj("@prop ".concat(className), cleared);
-    var computedStyleObj = _objectSpread$h(_objectSpread$h({}, styleObj), styleObjProps);
+    var computedStyleObj = _objectSpread$j(_objectSpread$j({}, styleObj), styleObjProps);
     var resultClassName = Object.values(computedStyleObj).join(" ").replace(/\n/g, "");
     return resultClassName.replace(/\s+/g, " ");
   }, [baseClassName, className]);
@@ -1844,8 +1844,8 @@ function _toConsumableArray(arr) {
 function _createForOfIteratorHelper$2(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray$2(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 function _unsupportedIterableToArray$2(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray$2(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$2(o, minLen); }
 function _arrayLikeToArray$2(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-function ownKeys$g(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread$g(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$g(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$g(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function ownKeys$i(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$i(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$i(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$i(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 var changeInput = function changeInput(e, _ref) {
   var inputs = _ref.inputs,
     errors = _ref.errors,
@@ -1854,9 +1854,9 @@ var changeInput = function changeInput(e, _ref) {
     setErrors = _ref$setErrors === void 0 ? function () {} : _ref$setErrors,
     setInputs = _ref.setInputs,
     setFiles = _ref.setFiles;
-  var localInputs = _objectSpread$g({}, inputs);
-  var localErrors = _objectSpread$g({}, errors);
-  var localFiles = _objectSpread$g({}, files);
+  var localInputs = _objectSpread$i({}, inputs);
+  var localErrors = _objectSpread$i({}, errors);
+  var localFiles = _objectSpread$i({}, files);
   localErrors[e.target.id] = [];
   if (!e.target.files) {
     if (!Object.keys(files).includes(e.target.id)) {
@@ -1866,7 +1866,7 @@ var changeInput = function changeInput(e, _ref) {
       localInputs[e.target.id] = e.target.value;
       if (e.target.multiple) {
         if (localFiles && Array.isArray(localFiles[e.target.id]) && Array.isArray(localInputs[e.target.id])) {
-          localFiles = _objectSpread$g(_objectSpread$g({}, localFiles), {}, _defineProperty({}, e.target.id, _toConsumableArray(localInputs[e.target.id])));
+          localFiles = _objectSpread$i(_objectSpread$i({}, localFiles), {}, _defineProperty({}, e.target.id, _toConsumableArray(localInputs[e.target.id])));
         }
       } else {
         // Deleted not multiple file
@@ -1874,7 +1874,7 @@ var changeInput = function changeInput(e, _ref) {
       }
     }
   } else {
-    var loadedFiles = _objectSpread$g({}, e.target.files);
+    var loadedFiles = _objectSpread$i({}, e.target.files);
     var _iterator = _createForOfIteratorHelper$2(new Array(e.target.files.length).entries()),
       _step;
     try {
@@ -1883,12 +1883,12 @@ var changeInput = function changeInput(e, _ref) {
           index = _step$value[0];
         if (e.target.multiple) {
           if (localFiles && Array.isArray(localFiles[e.target.id]) && Array.isArray(localInputs[e.target.id])) {
-            localFiles = _objectSpread$g(_objectSpread$g({}, localFiles), {}, _defineProperty({}, e.target.id, [].concat(_toConsumableArray(localFiles[e.target.id]), [loadedFiles[index]])));
+            localFiles = _objectSpread$i(_objectSpread$i({}, localFiles), {}, _defineProperty({}, e.target.id, [].concat(_toConsumableArray(localFiles[e.target.id]), [loadedFiles[index]])));
           } else {
-            localFiles = _objectSpread$g(_objectSpread$g({}, localFiles), {}, _defineProperty({}, e.target.id, [loadedFiles[index]]));
+            localFiles = _objectSpread$i(_objectSpread$i({}, localFiles), {}, _defineProperty({}, e.target.id, [loadedFiles[index]]));
           }
         } else {
-          localFiles = _objectSpread$g(_objectSpread$g({}, localFiles), {}, _defineProperty({}, e.target.id, loadedFiles[index]));
+          localFiles = _objectSpread$i(_objectSpread$i({}, localFiles), {}, _defineProperty({}, e.target.id, loadedFiles[index]));
         }
       }
     } catch (err) {
@@ -1900,9 +1900,9 @@ var changeInput = function changeInput(e, _ref) {
   if (e.target.type == "checkbox") {
     localInputs[e.target.id] = e.target.checked;
   }
-  setFiles(_objectSpread$g({}, localFiles));
-  setInputs(_objectSpread$g({}, localInputs));
-  setErrors(_objectSpread$g({}, localErrors));
+  setFiles(_objectSpread$i({}, localFiles));
+  setInputs(_objectSpread$i({}, localInputs));
+  setErrors(_objectSpread$i({}, localErrors));
 };
 var checkUsernameMask = function checkUsernameMask(_ref2) {
   var field = _ref2.field,
@@ -2005,7 +2005,7 @@ var checkFields = function checkFields(_ref8) {
     inputsConfig = _ref8.inputsConfig,
     inputs = _ref8.inputs,
     files = _ref8.files;
-  var localErrors = _objectSpread$g({}, errors);
+  var localErrors = _objectSpread$i({}, errors);
   inputsConfig.forEach(function (_ref9) {
     var field = _ref9.field,
       checkerFuncs = _ref9.checkerFuncs,
@@ -2063,7 +2063,7 @@ var checkFields = function checkFields(_ref8) {
       if (((_Object$values = Object.values(value)) === null || _Object$values === void 0 ? void 0 : (_Object$values$filter = _Object$values.filter(function (m) {
         return typeof m === "string";
       })) === null || _Object$values$filter === void 0 ? void 0 : _Object$values$filter.length) > 0) {
-        hasErrors.push(_objectSpread$g({}, value));
+        hasErrors.push(_objectSpread$i({}, value));
       }
     }
   }
@@ -2094,7 +2094,7 @@ var changeTypeFunc = function changeTypeFunc(_ref11) {
     field = _ref11.field;
   var type = types[field];
   if (types[field]) {
-    var localTypes = _objectSpread$g({}, types);
+    var localTypes = _objectSpread$i({}, types);
     if (type === "password") {
       localTypes[field] = "text";
     } else if (type === "text") {
@@ -2107,7 +2107,7 @@ var changeBlockedInputsFunc = function changeBlockedInputsFunc(_ref12) {
   var setBlockedInputs = _ref12.setBlockedInputs,
     blockedInputs = _ref12.blockedInputs,
     newBlockedInputs = _ref12.newBlockedInputs;
-  setBlockedInputs(_objectSpread$g(_objectSpread$g({}, blockedInputs), newBlockedInputs));
+  setBlockedInputs(_objectSpread$i(_objectSpread$i({}, blockedInputs), newBlockedInputs));
 };
 
 var checkIsServer = function () { return typeof window === "undefined"; };
@@ -2204,8 +2204,8 @@ var _excluded$8 = ["field", "blocked", "placeholder", "title", "label", "config"
 function _createForOfIteratorHelper$1(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray$1(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 function _unsupportedIterableToArray$1(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray$1(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$1(o, minLen); }
 function _arrayLikeToArray$1(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-function ownKeys$f(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread$f(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$f(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$f(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function ownKeys$h(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$h(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$h(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$h(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 var useForm = function useForm(_ref) {
   var inputsConfig = _ref.inputsConfig,
     _ref$submitFunc = _ref.submitFunc,
@@ -2289,7 +2289,7 @@ var useForm = function useForm(_ref) {
   };
   var onSubmitFunc = React.useCallback(function (e) {
     var submitProps = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-    return onSubmit(e, _objectSpread$f({
+    return onSubmit(e, _objectSpread$h({
       inputsConfig: inputsConfig,
       inputs: inputs,
       errors: errors,
@@ -2347,7 +2347,7 @@ var useForm = function useForm(_ref) {
         PairComponent = _ref4.PairComponent,
         params = _objectWithoutProperties(_ref4, _excluded$8);
       if (defaultType !== "hidden") {
-        var prop = _objectSpread$f({
+        var prop = _objectSpread$h({
           id: field,
           error: errors[field],
           changeType: changeType,
@@ -2482,8 +2482,8 @@ var selectFilesForDelete = function selectFilesForDelete(_ref5) {
   }
 };
 
-function ownKeys$e(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread$e(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$e(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$e(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function ownKeys$g(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$g(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$g(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$g(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 function useChildForm(_ref) {
   var inputsConfig = _ref.inputsConfig,
     _ref$setParentErrors = _ref.setParentErrors,
@@ -2516,12 +2516,12 @@ function useChildForm(_ref) {
 
   React.useEffect(function () {
     setSubmitPipe(function (prev) {
-      return _objectSpread$e(_objectSpread$e({}, prev), {}, _defineProperty({}, submitId, onSubmit));
+      return _objectSpread$g(_objectSpread$g({}, prev), {}, _defineProperty({}, submitId, onSubmit));
     });
   }, [onSubmit]);
   var onDelete = function onDelete() {
     setSubmitPipe(function (prev) {
-      var newSubmitPipes = _objectSpread$e({}, prev);
+      var newSubmitPipes = _objectSpread$g({}, prev);
       delete newSubmitPipes[submitId];
       return newSubmitPipes;
     });
@@ -2596,7 +2596,7 @@ var useDebounce = function (value, delay) {
 var useSendEmailConfirmation = function useSendEmailConfirmation(_ref) {
   var profilesApi = _ref.profilesApi,
     _ref$inputsConfig = _ref.inputsConfig,
-    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$9 : _ref$inputsConfig;
+    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$c : _ref$inputsConfig;
   var _profilesApi$useSendE = profilesApi.useSendEmailConfirmationMutation(),
     _profilesApi$useSendE2 = _slicedToArray(_profilesApi$useSendE, 2),
     sendEmailConfirmation = _profilesApi$useSendE2[0],
@@ -2621,6 +2621,7 @@ var useSendEmailConfirmation = function useSendEmailConfirmation(_ref) {
     }),
     inputs = _useForm.inputs,
     inputsErrors = _useForm.errors,
+    inputsValues = _useForm.inputsValues,
     onSubmit = _useForm.onSubmit,
     inputsSetErrors = _useForm.setErrors;
   return {
@@ -2628,13 +2629,14 @@ var useSendEmailConfirmation = function useSendEmailConfirmation(_ref) {
     inputsErrors: inputsErrors,
     inputsSetErrors: inputsSetErrors,
     error: error,
+    inputsValues: inputsValues,
     onSubmit: onSubmit,
     isLoading: isLoading,
     isSuccess: isSuccess,
     data: data
   };
 };
-var defaultInputsConfig$9 = [{
+var defaultInputsConfig$c = [{
   label: "Email",
   field: "email",
   checkerFuncs: ["checkRequiredField", "checkEmailMask"],
@@ -2646,7 +2648,7 @@ var defaultInputsConfig$9 = [{
 var useForgotPassword = function useForgotPassword(_ref) {
   var profilesApi = _ref.profilesApi,
     _ref$inputsConfig = _ref.inputsConfig,
-    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$8 : _ref$inputsConfig,
+    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$b : _ref$inputsConfig,
     authSlice = _ref.authSlice,
     useDispatch = _ref.useDispatch;
   var dispatch = useDispatch();
@@ -2677,18 +2679,24 @@ var useForgotPassword = function useForgotPassword(_ref) {
       inputPropsType: "object"
     }),
     inputs = _useForm.inputs,
+    inputsValues = _useForm.inputsValues,
+    setInputsValues = _useForm.setInputsValues,
+    setErrors = _useForm.setErrors,
     onSubmit = _useForm.onSubmit,
     setPassed = _useForm.setPassed;
   return {
     isLoading: isLoading,
     data: data,
     isSuccess: isSuccess,
+    inputsValues: inputsValues,
+    setErrors: setErrors,
+    setInputsValues: setInputsValues,
     inputs: inputs,
     onSubmit: onSubmit,
     setPassed: setPassed
   };
 };
-var defaultInputsConfig$8 = [{
+var defaultInputsConfig$b = [{
   title: "Email address*",
   label: "Email address",
   field: "email",
@@ -2697,12 +2705,12 @@ var defaultInputsConfig$8 = [{
   placeholder: "Type your email"
 }];
 
-function ownKeys$d(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread$d(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$d(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$d(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function ownKeys$f(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$f(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$f(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$f(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 var useLogin = function useLogin(_ref) {
   var profilesApi = _ref.profilesApi,
     _ref$inputsConfig = _ref.inputsConfig,
-    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$7 : _ref$inputsConfig;
+    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$a : _ref$inputsConfig;
   var _profilesApi$useLogin = profilesApi.useLoginWithEmailAndPasswordMutation(),
     _profilesApi$useLogin2 = _slicedToArray(_profilesApi$useLogin, 2),
     loginWithEmailAndPassword = _profilesApi$useLogin2[0],
@@ -2718,8 +2726,7 @@ var useLogin = function useLogin(_ref) {
   var submitFunc = function submitFunc(_ref2) {
     var inputs = _ref2.inputs;
     loginWithEmailAndPassword({
-      identifier: inputs.email,
-      password: inputs.password
+      data: inputs
     });
   };
   var _useForm = useForm({
@@ -2730,13 +2737,14 @@ var useLogin = function useLogin(_ref) {
     inputs = _useForm.inputs,
     setErrors = _useForm.setErrors,
     onSubmit = _useForm.onSubmit,
+    inputsValues = _useForm.inputsValues,
     changeBlockedInputs = _useForm.changeBlockedInputs,
     clearInputs = _useForm.clearInputs;
   React.useEffect(function () {
     if (error) {
       setErrors(function (prev) {
         var _error$data;
-        var newErrors = _objectSpread$d({}, prev);
+        var newErrors = _objectSpread$f({}, prev);
         if ((_error$data = error.data) !== null && _error$data !== void 0 && _error$data.error) {
           newErrors.email = {
             id: error.data.error.name,
@@ -2753,6 +2761,7 @@ var useLogin = function useLogin(_ref) {
   }, [error, setErrors]);
   return {
     inputs: inputs,
+    inputsValues: inputsValues,
     onSubmit: onSubmit,
     changeBlockedInputs: changeBlockedInputs,
     clearInputs: clearInputs,
@@ -2763,8 +2772,8 @@ var useLogin = function useLogin(_ref) {
     isFetching: isFetching
   };
 };
-var defaultInputsConfig$7 = [{
-  field: "email",
+var defaultInputsConfig$a = [{
+  field: "identifier",
   checkerFuncs: ["checkRequiredField"],
   type: "text",
   placeholder: "Type your email",
@@ -2790,7 +2799,7 @@ var defaultInputsConfig$7 = [{
 var useRegister = function useRegister(_ref) {
   var profilesApi = _ref.profilesApi,
     _ref$inputsConfig = _ref.inputsConfig,
-    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$6 : _ref$inputsConfig;
+    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$9 : _ref$inputsConfig;
   var _profilesApi$useRegis = profilesApi.useRegisterMutation(),
     _profilesApi$useRegis2 = _slicedToArray(_profilesApi$useRegis, 2),
     register = _profilesApi$useRegis2[0],
@@ -2821,11 +2830,13 @@ var useRegister = function useRegister(_ref) {
     inputs = _useForm.inputs,
     inputsSetErrors = _useForm.setErrors,
     inputsErrors = _useForm.errors,
+    inputsValues = _useForm.inputsValues,
     onSubmit = _useForm.onSubmit,
     setPassed = _useForm.setPassed;
   return {
     data: data,
     inputs: inputs,
+    inputsValues: inputsValues,
     onSubmit: onSubmit,
     isSuccess: isSuccess,
     isLoading: isLoading,
@@ -2835,7 +2846,7 @@ var useRegister = function useRegister(_ref) {
     inputsSetErrors: inputsSetErrors
   };
 };
-var defaultInputsConfig$6 = [{
+var defaultInputsConfig$9 = [{
   label: "Username",
   field: "username",
   checkerFuncs: ["checkRequiredField"],
@@ -2875,12 +2886,12 @@ var defaultInputsConfig$6 = [{
   defaultValue: false
 }];
 
-function ownKeys$c(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread$c(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$c(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$c(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function ownKeys$e(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$e(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$e(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$e(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 var useResetPassword = function useResetPassword(_ref) {
   var profilesApi = _ref.profilesApi,
     _ref$inputsConfig = _ref.inputsConfig,
-    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$5 : _ref$inputsConfig,
+    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$8 : _ref$inputsConfig,
     authSlice = _ref.authSlice,
     useDispatch = _ref.useDispatch;
   var dispatch = useDispatch();
@@ -2921,7 +2932,7 @@ var useResetPassword = function useResetPassword(_ref) {
     if (typeof window !== "undefined") {
       var _URLSearchParams, _URL, _window;
       var code = (_URLSearchParams = new URLSearchParams((_URL = new URL((_window = window) === null || _window === void 0 ? void 0 : _window.location)) === null || _URL === void 0 ? void 0 : _URL.search)) === null || _URLSearchParams === void 0 ? void 0 : _URLSearchParams.get("code");
-      setInputsValues(_objectSpread$c(_objectSpread$c({}, inputsValues), {}, {
+      setInputsValues(_objectSpread$e(_objectSpread$e({}, inputsValues), {}, {
         code: code
       }));
     }
@@ -2930,6 +2941,7 @@ var useResetPassword = function useResetPassword(_ref) {
     data: data,
     isLoading: isLoading,
     error: error,
+    inputsValues: inputsValues,
     inputs: inputs,
     onSubmit: onSubmit,
     isSuccess: isSuccess,
@@ -2937,7 +2949,7 @@ var useResetPassword = function useResetPassword(_ref) {
     setInputsErrors: setInputsErrors
   };
 };
-var defaultInputsConfig$5 = [{
+var defaultInputsConfig$8 = [{
   label: "New Password",
   field: "password",
   checkerFuncs: ["checkRequiredField", "checkPassword"],
@@ -2948,7 +2960,7 @@ var defaultInputsConfig$5 = [{
   placeholder: "Type your new password"
 }, {
   label: "Repeat New Password",
-  field: "confirm_password",
+  field: "passwordConfirmation",
   checkerFuncs: ["checkRequiredField", "checkEqualTo"],
   config: {
     equalTo: "password",
@@ -2966,7 +2978,7 @@ var defaultInputsConfig$5 = [{
 var usePhoneConfirmation = function usePhoneConfirmation(_ref) {
   var profilesApi = _ref.profilesApi,
     _ref$inputsConfig = _ref.inputsConfig,
-    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$4 : _ref$inputsConfig,
+    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$7 : _ref$inputsConfig,
     authSlice = _ref.authSlice;
   var auth = reactRedux.useSelector(authSlice.selectors.auth);
   var _useState = React.useState(),
@@ -3013,12 +3025,14 @@ var usePhoneConfirmation = function usePhoneConfirmation(_ref) {
       submitFunc: submitFunc,
       inputPropsType: "object"
     }),
+    inputsValues = _useForm.inputsValues,
     inputs = _useForm.inputs,
     onSubmit = _useForm.onSubmit,
     inputsErrors = _useForm.inputs,
     inputsSetErrors = _useForm.setErrors;
   return {
     inputs: inputs,
+    inputsValues: inputsValues,
     onSubmit: onSubmit,
     error: error,
     isSuccess: isSuccess,
@@ -3026,7 +3040,7 @@ var usePhoneConfirmation = function usePhoneConfirmation(_ref) {
     inputsSetErrors: inputsSetErrors
   };
 };
-var defaultInputsConfig$4 = [{
+var defaultInputsConfig$7 = [{
   label: "Verification code",
   field: "confirmation",
   type: "otp",
@@ -3037,7 +3051,7 @@ var defaultInputsConfig$4 = [{
 var useSendPhoneConfirmation = function useSendPhoneConfirmation(_ref) {
   var profilesApi = _ref.profilesApi,
     _ref$inputsConfig = _ref.inputsConfig,
-    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$3 : _ref$inputsConfig;
+    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$6 : _ref$inputsConfig;
   var _profilesApi$useSendP = profilesApi.useSendPhoneConfirmationMutation(),
     _profilesApi$useSendP2 = _slicedToArray(_profilesApi$useSendP, 2),
     sendPhoneConfirmation = _profilesApi$useSendP2[0],
@@ -3062,11 +3076,13 @@ var useSendPhoneConfirmation = function useSendPhoneConfirmation(_ref) {
     }),
     inputs = _useForm.inputs,
     inputsErrors = _useForm.errors,
+    inputsValues = _useForm.inputsValues,
     onSubmit = _useForm.onSubmit,
     inputsSetErrors = _useForm.setErrors;
   return {
     inputs: inputs,
     inputsErrors: inputsErrors,
+    inputsValues: inputsValues,
     inputsSetErrors: inputsSetErrors,
     error: error,
     onSubmit: onSubmit,
@@ -3075,7 +3091,7 @@ var useSendPhoneConfirmation = function useSendPhoneConfirmation(_ref) {
     data: data
   };
 };
-var defaultInputsConfig$3 = [{
+var defaultInputsConfig$6 = [{
   label: "Phone",
   field: "phone",
   checkerFuncs: ["checkRequiredField"],
@@ -3083,14 +3099,16 @@ var defaultInputsConfig$3 = [{
   placeholder: "Type your phone"
 }];
 
-function ownKeys$b(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread$b(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$b(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$b(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function ownKeys$d(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$d(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$d(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$d(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 var useConfirmEmail = function useConfirmEmail(_ref) {
   var profilesApi = _ref.profilesApi,
     _ref$inputsConfig = _ref.inputsConfig,
-    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$2 : _ref$inputsConfig,
+    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$5 : _ref$inputsConfig,
     _ref$ping = _ref.ping,
-    ping = _ref$ping === void 0 ? 30 : _ref$ping;
+    ping = _ref$ping === void 0 ? 30 : _ref$ping,
+    _ref$initialPing = _ref.initialPing,
+    initialPing = _ref$initialPing === void 0 ? 0 : _ref$initialPing;
   var _profilesApi$useConfi = profilesApi.useConfirmEmailMutation(),
     _profilesApi$useConfi2 = _slicedToArray(_profilesApi$useConfi, 2),
     confirmEmail = _profilesApi$useConfi2[0],
@@ -3113,7 +3131,7 @@ var useConfirmEmail = function useConfirmEmail(_ref) {
     resendEmailConfirmationIsLoading = _profilesApi$useSendE3.isLoading,
     resendEmailConfirmationIsSuccess = _profilesApi$useSendE3.isSuccess,
     resendEmailConfirmationData = _profilesApi$useSendE3.data;
-  var _useState = React.useState(ping),
+  var _useState = React.useState(initialPing),
     counter = _useState[0],
     setCounter = _useState[1];
   React.useEffect(function () {
@@ -3142,7 +3160,7 @@ var useConfirmEmail = function useConfirmEmail(_ref) {
     if (!inputsValues.email) {
       console.error("Pass email for resending code");
       setInputsErrors(function (prev) {
-        var newErrors = _objectSpread$b({}, prev);
+        var newErrors = _objectSpread$d({}, prev);
         newErrors.email = {
           id: "ValidationError",
           message: "Empty email address"
@@ -3151,6 +3169,7 @@ var useConfirmEmail = function useConfirmEmail(_ref) {
       });
       return;
     }
+    setCounter(ping);
     sendEmailConfirmation({
       data: {
         email: inputsValues.email
@@ -3162,7 +3181,7 @@ var useConfirmEmail = function useConfirmEmail(_ref) {
       var _URLSearchParams, _URL, _window, _URLSearchParams2, _URL2, _window2;
       var code = (_URLSearchParams = new URLSearchParams((_URL = new URL((_window = window) === null || _window === void 0 ? void 0 : _window.location)) === null || _URL === void 0 ? void 0 : _URL.search)) === null || _URLSearchParams === void 0 ? void 0 : _URLSearchParams.get("code");
       var email = (_URLSearchParams2 = new URLSearchParams((_URL2 = new URL((_window2 = window) === null || _window2 === void 0 ? void 0 : _window2.location)) === null || _URL2 === void 0 ? void 0 : _URL2.search)) === null || _URLSearchParams2 === void 0 ? void 0 : _URLSearchParams2.get("email");
-      setInputsValues(_objectSpread$b(_objectSpread$b({}, inputsValues), {}, {
+      setInputsValues(_objectSpread$d(_objectSpread$d({}, inputsValues), {}, {
         code: code,
         email: email
       }));
@@ -3177,6 +3196,7 @@ var useConfirmEmail = function useConfirmEmail(_ref) {
     resendEmailConfirmationData: resendEmailConfirmationData,
     data: data,
     isLoading: isLoading,
+    inputsValues: inputsValues,
     error: error,
     inputs: inputs,
     onSubmit: onSubmit,
@@ -3185,7 +3205,7 @@ var useConfirmEmail = function useConfirmEmail(_ref) {
     setInputsErrors: setInputsErrors
   };
 };
-var defaultInputsConfig$2 = [{
+var defaultInputsConfig$5 = [{
   field: "email",
   checkerFuncs: ["checkRequiredField"],
   type: "text",
@@ -3200,12 +3220,12 @@ var defaultInputsConfig$2 = [{
   type: "text"
 }];
 
-function ownKeys$a(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread$a(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$a(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$a(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function ownKeys$c(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$c(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$c(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$c(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 var useConfirmPhone = function useConfirmPhone(_ref) {
   var profilesApi = _ref.profilesApi,
     _ref$inputsConfig = _ref.inputsConfig,
-    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$1 : _ref$inputsConfig,
+    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$4 : _ref$inputsConfig,
     _ref$ping = _ref.ping,
     ping = _ref$ping === void 0 ? 30 : _ref$ping;
   var _profilesApi$useConfi = profilesApi.useConfirmPhoneMutation(),
@@ -3259,7 +3279,7 @@ var useConfirmPhone = function useConfirmPhone(_ref) {
     if (!inputsValues.phone) {
       console.error("Pass phone for resending code");
       setInputsErrors(function (prev) {
-        var newErrors = _objectSpread$a({}, prev);
+        var newErrors = _objectSpread$c({}, prev);
         newErrors.phone = {
           id: "ValidationError",
           message: "Empty phone address"
@@ -3280,7 +3300,7 @@ var useConfirmPhone = function useConfirmPhone(_ref) {
       var code = (_URLSearchParams = new URLSearchParams((_URL = new URL((_window = window) === null || _window === void 0 ? void 0 : _window.location)) === null || _URL === void 0 ? void 0 : _URL.search)) === null || _URLSearchParams === void 0 ? void 0 : _URLSearchParams.get("code");
       var phone = (_URLSearchParams2 = new URLSearchParams((_URL2 = new URL((_window2 = window) === null || _window2 === void 0 ? void 0 : _window2.location)) === null || _URL2 === void 0 ? void 0 : _URL2.search)) === null || _URLSearchParams2 === void 0 ? void 0 : _URLSearchParams2.get("phone");
       console.log("\uD83D\uDE80 ~ useEffect ~ phone", phone);
-      setInputsValues(_objectSpread$a(_objectSpread$a({}, inputsValues), {}, {
+      setInputsValues(_objectSpread$c(_objectSpread$c({}, inputsValues), {}, {
         code: code,
         phone: phone
       }));
@@ -3303,7 +3323,7 @@ var useConfirmPhone = function useConfirmPhone(_ref) {
     setInputsErrors: setInputsErrors
   };
 };
-var defaultInputsConfig$1 = [{
+var defaultInputsConfig$4 = [{
   field: "phone",
   checkerFuncs: ["checkRequiredField"],
   type: "text",
@@ -3372,8 +3392,11 @@ var selectors = {
 };
 function setUser(state, action) {
     var _a = action.payload, user = _a.user, jwt = _a.jwt, nextAuthFactor = _a.nextAuthFactor;
-    if (jwt) {
+    if (user) {
+        state.user = user;
         state.id = user.id;
+    }
+    if (jwt) {
         state.isAuthenticated = true;
         state.jwt = jwt;
         localStorage.setItem("jwt", jwt);
@@ -3393,7 +3416,8 @@ var authSlice = /*#__PURE__*/Object.freeze({
 var useUpdateMe = function useUpdateMe(_ref) {
   var profilesApi = _ref.profilesApi,
     _ref$inputsConfig = _ref.inputsConfig,
-    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig : _ref$inputsConfig;
+    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$3 : _ref$inputsConfig,
+    useSelector = _ref.useSelector;
   var _profilesApi$useUpdat = profilesApi.useUpdateMeMutation(),
     _profilesApi$useUpdat2 = _slicedToArray(_profilesApi$useUpdat, 2),
     updateMe = _profilesApi$useUpdat2[0],
@@ -3402,7 +3426,7 @@ var useUpdateMe = function useUpdateMe(_ref) {
     error = _profilesApi$useUpdat3.error,
     data = _profilesApi$useUpdat3.data,
     isLoading = _profilesApi$useUpdat3.isLoading;
-  var accountId = reactRedux.useSelector(selectors.selectAccountId); //?
+  var accountId = useSelector(selectors.selectAccountId); //?
 
   var submitFunc = function submitFunc(_ref2) {
     var inputs = _ref2.inputs;
@@ -3422,11 +3446,13 @@ var useUpdateMe = function useUpdateMe(_ref) {
     }),
     inputs = _useForm.inputs,
     onSubmit = _useForm.onSubmit,
+    inputsValues = _useForm.inputsValues,
     inputsErrors = _useForm.errors,
     setInputsErrors = _useForm.setErrors;
   return {
     data: data,
     isLoading: isLoading,
+    inputsValues: inputsValues,
     error: error,
     inputs: inputs,
     onSubmit: onSubmit,
@@ -3435,7 +3461,7 @@ var useUpdateMe = function useUpdateMe(_ref) {
     setInputsErrors: setInputsErrors
   };
 };
-var defaultInputsConfig = [{
+var defaultInputsConfig$3 = [{
   field: "username",
   checkerFuncs: ["checkRequiredField"],
   type: "text",
@@ -3445,9 +3471,6 @@ var defaultInputsConfig = [{
 
 var useMyProfileCreator = function (_a) {
     var profilesApi = _a.profilesApi, populate = _a.populate, useSelector = _a.useSelector;
-    React.useEffect(function () {
-        console.log("\uD83D\uDE80 new useMyProfile");
-    }, []);
     var accountId = useSelector(selectors.selectAccountId);
     var jwtToken = useSelector(selectors.selectJwt);
     var _b = profilesApi.useGetMeQuery(undefined, { skip: !jwtToken }), myProfileByMe = _b.data, meError = _b.error, refetchMe = _b.refetch, isUninitialized = _b.isUninitialized;
@@ -3478,6 +3501,205 @@ var useMyProfileCreator = function (_a) {
     return profile;
 };
 
+function ownKeys$b(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$b(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$b(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$b(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+var useSetOtp = function useSetOtp(_ref) {
+  var profilesApi = _ref.profilesApi,
+    _ref$inputsConfig = _ref.inputsConfig,
+    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$2 : _ref$inputsConfig,
+    useSelector = _ref.useSelector;
+  var accountId = useSelector(selectors.selectAccountId); //?
+  var _profilesApi$useGener = profilesApi.useGenerateOtpSecretQuery({
+      id: accountId
+    }, {
+      skip: !accountId
+    }),
+    generateOtpSecretData = _profilesApi$useGener.data,
+    generateOtpSecretIsSuccess = _profilesApi$useGener.isSuccess,
+    generateOtpSecretIsLoading = _profilesApi$useGener.isLoading;
+  var _profilesApi$useSetOt = profilesApi.useSetOtpMutation(),
+    _profilesApi$useSetOt2 = _slicedToArray(_profilesApi$useSetOt, 2),
+    setOtp = _profilesApi$useSetOt2[0],
+    _profilesApi$useSetOt3 = _profilesApi$useSetOt2[1],
+    isSuccess = _profilesApi$useSetOt3.isSuccess,
+    error = _profilesApi$useSetOt3.error,
+    data = _profilesApi$useSetOt3.data,
+    isLoading = _profilesApi$useSetOt3.isLoading;
+  var submitFunc = function submitFunc(_ref2) {
+    var inputs = _ref2.inputs;
+    setOtp({
+      id: accountId,
+      data: inputs
+    });
+  };
+  var memoInputsConfig = React.useMemo(function () {
+    return inputsConfig;
+  }, [inputsConfig]);
+  var _useForm = useForm({
+      inputsConfig: memoInputsConfig,
+      submitFunc: submitFunc,
+      inputPropsType: "object"
+    }),
+    inputs = _useForm.inputs,
+    onSubmit = _useForm.onSubmit,
+    setInputsValues = _useForm.setInputsValues,
+    inputsValues = _useForm.inputsValues,
+    inputsErrors = _useForm.errors,
+    setInputsErrors = _useForm.setErrors;
+  React.useEffect(function () {
+    setInputsValues(function (prev) {
+      return _objectSpread$b(_objectSpread$b({}, prev), {}, {
+        otp_secret: generateOtpSecretData === null || generateOtpSecretData === void 0 ? void 0 : generateOtpSecretData.secretHashCode
+      });
+    });
+  }, [setInputsValues, generateOtpSecretData]);
+
+  // useEffect(() => {
+  //   console.log(
+  //     `🚀 ~ useEffect ~ generateOtpSecretData`,
+  //     generateOtpSecretData
+  //   );
+  // }, [generateOtpSecretData]);
+
+  return {
+    generateOtpSecretData: generateOtpSecretData,
+    generateOtpSecretIsLoading: generateOtpSecretIsLoading,
+    generateOtpSecretIsSuccess: generateOtpSecretIsSuccess,
+    data: data,
+    inputsValues: inputsValues,
+    isLoading: isLoading,
+    setInputsValues: setInputsValues,
+    error: error,
+    inputs: inputs,
+    onSubmit: onSubmit,
+    isSuccess: isSuccess,
+    inputsErrors: inputsErrors,
+    setInputsErrors: setInputsErrors
+  };
+};
+var defaultInputsConfig$2 = [{
+  title: "Code",
+  field: "code",
+  checkerFuncs: ["checkRequiredField"],
+  label: "Code",
+  placeholder: "Type code here",
+  type: "otp"
+}];
+
+var useDeleteOtp = function useDeleteOtp(_ref) {
+  var profilesApi = _ref.profilesApi,
+    _ref$inputsConfig = _ref.inputsConfig,
+    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$1 : _ref$inputsConfig,
+    useSelector = _ref.useSelector;
+  var accountId = useSelector(selectors.selectAccountId); //?
+  var _profilesApi$useDelet = profilesApi.useDeleteOtpMutation(),
+    _profilesApi$useDelet2 = _slicedToArray(_profilesApi$useDelet, 2),
+    deleteOtp = _profilesApi$useDelet2[0],
+    _profilesApi$useDelet3 = _profilesApi$useDelet2[1],
+    isSuccess = _profilesApi$useDelet3.isSuccess,
+    error = _profilesApi$useDelet3.error,
+    data = _profilesApi$useDelet3.data,
+    isLoading = _profilesApi$useDelet3.isLoading;
+  var submitFunc = function submitFunc(_ref2) {
+    var inputs = _ref2.inputs;
+    deleteOtp({
+      id: accountId,
+      data: inputs
+    });
+  };
+  var memoInputsConfig = React.useMemo(function () {
+    return inputsConfig;
+  }, [inputsConfig]);
+  var _useForm = useForm({
+      inputsConfig: memoInputsConfig,
+      submitFunc: submitFunc,
+      inputPropsType: "object"
+    }),
+    inputs = _useForm.inputs,
+    onSubmit = _useForm.onSubmit,
+    setInputsValues = _useForm.setInputsValues,
+    inputsValues = _useForm.inputsValues,
+    inputsErrors = _useForm.errors,
+    setInputsErrors = _useForm.setErrors;
+  return {
+    data: data,
+    isLoading: isLoading,
+    setInputsValues: setInputsValues,
+    inputsValues: inputsValues,
+    error: error,
+    inputs: inputs,
+    onSubmit: onSubmit,
+    isSuccess: isSuccess,
+    inputsErrors: inputsErrors,
+    setInputsErrors: setInputsErrors
+  };
+};
+var defaultInputsConfig$1 = [{
+  title: "Code",
+  field: "code",
+  checkerFuncs: ["checkRequiredField"],
+  label: "Code",
+  placeholder: "Type code here",
+  type: "otp"
+}];
+
+var useCheckOtp = function useCheckOtp(_ref) {
+  var profilesApi = _ref.profilesApi,
+    _ref$inputsConfig = _ref.inputsConfig,
+    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig : _ref$inputsConfig,
+    useSelector = _ref.useSelector;
+  var accountId = useSelector(selectors.selectAccountId); //?
+  var _profilesApi$useCheck = profilesApi.useCheckOtpMutation(),
+    _profilesApi$useCheck2 = _slicedToArray(_profilesApi$useCheck, 2),
+    checkOtp = _profilesApi$useCheck2[0],
+    _profilesApi$useCheck3 = _profilesApi$useCheck2[1],
+    isSuccess = _profilesApi$useCheck3.isSuccess,
+    error = _profilesApi$useCheck3.error,
+    data = _profilesApi$useCheck3.data,
+    isLoading = _profilesApi$useCheck3.isLoading;
+  var submitFunc = function submitFunc(_ref2) {
+    var inputs = _ref2.inputs;
+    checkOtp({
+      id: accountId,
+      data: inputs
+    });
+  };
+  var memoInputsConfig = React.useMemo(function () {
+    return inputsConfig;
+  }, [inputsConfig]);
+  var _useForm = useForm({
+      inputsConfig: memoInputsConfig,
+      submitFunc: submitFunc,
+      inputPropsType: "object"
+    }),
+    inputs = _useForm.inputs,
+    onSubmit = _useForm.onSubmit,
+    setInputsValues = _useForm.setInputsValues,
+    inputsValues = _useForm.inputsValues,
+    inputsErrors = _useForm.errors,
+    setInputsErrors = _useForm.setErrors;
+  return {
+    data: data,
+    isLoading: isLoading,
+    inputsValues: inputsValues,
+    setInputsValues: setInputsValues,
+    error: error,
+    inputs: inputs,
+    onSubmit: onSubmit,
+    isSuccess: isSuccess,
+    inputsErrors: inputsErrors,
+    setInputsErrors: setInputsErrors
+  };
+};
+var defaultInputsConfig = [{
+  title: "Code",
+  field: "code",
+  checkerFuncs: ["checkRequiredField"],
+  label: "Code",
+  placeholder: "Type code here",
+  type: "otp"
+}];
+
 var useAuth = {
   useSendEmailConfirmation: useSendEmailConfirmation,
   usePhoneConfirmation: usePhoneConfirmation,
@@ -3489,12 +3711,15 @@ var useAuth = {
   useConfirmEmail: useConfirmEmail,
   useConfirmPhone: useConfirmPhone,
   useUpdateMe: useUpdateMe,
-  useMyProfileCreator: useMyProfileCreator
+  useMyProfileCreator: useMyProfileCreator,
+  useSetOtp: useSetOtp,
+  useDeleteOtp: useDeleteOtp,
+  useCheckOtp: useCheckOtp
 };
 
-function ownKeys$9(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread$9(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$9(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$9(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-var hooks = _objectSpread$9({
+function ownKeys$a(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$a(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$a(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$a(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+var hooks = _objectSpread$a({
   useDetectMouseover: useDetectMouseover$1,
   useDetectOutsideClick: useDetectOutsideClick$1,
   useLookupTable: useLookupTable,
@@ -3507,9 +3732,8 @@ var hooks = _objectSpread$9({
   useDebounce: useDebounce
 }, useAuth);
 
-function _objectDestructuringEmpty(obj) {
-  if (obj == null) throw new TypeError("Cannot destructure " + obj);
-}
+function ownKeys$9(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$9(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$9(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$9(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 // interface IStrapiParams {
 //   filters?: object;
@@ -3604,6 +3828,12 @@ function _objectDestructuringEmpty(obj) {
 //   any
 // >;
 
+function profileInvalidate(result, _error) {
+  return result ? [{
+    type: "Profile",
+    id: result.id
+  }] : [];
+}
 var prepareDataToSend = function prepareDataToSend(params) {
   var data = params.data,
     files = params.files;
@@ -3640,16 +3870,12 @@ function createProfilesApi(backendServiceApi) {
           }
         }),
         loginWithEmailAndPassword: build.mutation({
-          query: function query(_ref) {
-            var identifier = _ref.identifier,
-              password = _ref.password;
+          query: function query(params) {
+            var formData = prepareDataToSend(params);
             return {
               method: "POST",
               url: "auth/local",
-              body: {
-                identifier: identifier,
-                password: password
-              }
+              body: formData
             };
           },
           transformResponse: function transformResponse(res) {
@@ -3658,31 +3884,29 @@ function createProfilesApi(backendServiceApi) {
         }),
         checkOtp: build.mutation({
           query: function query(params) {
-            var userId = params.userId,
-              code = params.code;
+            var id = params.id,
+              data = params.data;
             return {
-              url: "auth/check-otp/".concat(userId),
-              params: {
-                code: code
-              }
+              url: "users/".concat(id, "/otp"),
+              params: _objectSpread$9({}, data)
             };
           },
           transformResponse: transformResponseItem
         }),
         sendEmailConfirmation: build.mutation({
-          query: function query(_ref2) {
-            var data = _ref2.data;
+          query: function query(params) {
+            var formData = prepareDataToSend(params);
             return {
               url: "auth/send-email-confirmation",
               method: "POST",
-              body: data
+              body: formData
             };
           },
           transformResponse: transformResponseItem
         }),
         confirmEmail: build.mutation({
-          query: function query(_ref3) {
-            var data = _ref3.data;
+          query: function query(_ref) {
+            var data = _ref.data;
             var stringifiedParams = qs__default["default"].stringify(data);
             // console.log(
             //   `🚀 ~ createProfilesApi ~ stringifiedParams`,
@@ -3696,18 +3920,18 @@ function createProfilesApi(backendServiceApi) {
           transformResponse: transformResponseItem
         }),
         sendPhoneConfirmation: build.mutation({
-          query: function query(_ref4) {
-            var data = _ref4.data;
+          query: function query(params) {
+            var formData = prepareDataToSend(params);
             return {
               url: "auth/send-phone-confirmation",
               method: "POST",
-              body: data
+              body: formData
             };
           }
         }),
         confirmPhone: build.mutation({
-          query: function query(_ref5) {
-            var data = _ref5.data;
+          query: function query(_ref2) {
+            var data = _ref2.data;
             var stringifiedParams = qs__default["default"].stringify(data); //?
 
             return {
@@ -3716,36 +3940,38 @@ function createProfilesApi(backendServiceApi) {
           }
         }),
         forgotPassword: build.mutation({
-          query: function query(_ref6) {
-            var data = _ref6.data;
+          query: function query(params) {
+            var formData = prepareDataToSend(params);
+
             // console.log(`🚀 ~ createProfilesApi ~ data`, data);
             return {
               url: "auth/forgot-password",
               method: "POST",
-              body: data
+              body: formData
             };
           },
           transformResponse: transformResponseItem
         }),
         resetPassword: build.mutation({
-          query: function query(_ref7) {
-            var data = _ref7.data;
-            console.log("\uD83D\uDE80 ~ createProfilesApi ~ data", data);
+          query: function query(params) {
+            var formData = prepareDataToSend(params);
+
+            // console.log(`🚀 ~ createProfilesApi ~ data`, data);
             return {
               url: "auth/reset-password",
               method: "POST",
-              body: data
+              body: formData
             };
           },
           transformResponse: transformResponseItem
         }),
         register: build.mutation({
-          query: function query(_ref8) {
-            var data = _ref8.data;
+          query: function query(params) {
+            var formData = prepareDataToSend(params);
             return {
               url: "auth/local/register",
               method: "POST",
-              body: data
+              body: formData
             };
           },
           transformResponse: transformResponseItem
@@ -3762,13 +3988,7 @@ function createProfilesApi(backendServiceApi) {
             };
           },
           transformResponse: transformResponseItem,
-          invalidatesTags: function invalidatesTags(_result, _error, _ref9) {
-            var id = _ref9.id;
-            return [{
-              type: "Profile",
-              id: id
-            }];
-          }
+          invalidatesTags: profileInvalidate
         }),
         getProfileById: build.query({
           query: function query(params) {
@@ -3782,26 +4002,47 @@ function createProfilesApi(backendServiceApi) {
             };
           },
           transformResponse: transformResponseItem,
-          providesTags: function providesTags(result, _error, id) {
-            return result ? [{
-              type: "Profile",
-              id: id
-            }] : [];
-          }
+          providesTags: profileInvalidate
         }),
-        generateOtp: build.query({
+        generateOtpSecret: build.query({
           query: function query() {
             var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-            _objectDestructuringEmpty(params);
+            var id = params.id;
             return {
-              url: "auth/otp-secret"
+              url: "user/".concat(id, "/otp/generate")
+            };
+          },
+          transformResponse: transformResponseItem
+        }),
+        setOtp: build.mutation({
+          query: function query(params) {
+            var id = params.id,
+              data = params.data; //?
+
+            return {
+              url: "users/".concat(id, "/otp"),
+              method: "POST",
+              body: {
+                data: data
+              }
             };
           },
           transformResponse: transformResponseItem,
-          invalidatesTags: function invalidatesTags(_result, _error, _ref10) {
-            _ref10.id;
-            return [];
-          }
+          invalidatesTags: profileInvalidate
+        }),
+        deleteOtp: build.mutation({
+          query: function query(params) {
+            var id = params.id,
+              data = params.data; //?
+            var code = data.code;
+            console.log("\uD83D\uDE80 ~ createProfilesApi ~ params", params);
+            return {
+              url: "users/".concat(id, "/otp?code=").concat(code),
+              method: "DELETE"
+            };
+          },
+          transformResponse: transformResponseItem,
+          invalidatesTags: profileInvalidate
         })
       };
     }
@@ -3821,7 +4062,9 @@ function createProfilesApi(backendServiceApi) {
     useSendConfirmEmailMutation = profilesApi.useSendConfirmEmailMutation,
     useUpdateMeMutation = profilesApi.useUpdateMeMutation,
     useRegisterMutation = profilesApi.useRegisterMutation,
-    useGenerateOtpQuery = profilesApi.useGenerateOtpQuery;
+    useGenerateOtpSecretQuery = profilesApi.useGenerateOtpSecretQuery,
+    useSetOtpMutation = profilesApi.useSetOtpMutation,
+    useDeleteOtpMutation = profilesApi.useDeleteOtpMutation;
   return {
     profilesApi: profilesApi,
     hooks: {
@@ -3840,7 +4083,9 @@ function createProfilesApi(backendServiceApi) {
       useSendConfirmEmailMutation: useSendConfirmEmailMutation,
       useUpdateMeMutation: useUpdateMeMutation,
       useRegisterMutation: useRegisterMutation,
-      useGenerateOtpQuery: useGenerateOtpQuery
+      useGenerateOtpSecretQuery: useGenerateOtpSecretQuery,
+      useSetOtpMutation: useSetOtpMutation,
+      useDeleteOtpMutation: useDeleteOtpMutation
     }
   };
 }

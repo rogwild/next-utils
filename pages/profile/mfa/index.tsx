@@ -16,7 +16,7 @@ const MfaPage = () => {
       <h1 className="mx-auto text-2xl font-bold">
         Multi Factor Authentification
       </h1>
-      {user.isOtpEnabled ? (
+      {user.isOtpConfirmationEnabled ? (
         <Link href="/profile/mfa/delete-otp" {...blackButtonProps}>
           Delete OTP
         </Link>

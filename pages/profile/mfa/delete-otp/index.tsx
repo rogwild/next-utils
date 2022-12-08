@@ -32,7 +32,7 @@ const DeleteOtp = () => {
       <h1 className="mx-auto text-2xl font-bold">
         Delete Multi Factor Authentification
       </h1>
-      {user.isOtpEnabled ? (
+      {user.isOtpConfirmationEnabled ? (
         <div className="w-1/2 mx-auto text-center flex flex-col gap-4">
           <Input {...inputs.code} {...otpInputProps} />
           {error ? (

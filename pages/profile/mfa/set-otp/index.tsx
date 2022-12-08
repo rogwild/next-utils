@@ -29,7 +29,7 @@ const SetOtp = () => {
       <h1 className="mx-auto text-2xl font-bold">
         Set Multi Factor Authentification
       </h1>
-      {user.isOtpEnabled ? (
+      {user.isOtpConfirmationEnabled ? (
         <div className="flex flex-col gap-3">
           <p className="text-center">You set OTP</p>
           <Link href="/profile/mfa/delete-otp" {...blackButtonProps}>
