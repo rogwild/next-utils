@@ -246,7 +246,7 @@ declare const _default: {
             isSuccess: any;
             data: any;
         };
-        useConfirmEmail: ({ profilesApi, inputsConfig, ping, initialPing, }: {
+        useConfirmEmail: ({ profilesApi, inputsConfig, ping, initialPing, useSelector, }: {
             profilesApi: any;
             inputsConfig?: ({
                 field: string;
@@ -265,6 +265,7 @@ declare const _default: {
             })[];
             ping?: number;
             initialPing?: number;
+            useSelector: any;
         }) => {
             counter: number;
             resendEmailConfirmation: () => void;

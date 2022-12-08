@@ -9,6 +9,7 @@ import {
   textInputProps,
 } from "~utils/vanilla";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
 
 const ConfirmEmail = () => {
   const router = useRouter();
@@ -31,6 +32,7 @@ const ConfirmEmail = () => {
     resendEmailConfirmation: any;
   } = useConfirmEmail({
     profilesApi,
+    useSelector,
     ping: 5,
   });
 

@@ -8,6 +8,7 @@ import {
   grayButtonProps,
   textInputProps,
 } from "~utils/vanilla";
+import { useSelector } from "react-redux";
 
 const ConfirmPhone = () => {
   const {
@@ -28,6 +29,7 @@ const ConfirmPhone = () => {
     isLoading: boolean;
   } = useConfirmPhone({
     profilesApi,
+    useSelector,
     ping: 5,
   });
 

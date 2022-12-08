@@ -666,8 +666,8 @@ function _defineProperty(obj, key, value) {
   return obj;
 }
 
-function ownKeys$k(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread$k(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$k(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$k(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function ownKeys$l(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$l(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$l(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$l(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 /**
  * Filter function by text content
@@ -780,7 +780,7 @@ var useLookupTable = function useLookupTable(_ref) {
     return state;
   }, [sortBy, filters, localSelectedRowIds]);
   var filterTypes = React.useMemo(function () {
-    return _objectSpread$k(_objectSpread$k({}, baseFilters), config.filterTypes);
+    return _objectSpread$l(_objectSpread$l({}, baseFilters), config.filterTypes);
   }, []);
   React.useEffect(function () {
     if (data.length && config.selectedRowIds) {
@@ -999,7 +999,7 @@ var returnDoc = createArgDocumentation({
 ({
   component: useLookupTable,
   title: "Hooks/useLookupTable",
-  argTypes: _objectSpread$k(_objectSpread$k(_objectSpread$k(_objectSpread$k({}, columnsDoc), dataDoc), configDoc), returnDoc),
+  argTypes: _objectSpread$l(_objectSpread$l(_objectSpread$l(_objectSpread$l({}, columnsDoc), dataDoc), configDoc), returnDoc),
   parameters: {
     docs: {
       description: {
@@ -1630,14 +1630,14 @@ var shortByFull = (_shortByFull = {
 //   }
 // });
 
-function ownKeys$j(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread$j(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$j(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$j(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function ownKeys$k(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$k(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$k(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$k(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 var useStyleRewriter$6 = function useStyleRewriter(baseClassName, className) {
   var cleared = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
   return React.useMemo(function () {
     var styleObj = getStyleObj("@base ".concat(baseClassName), cleared);
     var styleObjProps = getStyleObj("@prop ".concat(className), cleared);
-    var computedStyleObj = _objectSpread$j(_objectSpread$j({}, styleObj), styleObjProps);
+    var computedStyleObj = _objectSpread$k(_objectSpread$k({}, styleObj), styleObjProps);
     var resultClassName = Object.values(computedStyleObj).join(" ").replace(/\n/g, "");
     return resultClassName.replace(/\s+/g, " ");
   }, [baseClassName, className]);
@@ -1844,8 +1844,8 @@ function _toConsumableArray(arr) {
 function _createForOfIteratorHelper$2(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray$2(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 function _unsupportedIterableToArray$2(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray$2(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$2(o, minLen); }
 function _arrayLikeToArray$2(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-function ownKeys$i(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread$i(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$i(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$i(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function ownKeys$j(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$j(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$j(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$j(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 var changeInput = function changeInput(e, _ref) {
   var inputs = _ref.inputs,
     errors = _ref.errors,
@@ -1854,9 +1854,9 @@ var changeInput = function changeInput(e, _ref) {
     setErrors = _ref$setErrors === void 0 ? function () {} : _ref$setErrors,
     setInputs = _ref.setInputs,
     setFiles = _ref.setFiles;
-  var localInputs = _objectSpread$i({}, inputs);
-  var localErrors = _objectSpread$i({}, errors);
-  var localFiles = _objectSpread$i({}, files);
+  var localInputs = _objectSpread$j({}, inputs);
+  var localErrors = _objectSpread$j({}, errors);
+  var localFiles = _objectSpread$j({}, files);
   localErrors[e.target.id] = [];
   if (!e.target.files) {
     if (!Object.keys(files).includes(e.target.id)) {
@@ -1866,7 +1866,7 @@ var changeInput = function changeInput(e, _ref) {
       localInputs[e.target.id] = e.target.value;
       if (e.target.multiple) {
         if (localFiles && Array.isArray(localFiles[e.target.id]) && Array.isArray(localInputs[e.target.id])) {
-          localFiles = _objectSpread$i(_objectSpread$i({}, localFiles), {}, _defineProperty({}, e.target.id, _toConsumableArray(localInputs[e.target.id])));
+          localFiles = _objectSpread$j(_objectSpread$j({}, localFiles), {}, _defineProperty({}, e.target.id, _toConsumableArray(localInputs[e.target.id])));
         }
       } else {
         // Deleted not multiple file
@@ -1874,7 +1874,7 @@ var changeInput = function changeInput(e, _ref) {
       }
     }
   } else {
-    var loadedFiles = _objectSpread$i({}, e.target.files);
+    var loadedFiles = _objectSpread$j({}, e.target.files);
     var _iterator = _createForOfIteratorHelper$2(new Array(e.target.files.length).entries()),
       _step;
     try {
@@ -1883,12 +1883,12 @@ var changeInput = function changeInput(e, _ref) {
           index = _step$value[0];
         if (e.target.multiple) {
           if (localFiles && Array.isArray(localFiles[e.target.id]) && Array.isArray(localInputs[e.target.id])) {
-            localFiles = _objectSpread$i(_objectSpread$i({}, localFiles), {}, _defineProperty({}, e.target.id, [].concat(_toConsumableArray(localFiles[e.target.id]), [loadedFiles[index]])));
+            localFiles = _objectSpread$j(_objectSpread$j({}, localFiles), {}, _defineProperty({}, e.target.id, [].concat(_toConsumableArray(localFiles[e.target.id]), [loadedFiles[index]])));
           } else {
-            localFiles = _objectSpread$i(_objectSpread$i({}, localFiles), {}, _defineProperty({}, e.target.id, [loadedFiles[index]]));
+            localFiles = _objectSpread$j(_objectSpread$j({}, localFiles), {}, _defineProperty({}, e.target.id, [loadedFiles[index]]));
           }
         } else {
-          localFiles = _objectSpread$i(_objectSpread$i({}, localFiles), {}, _defineProperty({}, e.target.id, loadedFiles[index]));
+          localFiles = _objectSpread$j(_objectSpread$j({}, localFiles), {}, _defineProperty({}, e.target.id, loadedFiles[index]));
         }
       }
     } catch (err) {
@@ -1900,9 +1900,9 @@ var changeInput = function changeInput(e, _ref) {
   if (e.target.type == "checkbox") {
     localInputs[e.target.id] = e.target.checked;
   }
-  setFiles(_objectSpread$i({}, localFiles));
-  setInputs(_objectSpread$i({}, localInputs));
-  setErrors(_objectSpread$i({}, localErrors));
+  setFiles(_objectSpread$j({}, localFiles));
+  setInputs(_objectSpread$j({}, localInputs));
+  setErrors(_objectSpread$j({}, localErrors));
 };
 var checkUsernameMask = function checkUsernameMask(_ref2) {
   var field = _ref2.field,
@@ -2005,7 +2005,7 @@ var checkFields = function checkFields(_ref8) {
     inputsConfig = _ref8.inputsConfig,
     inputs = _ref8.inputs,
     files = _ref8.files;
-  var localErrors = _objectSpread$i({}, errors);
+  var localErrors = _objectSpread$j({}, errors);
   inputsConfig.forEach(function (_ref9) {
     var field = _ref9.field,
       checkerFuncs = _ref9.checkerFuncs,
@@ -2063,7 +2063,7 @@ var checkFields = function checkFields(_ref8) {
       if (((_Object$values = Object.values(value)) === null || _Object$values === void 0 ? void 0 : (_Object$values$filter = _Object$values.filter(function (m) {
         return typeof m === "string";
       })) === null || _Object$values$filter === void 0 ? void 0 : _Object$values$filter.length) > 0) {
-        hasErrors.push(_objectSpread$i({}, value));
+        hasErrors.push(_objectSpread$j({}, value));
       }
     }
   }
@@ -2094,7 +2094,7 @@ var changeTypeFunc = function changeTypeFunc(_ref11) {
     field = _ref11.field;
   var type = types[field];
   if (types[field]) {
-    var localTypes = _objectSpread$i({}, types);
+    var localTypes = _objectSpread$j({}, types);
     if (type === "password") {
       localTypes[field] = "text";
     } else if (type === "text") {
@@ -2107,7 +2107,7 @@ var changeBlockedInputsFunc = function changeBlockedInputsFunc(_ref12) {
   var setBlockedInputs = _ref12.setBlockedInputs,
     blockedInputs = _ref12.blockedInputs,
     newBlockedInputs = _ref12.newBlockedInputs;
-  setBlockedInputs(_objectSpread$i(_objectSpread$i({}, blockedInputs), newBlockedInputs));
+  setBlockedInputs(_objectSpread$j(_objectSpread$j({}, blockedInputs), newBlockedInputs));
 };
 
 var checkIsServer = function () { return typeof window === "undefined"; };
@@ -2204,8 +2204,8 @@ var _excluded$8 = ["field", "blocked", "placeholder", "title", "label", "config"
 function _createForOfIteratorHelper$1(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray$1(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 function _unsupportedIterableToArray$1(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray$1(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$1(o, minLen); }
 function _arrayLikeToArray$1(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-function ownKeys$h(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread$h(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$h(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$h(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function ownKeys$i(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$i(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$i(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$i(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 var useForm = function useForm(_ref) {
   var inputsConfig = _ref.inputsConfig,
     _ref$submitFunc = _ref.submitFunc,
@@ -2289,7 +2289,7 @@ var useForm = function useForm(_ref) {
   };
   var onSubmitFunc = React.useCallback(function (e) {
     var submitProps = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-    return onSubmit(e, _objectSpread$h({
+    return onSubmit(e, _objectSpread$i({
       inputsConfig: inputsConfig,
       inputs: inputs,
       errors: errors,
@@ -2347,7 +2347,7 @@ var useForm = function useForm(_ref) {
         PairComponent = _ref4.PairComponent,
         params = _objectWithoutProperties(_ref4, _excluded$8);
       if (defaultType !== "hidden") {
-        var prop = _objectSpread$h({
+        var prop = _objectSpread$i({
           id: field,
           error: errors[field],
           changeType: changeType,
@@ -2482,8 +2482,8 @@ var selectFilesForDelete = function selectFilesForDelete(_ref5) {
   }
 };
 
-function ownKeys$g(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread$g(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$g(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$g(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function ownKeys$h(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$h(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$h(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$h(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 function useChildForm(_ref) {
   var inputsConfig = _ref.inputsConfig,
     _ref$setParentErrors = _ref.setParentErrors,
@@ -2516,12 +2516,12 @@ function useChildForm(_ref) {
 
   React.useEffect(function () {
     setSubmitPipe(function (prev) {
-      return _objectSpread$g(_objectSpread$g({}, prev), {}, _defineProperty({}, submitId, onSubmit));
+      return _objectSpread$h(_objectSpread$h({}, prev), {}, _defineProperty({}, submitId, onSubmit));
     });
   }, [onSubmit]);
   var onDelete = function onDelete() {
     setSubmitPipe(function (prev) {
-      var newSubmitPipes = _objectSpread$g({}, prev);
+      var newSubmitPipes = _objectSpread$h({}, prev);
       delete newSubmitPipes[submitId];
       return newSubmitPipes;
     });
@@ -2705,8 +2705,8 @@ var defaultInputsConfig$b = [{
   placeholder: "Type your email"
 }];
 
-function ownKeys$f(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread$f(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$f(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$f(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function ownKeys$g(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$g(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$g(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$g(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 var useLogin = function useLogin(_ref) {
   var profilesApi = _ref.profilesApi,
     _ref$inputsConfig = _ref.inputsConfig,
@@ -2744,7 +2744,7 @@ var useLogin = function useLogin(_ref) {
     if (error) {
       setErrors(function (prev) {
         var _error$data;
-        var newErrors = _objectSpread$f({}, prev);
+        var newErrors = _objectSpread$g({}, prev);
         if ((_error$data = error.data) !== null && _error$data !== void 0 && _error$data.error) {
           newErrors.email = {
             id: error.data.error.name,
@@ -2886,8 +2886,8 @@ var defaultInputsConfig$9 = [{
   defaultValue: false
 }];
 
-function ownKeys$e(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread$e(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$e(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$e(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function ownKeys$f(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$f(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$f(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$f(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 var useResetPassword = function useResetPassword(_ref) {
   var profilesApi = _ref.profilesApi,
     _ref$inputsConfig = _ref.inputsConfig,
@@ -2932,7 +2932,7 @@ var useResetPassword = function useResetPassword(_ref) {
     if (typeof window !== "undefined") {
       var _URLSearchParams, _URL, _window;
       var code = (_URLSearchParams = new URLSearchParams((_URL = new URL((_window = window) === null || _window === void 0 ? void 0 : _window.location)) === null || _URL === void 0 ? void 0 : _URL.search)) === null || _URLSearchParams === void 0 ? void 0 : _URLSearchParams.get("code");
-      setInputsValues(_objectSpread$e(_objectSpread$e({}, inputsValues), {}, {
+      setInputsValues(_objectSpread$f(_objectSpread$f({}, inputsValues), {}, {
         code: code
       }));
     }
@@ -3099,8 +3099,8 @@ var defaultInputsConfig$6 = [{
   placeholder: "Type your phone"
 }];
 
-function ownKeys$d(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread$d(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$d(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$d(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function ownKeys$e(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$e(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$e(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$e(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 var useConfirmEmail = function useConfirmEmail(_ref) {
   var profilesApi = _ref.profilesApi,
     _ref$inputsConfig = _ref.inputsConfig,
@@ -3108,7 +3108,12 @@ var useConfirmEmail = function useConfirmEmail(_ref) {
     _ref$ping = _ref.ping,
     ping = _ref$ping === void 0 ? 30 : _ref$ping,
     _ref$initialPing = _ref.initialPing,
-    initialPing = _ref$initialPing === void 0 ? 0 : _ref$initialPing;
+    initialPing = _ref$initialPing === void 0 ? 0 : _ref$initialPing,
+    useSelector = _ref.useSelector;
+  var user = useSelector(function (state) {
+    var _state$auth;
+    return (_state$auth = state.auth) === null || _state$auth === void 0 ? void 0 : _state$auth.user;
+  }); //?
   var _profilesApi$useConfi = profilesApi.useConfirmEmailMutation(),
     _profilesApi$useConfi2 = _slicedToArray(_profilesApi$useConfi, 2),
     confirmEmail = _profilesApi$useConfi2[0],
@@ -3160,7 +3165,7 @@ var useConfirmEmail = function useConfirmEmail(_ref) {
     if (!inputsValues.email) {
       console.error("Pass email for resending code");
       setInputsErrors(function (prev) {
-        var newErrors = _objectSpread$d({}, prev);
+        var newErrors = _objectSpread$e({}, prev);
         newErrors.email = {
           id: "ValidationError",
           message: "Empty email address"
@@ -3177,16 +3182,25 @@ var useConfirmEmail = function useConfirmEmail(_ref) {
     });
   };
   React.useEffect(function () {
+    console.log("\uD83D\uDE80 ~ useEffect ~ user", user);
+    if (user) {
+      if (user.email) {
+        setInputsValues(_objectSpread$e(_objectSpread$e({}, inputsValues), {}, {
+          email: user.email
+        }));
+        return;
+      }
+    }
     if (typeof window !== "undefined") {
       var _URLSearchParams, _URL, _window, _URLSearchParams2, _URL2, _window2;
       var code = (_URLSearchParams = new URLSearchParams((_URL = new URL((_window = window) === null || _window === void 0 ? void 0 : _window.location)) === null || _URL === void 0 ? void 0 : _URL.search)) === null || _URLSearchParams === void 0 ? void 0 : _URLSearchParams.get("code");
       var email = (_URLSearchParams2 = new URLSearchParams((_URL2 = new URL((_window2 = window) === null || _window2 === void 0 ? void 0 : _window2.location)) === null || _URL2 === void 0 ? void 0 : _URL2.search)) === null || _URLSearchParams2 === void 0 ? void 0 : _URLSearchParams2.get("email");
-      setInputsValues(_objectSpread$d(_objectSpread$d({}, inputsValues), {}, {
+      setInputsValues(_objectSpread$e(_objectSpread$e({}, inputsValues), {}, {
         code: code,
         email: email
       }));
     }
-  }, []);
+  }, [user]);
   return {
     counter: counter,
     resendEmailConfirmation: resendEmailConfirmation,
@@ -3220,8 +3234,8 @@ var defaultInputsConfig$5 = [{
   type: "text"
 }];
 
-function ownKeys$c(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread$c(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$c(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$c(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function ownKeys$d(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$d(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$d(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$d(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 var useConfirmPhone = function useConfirmPhone(_ref) {
   var profilesApi = _ref.profilesApi,
     _ref$inputsConfig = _ref.inputsConfig,
@@ -3279,7 +3293,7 @@ var useConfirmPhone = function useConfirmPhone(_ref) {
     if (!inputsValues.phone) {
       console.error("Pass phone for resending code");
       setInputsErrors(function (prev) {
-        var newErrors = _objectSpread$c({}, prev);
+        var newErrors = _objectSpread$d({}, prev);
         newErrors.phone = {
           id: "ValidationError",
           message: "Empty phone address"
@@ -3300,7 +3314,7 @@ var useConfirmPhone = function useConfirmPhone(_ref) {
       var code = (_URLSearchParams = new URLSearchParams((_URL = new URL((_window = window) === null || _window === void 0 ? void 0 : _window.location)) === null || _URL === void 0 ? void 0 : _URL.search)) === null || _URLSearchParams === void 0 ? void 0 : _URLSearchParams.get("code");
       var phone = (_URLSearchParams2 = new URLSearchParams((_URL2 = new URL((_window2 = window) === null || _window2 === void 0 ? void 0 : _window2.location)) === null || _URL2 === void 0 ? void 0 : _URL2.search)) === null || _URLSearchParams2 === void 0 ? void 0 : _URLSearchParams2.get("phone");
       console.log("\uD83D\uDE80 ~ useEffect ~ phone", phone);
-      setInputsValues(_objectSpread$c(_objectSpread$c({}, inputsValues), {}, {
+      setInputsValues(_objectSpread$d(_objectSpread$d({}, inputsValues), {}, {
         code: code,
         phone: phone
       }));
@@ -3501,8 +3515,8 @@ var useMyProfileCreator = function (_a) {
     return profile;
 };
 
-function ownKeys$b(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread$b(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$b(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$b(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function ownKeys$c(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$c(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$c(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$c(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 var useSetOtp = function useSetOtp(_ref) {
   var profilesApi = _ref.profilesApi,
     _ref$inputsConfig = _ref.inputsConfig,
@@ -3548,7 +3562,7 @@ var useSetOtp = function useSetOtp(_ref) {
     setInputsErrors = _useForm.setErrors;
   React.useEffect(function () {
     setInputsValues(function (prev) {
-      return _objectSpread$b(_objectSpread$b({}, prev), {}, {
+      return _objectSpread$c(_objectSpread$c({}, prev), {}, {
         otp_secret: generateOtpSecretData === null || generateOtpSecretData === void 0 ? void 0 : generateOtpSecretData.secretHashCode
       });
     });
@@ -3643,12 +3657,17 @@ var defaultInputsConfig$1 = [{
   type: "otp"
 }];
 
+function ownKeys$b(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$b(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$b(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$b(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 var useCheckOtp = function useCheckOtp(_ref) {
   var profilesApi = _ref.profilesApi,
     _ref$inputsConfig = _ref.inputsConfig,
     inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig : _ref$inputsConfig,
     useSelector = _ref.useSelector;
-  var accountId = useSelector(selectors.selectAccountId); //?
+  var user = useSelector(function (state) {
+    var _state$auth;
+    return (_state$auth = state.auth) === null || _state$auth === void 0 ? void 0 : _state$auth.user;
+  }); //?
   var _profilesApi$useCheck = profilesApi.useCheckOtpMutation(),
     _profilesApi$useCheck2 = _slicedToArray(_profilesApi$useCheck, 2),
     checkOtp = _profilesApi$useCheck2[0],
@@ -3659,8 +3678,9 @@ var useCheckOtp = function useCheckOtp(_ref) {
     isLoading = _profilesApi$useCheck3.isLoading;
   var submitFunc = function submitFunc(_ref2) {
     var inputs = _ref2.inputs;
+    var userId = user !== null && user !== void 0 && user.id ? user.id : inputs.user;
     checkOtp({
-      id: accountId,
+      id: userId,
       data: inputs
     });
   };
@@ -3678,6 +3698,15 @@ var useCheckOtp = function useCheckOtp(_ref) {
     inputsValues = _useForm.inputsValues,
     inputsErrors = _useForm.errors,
     setInputsErrors = _useForm.setErrors;
+  React.useEffect(function () {
+    if (typeof window !== "undefined") {
+      var _URLSearchParams, _URL, _window;
+      var _user = (_URLSearchParams = new URLSearchParams((_URL = new URL((_window = window) === null || _window === void 0 ? void 0 : _window.location)) === null || _URL === void 0 ? void 0 : _URL.search)) === null || _URLSearchParams === void 0 ? void 0 : _URLSearchParams.get("user");
+      setInputsValues(_objectSpread$b(_objectSpread$b({}, inputsValues), {}, {
+        user: _user
+      }));
+    }
+  }, []);
   return {
     data: data,
     isLoading: isLoading,
@@ -5853,6 +5882,9 @@ var DateCalendar = /*#__PURE__*/React.forwardRef(function (props, ref) {
     dateInputYearInputClassName = props.dateInputYearInputClassName,
     calendarContainerClassName = props.calendarContainerClassName,
     DividerComponent = props.DividerComponent;
+  React.useEffect(function () {
+    console.log("\uD83D\uDE80 ~ useEffect ~ error", error);
+  }, [error]);
   var buttonRef = React.useRef();
   var _useState = React.useState(null),
     localValue = _useState[0],

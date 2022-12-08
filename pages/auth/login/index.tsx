@@ -33,7 +33,7 @@ const Login = () => {
     }
 
     if (data.nextAuthFactor) {
-      router.push(`/auth/confirm-email?email=${inputsValues.identifier}`);
+      router.push(`/auth/confirm-email`);
     }
   }, [data]);
 
