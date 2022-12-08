@@ -5948,7 +5948,7 @@ var DateCalendar = /*#__PURE__*/React.forwardRef(function (props, ref) {
   }, [localValue]);
   var srInputContainerClassName = useStyleRewriter$6(baseInputContainerClassName, inputContainerClassName);
   return __jsx$7(InputOverlay, _extends({}, props, {
-    error: localError
+    error: localError || error
   }), __jsx$7("div", {
     className: srInputContainerClassName,
     ref: buttonRef
