@@ -276,6 +276,7 @@ declare const _default: {
             data: any;
             isLoading: any;
             inputsValues: {};
+            setInputsValues: import("react").Dispatch<import("react").SetStateAction<{}>>;
             error: any;
             inputs: {};
             onSubmit: (e: any, submitProps?: {}) => any;

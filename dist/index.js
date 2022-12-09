@@ -3217,6 +3217,7 @@ var useConfirmEmail = function useConfirmEmail(_ref) {
     data: data,
     isLoading: isLoading,
     inputsValues: inputsValues,
+    setInputsValues: setInputsValues,
     error: error,
     inputs: inputs,
     onSubmit: onSubmit,
