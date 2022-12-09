@@ -3124,10 +3124,12 @@ var useConfirmEmail = function useConfirmEmail(_ref) {
     isLoading = _profilesApi$useConfi3.isLoading;
   var submitFunc = function submitFunc(_ref2) {
     var inputs = _ref2.inputs;
-    var headers = {
-      "Next-Auth-Factor-Key": user.nextAuthFactorKey
-    };
-    console.log("\uD83D\uDE80 ~ submitFunc ~ headers", headers, user);
+    var headers = {};
+    if (user.nextAuthFactorKey) {
+      headers = {
+        "Next-Auth-Factor-Key": user.nextAuthFactorKey
+      };
+    }
     confirmEmail({
       data: inputs,
       headers: headers
@@ -3253,7 +3255,7 @@ var useConfirmPhone = function useConfirmPhone(_ref) {
   }); //?
   var _profilesApi$useConfi = profilesApi.useConfirmPhoneMutation(),
     _profilesApi$useConfi2 = _slicedToArray(_profilesApi$useConfi, 2),
-    confirmEmail = _profilesApi$useConfi2[0],
+    confirmPhone = _profilesApi$useConfi2[0],
     _profilesApi$useConfi3 = _profilesApi$useConfi2[1],
     isSuccess = _profilesApi$useConfi3.isSuccess,
     error = _profilesApi$useConfi3.error,
@@ -3280,8 +3282,15 @@ var useConfirmPhone = function useConfirmPhone(_ref) {
   }, [counter]);
   var submitFunc = function submitFunc(_ref2) {
     var inputs = _ref2.inputs;
-    confirmEmail({
-      data: inputs
+    var headers = {};
+    if (user.nextAuthFactorKey) {
+      headers = {
+        "Next-Auth-Factor-Key": user.nextAuthFactorKey
+      };
+    }
+    confirmPhone({
+      data: inputs,
+      headers: headers
     });
   };
   var memoInputsConfig = React.useMemo(function () {
@@ -3695,10 +3704,17 @@ var useCheckOtp = function useCheckOtp(_ref) {
     isLoading = _profilesApi$useCheck3.isLoading;
   var submitFunc = function submitFunc(_ref2) {
     var inputs = _ref2.inputs;
+    var headers = {};
+    if (user.nextAuthFactorKey) {
+      headers = {
+        "Next-Auth-Factor-Key": user.nextAuthFactorKey
+      };
+    }
     var userId = user !== null && user !== void 0 && user.id ? user.id : inputs.user;
     checkOtp({
       id: userId,
-      data: inputs
+      data: inputs,
+      headers: headers
     });
   };
   var memoInputsConfig = React.useMemo(function () {
@@ -3931,10 +3947,13 @@ function createProfilesApi(backendServiceApi) {
         checkOtp: build.mutation({
           query: function query(params) {
             var id = params.id,
-              data = params.data;
+              data = params.data,
+              _params$headers = params.headers,
+              headers = _params$headers === void 0 ? {} : _params$headers;
             return {
               url: "users/".concat(id, "/otp"),
-              params: _objectSpread$9({}, data)
+              params: _objectSpread$9({}, data),
+              headers: headers
             };
           },
           transformResponse: transformResponseItem
@@ -3953,7 +3972,8 @@ function createProfilesApi(backendServiceApi) {
         confirmEmail: build.mutation({
           query: function query(_ref) {
             var data = _ref.data,
-              headers = _ref.headers;
+              _ref$headers = _ref.headers,
+              headers = _ref$headers === void 0 ? {} : _ref$headers;
             var stringifiedParams = qs__default["default"].stringify(data);
             // console.log(
             //   `🚀 ~ createProfilesApi ~ stringifiedParams`,
@@ -3963,7 +3983,7 @@ function createProfilesApi(backendServiceApi) {
             return {
               url: "auth/email-confirmation?".concat(stringifiedParams),
               mode: "cors",
-              headers: _objectSpread$9({}, headers)
+              headers: headers
             };
           },
           transformResponse: transformResponseItem
@@ -3980,11 +4000,14 @@ function createProfilesApi(backendServiceApi) {
         }),
         confirmPhone: build.mutation({
           query: function query(_ref2) {
-            var data = _ref2.data;
+            var data = _ref2.data,
+              _ref2$headers = _ref2.headers,
+              headers = _ref2$headers === void 0 ? {} : _ref2$headers;
             var stringifiedParams = qs__default["default"].stringify(data); //?
 
             return {
-              url: "auth/phone-confirmation?".concat(stringifiedParams)
+              url: "auth/phone-confirmation?".concat(stringifiedParams),
+              headers: headers
             };
           }
         }),
