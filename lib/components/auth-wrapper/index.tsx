@@ -18,7 +18,7 @@ const AuthWrapper = ({
   useRouter,
   // user,
   useMyProfile,
-  redirectTo,
+  redirectTo = "",
 }: TAuthWrapperProps) => {
   const { me: user } = useMyProfile();
   const router = useRouter();
@@ -26,32 +26,26 @@ const AuthWrapper = ({
     query: { initPath },
   } = router;
 
-  const [cachedInitPath, setCachedInitPath] = useState(initPath || "");
+  const [cachedInitPath, setCachedInitPath] = useState(redirectTo);
 
-  // useEffect(() => {
-  //   setCachedInitPath((prev) => {
-  //     if (initPath !== "" && prev === "") {
-  //       return initPath;
-  //     }
+  useEffect(() => {
+    setCachedInitPath((prev) => {
+      if (initPath) {
+        return initPath;
+      }
 
-  //     return prev;
-  //   });
-  // }, [initPath]);
-
-  // useEffect(() => {
-  //   console.log(`🚀 ~ useEffect ~ cachedInitPath`, cachedInitPath);
-  // }, [cachedInitPath]);
+      return prev;
+    });
+  }, [initPath]);
 
   const [passed, setPassed] = useState(false);
 
   useEffect(() => {
-    // console.log(`🚀 ~ useEffect ~ user`, user);
-
     if (user.id) {
       setPassed(true);
 
       if (router.pathname?.includes("/auth")) {
-        router.push(redirectTo);
+        router.push(cachedInitPath);
       }
 
       return;
@@ -62,9 +56,10 @@ const AuthWrapper = ({
         return;
       }
 
-      const pathQuery = !initPath ? `?initPath=${router.asPath}` : ``;
-
-      // console.log(`🚀 ~ useEffect ~ pathQuery`, pathQuery);
+      const pathQuery =
+        !initPath && !router.asPath.includes("/auth")
+          ? `?initPath=${router.asPath}`
+          : ``;
 
       router.push(`/auth/login${pathQuery}`);
     } else if (isAuth) {

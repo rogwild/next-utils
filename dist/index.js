@@ -3125,7 +3125,7 @@ var useConfirmEmail = function useConfirmEmail(_ref) {
   var submitFunc = function submitFunc(_ref2) {
     var inputs = _ref2.inputs;
     var headers = {};
-    if (user.nextAuthFactorKey) {
+    if (user !== null && user !== void 0 && user.nextAuthFactorKey) {
       headers = {
         "Next-Auth-Factor-Key": user.nextAuthFactorKey
       };
@@ -3283,7 +3283,7 @@ var useConfirmPhone = function useConfirmPhone(_ref) {
   var submitFunc = function submitFunc(_ref2) {
     var inputs = _ref2.inputs;
     var headers = {};
-    if (user.nextAuthFactorKey) {
+    if (user !== null && user !== void 0 && user.nextAuthFactorKey) {
       headers = {
         "Next-Auth-Factor-Key": user.nextAuthFactorKey
       };
@@ -3705,7 +3705,7 @@ var useCheckOtp = function useCheckOtp(_ref) {
   var submitFunc = function submitFunc(_ref2) {
     var inputs = _ref2.inputs;
     var headers = {};
-    if (user.nextAuthFactorKey) {
+    if (user !== null && user !== void 0 && user.nextAuthFactorKey) {
       headers = {
         "Next-Auth-Factor-Key": user.nextAuthFactorKey
       };
@@ -3903,7 +3903,6 @@ var prepareDataToSend = function prepareDataToSend(params) {
     data: data,
     files: files
   });
-  console.log("\uD83D\uDE80 ~ clearedData", clearedData);
   var formData = new FormData();
   formData.append("data", JSON.stringify(clearedData));
   if (files) {
@@ -4014,8 +4013,6 @@ function createProfilesApi(backendServiceApi) {
         forgotPassword: build.mutation({
           query: function query(params) {
             var formData = prepareDataToSend(params);
-
-            // console.log(`🚀 ~ createProfilesApi ~ data`, data);
             return {
               url: "auth/forgot-password",
               method: "POST",
@@ -4027,8 +4024,6 @@ function createProfilesApi(backendServiceApi) {
         resetPassword: build.mutation({
           query: function query(params) {
             var formData = prepareDataToSend(params);
-
-            // console.log(`🚀 ~ createProfilesApi ~ data`, data);
             return {
               url: "auth/reset-password",
               method: "POST",
@@ -4107,7 +4102,6 @@ function createProfilesApi(backendServiceApi) {
             var id = params.id,
               data = params.data; //?
             var code = data.code;
-            console.log("\uD83D\uDE80 ~ createProfilesApi ~ params", params);
             return {
               url: "users/".concat(id, "/otp?code=").concat(code),
               method: "DELETE"
@@ -5429,7 +5423,7 @@ var OtpInput = function OtpInput(props) {
   })));
 };
 var baseContainerClassName$2 = "\n  @dy flex gap-2\n  @jyc justify-center\n  @ani items-center\n";
-var baseInputClassName$3 = "\n  @wh w-4/12\n  @tta text-center\n  @oe outline-none\n  @bdc bg-transparent\n";
+var baseInputClassName$3 = "\n  @wh w-4/12\n  @tta text-center\n  @bdc bg-transparent\n";
 
 var _excluded$1 = ["value", "placeholder", "onChange", "className", "disabled", "id"];
 var __jsx$d = React__default["default"].createElement;
@@ -21510,30 +21504,26 @@ var CopyButton = function CopyButton(props) {
 var AuthWrapper = function (_a) {
     var isAuth = _a.isAuth, children = _a.children, _b = _a.isPublic, isPublic = _b === void 0 ? false : _b, useRouter = _a.useRouter, 
     // user,
-    useMyProfile = _a.useMyProfile, redirectTo = _a.redirectTo;
+    useMyProfile = _a.useMyProfile, _c = _a.redirectTo, redirectTo = _c === void 0 ? "" : _c;
     var user = useMyProfile().me;
     var router = useRouter();
     var initPath = router.query.initPath;
-    var _c = __read(React.useState(initPath || ""), 2); _c[0]; _c[1];
-    // useEffect(() => {
-    //   setCachedInitPath((prev) => {
-    //     if (initPath !== "" && prev === "") {
-    //       return initPath;
-    //     }
-    //     return prev;
-    //   });
-    // }, [initPath]);
-    // useEffect(() => {
-    //   console.log(`🚀 ~ useEffect ~ cachedInitPath`, cachedInitPath);
-    // }, [cachedInitPath]);
-    var _d = __read(React.useState(false), 2), passed = _d[0], setPassed = _d[1];
+    var _d = __read(React.useState(redirectTo), 2), cachedInitPath = _d[0], setCachedInitPath = _d[1];
     React.useEffect(function () {
-        // console.log(`🚀 ~ useEffect ~ user`, user);
+        setCachedInitPath(function (prev) {
+            if (initPath) {
+                return initPath;
+            }
+            return prev;
+        });
+    }, [initPath]);
+    var _e = __read(React.useState(false), 2), passed = _e[0], setPassed = _e[1];
+    React.useEffect(function () {
         var _a;
         if (user.id) {
             setPassed(true);
             if ((_a = router.pathname) === null || _a === void 0 ? void 0 : _a.includes("/auth")) {
-                router.push(redirectTo);
+                router.push(cachedInitPath);
             }
             return;
         }
@@ -21542,8 +21532,9 @@ var AuthWrapper = function (_a) {
                 setPassed(true);
                 return;
             }
-            var pathQuery = !initPath ? "?initPath=".concat(router.asPath) : "";
-            // console.log(`🚀 ~ useEffect ~ pathQuery`, pathQuery);
+            var pathQuery = !initPath && !router.asPath.includes("/auth")
+                ? "?initPath=".concat(router.asPath)
+                : "";
             router.push("/auth/login".concat(pathQuery));
         }
         else if (isAuth) {

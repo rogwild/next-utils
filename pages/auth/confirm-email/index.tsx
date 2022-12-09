@@ -37,7 +37,7 @@ const ConfirmEmail = () => {
   });
 
   useEffect(() => {
-    console.log(`🚀 ~ ConfirmEmail ~ data`, data);
+    // console.log(`🚀 ~ ConfirmEmail ~ data`, data);
 
     if (!data) {
       return;
