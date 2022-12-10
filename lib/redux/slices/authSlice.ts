@@ -4,7 +4,11 @@ export interface IProfileState {
   id: string | undefined;
   jwt: string | undefined;
   isAuthenticated: boolean;
-  nextAuthFactor: "local" | "otp" | "email" | "phone";
+  nextAuthFactor?:
+    | "auth.callback"
+    | "auth.checkEmail"
+    | "auth.checkPhone"
+    | "user.checkOtp";
   nextAuthFactorKey?: string;
   user?: any;
 }
@@ -15,7 +19,6 @@ export const sliceCreator = (profilesApi) => {
     jwt:
       typeof window !== "undefined" ? localStorage.getItem("jwt") : undefined,
     isAuthenticated: false,
-    nextAuthFactor: "local",
   };
 
   return createSlice({
@@ -25,7 +28,7 @@ export const sliceCreator = (profilesApi) => {
       logout: (state) => {
         localStorage.removeItem(`jwt`);
         state.id = null;
-        state.nextAuthFactor = "local";
+        state.nextAuthFactor = "auth.callback";
         state.jwt = undefined;
         state.isAuthenticated = false;
         state.nextAuthFactorKey = "";
@@ -75,8 +78,8 @@ export const sliceCreator = (profilesApi) => {
           profilesApi.endpoints.getMe.matchFulfilled,
           (state, action) => {
             state.id = action.payload.id;
-
             state.isAuthenticated = true;
+            state.user = action.payload;
           }
         );
     },

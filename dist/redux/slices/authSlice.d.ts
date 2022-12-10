@@ -2,7 +2,7 @@ export interface IProfileState {
     id: string | undefined;
     jwt: string | undefined;
     isAuthenticated: boolean;
-    nextAuthFactor: "local" | "otp" | "email" | "phone";
+    nextAuthFactor?: "auth.callback" | "auth.checkEmail" | "auth.checkPhone" | "user.checkOtp";
     nextAuthFactorKey?: string;
     user?: any;
 }

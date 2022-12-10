@@ -3381,7 +3381,6 @@ var sliceCreator = function (profilesApi) {
         id: null,
         jwt: typeof window !== "undefined" ? localStorage.getItem("jwt") : undefined,
         isAuthenticated: false,
-        nextAuthFactor: "local",
     };
     return toolkit.createSlice({
         name: "auth",
@@ -3390,7 +3389,7 @@ var sliceCreator = function (profilesApi) {
             logout: function (state) {
                 localStorage.removeItem("jwt");
                 state.id = null;
-                state.nextAuthFactor = "local";
+                state.nextAuthFactor = "auth.callback";
                 state.jwt = undefined;
                 state.isAuthenticated = false;
                 state.nextAuthFactorKey = "";
@@ -3420,6 +3419,7 @@ var sliceCreator = function (profilesApi) {
                 .addMatcher(profilesApi.endpoints.getMe.matchFulfilled, function (state, action) {
                 state.id = action.payload.id;
                 state.isAuthenticated = true;
+                state.user = action.payload;
             });
         },
     });
