@@ -2592,7 +2592,7 @@ var useDebounce = function (value, delay) {
 var useSendEmailConfirmation = function useSendEmailConfirmation(_ref) {
   var profilesApi = _ref.profilesApi,
     _ref$inputsConfig = _ref.inputsConfig,
-    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$c : _ref$inputsConfig;
+    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$d : _ref$inputsConfig;
   var _profilesApi$useSendE = profilesApi.useSendEmailConfirmationMutation(),
     _profilesApi$useSendE2 = _slicedToArray(_profilesApi$useSendE, 2),
     sendEmailConfirmation = _profilesApi$useSendE2[0],
@@ -2634,7 +2634,7 @@ var useSendEmailConfirmation = function useSendEmailConfirmation(_ref) {
     data: data
   };
 };
-var defaultInputsConfig$c = [{
+var defaultInputsConfig$d = [{
   label: "Email",
   field: "email",
   checkerFuncs: ["checkRequiredField", "checkEmailMask"],
@@ -2646,7 +2646,7 @@ var defaultInputsConfig$c = [{
 var useForgotPassword = function useForgotPassword(_ref) {
   var profilesApi = _ref.profilesApi,
     _ref$inputsConfig = _ref.inputsConfig,
-    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$b : _ref$inputsConfig,
+    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$c : _ref$inputsConfig,
     authSlice = _ref.authSlice,
     useDispatch = _ref.useDispatch;
   var dispatch = useDispatch();
@@ -2696,7 +2696,7 @@ var useForgotPassword = function useForgotPassword(_ref) {
     setPassed: setPassed
   };
 };
-var defaultInputsConfig$b = [{
+var defaultInputsConfig$c = [{
   title: "Email address*",
   label: "Email address",
   field: "email",
@@ -2710,7 +2710,7 @@ function _objectSpread$g(target) { for (var i = 1; i < arguments.length; i++) { 
 var useLogin = function useLogin(_ref) {
   var profilesApi = _ref.profilesApi,
     _ref$inputsConfig = _ref.inputsConfig,
-    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$a : _ref$inputsConfig;
+    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$b : _ref$inputsConfig;
   var _profilesApi$useLogin = profilesApi.useLoginWithEmailAndPasswordMutation(),
     _profilesApi$useLogin2 = _slicedToArray(_profilesApi$useLogin, 2),
     loginWithEmailAndPassword = _profilesApi$useLogin2[0],
@@ -2774,7 +2774,7 @@ var useLogin = function useLogin(_ref) {
     isFetching: isFetching
   };
 };
-var defaultInputsConfig$a = [{
+var defaultInputsConfig$b = [{
   field: "identifier",
   checkerFuncs: ["checkRequiredField"],
   type: "text",
@@ -2801,7 +2801,7 @@ var defaultInputsConfig$a = [{
 var useRegister = function useRegister(_ref) {
   var profilesApi = _ref.profilesApi,
     _ref$inputsConfig = _ref.inputsConfig,
-    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$9 : _ref$inputsConfig;
+    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$a : _ref$inputsConfig;
   var _profilesApi$useRegis = profilesApi.useRegisterMutation(),
     _profilesApi$useRegis2 = _slicedToArray(_profilesApi$useRegis, 2),
     register = _profilesApi$useRegis2[0],
@@ -2850,7 +2850,7 @@ var useRegister = function useRegister(_ref) {
     inputsSetErrors: inputsSetErrors
   };
 };
-var defaultInputsConfig$9 = [{
+var defaultInputsConfig$a = [{
   label: "Username",
   field: "username",
   checkerFuncs: ["checkRequiredField"],
@@ -2895,7 +2895,7 @@ function _objectSpread$f(target) { for (var i = 1; i < arguments.length; i++) { 
 var useResetPassword = function useResetPassword(_ref) {
   var profilesApi = _ref.profilesApi,
     _ref$inputsConfig = _ref.inputsConfig,
-    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$8 : _ref$inputsConfig,
+    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$9 : _ref$inputsConfig,
     authSlice = _ref.authSlice,
     useDispatch = _ref.useDispatch;
   var dispatch = useDispatch();
@@ -2955,7 +2955,7 @@ var useResetPassword = function useResetPassword(_ref) {
     setInputsErrors: setInputsErrors
   };
 };
-var defaultInputsConfig$8 = [{
+var defaultInputsConfig$9 = [{
   label: "New Password",
   field: "password",
   checkerFuncs: ["checkRequiredField", "checkPassword"],
@@ -2984,7 +2984,7 @@ var defaultInputsConfig$8 = [{
 var usePhoneConfirmation = function usePhoneConfirmation(_ref) {
   var profilesApi = _ref.profilesApi,
     _ref$inputsConfig = _ref.inputsConfig,
-    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$7 : _ref$inputsConfig,
+    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$8 : _ref$inputsConfig,
     authSlice = _ref.authSlice;
   var auth = reactRedux.useSelector(authSlice.selectors.auth);
   var _useState = React.useState(),
@@ -3046,7 +3046,7 @@ var usePhoneConfirmation = function usePhoneConfirmation(_ref) {
     inputsSetErrors: inputsSetErrors
   };
 };
-var defaultInputsConfig$7 = [{
+var defaultInputsConfig$8 = [{
   label: "Verification code",
   field: "confirmation",
   type: "otp",
@@ -3057,7 +3057,7 @@ var defaultInputsConfig$7 = [{
 var useSendPhoneConfirmation = function useSendPhoneConfirmation(_ref) {
   var profilesApi = _ref.profilesApi,
     _ref$inputsConfig = _ref.inputsConfig,
-    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$6 : _ref$inputsConfig;
+    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$7 : _ref$inputsConfig;
   var _profilesApi$useSendP = profilesApi.useSendPhoneConfirmationMutation(),
     _profilesApi$useSendP2 = _slicedToArray(_profilesApi$useSendP, 2),
     sendPhoneConfirmation = _profilesApi$useSendP2[0],
@@ -3099,7 +3099,7 @@ var useSendPhoneConfirmation = function useSendPhoneConfirmation(_ref) {
     data: data
   };
 };
-var defaultInputsConfig$6 = [{
+var defaultInputsConfig$7 = [{
   label: "Phone",
   field: "phone",
   checkerFuncs: ["checkRequiredField"],
@@ -3112,7 +3112,7 @@ function _objectSpread$e(target) { for (var i = 1; i < arguments.length; i++) { 
 var useConfirmEmail = function useConfirmEmail(_ref) {
   var profilesApi = _ref.profilesApi,
     _ref$inputsConfig = _ref.inputsConfig,
-    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$5 : _ref$inputsConfig,
+    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$6 : _ref$inputsConfig,
     _ref$ping = _ref.ping,
     ping = _ref$ping === void 0 ? 30 : _ref$ping,
     _ref$initialPing = _ref.initialPing,
@@ -3234,7 +3234,7 @@ var useConfirmEmail = function useConfirmEmail(_ref) {
     setInputsErrors: setInputsErrors
   };
 };
-var defaultInputsConfig$5 = [{
+var defaultInputsConfig$6 = [{
   field: "email",
   checkerFuncs: ["checkRequiredField"],
   type: "text",
@@ -3254,7 +3254,7 @@ function _objectSpread$d(target) { for (var i = 1; i < arguments.length; i++) { 
 var useConfirmPhone = function useConfirmPhone(_ref) {
   var profilesApi = _ref.profilesApi,
     _ref$inputsConfig = _ref.inputsConfig,
-    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$4 : _ref$inputsConfig,
+    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$5 : _ref$inputsConfig,
     _ref$ping = _ref.ping,
     ping = _ref$ping === void 0 ? 30 : _ref$ping,
     useSelector = _ref.useSelector;
@@ -3369,7 +3369,7 @@ var useConfirmPhone = function useConfirmPhone(_ref) {
     setInputsErrors: setInputsErrors
   };
 };
-var defaultInputsConfig$4 = [{
+var defaultInputsConfig$5 = [{
   field: "phone",
   checkerFuncs: ["checkRequiredField"],
   type: "text",
@@ -3465,7 +3465,7 @@ var authSlice = /*#__PURE__*/Object.freeze({
 var useUpdateMe = function useUpdateMe(_ref) {
   var profilesApi = _ref.profilesApi,
     _ref$inputsConfig = _ref.inputsConfig,
-    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$3 : _ref$inputsConfig,
+    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$4 : _ref$inputsConfig,
     useSelector = _ref.useSelector;
   var _profilesApi$useUpdat = profilesApi.useUpdateMeMutation(),
     _profilesApi$useUpdat2 = _slicedToArray(_profilesApi$useUpdat, 2),
@@ -3512,7 +3512,7 @@ var useUpdateMe = function useUpdateMe(_ref) {
     setInputsErrors: setInputsErrors
   };
 };
-var defaultInputsConfig$3 = [{
+var defaultInputsConfig$4 = [{
   field: "username",
   checkerFuncs: ["checkRequiredField"],
   type: "text",
@@ -3558,7 +3558,7 @@ function _objectSpread$c(target) { for (var i = 1; i < arguments.length; i++) { 
 var useSetOtp = function useSetOtp(_ref) {
   var profilesApi = _ref.profilesApi,
     _ref$inputsConfig = _ref.inputsConfig,
-    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$2 : _ref$inputsConfig,
+    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$3 : _ref$inputsConfig,
     useSelector = _ref.useSelector;
   var accountId = useSelector(selectors.selectAccountId); //?
   var _profilesApi$useGener = profilesApi.useGenerateOtpSecretQuery({
@@ -3631,7 +3631,7 @@ var useSetOtp = function useSetOtp(_ref) {
     setInputsErrors: setInputsErrors
   };
 };
-var defaultInputsConfig$2 = [{
+var defaultInputsConfig$3 = [{
   title: "Code",
   field: "code",
   checkerFuncs: ["checkRequiredField"],
@@ -3643,7 +3643,7 @@ var defaultInputsConfig$2 = [{
 var useDeleteOtp = function useDeleteOtp(_ref) {
   var profilesApi = _ref.profilesApi,
     _ref$inputsConfig = _ref.inputsConfig,
-    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$1 : _ref$inputsConfig,
+    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$2 : _ref$inputsConfig,
     useSelector = _ref.useSelector;
   var accountId = useSelector(selectors.selectAccountId); //?
   var _profilesApi$useDelet = profilesApi.useDeleteOtpMutation(),
@@ -3690,7 +3690,7 @@ var useDeleteOtp = function useDeleteOtp(_ref) {
     setInputsErrors: setInputsErrors
   };
 };
-var defaultInputsConfig$1 = [{
+var defaultInputsConfig$2 = [{
   title: "Code",
   field: "code",
   checkerFuncs: ["checkRequiredField"],
@@ -3704,7 +3704,7 @@ function _objectSpread$b(target) { for (var i = 1; i < arguments.length; i++) { 
 var useCheckOtp = function useCheckOtp(_ref) {
   var profilesApi = _ref.profilesApi,
     _ref$inputsConfig = _ref.inputsConfig,
-    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig : _ref$inputsConfig,
+    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$1 : _ref$inputsConfig,
     useSelector = _ref.useSelector;
   var user = useSelector(function (state) {
     var _state$auth;
@@ -3769,13 +3769,79 @@ var useCheckOtp = function useCheckOtp(_ref) {
     setInputsErrors: setInputsErrors
   };
 };
-var defaultInputsConfig = [{
+var defaultInputsConfig$1 = [{
   title: "Code",
   field: "code",
   checkerFuncs: ["checkRequiredField"],
   label: "Code",
   placeholder: "Type code here",
   type: "otp"
+}];
+
+var useChangePassword = function useChangePassword(_ref) {
+  var profilesApi = _ref.profilesApi,
+    _ref$inputsConfig = _ref.inputsConfig,
+    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig : _ref$inputsConfig;
+  var _profilesApi$useChang = profilesApi.useChangePasswordMutation(),
+    _profilesApi$useChang2 = _slicedToArray(_profilesApi$useChang, 2),
+    changePassword = _profilesApi$useChang2[0],
+    _profilesApi$useChang3 = _profilesApi$useChang2[1],
+    isSuccess = _profilesApi$useChang3.isSuccess,
+    error = _profilesApi$useChang3.error,
+    data = _profilesApi$useChang3.data,
+    isLoading = _profilesApi$useChang3.isLoading;
+  var submitFunc = function submitFunc(_ref2) {
+    var inputs = _ref2.inputs,
+      files = _ref2.files;
+    changePassword({
+      data: inputs,
+      files: files
+    });
+  };
+  var memoInputsConfig = React.useMemo(function () {
+    return inputsConfig;
+  }, [inputsConfig]);
+  var _useForm = useForm({
+      inputsConfig: memoInputsConfig,
+      submitFunc: submitFunc,
+      inputPropsType: "object"
+    }),
+    inputs = _useForm.inputs,
+    onSubmit = _useForm.onSubmit,
+    inputsValues = _useForm.inputsValues,
+    inputsErrors = _useForm.errors,
+    setInputsErrors = _useForm.setErrors;
+  return {
+    data: data,
+    isLoading: isLoading,
+    error: error,
+    inputsValues: inputsValues,
+    inputs: inputs,
+    onSubmit: onSubmit,
+    isSuccess: isSuccess,
+    inputsErrors: inputsErrors,
+    setInputsErrors: setInputsErrors
+  };
+};
+var defaultInputsConfig = [{
+  label: "Current Password",
+  field: "password",
+  checkerFuncs: ["checkRequiredField"],
+  config: {
+    enableTypeChanging: true
+  },
+  type: "password",
+  placeholder: "Type your current password"
+}, {
+  label: "New Password",
+  field: "passwordConfirmation",
+  checkerFuncs: ["checkRequiredField"],
+  config: {
+    equalTo: "password",
+    enableTypeChanging: true
+  },
+  type: "password",
+  placeholder: "Type new password"
 }];
 
 var useAuth = {
@@ -3792,7 +3858,8 @@ var useAuth = {
   useMyProfileCreator: useMyProfileCreator,
   useSetOtp: useSetOtp,
   useDeleteOtp: useDeleteOtp,
-  useCheckOtp: useCheckOtp
+  useCheckOtp: useCheckOtp,
+  useChangePassword: useChangePassword
 };
 
 function ownKeys$a(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
@@ -4050,6 +4117,17 @@ function createProfilesApi(backendServiceApi) {
           },
           transformResponse: transformResponseItem
         }),
+        changePassword: build.mutation({
+          query: function query(params) {
+            var formData = prepareDataToSend(params);
+            return {
+              url: "auth/change-password",
+              method: "POST",
+              body: formData
+            };
+          },
+          transformResponse: transformResponseItem
+        }),
         register: build.mutation({
           query: function query(params) {
             var formData = prepareDataToSend(params);
@@ -4143,6 +4221,7 @@ function createProfilesApi(backendServiceApi) {
     useForgotPasswordMutation = profilesApi.useForgotPasswordMutation,
     useResetPasswordMutation = profilesApi.useResetPasswordMutation,
     useCheckOtpMutation = profilesApi.useCheckOtpMutation,
+    useChangePasswordMutation = profilesApi.useChangePasswordMutation,
     useSendConfirmEmailMutation = profilesApi.useSendConfirmEmailMutation,
     useUpdateMeMutation = profilesApi.useUpdateMeMutation,
     useRegisterMutation = profilesApi.useRegisterMutation,
@@ -4163,6 +4242,7 @@ function createProfilesApi(backendServiceApi) {
       useSendEmailConfirmationMutation: useSendEmailConfirmationMutation,
       useForgotPasswordMutation: useForgotPasswordMutation,
       useResetPasswordMutation: useResetPasswordMutation,
+      useChangePasswordMutation: useChangePasswordMutation,
       useCheckOtpMutation: useCheckOtpMutation,
       useSendConfirmEmailMutation: useSendConfirmEmailMutation,
       useUpdateMeMutation: useUpdateMeMutation,
@@ -18030,7 +18110,7 @@ var CheckboxInput = function CheckboxInput(props) {
     if (value == "") {
       setLocalValue(false);
     }
-  }, []);
+  }, [value]);
   React.useEffect(function () {
     var e = {
       target: {}

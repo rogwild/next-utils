@@ -415,6 +415,40 @@ declare const _default: {
             inputsErrors: {};
             setInputsErrors: import("react").Dispatch<import("react").SetStateAction<{}>>;
         };
+        useChangePassword: ({ profilesApi, inputsConfig, }: {
+            profilesApi: any;
+            inputsConfig?: ({
+                label: string;
+                field: string;
+                checkerFuncs: string[];
+                config: {
+                    enableTypeChanging: boolean;
+                    equalTo?: undefined;
+                };
+                type: string;
+                placeholder: string;
+            } | {
+                label: string;
+                field: string;
+                checkerFuncs: string[];
+                config: {
+                    equalTo: string;
+                    enableTypeChanging: boolean;
+                };
+                type: string;
+                placeholder: string;
+            })[];
+        }) => {
+            data: any;
+            isLoading: any;
+            error: any;
+            inputsValues: {};
+            inputs: {};
+            onSubmit: (e: any, submitProps?: {}) => any;
+            isSuccess: any;
+            inputsErrors: {};
+            setInputsErrors: import("react").Dispatch<import("react").SetStateAction<{}>>;
+        };
         useDetectMouseover: (el: any, initialState: any) => any[];
         useDetectOutsideClick: (trigger: any, initialState: any) => any[];
         useLookupTable: ({ columns, data: passedData, memoUpdateFunc, getRowId, config, initialFiltersState, }: array<import("./hooks/use-lookup-table").ColumnItemObject>) => import("./hooks/use-lookup-table").ReturnObject;
