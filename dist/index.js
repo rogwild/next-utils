@@ -2602,9 +2602,11 @@ var useSendEmailConfirmation = function useSendEmailConfirmation(_ref) {
     isSuccess = _profilesApi$useSendE3.isSuccess,
     data = _profilesApi$useSendE3.data;
   var submitFunc = function submitFunc(_ref2) {
-    var inputs = _ref2.inputs;
+    var inputs = _ref2.inputs,
+      files = _ref2.files;
     sendEmailConfirmation({
-      data: inputs
+      data: inputs,
+      files: files
     });
   };
   var memoInputsConfig = React.useMemo(function () {
@@ -2661,9 +2663,11 @@ var useForgotPassword = function useForgotPassword(_ref) {
     sessionStorage.removeItem("jwt");
   }, [authSlice === null || authSlice === void 0 ? void 0 : authSlice.actions]);
   var submitFunc = function submitFunc(_ref2) {
-    var inputs = _ref2.inputs;
+    var inputs = _ref2.inputs,
+      files = _ref2.files;
     forgotPassword({
-      data: inputs
+      data: inputs,
+      files: files
     });
   };
   var memoInputsConfig = React.useMemo(function () {
@@ -2720,9 +2724,11 @@ var useLogin = function useLogin(_ref) {
     return inputsConfig;
   }, [inputsConfig]);
   var submitFunc = function submitFunc(_ref2) {
-    var inputs = _ref2.inputs;
+    var inputs = _ref2.inputs,
+      files = _ref2.files;
     loginWithEmailAndPassword({
-      data: inputs
+      data: inputs,
+      files: files
     });
   };
   var _useForm = useForm({
@@ -2808,9 +2814,11 @@ var useRegister = function useRegister(_ref) {
     return inputsConfig;
   }, [inputsConfig]);
   var submitFunc = function submitFunc(_ref2) {
-    var inputs = _ref2.inputs;
+    var inputs = _ref2.inputs,
+      files = _ref2.files;
     register({
-      data: inputs
+      data: inputs,
+      files: files
     });
   };
   var afterPassed = function afterPassed(_ref3) {
@@ -2905,9 +2913,11 @@ var useResetPassword = function useResetPassword(_ref) {
     data = _profilesApi$useReset3.data,
     isLoading = _profilesApi$useReset3.isLoading;
   var submitFunc = function submitFunc(_ref2) {
-    var inputs = _ref2.inputs;
+    var inputs = _ref2.inputs,
+      files = _ref2.files;
     resetPassword({
-      data: inputs
+      data: inputs,
+      files: files
     });
   };
   var memoInputsConfig = React.useMemo(function () {
@@ -3057,9 +3067,11 @@ var useSendPhoneConfirmation = function useSendPhoneConfirmation(_ref) {
     isSuccess = _profilesApi$useSendP3.isSuccess,
     data = _profilesApi$useSendP3.data;
   var submitFunc = function submitFunc(_ref2) {
-    var inputs = _ref2.inputs;
+    var inputs = _ref2.inputs,
+      files = _ref2.files;
     sendPhoneConfirmation({
-      data: inputs
+      data: inputs,
+      files: files
     });
   };
   var memoInputsConfig = React.useMemo(function () {
@@ -3566,10 +3578,12 @@ var useSetOtp = function useSetOtp(_ref) {
     data = _profilesApi$useSetOt3.data,
     isLoading = _profilesApi$useSetOt3.isLoading;
   var submitFunc = function submitFunc(_ref2) {
-    var inputs = _ref2.inputs;
+    var inputs = _ref2.inputs,
+      files = _ref2.files;
     setOtp({
       id: accountId,
-      data: inputs
+      data: inputs,
+      files: files
     });
   };
   var memoInputsConfig = React.useMemo(function () {
@@ -3641,10 +3655,12 @@ var useDeleteOtp = function useDeleteOtp(_ref) {
     data = _profilesApi$useDelet3.data,
     isLoading = _profilesApi$useDelet3.isLoading;
   var submitFunc = function submitFunc(_ref2) {
-    var inputs = _ref2.inputs;
+    var inputs = _ref2.inputs,
+      files = _ref2.files;
     deleteOtp({
       id: accountId,
-      data: inputs
+      data: inputs,
+      files: files
     });
   };
   var memoInputsConfig = React.useMemo(function () {
@@ -3982,7 +3998,6 @@ function createProfilesApi(backendServiceApi) {
 
             return {
               url: "auth/email-confirmation?".concat(stringifiedParams),
-              mode: "cors",
               headers: headers
             };
           },
@@ -4084,15 +4099,12 @@ function createProfilesApi(backendServiceApi) {
         }),
         setOtp: build.mutation({
           query: function query(params) {
-            var id = params.id,
-              data = params.data; //?
-
+            var id = params.id; //?
+            var formData = prepareDataToSend(params);
             return {
               url: "users/".concat(id, "/otp"),
               method: "POST",
-              body: {
-                data: data
-              }
+              body: formData
             };
           },
           transformResponse: transformResponseItem,
@@ -4101,10 +4113,13 @@ function createProfilesApi(backendServiceApi) {
         deleteOtp: build.mutation({
           query: function query(params) {
             var id = params.id,
-              data = params.data; //?
-            var code = data.code;
+              data = params.data,
+              _params$headers2 = params.headers,
+              headers = _params$headers2 === void 0 ? {} : _params$headers2;
             return {
-              url: "users/".concat(id, "/otp?code=").concat(code),
+              url: "users/".concat(id, "/otp"),
+              params: _objectSpread$9({}, data),
+              headers: headers,
               method: "DELETE"
             };
           },
