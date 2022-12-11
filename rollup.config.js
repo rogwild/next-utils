@@ -38,6 +38,7 @@ export default {
     "next",
     "react",
     "react-table",
+    "react-redux",
     "axios",
     "qs",
     "transition-component",
@@ -47,7 +48,6 @@ export default {
     "react-calendar",
     "@use-gesture/react",
     "@reduxjs/toolkit",
-    "react-redux",
     "@react-spring/web",
   ],
 };

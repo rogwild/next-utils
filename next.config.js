@@ -6,7 +6,15 @@
 module.exports = {
   reactStrictMode: false,
   images: {
-    domains: [`localhost`, `*.apisps.ru`, `apisps.ru`, `vercel.app`],
+    domains: [
+      `localhost`,
+      `*.apisps.ru`,
+      `apisps.ru`,
+      `vercel.app`,
+      `tailwindui.com`,
+      `*.unsplash.com`,
+      `unsplash.com`,
+    ],
   },
   trailingSlash: true,
 };

@@ -3516,10 +3516,11 @@ var useMyProfileCreator = function (_a) {
     var jwtToken = useSelector(selectors.selectJwt);
     var _b = profilesApi.useGetMeQuery(undefined, { skip: !jwtToken }), myProfileByMe = _b.data, meError = _b.error, refetchMe = _b.refetch, isUninitialized = _b.isUninitialized;
     var _c = profilesApi.useGetProfileByIdQuery({ id: accountId, populate: populate }, {
-        skip: !jwtToken || !accountId,
+        skip: !jwtToken,
         pollingInterval: 60000,
     }), filledProfile = _c.data, refetchProfileById = _c.refetch;
     React.useEffect(function () {
+        console.log("\uD83D\uDE80 ~ meError", meError);
         if (!isUninitialized &&
             meError &&
             ((meError === null || meError === void 0 ? void 0 : meError.status) !== 403 || (meError === null || meError === void 0 ? void 0 : meError.status) !== 401)) {
@@ -3906,6 +3907,7 @@ var prepareDataToSend = function prepareDataToSend(params) {
   });
   var formData = new FormData();
   formData.append("data", JSON.stringify(clearedData));
+  console.log("\uD83D\uDE80 ~ prepareDataToSend ~ files", files);
   if (files) {
     appendFilesToFormData(formData, files);
   }

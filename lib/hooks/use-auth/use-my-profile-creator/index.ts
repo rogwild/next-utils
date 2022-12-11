@@ -26,12 +26,14 @@ const useMyProfileCreator = ({
     profilesApi.useGetProfileByIdQuery(
       { id: accountId, populate },
       {
-        skip: !jwtToken || !accountId,
+        skip: !jwtToken,
         pollingInterval: 60000,
       }
     );
 
   useEffect(() => {
+    console.log(`🚀 ~ meError`, meError);
+
     if (
       !isUninitialized &&
       meError &&
