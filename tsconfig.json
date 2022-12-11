@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "./built",
+    "outDir": "build",
     "allowJs": true,
     "target": "es5",
     "jsx": "preserve",
@@ -37,13 +37,6 @@
     "typeRoots": ["./node_modules/@types", "types"]
   },
   "types": ["jest", "@testing-library/jest-dom"],
-  "exclude": ["node_modules"],
-  "include": [
-    "src/redux/index.js",
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "lib/**/*",
-    "jest.config.js"
-  ]
+  "exclude": ["node_modules", "dist"],
+  "include": ["lib"]
 }

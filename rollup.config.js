@@ -9,7 +9,7 @@ import typescript from "@rollup/plugin-typescript";
 import { babel } from "@rollup/plugin-babel";
 import pkg from "./package.json";
 
-export default {
+const config = {
   input: "lib/index.ts",
   output: [
     {
@@ -35,19 +35,13 @@ export default {
     commonjs(),
   ],
   external: [
-    "next",
+    ...Object.keys(pkg.dependencies).filter(
+      (p) => !["react-markdown"].includes(p)
+    ),
     "react",
-    "react-table",
-    "react-redux",
-    "axios",
-    "qs",
-    "transition-component",
-    "react-spring",
-    "react-dom",
-    "prop-types",
-    "react-calendar",
-    "@use-gesture/react",
-    "@reduxjs/toolkit",
-    "@react-spring/web",
+    "rect-dom",
   ],
 };
+
+export default config;
+console.log(`🚀 ~ config`, config);
