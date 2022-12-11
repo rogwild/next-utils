@@ -3915,10 +3915,12 @@ function profileInvalidate(result, _error) {
 var prepareDataToSend = function prepareDataToSend(params) {
   var data = params.data,
     files = params.files;
+  console.log("\uD83D\uDE80 ~ prepareDataToSend ~ data", data);
   var clearedData = removeEmptyFields({
     data: data,
     files: files
   });
+  console.log("\uD83D\uDE80 ~ prepareDataToSend ~ clearedData", clearedData);
   var formData = new FormData();
   formData.append("data", JSON.stringify(clearedData));
   console.log("\uD83D\uDE80 ~ prepareDataToSend ~ files", files);
@@ -18689,7 +18691,7 @@ var UploadFileInput = function UploadFileInput(props) {
           return backendFile.id !== file.id;
         });
       } else {
-        e.target.value = undefined;
+        e.target.value = null;
         // console.log(`🚀 ~ handleDelete ~ e.target.value`, e.target.value);
       }
     }
