@@ -3117,7 +3117,12 @@ var useConfirmEmail = function useConfirmEmail(_ref) {
     ping = _ref$ping === void 0 ? 30 : _ref$ping,
     _ref$initialPing = _ref.initialPing,
     initialPing = _ref$initialPing === void 0 ? 0 : _ref$initialPing,
+    _ref$resendOnMount = _ref.resendOnMount,
+    resendOnMount = _ref$resendOnMount === void 0 ? false : _ref$resendOnMount,
     useSelector = _ref.useSelector;
+  var _useState = React.useState(!resendOnMount),
+    onMountEmailWasSent = _useState[0],
+    setOnMountEmailWasSent = _useState[1];
   var user = useSelector(function (state) {
     var _state$auth;
     return (_state$auth = state.auth) === null || _state$auth === void 0 ? void 0 : _state$auth.user;
@@ -3151,9 +3156,9 @@ var useConfirmEmail = function useConfirmEmail(_ref) {
     resendEmailConfirmationIsLoading = _profilesApi$useSendE3.isLoading,
     resendEmailConfirmationIsSuccess = _profilesApi$useSendE3.isSuccess,
     resendEmailConfirmationData = _profilesApi$useSendE3.data;
-  var _useState = React.useState(initialPing),
-    counter = _useState[0],
-    setCounter = _useState[1];
+  var _useState2 = React.useState(initialPing),
+    counter = _useState2[0],
+    setCounter = _useState2[1];
   React.useEffect(function () {
     var timer = counter > 0 && setInterval(function () {
       return setCounter(counter - 1);
@@ -3196,6 +3201,12 @@ var useConfirmEmail = function useConfirmEmail(_ref) {
       }
     });
   };
+  React.useEffect(function () {
+    if (!onMountEmailWasSent && inputsValues !== null && inputsValues !== void 0 && inputsValues.email) {
+      resendEmailConfirmation();
+      setOnMountEmailWasSent(true);
+    }
+  }, [inputsValues]);
   React.useEffect(function () {
     if (user) {
       if (user.email) {
@@ -3526,7 +3537,7 @@ var useMyProfileCreator = function (_a) {
     var jwtToken = useSelector(selectors.selectJwt);
     var _b = profilesApi.useGetMeQuery(undefined, { skip: !jwtToken }), myProfileByMe = _b.data, meError = _b.error, refetchMe = _b.refetch, isUninitialized = _b.isUninitialized;
     var _c = profilesApi.useGetProfileByIdQuery({ id: accountId, populate: populate }, {
-        skip: !jwtToken,
+        skip: !jwtToken || !accountId,
         pollingInterval: 60000,
     }), filledProfile = _c.data, refetchProfileById = _c.refetch;
     React.useEffect(function () {

@@ -26,7 +26,7 @@ const useMyProfileCreator = ({
     profilesApi.useGetProfileByIdQuery(
       { id: accountId, populate },
       {
-        skip: !jwtToken,
+        skip: !jwtToken || !accountId,
         pollingInterval: 60000,
       }
     );

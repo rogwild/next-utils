@@ -1,3 +1,4 @@
+/// <reference types="react" />
 import * as apiUtils from "./api";
 import * as formatters from "./formatters";
 import * as vanilla from "./vanilla";
@@ -245,7 +246,7 @@ declare const _default: {
             isSuccess: any;
             data: any;
         };
-        useConfirmEmail: ({ profilesApi, inputsConfig, ping, initialPing, useSelector, }: {
+        useConfirmEmail: ({ profilesApi, inputsConfig, ping, initialPing, resendOnMount, useSelector, }: {
             profilesApi: any;
             inputsConfig?: ({
                 field: string;
@@ -264,6 +265,7 @@ declare const _default: {
             })[];
             ping?: number;
             initialPing?: number;
+            resendOnMount?: boolean;
             useSelector: any;
         }) => {
             counter: number;
