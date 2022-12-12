@@ -28,15 +28,6 @@ export const snakeToCamel = (str: string) => {
   });
 };
 
-export const flatItemAttributes = (data) => {
-  if (!data?.attributes) return data;
-
-  return {
-    id: data?.id,
-    ...data.attributes,
-  };
-};
-
 export const transformEntriesInObj = (item) => {
   if (isObject(item) && !isArray(item)) {
     const entries = Object.entries(item).map((entry) => {
@@ -68,11 +59,11 @@ export const transformResponseItem = (resItem: any) => {
     if (isArray(resItem.data)) {
       resItem = [...resItem.data];
     } else if (isObject(resItem.data)) {
-      resItem = transformEntriesInObj(flatItemAttributes(resItem.data));
+      resItem = transformEntriesInObj(resItem.data);
     } else if (resItem.data === null) {
       resItem = null;
     } else {
-      resItem = transformEntriesInObj(flatItemAttributes(resItem));
+      resItem = transformEntriesInObj(resItem);
     }
 
     if (isObject(resItem) && isObject(resItem.meta)) {

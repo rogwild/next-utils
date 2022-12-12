@@ -233,11 +233,6 @@ var snakeToCamel = function (str) {
         return char.toUpperCase().replace("-", "").replace("_", "");
     });
 };
-var flatItemAttributes = function (data) {
-    if (!(data === null || data === void 0 ? void 0 : data.attributes))
-        return data;
-    return _assign({ id: data === null || data === void 0 ? void 0 : data.id }, data.attributes);
-};
 var transformEntriesInObj = function (item) {
     if (isObject(item) && !isArray$1(item)) {
         var entries = Object.entries(item).map(function (entry) {
@@ -264,13 +259,13 @@ var transformResponseItem$1 = function (resItem) {
             resItem = __spreadArray([], __read(resItem.data), false);
         }
         else if (isObject(resItem.data)) {
-            resItem = transformEntriesInObj(flatItemAttributes(resItem.data));
+            resItem = transformEntriesInObj(resItem.data);
         }
         else if (resItem.data === null) {
             resItem = null;
         }
         else {
-            resItem = transformEntriesInObj(flatItemAttributes(resItem));
+            resItem = transformEntriesInObj(resItem);
         }
         if (isObject(resItem) && isObject(resItem.meta)) {
             resItem._meta = resItem.meta;
