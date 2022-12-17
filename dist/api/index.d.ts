@@ -57,5 +57,6 @@ export declare const handleApiError: (error: any) => {
     event: string;
     title: any;
 };
+export declare const prepareFormDataToSend: (params: any) => FormData;
 export declare const ApiClient: typeof Api;
 export declare const transformResponseItem: (resItem: any) => any;

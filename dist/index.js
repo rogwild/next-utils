@@ -556,6 +556,19 @@ var handleApiError = function (error) {
             : "Something went wrong :(",
     });
 };
+var prepareFormDataToSend = function (params) {
+    var data = params.data, files = params.files;
+    // console.log(`🚀 ~ prepareDataToSend ~ data`, data);
+    var clearedData = removeEmptyFields({ data: data, files: files });
+    // console.log(`🚀 ~ prepareDataToSend ~ clearedData`, clearedData);
+    var formData = new FormData();
+    formData.append("data", JSON.stringify(clearedData));
+    // console.log(`🚀 ~ prepareDataToSend ~ files`, files);
+    if (files) {
+        appendFilesToFormData(formData, files);
+    }
+    return formData;
+};
 var ApiClient = Api;
 var transformResponseItem = transformResponseItem$1;
 
@@ -569,6 +582,7 @@ var apiUtils = /*#__PURE__*/Object.freeze({
     removeEmptyFields: removeEmptyFields,
     getPageData: getPageData,
     handleApiError: handleApiError,
+    prepareFormDataToSend: prepareFormDataToSend,
     ApiClient: ApiClient,
     transformResponseItem: transformResponseItem
 });
@@ -3985,23 +3999,6 @@ function profileInvalidate(result, _error) {
     id: result.id
   }] : [];
 }
-var prepareDataToSend = function prepareDataToSend(params) {
-  var data = params.data,
-    files = params.files;
-  console.log("\uD83D\uDE80 ~ prepareDataToSend ~ data", data);
-  var clearedData = removeEmptyFields({
-    data: data,
-    files: files
-  });
-  console.log("\uD83D\uDE80 ~ prepareDataToSend ~ clearedData", clearedData);
-  var formData = new FormData();
-  formData.append("data", JSON.stringify(clearedData));
-  console.log("\uD83D\uDE80 ~ prepareDataToSend ~ files", files);
-  if (files) {
-    appendFilesToFormData(formData, files);
-  }
-  return formData;
-};
 function createProfilesApi(backendServiceApi) {
   var profilesApi = backendServiceApi.injectEndpoints({
     endpoints: function endpoints(build) {
@@ -4024,7 +4021,7 @@ function createProfilesApi(backendServiceApi) {
         }),
         loginWithEmailAndPassword: build.mutation({
           query: function query(params) {
-            var formData = prepareDataToSend(params);
+            var formData = prepareFormDataToSend(params);
             return {
               method: "POST",
               url: "auth/local",
@@ -4051,7 +4048,7 @@ function createProfilesApi(backendServiceApi) {
         }),
         sendEmailConfirmation: build.mutation({
           query: function query(params) {
-            var formData = prepareDataToSend(params);
+            var formData = prepareFormDataToSend(params);
             return {
               url: "auth/send-email-confirmation",
               method: "POST",
@@ -4080,7 +4077,7 @@ function createProfilesApi(backendServiceApi) {
         }),
         sendPhoneConfirmation: build.mutation({
           query: function query(params) {
-            var formData = prepareDataToSend(params);
+            var formData = prepareFormDataToSend(params);
             return {
               url: "auth/send-phone-confirmation",
               method: "POST",
@@ -4103,7 +4100,7 @@ function createProfilesApi(backendServiceApi) {
         }),
         forgotPassword: build.mutation({
           query: function query(params) {
-            var formData = prepareDataToSend(params);
+            var formData = prepareFormDataToSend(params);
             return {
               url: "auth/forgot-password",
               method: "POST",
@@ -4114,7 +4111,7 @@ function createProfilesApi(backendServiceApi) {
         }),
         resetPassword: build.mutation({
           query: function query(params) {
-            var formData = prepareDataToSend(params);
+            var formData = prepareFormDataToSend(params);
             return {
               url: "auth/reset-password",
               method: "POST",
@@ -4125,7 +4122,7 @@ function createProfilesApi(backendServiceApi) {
         }),
         changePassword: build.mutation({
           query: function query(params) {
-            var formData = prepareDataToSend(params);
+            var formData = prepareFormDataToSend(params);
             return {
               url: "auth/change-password",
               method: "POST",
@@ -4136,7 +4133,7 @@ function createProfilesApi(backendServiceApi) {
         }),
         register: build.mutation({
           query: function query(params) {
-            var formData = prepareDataToSend(params);
+            var formData = prepareFormDataToSend(params);
             return {
               url: "auth/local/register",
               method: "POST",
@@ -4149,7 +4146,7 @@ function createProfilesApi(backendServiceApi) {
           query: function query(params) {
             var id = params.id; //?
 
-            var formData = prepareDataToSend(params);
+            var formData = prepareFormDataToSend(params);
             return {
               url: "users/".concat(id),
               method: "PUT",
@@ -4186,7 +4183,7 @@ function createProfilesApi(backendServiceApi) {
         setOtp: build.mutation({
           query: function query(params) {
             var id = params.id; //?
-            var formData = prepareDataToSend(params);
+            var formData = prepareFormDataToSend(params);
             return {
               url: "users/".concat(id, "/otp"),
               method: "POST",

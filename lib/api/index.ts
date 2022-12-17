@@ -232,5 +232,26 @@ export const handleApiError = (error: any) => ({
     : `Something went wrong :(`,
 });
 
+export const prepareFormDataToSend = (params) => {
+  const { data, files } = params;
+
+  // console.log(`🚀 ~ prepareDataToSend ~ data`, data);
+
+  const clearedData = removeEmptyFields({ data, files });
+
+  // console.log(`🚀 ~ prepareDataToSend ~ clearedData`, clearedData);
+
+  const formData = new FormData();
+  formData.append(`data`, JSON.stringify(clearedData));
+
+  // console.log(`🚀 ~ prepareDataToSend ~ files`, files);
+
+  if (files) {
+    appendFilesToFormData(formData, files);
+  }
+
+  return formData;
+};
+
 export const ApiClient = Api;
 export const transformResponseItem = transformResponseItemFunc;
