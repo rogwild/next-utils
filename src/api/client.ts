@@ -1,9 +1,10 @@
 import axios from "axios";
 import { stringify } from "qs";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+import notification from "../components/spring-notification";
+const { createNotification } = notification;
 
-function createEventNotification(props: any) {}
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 export const combineHeaders = ({ withAuth }: { withAuth?: boolean }) => {
   const headers: {
@@ -132,7 +133,7 @@ export class Api {
 
         console.log(`error`, method, model, error.response?.data);
         notifyError &&
-          createEventNotification({
+          createNotification({
             event: `error`,
             title: message,
           });
