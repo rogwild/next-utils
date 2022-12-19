@@ -1,14 +1,42 @@
 {
   "compilerOptions": {
-    "outDir": "./built",
+    "outDir": "build",
     "allowJs": true,
     "target": "es5",
-    "jsx": "react",
+    "jsx": "preserve",
     "allowSyntheticDefaultImports": true,
     "declaration": true,
     "downlevelIteration": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "skipLibCheck": true,
+    "strict": false,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "incremental": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "baseUrl": ".",
+    "paths": {
+      "~store/*": ["./src/store/*"],
+      "~api/*": ["./src/api/*"],
+      "~components/*": ["./src/components/*"],
+      "~ui/*": ["./src/components/ui/*"],
+      "~utils/*": ["./src/utils/*"],
+      "~redux/*": ["./src/redux/*"],
+      "~transformers/*": ["./src/utils/transformers/*"],
+      "~hooks/*": ["./src/hooks/*"],
+      "~web3/*": ["./src/web3/*"],
+      "~abi/*": ["./src/web3/configs/abi/*"],
+      "~backend/*": ["./src/redux/services/backend/*"],
+      "~next-utils": ["./dist"]
+    },
+    "typeRoots": ["./node_modules/@types", "types"]
   },
-  "exclude": ["node_modules"],
-  "include": ["./src/**/*"]
+  "types": ["jest", "@testing-library/jest-dom"],
+  "exclude": ["node_modules", "dist"],
+  "include": ["lib"]
 }

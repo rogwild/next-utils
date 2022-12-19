@@ -3,9 +3,9 @@ import {
   transformResponseItem,
   getImageUrl,
   ApiClient,
-} from "../src/api";
+} from "../lib/api";
 
-describe("API UTILS", () => {
+describe.skip("API UTILS", () => {
   describe("getImageUrl", () => {
     const BACKEND_URL = "http://localhost:1337";
     const imageFromBackend = {
@@ -87,7 +87,7 @@ describe("API UTILS", () => {
   });
 
   describe("getPageData", () => {
-    it.only("should get data and transform it", async () => {
+    it("should get data and transform it", async () => {
       const transformers = {
         ["page-blocks.main-block"]: (block) => {
           block; //?

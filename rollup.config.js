@@ -9,8 +9,8 @@ import typescript from "@rollup/plugin-typescript";
 import { babel } from "@rollup/plugin-babel";
 import pkg from "./package.json";
 
-export default {
-  input: "src/index.ts",
+const config = {
+  input: "lib/index.ts",
   output: [
     {
       file: pkg.main,
@@ -22,25 +22,25 @@ export default {
   ],
   plugins: [
     resolve(),
+    typescript({
+      tsconfig: "tsconfig.lib.json",
+      module: "esnext",
+    }),
     babel({
       babelHelpers: "runtime",
       skipPreflightCheck: true,
+      plugins: [],
+      presets: ["next/babel"],
     }),
     commonjs(),
-    typescript(),
   ],
   external: [
+    ...Object.keys(pkg.dependencies).filter(
+      (p) => !["react-markdown"].includes(p)
+    ),
     "react",
-    "react-table",
-    "axios",
-    "qs",
-    "transition-component",
-    "react-spring",
-    "react-dom",
-    "prop-types",
-    "react-markdown",
-    "react-calendar",
-    "@use-gesture/react",
-    "@reduxjs/toolkit",
+    "rect-dom",
   ],
 };
+
+export default config;

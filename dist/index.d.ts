@@ -7,9 +7,453 @@ declare const _default: {
     formatters: typeof formatters;
     vanilla: typeof vanilla;
     hooks: {
+        useSendEmailConfirmation: ({ profilesApi, inputsConfig, }: {
+            profilesApi: any;
+            inputsConfig?: {
+                label: string;
+                field: string;
+                checkerFuncs: string[];
+                type: string;
+                id: string;
+                placeholder: string;
+            }[];
+        }) => {
+            inputs: {};
+            inputsErrors: {};
+            inputsSetErrors: import("react").Dispatch<import("react").SetStateAction<{}>>;
+            error: any;
+            inputsValues: {};
+            onSubmit: (e: any, submitProps?: {}) => any;
+            isLoading: any;
+            isSuccess: any;
+            data: any;
+        };
+        usePhoneConfirmation: ({ profilesApi, inputsConfig, authSlice, }: {
+            profilesApi: any;
+            inputsConfig?: {
+                label: string;
+                field: string;
+                type: string;
+                checkerFuncs: string[];
+                id: string;
+            }[];
+            authSlice: any;
+        }) => {
+            inputs: {};
+            inputsValues: {};
+            onSubmit: (e: any, submitProps?: {}) => any;
+            error: any;
+            isSuccess: any;
+            inputsErrors: {};
+            inputsSetErrors: import("react").Dispatch<import("react").SetStateAction<{}>>;
+        };
+        useForgotPassword: ({ profilesApi, inputsConfig, authSlice, useDispatch, }: {
+            profilesApi: any;
+            inputsConfig?: {
+                title: string;
+                label: string;
+                field: string;
+                checkerFuncs: string[];
+                type: string;
+                placeholder: string;
+            }[];
+            authSlice: any;
+            useDispatch: any;
+        }) => {
+            isLoading: any;
+            data: any;
+            isSuccess: any;
+            inputsValues: {};
+            setErrors: import("react").Dispatch<import("react").SetStateAction<{}>>;
+            setInputsValues: import("react").Dispatch<import("react").SetStateAction<{}>>;
+            inputs: {};
+            onSubmit: (e: any, submitProps?: {}) => any;
+            setPassed: any;
+        };
+        useLogin: ({ profilesApi, inputsConfig }: {
+            profilesApi: any;
+            inputsConfig?: ({
+                field: string;
+                checkerFuncs: string[];
+                type: string;
+                placeholder: string;
+                label: string;
+                config?: undefined;
+                defaultValue?: undefined;
+                id?: undefined;
+            } | {
+                field: string;
+                checkerFuncs: string[];
+                config: {
+                    enableTypeChanging: boolean;
+                };
+                label: string;
+                type: string;
+                placeholder: string;
+                defaultValue?: undefined;
+                id?: undefined;
+            } | {
+                field: string;
+                checkerFuncs: any[];
+                type: string;
+                defaultValue: boolean;
+                id: string;
+                label: string;
+                placeholder?: undefined;
+                config?: undefined;
+            })[];
+        }) => {
+            inputs: {};
+            inputsValues: {};
+            onSubmit: (e: any, submitProps?: {}) => any;
+            changeBlockedInputs: (inputs: any) => void;
+            clearInputs: () => void;
+            error: any;
+            data: any;
+            isSuccess: any;
+            isLoading: any;
+            isFetching: any;
+        };
+        useRegister: ({ profilesApi, inputsConfig }: {
+            profilesApi: any;
+            inputsConfig?: ({
+                label: string;
+                field: string;
+                checkerFuncs: string[];
+                type: string;
+                placeholder: string;
+                id?: undefined;
+                config?: undefined;
+                defaultValue?: undefined;
+            } | {
+                label: string;
+                field: string;
+                checkerFuncs: string[];
+                type: string;
+                id: string;
+                placeholder: string;
+                config?: undefined;
+                defaultValue?: undefined;
+            } | {
+                label: string;
+                field: string;
+                checkerFuncs: string[];
+                config: {
+                    enableTypeChanging: boolean;
+                    equalTo?: undefined;
+                };
+                type: string;
+                placeholder: string;
+                id?: undefined;
+                defaultValue?: undefined;
+            } | {
+                label: string;
+                field: string;
+                checkerFuncs: string[];
+                config: {
+                    equalTo: string;
+                    enableTypeChanging: boolean;
+                };
+                type: string;
+                placeholder: string;
+                id?: undefined;
+                defaultValue?: undefined;
+            } | {
+                label: string;
+                field: string;
+                checkerFuncs: any[];
+                type: string;
+                defaultValue: boolean;
+                placeholder?: undefined;
+                id?: undefined;
+                config?: undefined;
+            })[];
+        }) => {
+            data: any;
+            inputs: {};
+            inputsValues: {};
+            onSubmit: (e: any, submitProps?: {}) => any;
+            isSuccess: any;
+            isLoading: any;
+            error: any;
+            setPassed: any;
+            inputsErrors: {};
+            inputsSetErrors: import("react").Dispatch<import("react").SetStateAction<{}>>;
+        };
+        useResetPassword: ({ profilesApi, inputsConfig, authSlice, useDispatch, }: {
+            profilesApi: any;
+            inputsConfig?: ({
+                label: string;
+                field: string;
+                checkerFuncs: string[];
+                config: {
+                    enableTypeChanging: boolean;
+                    equalTo?: undefined;
+                };
+                type: string;
+                placeholder: string;
+                title?: undefined;
+            } | {
+                label: string;
+                field: string;
+                checkerFuncs: string[];
+                config: {
+                    equalTo: string;
+                    enableTypeChanging: boolean;
+                };
+                type: string;
+                placeholder: string;
+                title?: undefined;
+            } | {
+                title: string;
+                field: string;
+                checkerFuncs: string[];
+                type: string;
+                label?: undefined;
+                config?: undefined;
+                placeholder?: undefined;
+            })[];
+            authSlice: any;
+            useDispatch: any;
+        }) => {
+            data: any;
+            isLoading: any;
+            error: any;
+            inputsValues: {};
+            inputs: {};
+            onSubmit: (e: any, submitProps?: {}) => any;
+            isSuccess: any;
+            inputsErrors: {};
+            setInputsErrors: import("react").Dispatch<import("react").SetStateAction<{}>>;
+        };
+        useSendPhoneConfirmation: ({ profilesApi, inputsConfig, }: {
+            profilesApi: any;
+            inputsConfig?: {
+                label: string;
+                field: string;
+                checkerFuncs: string[];
+                type: string;
+                placeholder: string;
+            }[];
+        }) => {
+            inputs: {};
+            inputsErrors: {};
+            inputsValues: {};
+            inputsSetErrors: import("react").Dispatch<import("react").SetStateAction<{}>>;
+            error: any;
+            onSubmit: (e: any, submitProps?: {}) => any;
+            isLoading: any;
+            isSuccess: any;
+            data: any;
+        };
+        useConfirmEmail: ({ profilesApi, inputsConfig, ping, initialPing, resendOnMount, useSelector, }: {
+            profilesApi: any;
+            inputsConfig?: ({
+                field: string;
+                checkerFuncs: string[];
+                type: string;
+                placeholder: string;
+                label: string;
+                title?: undefined;
+            } | {
+                title: string;
+                field: string;
+                checkerFuncs: string[];
+                label: string;
+                placeholder: string;
+                type: string;
+            })[];
+            ping?: number;
+            initialPing?: number;
+            resendOnMount?: boolean;
+            useSelector: any;
+        }) => {
+            counter: number;
+            resendEmailConfirmation: () => void;
+            resendEmailConfirmationError: any;
+            resendEmailConfirmationIsLoading: any;
+            resendEmailConfirmationIsSuccess: any;
+            resendEmailConfirmationData: any;
+            data: any;
+            isLoading: any;
+            inputsValues: {};
+            setInputsValues: import("react").Dispatch<import("react").SetStateAction<{}>>;
+            error: any;
+            inputs: {};
+            onSubmit: (e: any, submitProps?: {}) => any;
+            isSuccess: any;
+            inputsErrors: {};
+            setInputsErrors: import("react").Dispatch<import("react").SetStateAction<{}>>;
+        };
+        useConfirmPhone: ({ profilesApi, inputsConfig, ping, useSelector, }: {
+            profilesApi: any;
+            inputsConfig?: ({
+                field: string;
+                checkerFuncs: string[];
+                type: string;
+                placeholder: string;
+                label: string;
+                title?: undefined;
+            } | {
+                title: string;
+                field: string;
+                checkerFuncs: string[];
+                label: string;
+                placeholder: string;
+                type: string;
+            })[];
+            ping?: number;
+            useSelector: any;
+        }) => {
+            counter: number;
+            resendPhoneConfirmation: () => void;
+            resendPhoneConfirmationError: any;
+            resendPhoneConfirmationIsLoading: any;
+            resendPhoneConfirmationIsSuccess: any;
+            resendPhoneConfirmationData: any;
+            data: any;
+            isLoading: any;
+            error: any;
+            inputs: {};
+            onSubmit: (e: any, submitProps?: {}) => any;
+            isSuccess: any;
+            inputsErrors: {};
+            setInputsErrors: import("react").Dispatch<import("react").SetStateAction<{}>>;
+        };
+        useUpdateMe: ({ profilesApi, inputsConfig, useSelector, }: {
+            profilesApi: any;
+            inputsConfig?: {
+                field: string;
+                checkerFuncs: string[];
+                type: string;
+                placeholder: string;
+                label: string;
+            }[];
+            useSelector: any;
+        }) => {
+            data: any;
+            isLoading: any;
+            inputsValues: {};
+            error: any;
+            inputs: {};
+            onSubmit: (e: any, submitProps?: {}) => any;
+            isSuccess: any;
+            inputsErrors: {};
+            setInputsErrors: import("react").Dispatch<import("react").SetStateAction<{}>>;
+        };
+        useMyProfileCreator: ({ profilesApi, populate, useSelector, }: import("./hooks/use-auth/use-my-profile-creator").IUseMyProfile) => {
+            me: any;
+            refetch: () => void;
+        };
+        useSetOtp: ({ profilesApi, inputsConfig, useSelector, }: {
+            profilesApi: any;
+            inputsConfig?: {
+                title: string;
+                field: string;
+                checkerFuncs: string[];
+                label: string;
+                placeholder: string;
+                type: string;
+            }[];
+            useSelector: any;
+        }) => {
+            generateOtpSecretData: any;
+            generateOtpSecretIsLoading: any;
+            generateOtpSecretIsSuccess: any;
+            data: any;
+            inputsValues: {};
+            isLoading: any;
+            setInputsValues: import("react").Dispatch<import("react").SetStateAction<{}>>;
+            error: any;
+            inputs: {};
+            onSubmit: (e: any, submitProps?: {}) => any;
+            isSuccess: any;
+            inputsErrors: {};
+            setInputsErrors: import("react").Dispatch<import("react").SetStateAction<{}>>;
+        };
+        useDeleteOtp: ({ profilesApi, inputsConfig, useSelector, }: {
+            profilesApi: any;
+            inputsConfig?: {
+                title: string;
+                field: string;
+                checkerFuncs: string[];
+                label: string;
+                placeholder: string;
+                type: string;
+            }[];
+            useSelector: any;
+        }) => {
+            data: any;
+            isLoading: any;
+            setInputsValues: import("react").Dispatch<import("react").SetStateAction<{}>>;
+            inputsValues: {};
+            error: any;
+            inputs: {};
+            onSubmit: (e: any, submitProps?: {}) => any;
+            isSuccess: any;
+            inputsErrors: {};
+            setInputsErrors: import("react").Dispatch<import("react").SetStateAction<{}>>;
+        };
+        useCheckOtp: ({ profilesApi, inputsConfig, useSelector, }: {
+            profilesApi: any;
+            inputsConfig?: {
+                title: string;
+                field: string;
+                checkerFuncs: string[];
+                label: string;
+                placeholder: string;
+                type: string;
+            }[];
+            useSelector: any;
+        }) => {
+            data: any;
+            isLoading: any;
+            inputsValues: {};
+            setInputsValues: import("react").Dispatch<import("react").SetStateAction<{}>>;
+            error: any;
+            inputs: {};
+            onSubmit: (e: any, submitProps?: {}) => any;
+            isSuccess: any;
+            inputsErrors: {};
+            setInputsErrors: import("react").Dispatch<import("react").SetStateAction<{}>>;
+        };
+        useChangePassword: ({ profilesApi, inputsConfig, }: {
+            profilesApi: any;
+            inputsConfig?: ({
+                label: string;
+                field: string;
+                checkerFuncs: string[];
+                config: {
+                    enableTypeChanging: boolean;
+                    equalTo?: undefined;
+                };
+                type: string;
+                placeholder: string;
+            } | {
+                label: string;
+                field: string;
+                checkerFuncs: string[];
+                config: {
+                    equalTo: string;
+                    enableTypeChanging: boolean;
+                };
+                type: string;
+                placeholder: string;
+            })[];
+        }) => {
+            data: any;
+            isLoading: any;
+            error: any;
+            inputsValues: {};
+            inputs: {};
+            onSubmit: (e: any, submitProps?: {}) => any;
+            isSuccess: any;
+            inputsErrors: {};
+            setInputsErrors: import("react").Dispatch<import("react").SetStateAction<{}>>;
+        };
         useDetectMouseover: (el: any, initialState: any) => any[];
         useDetectOutsideClick: (trigger: any, initialState: any) => any[];
-        useLookupTable: ({ columns, data, memoUpdateFunc, getRowId, config, initialFiltersState, }: array<import("./hooks/use-lookup-table").ColumnItemObject>) => import("./hooks/use-lookup-table").ReturnObject;
+        useLookupTable: ({ columns, data: passedData, memoUpdateFunc, getRowId, config, initialFiltersState, }: array<import("./hooks/use-lookup-table").ColumnItemObject>) => import("./hooks/use-lookup-table").ReturnObject;
         useBreakpoint: (breakpoint: any) => boolean;
         useSetParentsInput: ({ passedState, passedFiles, parentKey, setParentInputs, setParentFiles, setParentErrors, }: {
             passedState: any;
@@ -48,7 +492,7 @@ declare const _default: {
         useDebounce: (value: string | number, delay: number) => string | number;
     };
     components: {
-        SmartButton: ({ disabled, className, disabledClassName, children, tooltipPosition, href, dropdownItems, dropdownContainerClassName, dropdownClassName, dropdownProps, tooltipItems, tooltipContainerClasses, onClick, linkProps, Link, }: {
+        SmartButton: ({ disabled, className, disabledClassName, children, tooltipPosition, href, dropdownItems: DropdownItems, dropdownContainerClassName, dropdownClassName, dropdownProps, tooltipItems: TooltipItems, tooltipContainerClasses, onClick: onClickCb, linkProps, Link, }: {
             disabled: any;
             className: any;
             disabledClassName: any;
@@ -63,7 +507,7 @@ declare const _default: {
             tooltipContainerClasses?: string;
             onClick: any;
             linkProps?: any[];
-            Link?: () => void;
+            Link?: () => any;
         }) => JSX.Element;
         Modal: ({ children, showEffect, ...props }: {
             [x: string]: any;
@@ -104,10 +548,25 @@ declare const _default: {
             MediaItemComponent: any;
         }) => JSX.Element;
         CopyButton: (props: any) => JSX.Element;
+        AuthWrapper: ({ isAuth, children, isPublic, useRouter, useMyProfile, redirectTo, }: {
+            isAuth?: boolean;
+            children: import("react").ReactNode;
+            isPublic?: boolean;
+            useRouter?: any;
+            useMyProfile: any;
+            user?: any;
+            redirectTo?: string;
+        }) => JSX.Element;
+        Pagination: import("react").FC<import("./components/pagination").TPaginationProps>;
     };
     redux: {
         slices: {
             authSlice: typeof import("./redux/slices/authSlice");
+        };
+        queries: {
+            profiles: {
+                createProfilesApi: typeof import("./redux/queries/profiles").createProfilesApi;
+            };
         };
     };
 };

@@ -21,9 +21,9 @@ export declare const appendFilesToFormData: (formData: any, files: any) => void;
 export declare const unlunkRemovedFiles: ({ data }: {
     data: any;
 }) => any;
-export declare const removeEmptyFields: ({ data, passKey, files }: {
-    data: any;
-    passKey: any;
+export declare const removeEmptyFields: ({ data, passKey, files, }: {
+    data: object;
+    passKey?: string;
     files: any;
 }) => any;
 /**
@@ -57,5 +57,6 @@ export declare const handleApiError: (error: any) => {
     event: string;
     title: any;
 };
+export declare const prepareFormDataToSend: (params: any) => FormData;
 export declare const ApiClient: typeof Api;
 export declare const transformResponseItem: (resItem: any) => any;
