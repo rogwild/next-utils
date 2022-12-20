@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export interface IProfileState {
-  id: string | undefined;
-  jwt: string | undefined;
+  id: string | null | undefined;
+  jwt: string | null | undefined;
   isAuthenticated: boolean;
   nextAuthFactor?:
     | "auth.callback"

@@ -1,4 +1,3 @@
-import { ethers } from "ethers";
 import { hexValue } from "ethers/lib/utils";
 
 export enum ChainIds {

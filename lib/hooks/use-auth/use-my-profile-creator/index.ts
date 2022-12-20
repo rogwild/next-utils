@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from "react";
-import { selectors } from "../../../redux/slices/authSlice";
+import { selectors } from "../../../redux/slices/auth";
 
 export interface IUseMyProfile {
   profilesApi: any;

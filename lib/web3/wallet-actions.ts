@@ -3,7 +3,7 @@ import networkConfigs, { ChainIds } from "./configs/networks";
 import springNotification from "../components/spring-notification";
 const { createNotification } = springNotification;
 
-export const setupNetwork = (provider: any, chainId: ChainIds) => {
+export const setupNetwork = async (provider: any, chainId: ChainIds) => {
   try {
     const hexChainId = hexValue(chainId);
 
