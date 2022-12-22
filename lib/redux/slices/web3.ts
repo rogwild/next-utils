@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { supportedChains } from "../../web3/configs/networks";
+import { supportedChains } from "../../../web3/configs/networks";
 
 export interface IWeb3State {
   chainId: number | undefined;

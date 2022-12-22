@@ -12,11 +12,11 @@ import {
   WalletConnectConnector,
 } from "@web3-react/walletconnect-connector";
 
-import { selectors, actions } from "../../redux/slices/web3";
-import { setupNetwork } from "../../web3/wallet-actions";
-import { connectorLocalStorageKey } from "../../web3/connectors";
-import connectorsByName from "../../web3/connectors";
-import { supportedChains } from "../../web3/configs/networks";
+import { selectors, actions } from "../lib/redux/slices/web3";
+import { setupNetwork } from "../web3/wallet-actions";
+import { connectorLocalStorageKey } from "../web3/connectors";
+import connectorsByName from "../web3/connectors";
+import { supportedChains } from "../web3/configs/networks";
 
 const useWeb3Auth = ({
   useDispatch,

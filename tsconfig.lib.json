@@ -2,13 +2,13 @@
   "compilerOptions": {
     "outDir": "./built",
     "allowJs": true,
-    "target": "es5",
+    "target": "es6",
     "jsx": "react",
     "allowSyntheticDefaultImports": true,
     "declaration": true,
     "downlevelIteration": true,
     "esModuleInterop": true
   },
-  "exclude": ["node_modules"],
-  "include": ["./lib/**/*"]
+  "exclude": ["node_modules", "web3", "use-web3-auth"],
+  "include": ["lib"]
 }

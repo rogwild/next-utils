@@ -1,6 +1,6 @@
 import { hexValue, hexlify, toUtf8Bytes } from "ethers/lib/utils";
 import networkConfigs, { ChainIds } from "./configs/networks";
-import springNotification from "../components/spring-notification";
+import springNotification from "../lib/components/spring-notification";
 const { createNotification } = springNotification;
 
 export const setupNetwork = async (provider: any, chainId: ChainIds) => {

@@ -2,7 +2,7 @@ export const checkIsServer = () => typeof window === `undefined`;
 
 export const loadScripts = async ({ u, type = `text/javascript`, id }) => {
   return new Promise(function (resolve, reject) {
-    var s = document.createElement(`script`);
+    const s = document.createElement(`script`);
     s.type = type;
     s.async = true;
     s.src = u;
@@ -32,7 +32,7 @@ export const GTMPageView = (url) => {
 export const isNil = (value) => value === null || value === undefined;
 
 export const urlRegex =
-  /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gim;
+  /[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/gim;
 
 export const addProtocolToUrl = (url) => {
   const splittedString = url.split(`://`);
