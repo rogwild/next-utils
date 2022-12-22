@@ -561,7 +561,17 @@ declare const _default: {
     };
     redux: {
         slices: {
-            authSlice: typeof import("./redux/slices/authSlice");
+            authSlice: typeof import("./redux/slices/auth");
+            web3Slice: import("@reduxjs/toolkit").Slice<{
+                chainId: number;
+            }, {
+                setupNetwork: (state: import("immer/dist/internal").WritableDraft<{
+                    chainId: number;
+                }>, action: {
+                    payload: any;
+                    type: string;
+                }) => void;
+            }, "web3">;
         };
         queries: {
             profiles: {

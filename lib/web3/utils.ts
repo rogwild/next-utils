@@ -1,4 +1,4 @@
-import ethers from "ethers";
+import { ethers } from "ethers";
 import { rpcUrlByChains, ChainIds } from "./configs/networks";
 
 export const getContract = ({

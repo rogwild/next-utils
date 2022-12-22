@@ -10,7 +10,7 @@ export declare enum ChainIds {
 }
 declare const networkConfigs: {
     1: {
-        chainId: any;
+        chainId: string;
         chainName: string;
         nativeCurrency: {
             name: string;
@@ -21,7 +21,7 @@ declare const networkConfigs: {
         blockExplorerUrls: string[];
     };
     3: {
-        chainId: any;
+        chainId: string;
         chainName: string;
         nativeCurrency: {
             name: string;
@@ -32,7 +32,7 @@ declare const networkConfigs: {
         blockExplorerUrls: string[];
     };
     5: {
-        chainId: any;
+        chainId: string;
         chainName: string;
         nativeCurrency: {
             name: string;
@@ -43,7 +43,7 @@ declare const networkConfigs: {
         blockExplorerUrls: string[];
     };
     137: {
-        chainId: any;
+        chainId: string;
         chainName: string;
         nativeCurrency: {
             name: string;
@@ -54,7 +54,7 @@ declare const networkConfigs: {
         blockExplorerUrls: string[];
     };
     80001: {
-        chainId: any;
+        chainId: string;
         chainName: string;
         nativeCurrency: {
             name: string;
@@ -65,7 +65,7 @@ declare const networkConfigs: {
         blockExplorerUrls: string[];
     };
     56: {
-        chainId: any;
+        chainId: string;
         chainName: string;
         nativeCurrency: {
             name: string;
@@ -76,7 +76,7 @@ declare const networkConfigs: {
         blockExplorerUrls: string[];
     };
     97: {
-        chainId: any;
+        chainId: string;
         chainName: string;
         nativeCurrency: {
             name: string;
@@ -87,7 +87,7 @@ declare const networkConfigs: {
         blockExplorerUrls: string[];
     };
     31337: {
-        chainId: any;
+        chainId: string;
         chainName: string;
         nativeCurrency: {
             name: string;
