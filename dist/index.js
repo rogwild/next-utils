@@ -18787,7 +18787,7 @@ const useMyProfileCreator = ({ profilesApi, populate, useSelector, }) => {
         pollingInterval: 60000,
     });
     React.useEffect(() => {
-        console.log(`🚀 ~ meError`, meError);
+        // console.log(`🚀 ~ meError`, meError);
         if (!isUninitialized &&
             meError &&
             ((meError === null || meError === void 0 ? void 0 : meError.status) !== 403 || (meError === null || meError === void 0 ? void 0 : meError.status) !== 401)) {
@@ -35033,9 +35033,11 @@ var DateCalendar = /*#__PURE__*/React.forwardRef(function (props, ref) {
     dateInputYearInputClassName = props.dateInputYearInputClassName,
     calendarContainerClassName = props.calendarContainerClassName,
     DividerComponent = props.DividerComponent;
-  React.useEffect(function () {
-    console.log("\uD83D\uDE80 ~ useEffect ~ error", error);
-  }, [error]);
+
+  // useEffect(() => {
+  //   console.log(`🚀 ~ useEffect ~ error`, error);
+  // }, [error]);
+
   var buttonRef = React.useRef();
   var _useState = React.useState(null),
     localValue = _useState[0],

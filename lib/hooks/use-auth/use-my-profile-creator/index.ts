@@ -32,7 +32,7 @@ const useMyProfileCreator = ({
     );
 
   useEffect(() => {
-    console.log(`🚀 ~ meError`, meError);
+    // console.log(`🚀 ~ meError`, meError);
 
     if (
       !isUninitialized &&
