@@ -548,7 +548,7 @@ declare const _default: {
             MediaItemComponent: any;
         }) => JSX.Element;
         CopyButton: (props: any) => JSX.Element;
-        AuthWrapper: ({ isAuth, children, isPublic, useRouter, useMyProfile, redirectTo, }: {
+        AuthWrapper: ({ isAuth, children, isPublic, useRouter, useMyProfile, redirectTo, Loader, }: {
             isAuth?: boolean;
             children: import("react").ReactNode;
             isPublic?: boolean;
@@ -556,6 +556,7 @@ declare const _default: {
             useMyProfile: any;
             user?: any;
             redirectTo?: string;
+            Loader?: any;
         }) => JSX.Element;
         Pagination: import("react").FC<import("./components/pagination").TPaginationProps>;
     };

@@ -35577,9 +35577,12 @@ var CopyButton = function CopyButton(props) {
   }));
 };
 
+const DefaultLoader = () => {
+    return React__default["default"].createElement(React__default["default"].Fragment, null);
+};
 const AuthWrapper = ({ isAuth, children, isPublic = false, useRouter, 
 // user,
-useMyProfile, redirectTo = "", }) => {
+useMyProfile, redirectTo = "", Loader = DefaultLoader, }) => {
     const { me: user } = useMyProfile();
     const router = useRouter();
     const { query: { initPath }, } = router;
@@ -35593,6 +35596,36 @@ useMyProfile, redirectTo = "", }) => {
         });
     }, [initPath]);
     const [passed, setPassed] = React.useState(false);
+    const [hideLoader, setHideLoader] = React.useState(false);
+    const [closeLoader, setCloseLoader] = React.useState(false);
+    const fromLoaderStyles = {
+        opacity: 1,
+    };
+    const toLoaderStyles = {
+        opacity: 0,
+    };
+    const loaderStyles = web.useSpring({
+        from: fromLoaderStyles,
+        to: closeLoader ? toLoaderStyles : fromLoaderStyles,
+        delay: 2000,
+        config: {
+            duration: 500,
+        },
+    });
+    React.useEffect(() => {
+        let loaderTm;
+        let hideLoaderTm;
+        if (passed) {
+            setCloseLoader(true);
+            hideLoaderTm = setTimeout(() => {
+                setHideLoader(true);
+            }, 3000);
+        }
+        return () => {
+            clearTimeout(loaderTm);
+            clearTimeout(hideLoaderTm);
+        };
+    }, [passed]);
     React.useEffect(() => {
         var _a;
         if (user.id) {
@@ -35616,7 +35649,10 @@ useMyProfile, redirectTo = "", }) => {
             setPassed(true);
         }
     }, [user, router]);
-    return (React__default["default"].createElement(React__default["default"].Fragment, null, passed ? children : null));
+    return (React__default["default"].createElement(React__default["default"].Fragment, null,
+        React__default["default"].createElement(web.animated.div, { className: `fixed flex inset-0 h-screen w-screen overflow-hidden ${hideLoader ? `-z-1 hidden` : `z-[200] flex-center`}`, style: loaderStyles },
+            React__default["default"].createElement(Loader, null)),
+        passed ? children : null));
 };
 
 const Pagination = ({ currentPage, pagesCount, visiblePagesCount = 3, onNavBtnClick, onPageBtnClick, }) => {

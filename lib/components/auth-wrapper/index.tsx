@@ -9,6 +9,11 @@ type TAuthWrapperProps = {
   useMyProfile: any;
   user?: any;
   redirectTo?: string;
+  Loader?: any;
+};
+
+const DefaultLoader = () => {
+  return <></>;
 };
 
 const AuthWrapper = ({
@@ -19,6 +24,7 @@ const AuthWrapper = ({
   // user,
   useMyProfile,
   redirectTo = "",
+  Loader = DefaultLoader,
 }: TAuthWrapperProps) => {
   const { me: user } = useMyProfile();
   const router = useRouter();
@@ -39,6 +45,43 @@ const AuthWrapper = ({
   }, [initPath]);
 
   const [passed, setPassed] = useState(false);
+  const [hideLoader, setHideLoader] = useState(false);
+  const [closeLoader, setCloseLoader] = useState(false);
+
+  const fromLoaderStyles = {
+    opacity: 1,
+  };
+
+  const toLoaderStyles = {
+    opacity: 0,
+  };
+
+  const loaderStyles = useSpring({
+    from: fromLoaderStyles,
+    to: closeLoader ? toLoaderStyles : fromLoaderStyles,
+    delay: 2000,
+    config: {
+      duration: 500,
+    },
+  });
+
+  useEffect(() => {
+    let loaderTm: undefined | ReturnType<typeof setTimeout>;
+    let hideLoaderTm: undefined | ReturnType<typeof setTimeout>;
+
+    if (passed) {
+      setCloseLoader(true);
+
+      hideLoaderTm = setTimeout(() => {
+        setHideLoader(true);
+      }, 3000);
+    }
+
+    return () => {
+      clearTimeout(loaderTm);
+      clearTimeout(hideLoaderTm);
+    };
+  }, [passed]);
 
   useEffect(() => {
     if (user.id) {
@@ -69,14 +112,14 @@ const AuthWrapper = ({
 
   return (
     <>
-      {/* <animated.div
-        className={`fixed bg-black-primary inset-0 h-screen w-screen overflow-hidden ${
+      <animated.div
+        className={`fixed flex inset-0 h-screen w-screen overflow-hidden ${
           hideLoader ? `-z-1 hidden` : `z-[200] flex-center`
         }`}
         style={loaderStyles}
       >
         <Loader />
-      </animated.div> */}
+      </animated.div>
       {passed ? children : null}
     </>
   );

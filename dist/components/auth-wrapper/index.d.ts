@@ -7,6 +7,7 @@ type TAuthWrapperProps = {
     useMyProfile: any;
     user?: any;
     redirectTo?: string;
+    Loader?: any;
 };
-declare const AuthWrapper: ({ isAuth, children, isPublic, useRouter, useMyProfile, redirectTo, }: TAuthWrapperProps) => JSX.Element;
+declare const AuthWrapper: ({ isAuth, children, isPublic, useRouter, useMyProfile, redirectTo, Loader, }: TAuthWrapperProps) => JSX.Element;
 export default AuthWrapper;
