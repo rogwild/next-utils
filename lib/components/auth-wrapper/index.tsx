@@ -44,7 +44,7 @@ const AuthWrapper = ({
     if (user.id) {
       setPassed(true);
 
-      if (router.pathname?.includes("/auth")) {
+      if (router.asPath?.includes("/auth")) {
         router.push(cachedInitPath);
       }
 

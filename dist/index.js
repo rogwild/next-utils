@@ -35597,7 +35597,7 @@ useMyProfile, redirectTo = "", }) => {
         var _a;
         if (user.id) {
             setPassed(true);
-            if ((_a = router.pathname) === null || _a === void 0 ? void 0 : _a.includes("/auth")) {
+            if ((_a = router.asPath) === null || _a === void 0 ? void 0 : _a.includes("/auth")) {
                 router.push(cachedInitPath);
             }
             return;
