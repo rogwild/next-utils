@@ -34173,6 +34173,13 @@ var RangeInput = function RangeInput(props) {
     var value = +e.target.value;
     onChange(e, value);
   };
+  React.useEffect(function () {
+    onChange({
+      target: {
+        value: +value
+      }
+    }, value);
+  }, [+value]);
   var srContainerClassName = useStyleRewriter$6(baseContainerClassName$3, containerClassName);
   var valueDividedByMaxValue = value / maxValue * 100 || 0;
   var srRangeClassName = useStyleRewriter$6(baseRangeClassName, rangeClassName);
