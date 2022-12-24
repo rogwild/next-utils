@@ -28,25 +28,6 @@ declare const _default: {
             isSuccess: any;
             data: any;
         };
-        usePhoneConfirmation: ({ profilesApi, inputsConfig, authSlice, }: {
-            profilesApi: any;
-            inputsConfig?: {
-                label: string;
-                field: string;
-                type: string;
-                checkerFuncs: string[];
-                id: string;
-            }[];
-            authSlice: any;
-        }) => {
-            inputs: {};
-            inputsValues: {};
-            onSubmit: (e: any, submitProps?: {}) => any;
-            error: any;
-            isSuccess: any;
-            inputsErrors: {};
-            inputsSetErrors: import("react").Dispatch<import("react").SetStateAction<{}>>;
-        };
         useForgotPassword: ({ profilesApi, inputsConfig, authSlice, useDispatch, }: {
             profilesApi: any;
             inputsConfig?: {
@@ -233,14 +214,15 @@ declare const _default: {
                 field: string;
                 checkerFuncs: string[];
                 type: string;
+                id: string;
                 placeholder: string;
             }[];
         }) => {
             inputs: {};
             inputsErrors: {};
-            inputsValues: {};
             inputsSetErrors: import("react").Dispatch<import("react").SetStateAction<{}>>;
             error: any;
+            inputsValues: {};
             onSubmit: (e: any, submitProps?: {}) => any;
             isLoading: any;
             isSuccess: any;
@@ -285,7 +267,7 @@ declare const _default: {
             inputsErrors: {};
             setInputsErrors: import("react").Dispatch<import("react").SetStateAction<{}>>;
         };
-        useConfirmPhone: ({ profilesApi, inputsConfig, ping, useSelector, }: {
+        useConfirmPhone: ({ profilesApi, inputsConfig, ping, initialPing, resendOnMount, useSelector, }: {
             profilesApi: any;
             inputsConfig?: ({
                 field: string;
@@ -303,6 +285,8 @@ declare const _default: {
                 type: string;
             })[];
             ping?: number;
+            initialPing?: number;
+            resendOnMount?: boolean;
             useSelector: any;
         }) => {
             counter: number;
@@ -313,6 +297,8 @@ declare const _default: {
             resendPhoneConfirmationData: any;
             data: any;
             isLoading: any;
+            inputsValues: {};
+            setInputsValues: import("react").Dispatch<import("react").SetStateAction<{}>>;
             error: any;
             inputs: {};
             onSubmit: (e: any, submitProps?: {}) => any;

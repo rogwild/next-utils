@@ -8,7 +8,6 @@ var path = require('path');
 var proc = require('process');
 var url$1 = require('url');
 var reactTable = require('react-table');
-var reactRedux = require('react-redux');
 var toolkit = require('@reduxjs/toolkit');
 var transitionComponent = require('transition-component');
 var react = require('@use-gesture/react');
@@ -17836,120 +17835,96 @@ const useDebounce = (value, delay) => {
     return depouncedValue;
 };
 
-var useSendEmailConfirmation = function useSendEmailConfirmation(_ref) {
+var useRegister = function useRegister(_ref) {
   var profilesApi = _ref.profilesApi,
     _ref$inputsConfig = _ref.inputsConfig,
-    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$d : _ref$inputsConfig;
-  var _profilesApi$useSendE = profilesApi.useSendEmailConfirmationMutation(),
-    _profilesApi$useSendE2 = _slicedToArray(_profilesApi$useSendE, 2),
-    sendEmailConfirmation = _profilesApi$useSendE2[0],
-    _profilesApi$useSendE3 = _profilesApi$useSendE2[1],
-    error = _profilesApi$useSendE3.error,
-    isLoading = _profilesApi$useSendE3.isLoading,
-    isSuccess = _profilesApi$useSendE3.isSuccess,
-    data = _profilesApi$useSendE3.data;
+    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$c : _ref$inputsConfig;
+  var _profilesApi$useRegis = profilesApi.useRegisterMutation(),
+    _profilesApi$useRegis2 = _slicedToArray(_profilesApi$useRegis, 2),
+    register = _profilesApi$useRegis2[0],
+    _profilesApi$useRegis3 = _profilesApi$useRegis2[1],
+    error = _profilesApi$useRegis3.error,
+    isSuccess = _profilesApi$useRegis3.isSuccess,
+    isLoading = _profilesApi$useRegis3.isLoading,
+    data = _profilesApi$useRegis3.data;
+  var memoInputsConfig = React.useMemo(function () {
+    return inputsConfig;
+  }, [inputsConfig]);
   var submitFunc = function submitFunc(_ref2) {
     var inputs = _ref2.inputs,
       files = _ref2.files;
-    sendEmailConfirmation({
+    register({
       data: inputs,
       files: files
     });
   };
-  var memoInputsConfig = React.useMemo(function () {
-    return inputsConfig;
-  }, [inputsConfig]);
+  var afterPassed = function afterPassed(_ref3) {
+    var clearInputs = _ref3.clearInputs;
+    clearInputs();
+  };
   var _useForm = useForm({
       inputsConfig: memoInputsConfig,
+      afterPassed: afterPassed,
       submitFunc: submitFunc,
       inputPropsType: "object"
     }),
     inputs = _useForm.inputs,
+    inputsSetErrors = _useForm.setErrors,
     inputsErrors = _useForm.errors,
     inputsValues = _useForm.inputsValues,
     onSubmit = _useForm.onSubmit,
-    inputsSetErrors = _useForm.setErrors;
+    setPassed = _useForm.setPassed;
   return {
+    data: data,
     inputs: inputs,
-    inputsErrors: inputsErrors,
-    inputsSetErrors: inputsSetErrors,
-    error: error,
     inputsValues: inputsValues,
     onSubmit: onSubmit,
-    isLoading: isLoading,
     isSuccess: isSuccess,
-    data: data
+    isLoading: isLoading,
+    error: error,
+    setPassed: setPassed,
+    inputsErrors: inputsErrors,
+    inputsSetErrors: inputsSetErrors
   };
 };
-var defaultInputsConfig$d = [{
+var defaultInputsConfig$c = [{
+  label: "Username",
+  field: "username",
+  checkerFuncs: ["checkRequiredField"],
+  type: "text",
+  placeholder: "Type your username"
+}, {
   label: "Email",
   field: "email",
   checkerFuncs: ["checkRequiredField", "checkEmailMask"],
   type: "email",
   id: "email",
   placeholder: "Type your email"
-}];
-
-var useForgotPassword = function useForgotPassword(_ref) {
-  var profilesApi = _ref.profilesApi,
-    _ref$inputsConfig = _ref.inputsConfig,
-    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$c : _ref$inputsConfig,
-    authSlice = _ref.authSlice,
-    useDispatch = _ref.useDispatch;
-  var dispatch = useDispatch();
-  var _profilesApi$useForgo = profilesApi.useForgotPasswordMutation(),
-    _profilesApi$useForgo2 = _slicedToArray(_profilesApi$useForgo, 2),
-    forgotPassword = _profilesApi$useForgo2[0],
-    _profilesApi$useForgo3 = _profilesApi$useForgo2[1],
-    isSuccess = _profilesApi$useForgo3.isSuccess,
-    isLoading = _profilesApi$useForgo3.isLoading,
-    data = _profilesApi$useForgo3.data;
-  React.useEffect(function () {
-    dispatch(authSlice.actions.logout());
-    localStorage.removeItem("jwt");
-    sessionStorage.removeItem("jwt");
-  }, [authSlice === null || authSlice === void 0 ? void 0 : authSlice.actions]);
-  var submitFunc = function submitFunc(_ref2) {
-    var inputs = _ref2.inputs,
-      files = _ref2.files;
-    forgotPassword({
-      data: inputs,
-      files: files
-    });
-  };
-  var memoInputsConfig = React.useMemo(function () {
-    return inputsConfig;
-  }, [inputsConfig]);
-  var _useForm = useForm({
-      inputsConfig: memoInputsConfig,
-      submitFunc: submitFunc,
-      inputPropsType: "object"
-    }),
-    inputs = _useForm.inputs,
-    inputsValues = _useForm.inputsValues,
-    setInputsValues = _useForm.setInputsValues,
-    setErrors = _useForm.setErrors,
-    onSubmit = _useForm.onSubmit,
-    setPassed = _useForm.setPassed;
-  return {
-    isLoading: isLoading,
-    data: data,
-    isSuccess: isSuccess,
-    inputsValues: inputsValues,
-    setErrors: setErrors,
-    setInputsValues: setInputsValues,
-    inputs: inputs,
-    onSubmit: onSubmit,
-    setPassed: setPassed
-  };
-};
-var defaultInputsConfig$c = [{
-  title: "Email address*",
-  label: "Email address",
-  field: "email",
-  checkerFuncs: ["checkRequiredField", "checkEmailMask"],
-  type: "email",
-  placeholder: "Type your email"
+}, {
+  label: "Password",
+  field: "password",
+  checkerFuncs: ["checkRequiredField", "checkPassword"],
+  config: {
+    enableTypeChanging: true
+  },
+  type: "password",
+  placeholder: "Type your password"
+}, {
+  label: "Repeat password",
+  field: "confirm_password",
+  checkerFuncs: ["checkRequiredField", "checkEqualTo"],
+  config: {
+    equalTo: "password",
+    enableTypeChanging: true
+  },
+  type: "password",
+  placeholder: "Repeat your password"
+}, {
+  label: "I agree with terms and conditions",
+  field: "agreement_checkbox",
+  checkerFuncs: [],
+  type: "checkbox",
+  defaultValue: false
 }];
 
 function ownKeys$c(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
@@ -18045,96 +18020,66 @@ var defaultInputsConfig$b = [{
   label: "Remember"
 }];
 
-var useRegister = function useRegister(_ref) {
+var useForgotPassword = function useForgotPassword(_ref) {
   var profilesApi = _ref.profilesApi,
     _ref$inputsConfig = _ref.inputsConfig,
-    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$a : _ref$inputsConfig;
-  var _profilesApi$useRegis = profilesApi.useRegisterMutation(),
-    _profilesApi$useRegis2 = _slicedToArray(_profilesApi$useRegis, 2),
-    register = _profilesApi$useRegis2[0],
-    _profilesApi$useRegis3 = _profilesApi$useRegis2[1],
-    error = _profilesApi$useRegis3.error,
-    isSuccess = _profilesApi$useRegis3.isSuccess,
-    isLoading = _profilesApi$useRegis3.isLoading,
-    data = _profilesApi$useRegis3.data;
-  var memoInputsConfig = React.useMemo(function () {
-    return inputsConfig;
-  }, [inputsConfig]);
+    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$a : _ref$inputsConfig,
+    authSlice = _ref.authSlice,
+    useDispatch = _ref.useDispatch;
+  var dispatch = useDispatch();
+  var _profilesApi$useForgo = profilesApi.useForgotPasswordMutation(),
+    _profilesApi$useForgo2 = _slicedToArray(_profilesApi$useForgo, 2),
+    forgotPassword = _profilesApi$useForgo2[0],
+    _profilesApi$useForgo3 = _profilesApi$useForgo2[1],
+    isSuccess = _profilesApi$useForgo3.isSuccess,
+    isLoading = _profilesApi$useForgo3.isLoading,
+    data = _profilesApi$useForgo3.data;
+  React.useEffect(function () {
+    dispatch(authSlice.actions.logout());
+    localStorage.removeItem("jwt");
+    sessionStorage.removeItem("jwt");
+  }, [authSlice === null || authSlice === void 0 ? void 0 : authSlice.actions]);
   var submitFunc = function submitFunc(_ref2) {
     var inputs = _ref2.inputs,
       files = _ref2.files;
-    register({
+    forgotPassword({
       data: inputs,
       files: files
     });
   };
-  var afterPassed = function afterPassed(_ref3) {
-    var clearInputs = _ref3.clearInputs;
-    clearInputs();
-  };
+  var memoInputsConfig = React.useMemo(function () {
+    return inputsConfig;
+  }, [inputsConfig]);
   var _useForm = useForm({
       inputsConfig: memoInputsConfig,
-      afterPassed: afterPassed,
       submitFunc: submitFunc,
       inputPropsType: "object"
     }),
     inputs = _useForm.inputs,
-    inputsSetErrors = _useForm.setErrors,
-    inputsErrors = _useForm.errors,
     inputsValues = _useForm.inputsValues,
+    setInputsValues = _useForm.setInputsValues,
+    setErrors = _useForm.setErrors,
     onSubmit = _useForm.onSubmit,
     setPassed = _useForm.setPassed;
   return {
-    data: data,
-    inputs: inputs,
-    inputsValues: inputsValues,
-    onSubmit: onSubmit,
-    isSuccess: isSuccess,
     isLoading: isLoading,
-    error: error,
-    setPassed: setPassed,
-    inputsErrors: inputsErrors,
-    inputsSetErrors: inputsSetErrors
+    data: data,
+    isSuccess: isSuccess,
+    inputsValues: inputsValues,
+    setErrors: setErrors,
+    setInputsValues: setInputsValues,
+    inputs: inputs,
+    onSubmit: onSubmit,
+    setPassed: setPassed
   };
 };
 var defaultInputsConfig$a = [{
-  label: "Username",
-  field: "username",
-  checkerFuncs: ["checkRequiredField"],
-  type: "text",
-  placeholder: "Type your username"
-}, {
-  label: "Email",
+  title: "Email address*",
+  label: "Email address",
   field: "email",
   checkerFuncs: ["checkRequiredField", "checkEmailMask"],
   type: "email",
-  id: "email",
   placeholder: "Type your email"
-}, {
-  label: "Password",
-  field: "password",
-  checkerFuncs: ["checkRequiredField", "checkPassword"],
-  config: {
-    enableTypeChanging: true
-  },
-  type: "password",
-  placeholder: "Type your password"
-}, {
-  label: "Repeat password",
-  field: "confirm_password",
-  checkerFuncs: ["checkRequiredField", "checkEqualTo"],
-  config: {
-    equalTo: "password",
-    enableTypeChanging: true
-  },
-  type: "password",
-  placeholder: "Repeat your password"
-}, {
-  label: "I agree with terms and conditions",
-  field: "agreement_checkbox",
-  checkerFuncs: [],
-  type: "checkbox",
-  defaultValue: false
 }];
 
 function ownKeys$b(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
@@ -18228,95 +18173,22 @@ var defaultInputsConfig$9 = [{
   type: "hidden"
 }];
 
-var usePhoneConfirmation = function usePhoneConfirmation(_ref) {
+var useSendEmailConfirmation = function useSendEmailConfirmation(_ref) {
   var profilesApi = _ref.profilesApi,
     _ref$inputsConfig = _ref.inputsConfig,
-    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$8 : _ref$inputsConfig,
-    authSlice = _ref.authSlice;
-  var auth = reactRedux.useSelector(authSlice.selectors.auth);
-  var _useState = React.useState(),
-    user = _useState[0],
-    setUser = _useState[1];
-
-  // Without hard memoization sendPhoneConfirmSms calls twice
-  React.useEffect(function () {
-    var _auth$user, _auth$user2;
-    if (auth !== null && auth !== void 0 && (_auth$user = auth.user) !== null && _auth$user !== void 0 && _auth$user.phoneNumber && (auth === null || auth === void 0 ? void 0 : (_auth$user2 = auth.user) === null || _auth$user2 === void 0 ? void 0 : _auth$user2.phoneNumber) !== (user === null || user === void 0 ? void 0 : user.phoneNumber)) {
-      setUser(auth.user);
-    }
-  }, [auth]);
-  var _profilesApi$useSendC = profilesApi.useSendConfirmPhoneMutation(),
-    _profilesApi$useSendC2 = _slicedToArray(_profilesApi$useSendC, 2),
-    sendPhoneConfirmSms = _profilesApi$useSendC2[0],
-    isUninitialized = _profilesApi$useSendC2[1].isUninitialized;
-  React.useEffect(function () {
-    if (user && isUninitialized) {
-      sendPhoneConfirmSms({
-        data: {
-          phone_number: user.phoneNumber
-        }
-      });
-    }
-  }, [user, isUninitialized]);
-  var memoInputsConfig = React.useMemo(function () {
-    return inputsConfig;
-  }, [inputsConfig]);
-  var _profilesApi$useConfi = profilesApi.useConfirmPhoneMutation(),
-    _profilesApi$useConfi2 = _slicedToArray(_profilesApi$useConfi, 2),
-    confirmPhone = _profilesApi$useConfi2[0],
-    _profilesApi$useConfi3 = _profilesApi$useConfi2[1],
-    error = _profilesApi$useConfi3.error,
-    isSuccess = _profilesApi$useConfi3.isSuccess;
-  var submitFunc = function submitFunc(_ref2) {
-    var inputs = _ref2.inputs;
-    confirmPhone({
-      confirmation: inputs.confirmation
-    });
-  };
-  var _useForm = useForm({
-      inputsConfig: memoInputsConfig,
-      submitFunc: submitFunc,
-      inputPropsType: "object"
-    }),
-    inputsValues = _useForm.inputsValues,
-    inputs = _useForm.inputs,
-    onSubmit = _useForm.onSubmit,
-    inputsErrors = _useForm.inputs,
-    inputsSetErrors = _useForm.setErrors;
-  return {
-    inputs: inputs,
-    inputsValues: inputsValues,
-    onSubmit: onSubmit,
-    error: error,
-    isSuccess: isSuccess,
-    inputsErrors: inputsErrors,
-    inputsSetErrors: inputsSetErrors
-  };
-};
-var defaultInputsConfig$8 = [{
-  label: "Verification code",
-  field: "confirmation",
-  type: "otp",
-  checkerFuncs: ["checkRequiredField"],
-  id: "confirmation"
-}];
-
-var useSendPhoneConfirmation = function useSendPhoneConfirmation(_ref) {
-  var profilesApi = _ref.profilesApi,
-    _ref$inputsConfig = _ref.inputsConfig,
-    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$7 : _ref$inputsConfig;
-  var _profilesApi$useSendP = profilesApi.useSendPhoneConfirmationMutation(),
-    _profilesApi$useSendP2 = _slicedToArray(_profilesApi$useSendP, 2),
-    sendPhoneConfirmation = _profilesApi$useSendP2[0],
-    _profilesApi$useSendP3 = _profilesApi$useSendP2[1],
-    error = _profilesApi$useSendP3.error,
-    isLoading = _profilesApi$useSendP3.isLoading,
-    isSuccess = _profilesApi$useSendP3.isSuccess,
-    data = _profilesApi$useSendP3.data;
+    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$8 : _ref$inputsConfig;
+  var _profilesApi$useSendE = profilesApi.useSendEmailConfirmationMutation(),
+    _profilesApi$useSendE2 = _slicedToArray(_profilesApi$useSendE, 2),
+    sendEmailConfirmation = _profilesApi$useSendE2[0],
+    _profilesApi$useSendE3 = _profilesApi$useSendE2[1],
+    error = _profilesApi$useSendE3.error,
+    isLoading = _profilesApi$useSendE3.isLoading,
+    isSuccess = _profilesApi$useSendE3.isSuccess,
+    data = _profilesApi$useSendE3.data;
   var submitFunc = function submitFunc(_ref2) {
     var inputs = _ref2.inputs,
       files = _ref2.files;
-    sendPhoneConfirmation({
+    sendEmailConfirmation({
       data: inputs,
       files: files
     });
@@ -18337,21 +18209,22 @@ var useSendPhoneConfirmation = function useSendPhoneConfirmation(_ref) {
   return {
     inputs: inputs,
     inputsErrors: inputsErrors,
-    inputsValues: inputsValues,
     inputsSetErrors: inputsSetErrors,
     error: error,
+    inputsValues: inputsValues,
     onSubmit: onSubmit,
     isLoading: isLoading,
     isSuccess: isSuccess,
     data: data
   };
 };
-var defaultInputsConfig$7 = [{
-  label: "Phone",
-  field: "phone",
-  checkerFuncs: ["checkRequiredField"],
-  type: "text",
-  placeholder: "Type your phone"
+var defaultInputsConfig$8 = [{
+  label: "Email",
+  field: "email",
+  checkerFuncs: ["checkRequiredField", "checkEmailMask"],
+  type: "email",
+  id: "email",
+  placeholder: "Type your email"
 }];
 
 function ownKeys$a(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
@@ -18359,7 +18232,7 @@ function _objectSpread$a(target) { for (var i = 1; i < arguments.length; i++) { 
 var useConfirmEmail = function useConfirmEmail(_ref) {
   var profilesApi = _ref.profilesApi,
     _ref$inputsConfig = _ref.inputsConfig,
-    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$6 : _ref$inputsConfig,
+    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$7 : _ref$inputsConfig,
     _ref$ping = _ref.ping,
     ping = _ref$ping === void 0 ? 30 : _ref$ping,
     _ref$initialPing = _ref.initialPing,
@@ -18492,7 +18365,7 @@ var useConfirmEmail = function useConfirmEmail(_ref) {
     setInputsErrors: setInputsErrors
   };
 };
-var defaultInputsConfig$6 = [{
+var defaultInputsConfig$7 = [{
   field: "email",
   checkerFuncs: ["checkRequiredField"],
   type: "text",
@@ -18507,6 +18380,60 @@ var defaultInputsConfig$6 = [{
   type: "text"
 }];
 
+var useSendPhoneConfirmation = function useSendPhoneConfirmation(_ref) {
+  var profilesApi = _ref.profilesApi,
+    _ref$inputsConfig = _ref.inputsConfig,
+    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$6 : _ref$inputsConfig;
+  var _profilesApi$useSendP = profilesApi.useSendPhoneConfirmationMutation(),
+    _profilesApi$useSendP2 = _slicedToArray(_profilesApi$useSendP, 2),
+    sendPhoneConfirmation = _profilesApi$useSendP2[0],
+    _profilesApi$useSendP3 = _profilesApi$useSendP2[1],
+    error = _profilesApi$useSendP3.error,
+    isLoading = _profilesApi$useSendP3.isLoading,
+    isSuccess = _profilesApi$useSendP3.isSuccess,
+    data = _profilesApi$useSendP3.data;
+  var submitFunc = function submitFunc(_ref2) {
+    var inputs = _ref2.inputs,
+      files = _ref2.files;
+    sendPhoneConfirmation({
+      data: inputs,
+      files: files
+    });
+  };
+  var memoInputsConfig = React.useMemo(function () {
+    return inputsConfig;
+  }, [inputsConfig]);
+  var _useForm = useForm({
+      inputsConfig: memoInputsConfig,
+      submitFunc: submitFunc,
+      inputPropsType: "object"
+    }),
+    inputs = _useForm.inputs,
+    inputsErrors = _useForm.errors,
+    inputsValues = _useForm.inputsValues,
+    onSubmit = _useForm.onSubmit,
+    inputsSetErrors = _useForm.setErrors;
+  return {
+    inputs: inputs,
+    inputsErrors: inputsErrors,
+    inputsSetErrors: inputsSetErrors,
+    error: error,
+    inputsValues: inputsValues,
+    onSubmit: onSubmit,
+    isLoading: isLoading,
+    isSuccess: isSuccess,
+    data: data
+  };
+};
+var defaultInputsConfig$6 = [{
+  label: "Phone",
+  field: "phone_number",
+  checkerFuncs: ["checkRequiredField"],
+  type: "text",
+  id: "phone",
+  placeholder: "Type your phone"
+}];
+
 function ownKeys$9(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 function _objectSpread$9(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$9(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$9(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 var useConfirmPhone = function useConfirmPhone(_ref) {
@@ -18515,7 +18442,14 @@ var useConfirmPhone = function useConfirmPhone(_ref) {
     inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$5 : _ref$inputsConfig,
     _ref$ping = _ref.ping,
     ping = _ref$ping === void 0 ? 30 : _ref$ping,
+    _ref$initialPing = _ref.initialPing,
+    initialPing = _ref$initialPing === void 0 ? 0 : _ref$initialPing,
+    _ref$resendOnMount = _ref.resendOnMount,
+    resendOnMount = _ref$resendOnMount === void 0 ? false : _ref$resendOnMount,
     useSelector = _ref.useSelector;
+  var _useState = React.useState(!resendOnMount),
+    onMountCodeWasSent = _useState[0],
+    setOnMountCodeWasSent = _useState[1];
   var user = useSelector(function (state) {
     var _state$auth;
     return (_state$auth = state.auth) === null || _state$auth === void 0 ? void 0 : _state$auth.user;
@@ -18528,25 +18462,6 @@ var useConfirmPhone = function useConfirmPhone(_ref) {
     error = _profilesApi$useConfi3.error,
     data = _profilesApi$useConfi3.data,
     isLoading = _profilesApi$useConfi3.isLoading;
-  var _profilesApi$useSendP = profilesApi.useSendPhoneConfirmationMutation(),
-    _profilesApi$useSendP2 = _slicedToArray(_profilesApi$useSendP, 2),
-    sendPhoneConfirmation = _profilesApi$useSendP2[0],
-    _profilesApi$useSendP3 = _profilesApi$useSendP2[1],
-    resendPhoneConfirmationError = _profilesApi$useSendP3.error,
-    resendPhoneConfirmationIsLoading = _profilesApi$useSendP3.isLoading,
-    resendPhoneConfirmationIsSuccess = _profilesApi$useSendP3.isSuccess,
-    resendPhoneConfirmationData = _profilesApi$useSendP3.data;
-  var _useState = React.useState(ping),
-    counter = _useState[0],
-    setCounter = _useState[1];
-  React.useEffect(function () {
-    var timer = counter > 0 && setInterval(function () {
-      return setCounter(counter - 1);
-    }, 1000);
-    return function () {
-      return clearInterval(timer);
-    };
-  }, [counter]);
   var submitFunc = function submitFunc(_ref2) {
     var inputs = _ref2.inputs;
     var headers = {};
@@ -18560,6 +18475,25 @@ var useConfirmPhone = function useConfirmPhone(_ref) {
       headers: headers
     });
   };
+  var _profilesApi$useSendP = profilesApi.useSendPhoneConfirmationMutation(),
+    _profilesApi$useSendP2 = _slicedToArray(_profilesApi$useSendP, 2),
+    sendPhoneConfirmation = _profilesApi$useSendP2[0],
+    _profilesApi$useSendP3 = _profilesApi$useSendP2[1],
+    resendPhoneConfirmationError = _profilesApi$useSendP3.error,
+    resendPhoneConfirmationIsLoading = _profilesApi$useSendP3.isLoading,
+    resendPhoneConfirmationIsSuccess = _profilesApi$useSendP3.isSuccess,
+    resendPhoneConfirmationData = _profilesApi$useSendP3.data;
+  var _useState2 = React.useState(initialPing),
+    counter = _useState2[0],
+    setCounter = _useState2[1];
+  React.useEffect(function () {
+    var timer = counter > 0 && setInterval(function () {
+      return setCounter(counter - 1);
+    }, 1000);
+    return function () {
+      return clearInterval(timer);
+    };
+  }, [counter]);
   var memoInputsConfig = React.useMemo(function () {
     return inputsConfig;
   }, [inputsConfig]);
@@ -18587,12 +18521,19 @@ var useConfirmPhone = function useConfirmPhone(_ref) {
       });
       return;
     }
+    setCounter(ping);
     sendPhoneConfirmation({
       data: {
         phone: inputsValues.phone
       }
     });
   };
+  React.useEffect(function () {
+    if (!onMountCodeWasSent && inputsValues !== null && inputsValues !== void 0 && inputsValues.phone) {
+      resendPhoneConfirmation();
+      setOnMountCodeWasSent(true);
+    }
+  }, [inputsValues]);
   React.useEffect(function () {
     if (user) {
       if (user.phone) {
@@ -18603,9 +18544,11 @@ var useConfirmPhone = function useConfirmPhone(_ref) {
       }
     }
     if (typeof window !== "undefined") {
-      var _URLSearchParams, _URL, _window;
-      var phone = (_URLSearchParams = new URLSearchParams((_URL = new URL((_window = window) === null || _window === void 0 ? void 0 : _window.location)) === null || _URL === void 0 ? void 0 : _URL.search)) === null || _URLSearchParams === void 0 ? void 0 : _URLSearchParams.get("phone");
+      var _URLSearchParams, _URL, _window, _URLSearchParams2, _URL2, _window2;
+      var code = (_URLSearchParams = new URLSearchParams((_URL = new URL((_window = window) === null || _window === void 0 ? void 0 : _window.location)) === null || _URL === void 0 ? void 0 : _URL.search)) === null || _URLSearchParams === void 0 ? void 0 : _URLSearchParams.get("code");
+      var phone = (_URLSearchParams2 = new URLSearchParams((_URL2 = new URL((_window2 = window) === null || _window2 === void 0 ? void 0 : _window2.location)) === null || _URL2 === void 0 ? void 0 : _URL2.search)) === null || _URLSearchParams2 === void 0 ? void 0 : _URLSearchParams2.get("phone");
       setInputsValues(_objectSpread$9(_objectSpread$9({}, inputsValues), {}, {
+        code: code,
         phone: phone
       }));
     }
@@ -18619,6 +18562,8 @@ var useConfirmPhone = function useConfirmPhone(_ref) {
     resendPhoneConfirmationData: resendPhoneConfirmationData,
     data: data,
     isLoading: isLoading,
+    inputsValues: inputsValues,
+    setInputsValues: setInputsValues,
     error: error,
     inputs: inputs,
     onSubmit: onSubmit,
@@ -18628,7 +18573,7 @@ var useConfirmPhone = function useConfirmPhone(_ref) {
   };
 };
 var defaultInputsConfig$5 = [{
-  field: "phone",
+  field: "phone_number",
   checkerFuncs: ["checkRequiredField"],
   type: "text",
   placeholder: "Type your phone",
@@ -19103,7 +19048,6 @@ var defaultInputsConfig = [{
 
 var useAuth = {
   useSendEmailConfirmation: useSendEmailConfirmation,
-  usePhoneConfirmation: usePhoneConfirmation,
   useForgotPassword: useForgotPassword,
   useLogin: useLogin,
   useRegister: useRegister,
@@ -33298,14 +33242,19 @@ function createProfilesApi(backendServiceApi) {
               method: "POST",
               body: formData
             };
-          }
+          },
+          transformResponse: transformResponseItem
         }),
         confirmPhone: build.mutation({
           query: function query(_ref2) {
             var data = _ref2.data,
               _ref2$headers = _ref2.headers,
               headers = _ref2$headers === void 0 ? {} : _ref2$headers;
-            var stringifiedParams = qs__default["default"].stringify(data); //?
+            var stringifiedParams = qs__default["default"].stringify(data);
+            // console.log(
+            //   `🚀 ~ createProfilesApi ~ stringifiedParams`,
+            //   stringifiedParams
+            // );
 
             return {
               url: "auth/phone-confirmation?".concat(stringifiedParams),
