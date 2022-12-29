@@ -7,7 +7,7 @@ declare const _default: {
     formatters: typeof formatters;
     vanilla: typeof vanilla;
     hooks: {
-        useSendEmailConfirmation: ({ profilesApi, inputsConfig, }: {
+        useSendEmailConfirmation: ({ profilesApi, inputsConfig, inputPropsType, }: {
             profilesApi: any;
             inputsConfig?: {
                 label: string;
@@ -17,6 +17,7 @@ declare const _default: {
                 id: string;
                 placeholder: string;
             }[];
+            inputPropsType?: string;
         }) => {
             inputs: {};
             inputsErrors: {};
@@ -28,7 +29,7 @@ declare const _default: {
             isSuccess: any;
             data: any;
         };
-        useForgotPassword: ({ profilesApi, inputsConfig, authSlice, useDispatch, }: {
+        useForgotPassword: ({ profilesApi, inputsConfig, authSlice, useDispatch, inputPropsType, }: {
             profilesApi: any;
             inputsConfig?: {
                 title: string;
@@ -40,6 +41,7 @@ declare const _default: {
             }[];
             authSlice: any;
             useDispatch: any;
+            inputPropsType?: string;
         }) => {
             isLoading: any;
             data: any;
@@ -51,7 +53,7 @@ declare const _default: {
             onSubmit: (e: any, submitProps?: {}) => any;
             setPassed: any;
         };
-        useLogin: ({ profilesApi, inputsConfig }: {
+        useLogin: ({ profilesApi, inputsConfig, inputPropsType, }: {
             profilesApi: any;
             inputsConfig?: ({
                 field: string;
@@ -83,6 +85,7 @@ declare const _default: {
                 placeholder?: undefined;
                 config?: undefined;
             })[];
+            inputPropsType?: string;
         }) => {
             inputs: {};
             inputsValues: {};
@@ -95,7 +98,7 @@ declare const _default: {
             isLoading: any;
             isFetching: any;
         };
-        useRegister: ({ profilesApi, inputsConfig }: {
+        useRegister: ({ profilesApi, inputsConfig, inputPropsType, }: {
             profilesApi: any;
             inputsConfig?: ({
                 label: string;
@@ -149,6 +152,7 @@ declare const _default: {
                 id?: undefined;
                 config?: undefined;
             })[];
+            inputPropsType?: string;
         }) => {
             data: any;
             inputs: {};
@@ -161,7 +165,7 @@ declare const _default: {
             inputsErrors: {};
             inputsSetErrors: import("react").Dispatch<import("react").SetStateAction<{}>>;
         };
-        useResetPassword: ({ profilesApi, inputsConfig, authSlice, useDispatch, }: {
+        useResetPassword: ({ profilesApi, inputsConfig, authSlice, useDispatch, inputPropsType, }: {
             profilesApi: any;
             inputsConfig?: ({
                 label: string;
@@ -196,6 +200,7 @@ declare const _default: {
             })[];
             authSlice: any;
             useDispatch: any;
+            inputPropsType?: string;
         }) => {
             data: any;
             isLoading: any;
@@ -207,7 +212,7 @@ declare const _default: {
             inputsErrors: {};
             setInputsErrors: import("react").Dispatch<import("react").SetStateAction<{}>>;
         };
-        useSendPhoneConfirmation: ({ profilesApi, inputsConfig, }: {
+        useSendPhoneConfirmation: ({ profilesApi, inputsConfig, inputPropsType, }: {
             profilesApi: any;
             inputsConfig?: {
                 label: string;
@@ -217,6 +222,7 @@ declare const _default: {
                 id: string;
                 placeholder: string;
             }[];
+            inputPropsType?: string;
         }) => {
             inputs: {};
             inputsErrors: {};
@@ -228,7 +234,7 @@ declare const _default: {
             isSuccess: any;
             data: any;
         };
-        useConfirmEmail: ({ profilesApi, inputsConfig, ping, initialPing, resendOnMount, useSelector, }: {
+        useConfirmEmail: ({ profilesApi, inputsConfig, ping, initialPing, resendOnMount, useSelector, inputPropsType, }: {
             profilesApi: any;
             inputsConfig?: ({
                 field: string;
@@ -249,6 +255,7 @@ declare const _default: {
             initialPing?: number;
             resendOnMount?: boolean;
             useSelector: any;
+            inputPropsType?: string;
         }) => {
             counter: number;
             resendEmailConfirmation: () => void;
@@ -267,7 +274,7 @@ declare const _default: {
             inputsErrors: {};
             setInputsErrors: import("react").Dispatch<import("react").SetStateAction<{}>>;
         };
-        useConfirmPhone: ({ profilesApi, inputsConfig, ping, initialPing, resendOnMount, useSelector, }: {
+        useConfirmPhone: ({ profilesApi, inputsConfig, ping, initialPing, resendOnMount, useSelector, inputPropsType, }: {
             profilesApi: any;
             inputsConfig?: ({
                 field: string;
@@ -288,6 +295,7 @@ declare const _default: {
             initialPing?: number;
             resendOnMount?: boolean;
             useSelector: any;
+            inputPropsType?: string;
         }) => {
             counter: number;
             resendPhoneConfirmation: () => void;
@@ -306,7 +314,7 @@ declare const _default: {
             inputsErrors: {};
             setInputsErrors: import("react").Dispatch<import("react").SetStateAction<{}>>;
         };
-        useUpdateMe: ({ profilesApi, inputsConfig, useSelector, }: {
+        useUpdateMe: ({ profilesApi, inputsConfig, useSelector, inputPropsType, }: {
             profilesApi: any;
             inputsConfig?: {
                 field: string;
@@ -316,6 +324,7 @@ declare const _default: {
                 label: string;
             }[];
             useSelector: any;
+            inputPropsType?: string;
         }) => {
             data: any;
             isLoading: any;
@@ -331,7 +340,7 @@ declare const _default: {
             me: any;
             refetch: () => void;
         };
-        useSetOtp: ({ profilesApi, inputsConfig, useSelector, }: {
+        useSetOtp: ({ profilesApi, inputsConfig, useSelector, inputPropsType, }: {
             profilesApi: any;
             inputsConfig?: {
                 title: string;
@@ -342,6 +351,7 @@ declare const _default: {
                 type: string;
             }[];
             useSelector: any;
+            inputPropsType?: string;
         }) => {
             generateOtpSecretData: any;
             generateOtpSecretIsLoading: any;
@@ -357,7 +367,7 @@ declare const _default: {
             inputsErrors: {};
             setInputsErrors: import("react").Dispatch<import("react").SetStateAction<{}>>;
         };
-        useDeleteOtp: ({ profilesApi, inputsConfig, useSelector, }: {
+        useDeleteOtp: ({ profilesApi, inputsConfig, useSelector, inputPropsType, }: {
             profilesApi: any;
             inputsConfig?: {
                 title: string;
@@ -368,6 +378,7 @@ declare const _default: {
                 type: string;
             }[];
             useSelector: any;
+            inputPropsType?: string;
         }) => {
             data: any;
             isLoading: any;
@@ -380,7 +391,7 @@ declare const _default: {
             inputsErrors: {};
             setInputsErrors: import("react").Dispatch<import("react").SetStateAction<{}>>;
         };
-        useCheckOtp: ({ profilesApi, inputsConfig, useSelector, }: {
+        useCheckOtp: ({ profilesApi, inputsConfig, useSelector, inputPropsType, }: {
             profilesApi: any;
             inputsConfig?: {
                 title: string;
@@ -391,6 +402,7 @@ declare const _default: {
                 type: string;
             }[];
             useSelector: any;
+            inputPropsType?: string;
         }) => {
             data: any;
             isLoading: any;
@@ -403,7 +415,7 @@ declare const _default: {
             inputsErrors: {};
             setInputsErrors: import("react").Dispatch<import("react").SetStateAction<{}>>;
         };
-        useChangePassword: ({ profilesApi, inputsConfig, }: {
+        useChangePassword: ({ profilesApi, inputsConfig, inputPropsType, }: {
             profilesApi: any;
             inputsConfig?: ({
                 label: string;
@@ -426,6 +438,7 @@ declare const _default: {
                 type: string;
                 placeholder: string;
             })[];
+            inputPropsType?: string;
         }) => {
             data: any;
             isLoading: any;

@@ -211,6 +211,7 @@ export const getPageData = async (params: {
   const additionalBlocksData = {};
   for (const block of additionalBlocks) {
     block; //?
+
     if (res[block]) {
       res[block];
       additionalBlocksData[block] = transformPageBlock(
@@ -219,8 +220,6 @@ export const getPageData = async (params: {
       );
     }
   }
-
-  additionalBlocksData; //?
 
   return { pageBlocks, res, additionalBlocks: additionalBlocksData };
 };

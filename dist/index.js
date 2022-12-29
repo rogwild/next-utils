@@ -17838,7 +17838,9 @@ const useDebounce = (value, delay) => {
 var useRegister = function useRegister(_ref) {
   var profilesApi = _ref.profilesApi,
     _ref$inputsConfig = _ref.inputsConfig,
-    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$c : _ref$inputsConfig;
+    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$c : _ref$inputsConfig,
+    _ref$inputPropsType = _ref.inputPropsType,
+    inputPropsType = _ref$inputPropsType === void 0 ? "object" : _ref$inputPropsType;
   var _profilesApi$useRegis = profilesApi.useRegisterMutation(),
     _profilesApi$useRegis2 = _slicedToArray(_profilesApi$useRegis, 2),
     register = _profilesApi$useRegis2[0],
@@ -17866,7 +17868,7 @@ var useRegister = function useRegister(_ref) {
       inputsConfig: memoInputsConfig,
       afterPassed: afterPassed,
       submitFunc: submitFunc,
-      inputPropsType: "object"
+      inputPropsType: inputPropsType
     }),
     inputs = _useForm.inputs,
     inputsSetErrors = _useForm.setErrors,
@@ -17932,7 +17934,9 @@ function _objectSpread$c(target) { for (var i = 1; i < arguments.length; i++) { 
 var useLogin = function useLogin(_ref) {
   var profilesApi = _ref.profilesApi,
     _ref$inputsConfig = _ref.inputsConfig,
-    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$b : _ref$inputsConfig;
+    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$b : _ref$inputsConfig,
+    _ref$inputPropsType = _ref.inputPropsType,
+    inputPropsType = _ref$inputPropsType === void 0 ? "object" : _ref$inputPropsType;
   var _profilesApi$useLogin = profilesApi.useLoginWithEmailAndPasswordMutation(),
     _profilesApi$useLogin2 = _slicedToArray(_profilesApi$useLogin, 2),
     loginWithEmailAndPassword = _profilesApi$useLogin2[0],
@@ -17956,7 +17960,7 @@ var useLogin = function useLogin(_ref) {
   var _useForm = useForm({
       inputsConfig: memoInputsConfig,
       submitFunc: submitFunc,
-      inputPropsType: "object"
+      inputPropsType: inputPropsType
     }),
     inputs = _useForm.inputs,
     setErrors = _useForm.setErrors,
@@ -18025,7 +18029,9 @@ var useForgotPassword = function useForgotPassword(_ref) {
     _ref$inputsConfig = _ref.inputsConfig,
     inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$a : _ref$inputsConfig,
     authSlice = _ref.authSlice,
-    useDispatch = _ref.useDispatch;
+    useDispatch = _ref.useDispatch,
+    _ref$inputPropsType = _ref.inputPropsType,
+    inputPropsType = _ref$inputPropsType === void 0 ? "object" : _ref$inputPropsType;
   var dispatch = useDispatch();
   var _profilesApi$useForgo = profilesApi.useForgotPasswordMutation(),
     _profilesApi$useForgo2 = _slicedToArray(_profilesApi$useForgo, 2),
@@ -18053,7 +18059,7 @@ var useForgotPassword = function useForgotPassword(_ref) {
   var _useForm = useForm({
       inputsConfig: memoInputsConfig,
       submitFunc: submitFunc,
-      inputPropsType: "object"
+      inputPropsType: inputPropsType
     }),
     inputs = _useForm.inputs,
     inputsValues = _useForm.inputsValues,
@@ -18089,7 +18095,9 @@ var useResetPassword = function useResetPassword(_ref) {
     _ref$inputsConfig = _ref.inputsConfig,
     inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$9 : _ref$inputsConfig,
     authSlice = _ref.authSlice,
-    useDispatch = _ref.useDispatch;
+    useDispatch = _ref.useDispatch,
+    _ref$inputPropsType = _ref.inputPropsType,
+    inputPropsType = _ref$inputPropsType === void 0 ? "object" : _ref$inputPropsType;
   var dispatch = useDispatch();
   React.useEffect(function () {
     dispatch(authSlice.actions.logout());
@@ -18118,7 +18126,7 @@ var useResetPassword = function useResetPassword(_ref) {
   var _useForm = useForm({
       inputsConfig: memoInputsConfig,
       submitFunc: submitFunc,
-      inputPropsType: "object"
+      inputPropsType: inputPropsType
     }),
     inputs = _useForm.inputs,
     onSubmit = _useForm.onSubmit,
@@ -18176,7 +18184,9 @@ var defaultInputsConfig$9 = [{
 var useSendEmailConfirmation = function useSendEmailConfirmation(_ref) {
   var profilesApi = _ref.profilesApi,
     _ref$inputsConfig = _ref.inputsConfig,
-    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$8 : _ref$inputsConfig;
+    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$8 : _ref$inputsConfig,
+    _ref$inputPropsType = _ref.inputPropsType,
+    inputPropsType = _ref$inputPropsType === void 0 ? "object" : _ref$inputPropsType;
   var _profilesApi$useSendE = profilesApi.useSendEmailConfirmationMutation(),
     _profilesApi$useSendE2 = _slicedToArray(_profilesApi$useSendE, 2),
     sendEmailConfirmation = _profilesApi$useSendE2[0],
@@ -18199,7 +18209,7 @@ var useSendEmailConfirmation = function useSendEmailConfirmation(_ref) {
   var _useForm = useForm({
       inputsConfig: memoInputsConfig,
       submitFunc: submitFunc,
-      inputPropsType: "object"
+      inputPropsType: inputPropsType
     }),
     inputs = _useForm.inputs,
     inputsErrors = _useForm.errors,
@@ -18239,7 +18249,9 @@ var useConfirmEmail = function useConfirmEmail(_ref) {
     initialPing = _ref$initialPing === void 0 ? 0 : _ref$initialPing,
     _ref$resendOnMount = _ref.resendOnMount,
     resendOnMount = _ref$resendOnMount === void 0 ? false : _ref$resendOnMount,
-    useSelector = _ref.useSelector;
+    useSelector = _ref.useSelector,
+    _ref$inputPropsType = _ref.inputPropsType,
+    inputPropsType = _ref$inputPropsType === void 0 ? "object" : _ref$inputPropsType;
   var _useState = React.useState(!resendOnMount),
     onMountEmailWasSent = _useState[0],
     setOnMountEmailWasSent = _useState[1];
@@ -18293,7 +18305,7 @@ var useConfirmEmail = function useConfirmEmail(_ref) {
   var _useForm = useForm({
       inputsConfig: memoInputsConfig,
       submitFunc: submitFunc,
-      inputPropsType: "object"
+      inputPropsType: inputPropsType
     }),
     inputs = _useForm.inputs,
     onSubmit = _useForm.onSubmit,
@@ -18301,7 +18313,7 @@ var useConfirmEmail = function useConfirmEmail(_ref) {
     inputsValues = _useForm.inputsValues,
     inputsErrors = _useForm.errors,
     setInputsErrors = _useForm.setErrors;
-  var resendEmailConfirmation = function resendEmailConfirmation() {
+  var resendEmailConfirmation = React.useCallback(function () {
     if (!inputsValues.email) {
       console.error("Pass email for resending code");
       setInputsErrors(function (prev) {
@@ -18315,18 +18327,19 @@ var useConfirmEmail = function useConfirmEmail(_ref) {
       return;
     }
     setCounter(ping);
+    setOnMountEmailWasSent(true);
     sendEmailConfirmation({
       data: {
         email: inputsValues.email
       }
     });
-  };
+  }, [inputsValues]);
   React.useEffect(function () {
-    if (!onMountEmailWasSent && inputsValues !== null && inputsValues !== void 0 && inputsValues.email) {
+    if (resendOnMount && !onMountEmailWasSent && inputsValues !== null && inputsValues !== void 0 && inputsValues.email) {
       resendEmailConfirmation();
       setOnMountEmailWasSent(true);
     }
-  }, [inputsValues]);
+  }, [inputsValues, onMountEmailWasSent]);
   React.useEffect(function () {
     if (user) {
       if (user.email) {
@@ -18383,7 +18396,9 @@ var defaultInputsConfig$7 = [{
 var useSendPhoneConfirmation = function useSendPhoneConfirmation(_ref) {
   var profilesApi = _ref.profilesApi,
     _ref$inputsConfig = _ref.inputsConfig,
-    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$6 : _ref$inputsConfig;
+    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$6 : _ref$inputsConfig,
+    _ref$inputPropsType = _ref.inputPropsType,
+    inputPropsType = _ref$inputPropsType === void 0 ? "object" : _ref$inputPropsType;
   var _profilesApi$useSendP = profilesApi.useSendPhoneConfirmationMutation(),
     _profilesApi$useSendP2 = _slicedToArray(_profilesApi$useSendP, 2),
     sendPhoneConfirmation = _profilesApi$useSendP2[0],
@@ -18406,7 +18421,7 @@ var useSendPhoneConfirmation = function useSendPhoneConfirmation(_ref) {
   var _useForm = useForm({
       inputsConfig: memoInputsConfig,
       submitFunc: submitFunc,
-      inputPropsType: "object"
+      inputPropsType: inputPropsType
     }),
     inputs = _useForm.inputs,
     inputsErrors = _useForm.errors,
@@ -18446,7 +18461,9 @@ var useConfirmPhone = function useConfirmPhone(_ref) {
     initialPing = _ref$initialPing === void 0 ? 0 : _ref$initialPing,
     _ref$resendOnMount = _ref.resendOnMount,
     resendOnMount = _ref$resendOnMount === void 0 ? false : _ref$resendOnMount,
-    useSelector = _ref.useSelector;
+    useSelector = _ref.useSelector,
+    _ref$inputPropsType = _ref.inputPropsType,
+    inputPropsType = _ref$inputPropsType === void 0 ? "object" : _ref$inputPropsType;
   var _useState = React.useState(!resendOnMount),
     onMountCodeWasSent = _useState[0],
     setOnMountCodeWasSent = _useState[1];
@@ -18500,7 +18517,7 @@ var useConfirmPhone = function useConfirmPhone(_ref) {
   var _useForm = useForm({
       inputsConfig: memoInputsConfig,
       submitFunc: submitFunc,
-      inputPropsType: "object"
+      inputPropsType: inputPropsType
     }),
     inputs = _useForm.inputs,
     onSubmit = _useForm.onSubmit,
@@ -18669,7 +18686,9 @@ var useUpdateMe = function useUpdateMe(_ref) {
   var profilesApi = _ref.profilesApi,
     _ref$inputsConfig = _ref.inputsConfig,
     inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$4 : _ref$inputsConfig,
-    useSelector = _ref.useSelector;
+    useSelector = _ref.useSelector,
+    _ref$inputPropsType = _ref.inputPropsType,
+    inputPropsType = _ref$inputPropsType === void 0 ? "object" : _ref$inputPropsType;
   var _profilesApi$useUpdat = profilesApi.useUpdateMeMutation(),
     _profilesApi$useUpdat2 = _slicedToArray(_profilesApi$useUpdat, 2),
     updateMe = _profilesApi$useUpdat2[0],
@@ -18696,7 +18715,7 @@ var useUpdateMe = function useUpdateMe(_ref) {
   var _useForm = useForm({
       inputsConfig: memoInputsConfig,
       submitFunc: submitFunc,
-      inputPropsType: "object"
+      inputPropsType: inputPropsType
     }),
     inputs = _useForm.inputs,
     onSubmit = _useForm.onSubmit,
@@ -18761,7 +18780,9 @@ var useSetOtp = function useSetOtp(_ref) {
   var profilesApi = _ref.profilesApi,
     _ref$inputsConfig = _ref.inputsConfig,
     inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$3 : _ref$inputsConfig,
-    useSelector = _ref.useSelector;
+    useSelector = _ref.useSelector,
+    _ref$inputPropsType = _ref.inputPropsType,
+    inputPropsType = _ref$inputPropsType === void 0 ? "object" : _ref$inputPropsType;
   var accountId = useSelector(selectors.selectAccountId); //?
   var _profilesApi$useGener = profilesApi.useGenerateOtpSecretQuery({
       id: accountId
@@ -18794,7 +18815,7 @@ var useSetOtp = function useSetOtp(_ref) {
   var _useForm = useForm({
       inputsConfig: memoInputsConfig,
       submitFunc: submitFunc,
-      inputPropsType: "object"
+      inputPropsType: inputPropsType
     }),
     inputs = _useForm.inputs,
     onSubmit = _useForm.onSubmit,
@@ -18846,7 +18867,9 @@ var useDeleteOtp = function useDeleteOtp(_ref) {
   var profilesApi = _ref.profilesApi,
     _ref$inputsConfig = _ref.inputsConfig,
     inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$2 : _ref$inputsConfig,
-    useSelector = _ref.useSelector;
+    useSelector = _ref.useSelector,
+    _ref$inputPropsType = _ref.inputPropsType,
+    inputPropsType = _ref$inputPropsType === void 0 ? "object" : _ref$inputPropsType;
   var accountId = useSelector(selectors.selectAccountId); //?
   var _profilesApi$useDelet = profilesApi.useDeleteOtpMutation(),
     _profilesApi$useDelet2 = _slicedToArray(_profilesApi$useDelet, 2),
@@ -18871,7 +18894,7 @@ var useDeleteOtp = function useDeleteOtp(_ref) {
   var _useForm = useForm({
       inputsConfig: memoInputsConfig,
       submitFunc: submitFunc,
-      inputPropsType: "object"
+      inputPropsType: inputPropsType
     }),
     inputs = _useForm.inputs,
     onSubmit = _useForm.onSubmit,
@@ -18907,7 +18930,9 @@ var useCheckOtp = function useCheckOtp(_ref) {
   var profilesApi = _ref.profilesApi,
     _ref$inputsConfig = _ref.inputsConfig,
     inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$1 : _ref$inputsConfig,
-    useSelector = _ref.useSelector;
+    useSelector = _ref.useSelector,
+    _ref$inputPropsType = _ref.inputPropsType,
+    inputPropsType = _ref$inputPropsType === void 0 ? "object" : _ref$inputPropsType;
   var user = useSelector(function (state) {
     var _state$auth;
     return (_state$auth = state.auth) === null || _state$auth === void 0 ? void 0 : _state$auth.user;
@@ -18941,7 +18966,7 @@ var useCheckOtp = function useCheckOtp(_ref) {
   var _useForm = useForm({
       inputsConfig: memoInputsConfig,
       submitFunc: submitFunc,
-      inputPropsType: "object"
+      inputPropsType: inputPropsType
     }),
     inputs = _useForm.inputs,
     onSubmit = _useForm.onSubmit,
@@ -18983,7 +19008,9 @@ var defaultInputsConfig$1 = [{
 var useChangePassword = function useChangePassword(_ref) {
   var profilesApi = _ref.profilesApi,
     _ref$inputsConfig = _ref.inputsConfig,
-    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig : _ref$inputsConfig;
+    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig : _ref$inputsConfig,
+    _ref$inputPropsType = _ref.inputPropsType,
+    inputPropsType = _ref$inputPropsType === void 0 ? "object" : _ref$inputPropsType;
   var _profilesApi$useChang = profilesApi.useChangePasswordMutation(),
     _profilesApi$useChang2 = _slicedToArray(_profilesApi$useChang, 2),
     changePassword = _profilesApi$useChang2[0],
@@ -19006,7 +19033,7 @@ var useChangePassword = function useChangePassword(_ref) {
   var _useForm = useForm({
       inputsConfig: memoInputsConfig,
       submitFunc: submitFunc,
-      inputPropsType: "object"
+      inputPropsType: inputPropsType
     }),
     inputs = _useForm.inputs,
     onSubmit = _useForm.onSubmit,
