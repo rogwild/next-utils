@@ -154,7 +154,7 @@ export const getPageData = async (params: {
   url?: string;
   page: string;
   locale?: string;
-  keys: string[];
+  keys?: string[];
   additionalBlocks?: string[];
   transformers?: {};
   query?: {};
