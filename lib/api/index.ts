@@ -232,6 +232,7 @@ export const handleApiError = (error: any) => ({
 });
 
 export const prepareFormDataToSend = (params) => {
+  console.log(`🚀 ~ prepareFormDataToSend ~ params`, params);
   const { data, files } = params;
 
   // console.log(`🚀 ~ prepareDataToSend ~ data`, data);

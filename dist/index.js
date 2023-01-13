@@ -33015,6 +33015,7 @@ const handleApiError = (error) => {
     });
 };
 const prepareFormDataToSend = (params) => {
+    console.log(`🚀 ~ prepareFormDataToSend ~ params`, params);
     const { data, files } = params;
     // console.log(`🚀 ~ prepareDataToSend ~ data`, data);
     const clearedData = removeEmptyFields({ data, files });
