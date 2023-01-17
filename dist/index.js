@@ -35300,7 +35300,7 @@ function ReactSpringGallery(_ref) {
   var srImageItemClassName = useStyleRewriter$6(baseImageItemClassName, imageItemClassName);
   var srVideoItemClassName = useStyleRewriter$6(baseVideoItemClassName, videoItemClassName);
   var isDesktop = useBreakpoint$1("md");
-  var _useState = React.useState(),
+  var _useState = React.useState(0),
     width = _useState[0],
     setWidth = _useState[1];
   React.useEffect(function () {
