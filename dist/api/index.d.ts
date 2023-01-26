@@ -17,7 +17,6 @@ export declare const getImageUrl: (obj: {
     BACKEND_URL?: string;
 }) => string;
 export declare const transformPageBlock: (block: any, transformers: any) => any;
-export declare const appendFilesToFormData: (formData: any, files: any) => void;
 export declare const unlunkRemovedFiles: ({ data }: {
     data: any;
 }) => any;
@@ -46,8 +45,8 @@ export declare const getPageData: (params: {
     locale?: string;
     keys?: string[];
     additionalBlocks?: string[];
-    transformers?: {};
-    query?: {};
+    transformers?: any;
+    query?: any;
 }) => Promise<{
     pageBlocks: any;
     res: any;
@@ -57,6 +56,7 @@ export declare const handleApiError: (error: any) => {
     event: string;
     title: any;
 };
+export declare const appendFilesToFormData: (formData: any, files: any) => void;
 export declare const prepareFormDataToSend: (params: any) => FormData;
 export declare const ApiClient: typeof Api;
 export declare const transformResponseItem: (resItem: any) => any;

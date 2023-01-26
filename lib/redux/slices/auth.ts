@@ -45,7 +45,7 @@ export const sliceCreator = (profilesApi) => {
           }
         )
         .addMatcher(
-          profilesApi.endpoints.register.matchFulfilled,
+          profilesApi.endpoints.registration.matchFulfilled,
           (state, action) => {
             setUser(state, action);
           }

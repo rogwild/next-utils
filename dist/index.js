@@ -1,5 +1,6 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
+var ramda = require('ramda');
 var axios = require('axios');
 var qs = require('qs');
 var React = require('react');
@@ -8,6 +9,7 @@ var path = require('path');
 var proc = require('process');
 var url$1 = require('url');
 var reactTable = require('react-table');
+var reactHookForm = require('react-hook-form');
 var toolkit = require('@reduxjs/toolkit');
 var transitionComponent = require('transition-component');
 var react = require('@use-gesture/react');
@@ -923,14 +925,14 @@ var shortByFull = (_shortByFull = {
 //   }
 // });
 
-function ownKeys$l(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread$l(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$l(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$l(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function ownKeys$g(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$g(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$g(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$g(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 var useStyleRewriter$6 = function useStyleRewriter(baseClassName, className) {
   var cleared = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
   return React.useMemo(function () {
     var styleObj = getStyleObj("@base ".concat(baseClassName), cleared);
     var styleObjProps = getStyleObj("@prop ".concat(className), cleared);
-    var computedStyleObj = _objectSpread$l(_objectSpread$l({}, styleObj), styleObjProps);
+    var computedStyleObj = _objectSpread$g(_objectSpread$g({}, styleObj), styleObjProps);
     var resultClassName = Object.values(computedStyleObj).join(" ").replace(/\n/g, "");
     return resultClassName.replace(/\s+/g, " ");
   }, [baseClassName, className]);
@@ -11236,8 +11238,8 @@ function u(type, props, value) {
   return node;
 };
 
-function ownKeys$k(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread$k(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$k(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$k(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function ownKeys$f(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$f(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$f(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$f(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 var own$5 = {}.hasOwnProperty;
 
 /**
@@ -11282,7 +11284,7 @@ function one(h, node, parent) {
  */
 function returnNode(h, node) {
   // @ts-expect-error: Pass through custom node.
-  return 'children' in node ? _objectSpread$k(_objectSpread$k({}, node), {}, {
+  return 'children' in node ? _objectSpread$f(_objectSpread$f({}, node), {}, {
     children: all(h, node)
   }) : node;
 }
@@ -11854,8 +11856,8 @@ function wrap(nodes, loose) {
   return result;
 }
 
-function ownKeys$j(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread$j(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$j(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$j(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function ownKeys$e(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$e(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$e(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$e(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 /**
  * @param {H} h
@@ -11954,7 +11956,7 @@ function footer(h) {
     children: [{
       type: 'element',
       tagName: h.footnoteLabelTagName,
-      properties: _objectSpread$j(_objectSpread$j({}, JSON.parse(JSON.stringify(h.footnoteLabelProperties))), {}, {
+      properties: _objectSpread$e(_objectSpread$e({}, JSON.parse(JSON.stringify(h.footnoteLabelProperties))), {}, {
         id: 'footnote-label'
       }),
       children: [u('text', h.footnoteLabel)]
@@ -12617,8 +12619,8 @@ function ignore() {
   return null;
 }
 
-function ownKeys$i(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread$i(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$i(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$i(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function ownKeys$d(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$d(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$d(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$d(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 var own$3 = {}.hasOwnProperty;
 
 /**
@@ -12651,7 +12653,7 @@ function factory(tree, options) {
   /** @type {Record<string, number>} */
   h.footnoteCounts = {};
   h.augment = augment;
-  h.handlers = _objectSpread$i(_objectSpread$i({}, handlers), settings.handlers);
+  h.handlers = _objectSpread$d(_objectSpread$d({}, handlers), settings.handlers);
   h.unknownHandler = settings.unknownHandler;
   h.passThrough = settings.passThrough;
   visit(tree, 'footnoteDefinition', function (definition) {
@@ -12691,7 +12693,7 @@ function factory(tree, options) {
         right.tagName = data.hName;
       }
       if (right.type === 'element' && data.hProperties) {
-        right.properties = _objectSpread$i(_objectSpread$i({}, right.properties), data.hProperties);
+        right.properties = _objectSpread$d(_objectSpread$d({}, right.properties), data.hProperties);
       }
       if ('children' in right && right.children && data.hChildren) {
         right.children = data.hChildren;
@@ -16317,8 +16319,8 @@ function flattenPosition(pos) {
   return [pos.start.line, ':', pos.start.column, '-', pos.end.line, ':', pos.end.column].map(String).join('');
 }
 
-function ownKeys$h(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread$h(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$h(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$h(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function ownKeys$c(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$c(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$c(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$c(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 var own = {}.hasOwnProperty;
 var changelog = 'https://github.com/remarkjs/react-markdown/blob/main/changelog.md';
 
@@ -16377,7 +16379,7 @@ function ReactMarkdown(options) {
       delete deprecated[key];
     }
   }
-  var processor = unified().use(remarkParse).use(options.remarkPlugins || []).use(remarkRehype, _objectSpread$h(_objectSpread$h({}, options.remarkRehypeOptions), {}, {
+  var processor = unified().use(remarkParse).use(options.remarkPlugins || []).use(remarkRehype, _objectSpread$c(_objectSpread$c({}, options.remarkRehypeOptions), {}, {
     allowDangerousHtml: true
   })).use(options.rehypePlugins || []).use(rehypeFilter, options);
   var file = new VFile();
@@ -16471,8 +16473,8 @@ function _slicedToArray(arr, i) {
   return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray$3(arr, i) || _nonIterableRest();
 }
 
-function ownKeys$g(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread$g(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$g(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$g(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function ownKeys$b(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$b(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$b(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$b(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 /**
  * Filter function by text content
@@ -16585,7 +16587,7 @@ var useLookupTable = function useLookupTable(_ref) {
     return state;
   }, [sortBy, filters, localSelectedRowIds]);
   var filterTypes = React.useMemo(function () {
-    return _objectSpread$g(_objectSpread$g({}, baseFilters), config.filterTypes);
+    return _objectSpread$b(_objectSpread$b({}, baseFilters), config.filterTypes);
   }, []);
   React.useEffect(function () {
     if (data.length && config.selectedRowIds) {
@@ -16804,7 +16806,7 @@ var returnDoc = createArgDocumentation({
 ({
   component: useLookupTable,
   title: "Hooks/useLookupTable",
-  argTypes: _objectSpread$g(_objectSpread$g(_objectSpread$g(_objectSpread$g({}, columnsDoc), dataDoc), configDoc), returnDoc),
+  argTypes: _objectSpread$b(_objectSpread$b(_objectSpread$b(_objectSpread$b({}, columnsDoc), dataDoc), configDoc), returnDoc),
   parameters: {
     docs: {
       description: {
@@ -17096,8 +17098,8 @@ var useDetectOutsideClick$1 = function useDetectOutsideClick(trigger, initialSta
 function _createForOfIteratorHelper$2(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray$2(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 function _unsupportedIterableToArray$2(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray$2(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$2(o, minLen); }
 function _arrayLikeToArray$2(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-function ownKeys$f(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread$f(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$f(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$f(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function ownKeys$a(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$a(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$a(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$a(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 var changeInput = function changeInput(e, _ref) {
   var inputs = _ref.inputs,
     errors = _ref.errors,
@@ -17106,9 +17108,9 @@ var changeInput = function changeInput(e, _ref) {
     setErrors = _ref$setErrors === void 0 ? function () {} : _ref$setErrors,
     setInputs = _ref.setInputs,
     setFiles = _ref.setFiles;
-  var localInputs = _objectSpread$f({}, inputs);
-  var localErrors = _objectSpread$f({}, errors);
-  var localFiles = _objectSpread$f({}, files);
+  var localInputs = _objectSpread$a({}, inputs);
+  var localErrors = _objectSpread$a({}, errors);
+  var localFiles = _objectSpread$a({}, files);
   localErrors[e.target.id] = [];
   if (!e.target.files) {
     if (!Object.keys(files).includes(e.target.id)) {
@@ -17118,7 +17120,7 @@ var changeInput = function changeInput(e, _ref) {
       localInputs[e.target.id] = e.target.value;
       if (e.target.multiple) {
         if (localFiles && Array.isArray(localFiles[e.target.id]) && Array.isArray(localInputs[e.target.id])) {
-          localFiles = _objectSpread$f(_objectSpread$f({}, localFiles), {}, _defineProperty({}, e.target.id, _toConsumableArray(localInputs[e.target.id])));
+          localFiles = _objectSpread$a(_objectSpread$a({}, localFiles), {}, _defineProperty({}, e.target.id, _toConsumableArray(localInputs[e.target.id])));
         }
       } else {
         // Deleted not multiple file
@@ -17126,7 +17128,7 @@ var changeInput = function changeInput(e, _ref) {
       }
     }
   } else {
-    var loadedFiles = _objectSpread$f({}, e.target.files);
+    var loadedFiles = _objectSpread$a({}, e.target.files);
     var _iterator = _createForOfIteratorHelper$2(new Array(e.target.files.length).entries()),
       _step;
     try {
@@ -17135,12 +17137,12 @@ var changeInput = function changeInput(e, _ref) {
           index = _step$value[0];
         if (e.target.multiple) {
           if (localFiles && Array.isArray(localFiles[e.target.id]) && Array.isArray(localInputs[e.target.id])) {
-            localFiles = _objectSpread$f(_objectSpread$f({}, localFiles), {}, _defineProperty({}, e.target.id, [].concat(_toConsumableArray(localFiles[e.target.id]), [loadedFiles[index]])));
+            localFiles = _objectSpread$a(_objectSpread$a({}, localFiles), {}, _defineProperty({}, e.target.id, [].concat(_toConsumableArray(localFiles[e.target.id]), [loadedFiles[index]])));
           } else {
-            localFiles = _objectSpread$f(_objectSpread$f({}, localFiles), {}, _defineProperty({}, e.target.id, [loadedFiles[index]]));
+            localFiles = _objectSpread$a(_objectSpread$a({}, localFiles), {}, _defineProperty({}, e.target.id, [loadedFiles[index]]));
           }
         } else {
-          localFiles = _objectSpread$f(_objectSpread$f({}, localFiles), {}, _defineProperty({}, e.target.id, loadedFiles[index]));
+          localFiles = _objectSpread$a(_objectSpread$a({}, localFiles), {}, _defineProperty({}, e.target.id, loadedFiles[index]));
         }
       }
     } catch (err) {
@@ -17152,9 +17154,9 @@ var changeInput = function changeInput(e, _ref) {
   if (e.target.type == "checkbox") {
     localInputs[e.target.id] = e.target.checked;
   }
-  setFiles(_objectSpread$f({}, localFiles));
-  setInputs(_objectSpread$f({}, localInputs));
-  setErrors(_objectSpread$f({}, localErrors));
+  setFiles(_objectSpread$a({}, localFiles));
+  setInputs(_objectSpread$a({}, localInputs));
+  setErrors(_objectSpread$a({}, localErrors));
 };
 var checkUsernameMask = function checkUsernameMask(_ref2) {
   var field = _ref2.field,
@@ -17257,7 +17259,7 @@ var checkFields = function checkFields(_ref8) {
     inputsConfig = _ref8.inputsConfig,
     inputs = _ref8.inputs,
     files = _ref8.files;
-  var localErrors = _objectSpread$f({}, errors);
+  var localErrors = _objectSpread$a({}, errors);
   inputsConfig.forEach(function (_ref9) {
     var field = _ref9.field,
       checkerFuncs = _ref9.checkerFuncs,
@@ -17315,7 +17317,7 @@ var checkFields = function checkFields(_ref8) {
       if (((_Object$values = Object.values(value)) === null || _Object$values === void 0 ? void 0 : (_Object$values$filter = _Object$values.filter(function (m) {
         return typeof m === "string";
       })) === null || _Object$values$filter === void 0 ? void 0 : _Object$values$filter.length) > 0) {
-        hasErrors.push(_objectSpread$f({}, value));
+        hasErrors.push(_objectSpread$a({}, value));
       }
     }
   }
@@ -17346,7 +17348,7 @@ var changeTypeFunc = function changeTypeFunc(_ref11) {
     field = _ref11.field;
   var type = types[field];
   if (types[field]) {
-    var localTypes = _objectSpread$f({}, types);
+    var localTypes = _objectSpread$a({}, types);
     if (type === "password") {
       localTypes[field] = "text";
     } else if (type === "text") {
@@ -17359,7 +17361,7 @@ var changeBlockedInputsFunc = function changeBlockedInputsFunc(_ref12) {
   var setBlockedInputs = _ref12.setBlockedInputs,
     blockedInputs = _ref12.blockedInputs,
     newBlockedInputs = _ref12.newBlockedInputs;
-  setBlockedInputs(_objectSpread$f(_objectSpread$f({}, blockedInputs), newBlockedInputs));
+  setBlockedInputs(_objectSpread$a(_objectSpread$a({}, blockedInputs), newBlockedInputs));
 };
 
 const checkIsServer = () => typeof window === `undefined`;
@@ -17450,8 +17452,8 @@ var _excluded$8 = ["field", "blocked", "placeholder", "title", "label", "config"
 function _createForOfIteratorHelper$1(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray$1(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 function _unsupportedIterableToArray$1(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray$1(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$1(o, minLen); }
 function _arrayLikeToArray$1(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-function ownKeys$e(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread$e(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$e(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$e(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function ownKeys$9(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$9(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$9(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$9(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 var useForm = function useForm(_ref) {
   var inputsConfig = _ref.inputsConfig,
     _ref$submitFunc = _ref.submitFunc,
@@ -17535,7 +17537,7 @@ var useForm = function useForm(_ref) {
   };
   var onSubmitFunc = React.useCallback(function (e) {
     var submitProps = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-    return onSubmit(e, _objectSpread$e({
+    return onSubmit(e, _objectSpread$9({
       inputsConfig: inputsConfig,
       inputs: inputs,
       errors: errors,
@@ -17593,7 +17595,7 @@ var useForm = function useForm(_ref) {
         PairComponent = _ref4.PairComponent,
         params = _objectWithoutProperties(_ref4, _excluded$8);
       if (defaultType !== "hidden") {
-        var prop = _objectSpread$e({
+        var prop = _objectSpread$9({
           id: field,
           error: errors[field],
           changeType: changeType,
@@ -17727,8 +17729,8 @@ var selectFilesForDelete = function selectFilesForDelete(_ref5) {
   }
 };
 
-function ownKeys$d(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread$d(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$d(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$d(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function ownKeys$8(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$8(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$8(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$8(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 function useChildForm(_ref) {
   var inputsConfig = _ref.inputsConfig,
     _ref$setParentErrors = _ref.setParentErrors,
@@ -17758,12 +17760,12 @@ function useChildForm(_ref) {
   }, [errors]);
   React.useEffect(function () {
     setSubmitPipe(function (prev) {
-      return _objectSpread$d(_objectSpread$d({}, prev), {}, _defineProperty({}, submitId, onSubmit));
+      return _objectSpread$8(_objectSpread$8({}, prev), {}, _defineProperty({}, submitId, onSubmit));
     });
   }, [onSubmit]);
   var onDelete = function onDelete() {
     setSubmitPipe(function (prev) {
-      var newSubmitPipes = _objectSpread$d({}, prev);
+      var newSubmitPipes = _objectSpread$8({}, prev);
       delete newSubmitPipes[submitId];
       return newSubmitPipes;
     });
@@ -17836,355 +17838,348 @@ const useDebounce = (value, delay) => {
 };
 
 var useRegister = function useRegister(_ref) {
-  var profilesApi = _ref.profilesApi,
-    _ref$inputsConfig = _ref.inputsConfig,
-    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$c : _ref$inputsConfig,
-    _ref$inputPropsType = _ref.inputPropsType,
-    inputPropsType = _ref$inputPropsType === void 0 ? "object" : _ref$inputPropsType;
-  var _profilesApi$useRegis = profilesApi.useRegisterMutation(),
+  var profilesApi = _ref.profilesApi;
+    _ref.useRouter;
+    _ref.createNotification;
+  var inputs = React.useMemo(function () {
+    return [{
+      variant: "text",
+      name: "username",
+      label: "Username",
+      placeholder: "Type your username"
+    }, {
+      variant: "text",
+      name: "email",
+      label: "Email",
+      placeholder: "Type your email"
+    }, {
+      label: "Password",
+      name: "password",
+      type: "password",
+      placeholder: "Type your password"
+    }, {
+      variant: "text",
+      type: "password",
+      label: "Repeat password",
+      name: "confirm_password",
+      placeholder: "Repeat your password"
+    }, {
+      label: "I agree with terms and conditions",
+      name: "agreement_checkbox",
+      variant: "switch"
+    }];
+  }, []);
+  var _profilesApi$useRegis = profilesApi.useRegistrationMutation({}),
     _profilesApi$useRegis2 = _slicedToArray(_profilesApi$useRegis, 2),
-    register = _profilesApi$useRegis2[0],
-    _profilesApi$useRegis3 = _profilesApi$useRegis2[1],
-    error = _profilesApi$useRegis3.error,
-    isSuccess = _profilesApi$useRegis3.isSuccess,
-    isLoading = _profilesApi$useRegis3.isLoading,
-    data = _profilesApi$useRegis3.data;
-  var memoInputsConfig = React.useMemo(function () {
-    return inputsConfig;
-  }, [inputsConfig]);
-  var submitFunc = function submitFunc(_ref2) {
-    var inputs = _ref2.inputs,
-      files = _ref2.files;
-    register({
-      data: inputs,
-      files: files
-    });
-  };
-  var afterPassed = function afterPassed(_ref3) {
-    var clearInputs = _ref3.clearInputs;
-    clearInputs();
-  };
-  var _useForm = useForm({
-      inputsConfig: memoInputsConfig,
-      afterPassed: afterPassed,
-      submitFunc: submitFunc,
-      inputPropsType: inputPropsType
-    }),
-    inputs = _useForm.inputs,
-    inputsSetErrors = _useForm.setErrors,
-    inputsErrors = _useForm.errors,
-    inputsValues = _useForm.inputsValues,
-    onSubmit = _useForm.onSubmit,
-    setPassed = _useForm.setPassed;
+    registration = _profilesApi$useRegis2[0],
+    registrationResult = _profilesApi$useRegis2[1];
+  var methods = reactHookForm.useForm({
+    mode: "all"
+  });
+  var handleSubmit = methods.handleSubmit,
+    watch = methods.watch;
+  var watchData = watch();
+  React.useEffect(function () {
+    // console.log(`🚀 ~ useEffect ~ watchData`, watchData);
+  }, [watchData]);
+  function onSubmit(_x) {
+    return _onSubmit.apply(this, arguments);
+  }
+  function _onSubmit() {
+    _onSubmit = _asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(data) {
+      return regenerator.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              // console.log(`🚀 ~ onSubmit ~ data`, data);
+              registration({
+                data: data,
+                files: data.files
+              });
+            case 1:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+    return _onSubmit.apply(this, arguments);
+  }
   return {
-    data: data,
     inputs: inputs,
-    inputsValues: inputsValues,
-    onSubmit: onSubmit,
-    isSuccess: isSuccess,
-    isLoading: isLoading,
-    error: error,
-    setPassed: setPassed,
-    inputsErrors: inputsErrors,
-    inputsSetErrors: inputsSetErrors
+    methods: methods,
+    submitFunction: handleSubmit(onSubmit),
+    registrationResult: registrationResult
   };
 };
-var defaultInputsConfig$c = [{
-  label: "Username",
-  field: "username",
-  checkerFuncs: ["checkRequiredField"],
-  type: "text",
-  placeholder: "Type your username"
-}, {
-  label: "Email",
-  field: "email",
-  checkerFuncs: ["checkRequiredField", "checkEmailMask"],
-  type: "email",
-  id: "email",
-  placeholder: "Type your email"
-}, {
-  label: "Password",
-  field: "password",
-  checkerFuncs: ["checkRequiredField", "checkPassword"],
-  config: {
-    enableTypeChanging: true
-  },
-  type: "password",
-  placeholder: "Type your password"
-}, {
-  label: "Repeat password",
-  field: "confirm_password",
-  checkerFuncs: ["checkRequiredField", "checkEqualTo"],
-  config: {
-    equalTo: "password",
-    enableTypeChanging: true
-  },
-  type: "password",
-  placeholder: "Repeat your password"
-}, {
-  label: "I agree with terms and conditions",
-  field: "agreement_checkbox",
-  checkerFuncs: [],
-  type: "checkbox",
-  defaultValue: false
-}];
 
-function ownKeys$c(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread$c(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$c(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$c(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 var useLogin = function useLogin(_ref) {
   var profilesApi = _ref.profilesApi,
-    _ref$inputsConfig = _ref.inputsConfig,
-    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$b : _ref$inputsConfig,
-    _ref$inputPropsType = _ref.inputPropsType,
-    inputPropsType = _ref$inputPropsType === void 0 ? "object" : _ref$inputPropsType;
+    _ref$useRouter = _ref.useRouter,
+    useRouter = _ref$useRouter === void 0 ? function () {
+      return {};
+    } : _ref$useRouter;
+    _ref.createNotification;
+  var router = useRouter();
   var _profilesApi$useLogin = profilesApi.useLoginWithEmailAndPasswordMutation(),
     _profilesApi$useLogin2 = _slicedToArray(_profilesApi$useLogin, 2),
     loginWithEmailAndPassword = _profilesApi$useLogin2[0],
-    _profilesApi$useLogin3 = _profilesApi$useLogin2[1],
-    error = _profilesApi$useLogin3.error,
-    data = _profilesApi$useLogin3.data,
-    isSuccess = _profilesApi$useLogin3.isSuccess,
-    isLoading = _profilesApi$useLogin3.isLoading,
-    isFetching = _profilesApi$useLogin3.isFetching;
-  var memoInputsConfig = React.useMemo(function () {
-    return inputsConfig;
-  }, [inputsConfig]);
-  var submitFunc = function submitFunc(_ref2) {
-    var inputs = _ref2.inputs,
-      files = _ref2.files;
-    loginWithEmailAndPassword({
-      data: inputs,
-      files: files
-    });
-  };
-  var _useForm = useForm({
-      inputsConfig: memoInputsConfig,
-      submitFunc: submitFunc,
-      inputPropsType: inputPropsType
-    }),
-    inputs = _useForm.inputs,
-    setErrors = _useForm.setErrors,
-    onSubmit = _useForm.onSubmit,
-    inputsValues = _useForm.inputsValues,
-    changeBlockedInputs = _useForm.changeBlockedInputs,
-    clearInputs = _useForm.clearInputs;
+    loginWithEmailAndPasswordResult = _profilesApi$useLogin2[1];
+  var inputs = React.useMemo(function () {
+    return [{
+      variant: "text",
+      name: "identifier",
+      label: "Email",
+      placeholder: "Type your email"
+    }, {
+      variant: "text",
+      type: "password",
+      name: "password",
+      label: "Password",
+      placeholder: "Type your password"
+    }];
+  }, []);
+  var methods = reactHookForm.useForm({
+    mode: "all"
+  });
+  var handleSubmit = methods.handleSubmit,
+    watch = methods.watch;
+  var watchData = watch();
   React.useEffect(function () {
-    if (error) {
-      setErrors(function (prev) {
-        var _error$data;
-        var newErrors = _objectSpread$c({}, prev);
-        if ((_error$data = error.data) !== null && _error$data !== void 0 && _error$data.error) {
-          newErrors.email = {
-            id: error.data.error.name,
-            message: error.data.error.message
-          };
-          newErrors.password = {
-            id: error.data.error.name,
-            message: error.data.error.message
-          };
+    // console.log(`🚀 ~ useEffect ~ watchData`, watchData);
+  }, [watchData]);
+  function onSubmit(_x) {
+    return _onSubmit.apply(this, arguments);
+  }
+  function _onSubmit() {
+    _onSubmit = _asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(data) {
+      return regenerator.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              // console.log(`🚀 ~ onSubmit ~ data`, data);
+
+              loginWithEmailAndPassword({
+                data: data,
+                files: data.files
+              });
+            case 1:
+            case "end":
+              return _context.stop();
+          }
         }
-        return newErrors;
-      });
+      }, _callee);
+    }));
+    return _onSubmit.apply(this, arguments);
+  }
+  React.useEffect(function () {
+    var data = loginWithEmailAndPasswordResult.data;
+    if (!data) {
+      return;
     }
-  }, [error, setErrors]);
+    if (router !== null && router !== void 0 && router.push) {
+      if (data.nextAuthFactor === "auth.emailConfirmation") {
+        router.push("/auth/confirm-email");
+      } else if (data.nextAuthFactor === "user.checkOtp") {
+        router === null || router === void 0 ? void 0 : router.push("/auth/otp");
+      }
+    }
+  }, [loginWithEmailAndPasswordResult, router]);
   return {
     inputs: inputs,
-    inputsValues: inputsValues,
-    onSubmit: onSubmit,
-    changeBlockedInputs: changeBlockedInputs,
-    clearInputs: clearInputs,
-    error: error,
-    data: data,
-    isSuccess: isSuccess,
-    isLoading: isLoading,
-    isFetching: isFetching
+    methods: methods,
+    submitFunction: handleSubmit(onSubmit),
+    loginWithEmailAndPasswordResult: loginWithEmailAndPasswordResult
   };
 };
-var defaultInputsConfig$b = [{
-  field: "identifier",
-  checkerFuncs: ["checkRequiredField"],
-  type: "text",
-  placeholder: "Type your email",
-  label: "Email"
-}, {
-  field: "password",
-  checkerFuncs: ["checkRequiredField"],
-  config: {
-    enableTypeChanging: true
-  },
-  label: "Password",
-  type: "password",
-  placeholder: "Type your password"
-}, {
-  field: "rememberCheckbox",
-  checkerFuncs: [],
-  type: "checkbox",
-  defaultValue: true,
-  id: "rememberCheckbox",
-  label: "Remember"
-}];
 
 var useForgotPassword = function useForgotPassword(_ref) {
   var profilesApi = _ref.profilesApi,
-    _ref$inputsConfig = _ref.inputsConfig,
-    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$a : _ref$inputsConfig,
-    authSlice = _ref.authSlice,
-    useDispatch = _ref.useDispatch,
-    _ref$inputPropsType = _ref.inputPropsType,
-    inputPropsType = _ref$inputPropsType === void 0 ? "object" : _ref$inputPropsType;
-  var dispatch = useDispatch();
-  var _profilesApi$useForgo = profilesApi.useForgotPasswordMutation(),
+    _ref$createNotificati = _ref.createNotification,
+    createNotification = _ref$createNotificati === void 0 ? function () {
+      return {};
+    } : _ref$createNotificati,
+    _ref$useRouter = _ref.useRouter,
+    useRouter = _ref$useRouter === void 0 ? function () {
+      return {};
+    } : _ref$useRouter;
+  var router = useRouter();
+  var inputs = React.useMemo(function () {
+    return [{
+      name: "email",
+      variant: "text",
+      placeholder: "Type your email",
+      label: "Email"
+    }];
+  }, []);
+  var _profilesApi$useForgo = profilesApi.useForgotPasswordMutation({}),
     _profilesApi$useForgo2 = _slicedToArray(_profilesApi$useForgo, 2),
     forgotPassword = _profilesApi$useForgo2[0],
-    _profilesApi$useForgo3 = _profilesApi$useForgo2[1],
-    isSuccess = _profilesApi$useForgo3.isSuccess,
-    isLoading = _profilesApi$useForgo3.isLoading,
-    data = _profilesApi$useForgo3.data;
+    forgotPasswordResult = _profilesApi$useForgo2[1];
+  var methods = reactHookForm.useForm({
+    mode: "all"
+  });
+  var handleSubmit = methods.handleSubmit,
+    watch = methods.watch;
+  var watchData = watch();
   React.useEffect(function () {
-    dispatch(authSlice.actions.logout());
-    localStorage.removeItem("jwt");
-    sessionStorage.removeItem("jwt");
-  }, [authSlice === null || authSlice === void 0 ? void 0 : authSlice.actions]);
-  var submitFunc = function submitFunc(_ref2) {
-    var inputs = _ref2.inputs,
-      files = _ref2.files;
-    forgotPassword({
-      data: inputs,
-      files: files
-    });
-  };
-  var memoInputsConfig = React.useMemo(function () {
-    return inputsConfig;
-  }, [inputsConfig]);
-  var _useForm = useForm({
-      inputsConfig: memoInputsConfig,
-      submitFunc: submitFunc,
-      inputPropsType: inputPropsType
-    }),
-    inputs = _useForm.inputs,
-    inputsValues = _useForm.inputsValues,
-    setInputsValues = _useForm.setInputsValues,
-    setErrors = _useForm.setErrors,
-    onSubmit = _useForm.onSubmit,
-    setPassed = _useForm.setPassed;
+    // console.log(`🚀 ~ useEffect ~ watchData`, watchData);
+  }, [watchData]);
+  function onSubmit(_x) {
+    return _onSubmit.apply(this, arguments);
+  }
+  function _onSubmit() {
+    _onSubmit = _asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(data) {
+      return regenerator.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              // console.log(`🚀 ~ onSubmit ~ data`, data);
+
+              forgotPassword({
+                data: data,
+                files: data.files
+              });
+            case 1:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+    return _onSubmit.apply(this, arguments);
+  }
+  React.useEffect(function () {
+    var data = forgotPasswordResult.data;
+    if (data !== null && data !== void 0 && data.ok) {
+      if (createNotification) {
+        createNotification({
+          title: "Recovery link was sent to your email",
+          contentContainerClassName: "@pg pl-2 pr-4 py-4 @bxsw shadow-lg @ttc text-gray-base",
+          containerClassName: "@ow overflow-visible",
+          duration: 5000
+        });
+      }
+      router.push("/auth/login");
+    }
+  }, [forgotPasswordResult]);
   return {
-    isLoading: isLoading,
-    data: data,
-    isSuccess: isSuccess,
-    inputsValues: inputsValues,
-    setErrors: setErrors,
-    setInputsValues: setInputsValues,
     inputs: inputs,
-    onSubmit: onSubmit,
-    setPassed: setPassed
+    methods: methods,
+    submitFunction: handleSubmit(onSubmit),
+    forgotPasswordResult: forgotPasswordResult
   };
 };
-var defaultInputsConfig$a = [{
-  title: "Email address*",
-  label: "Email address",
-  field: "email",
-  checkerFuncs: ["checkRequiredField", "checkEmailMask"],
-  type: "email",
-  placeholder: "Type your email"
-}];
 
-function ownKeys$b(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread$b(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$b(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$b(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 var useResetPassword = function useResetPassword(_ref) {
   var profilesApi = _ref.profilesApi,
-    _ref$inputsConfig = _ref.inputsConfig,
-    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$9 : _ref$inputsConfig,
     authSlice = _ref.authSlice,
     useDispatch = _ref.useDispatch,
-    _ref$inputPropsType = _ref.inputPropsType,
-    inputPropsType = _ref$inputPropsType === void 0 ? "object" : _ref$inputPropsType;
+    _ref$useRouter = _ref.useRouter,
+    useRouter = _ref$useRouter === void 0 ? function () {
+      return {};
+    } : _ref$useRouter,
+    _ref$createNotificati = _ref.createNotification,
+    createNotification = _ref$createNotificati === void 0 ? function () {
+      return {};
+    } : _ref$createNotificati;
   var dispatch = useDispatch();
+  var router = useRouter();
   React.useEffect(function () {
     dispatch(authSlice.actions.logout());
     localStorage.removeItem("jwt");
     sessionStorage.removeItem("jwt");
   }, [authSlice === null || authSlice === void 0 ? void 0 : authSlice.actions]);
+  var inputs = React.useMemo(function () {
+    return [{
+      label: "New Password",
+      name: "password",
+      variant: "text",
+      type: "password",
+      placeholder: "Type your new password"
+    }, {
+      label: "Repeat New Password",
+      name: "passwordConfirmation",
+      variant: "text",
+      type: "password",
+      placeholder: "Repeat your new password"
+    }, {
+      name: "code",
+      variant: "text",
+      className: "hidden"
+    }];
+  }, []);
   var _profilesApi$useReset = profilesApi.useResetPasswordMutation(),
     _profilesApi$useReset2 = _slicedToArray(_profilesApi$useReset, 2),
     resetPassword = _profilesApi$useReset2[0],
-    _profilesApi$useReset3 = _profilesApi$useReset2[1],
-    isSuccess = _profilesApi$useReset3.isSuccess,
-    error = _profilesApi$useReset3.error,
-    data = _profilesApi$useReset3.data,
-    isLoading = _profilesApi$useReset3.isLoading;
-  var submitFunc = function submitFunc(_ref2) {
-    var inputs = _ref2.inputs,
-      files = _ref2.files;
-    resetPassword({
-      data: inputs,
-      files: files
-    });
-  };
-  var memoInputsConfig = React.useMemo(function () {
-    return inputsConfig;
-  }, [inputsConfig]);
-  var _useForm = useForm({
-      inputsConfig: memoInputsConfig,
-      submitFunc: submitFunc,
-      inputPropsType: inputPropsType
-    }),
-    inputs = _useForm.inputs,
-    onSubmit = _useForm.onSubmit,
-    setInputsValues = _useForm.setInputsValues,
-    inputsValues = _useForm.inputsValues,
-    inputsErrors = _useForm.errors,
-    setInputsErrors = _useForm.setErrors;
+    resetPasswordResult = _profilesApi$useReset2[1];
+  var methods = reactHookForm.useForm({
+    mode: "all"
+  });
+  var handleSubmit = methods.handleSubmit,
+    watch = methods.watch,
+    setValue = methods.setValue;
+  var watchData = watch();
   React.useEffect(function () {
-    if (typeof window !== "undefined") {
-      var _URLSearchParams, _URL, _window;
-      var code = (_URLSearchParams = new URLSearchParams((_URL = new URL((_window = window) === null || _window === void 0 ? void 0 : _window.location)) === null || _URL === void 0 ? void 0 : _URL.search)) === null || _URLSearchParams === void 0 ? void 0 : _URLSearchParams.get("code");
-      setInputsValues(_objectSpread$b(_objectSpread$b({}, inputsValues), {}, {
-        code: code
-      }));
+    // console.log(`🚀 ~ useEffect ~ watchData`, watchData);
+  }, [watchData]);
+  React.useEffect(function () {
+    if (typeof window !== "undefined" && (!watchData.code || watchData.code === "")) {
+      var _URLSearchParams, _window, _window$location;
+      var code = (_URLSearchParams = new URLSearchParams((_window = window) === null || _window === void 0 ? void 0 : (_window$location = _window.location) === null || _window$location === void 0 ? void 0 : _window$location.search)) === null || _URLSearchParams === void 0 ? void 0 : _URLSearchParams.get("code");
+      setValue("code", code);
     }
-  }, []);
+  }, [router.query, watchData]);
+  function onSubmit(_x) {
+    return _onSubmit.apply(this, arguments);
+  }
+  function _onSubmit() {
+    _onSubmit = _asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(data) {
+      return regenerator.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              // console.log(`🚀 ~ onSubmit ~ data`, data);
+
+              resetPassword({
+                data: data,
+                files: data.files
+              });
+            case 1:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+    return _onSubmit.apply(this, arguments);
+  }
+  React.useEffect(function () {
+    var data = resetPasswordResult.data;
+    if (data !== null && data !== void 0 && data.ok) {
+      if (createNotification) {
+        createNotification({
+          title: "New password was set",
+          contentContainerClassName: "@pg pl-2 pr-4 py-4 @bxsw shadow-lg @ttc text-gray-base",
+          containerClassName: "@ow overflow-visible",
+          duration: 5000
+        });
+      }
+      router.push("/auth/login");
+    }
+  }, [resetPasswordResult]);
   return {
-    data: data,
-    isLoading: isLoading,
-    error: error,
-    inputsValues: inputsValues,
     inputs: inputs,
-    onSubmit: onSubmit,
-    isSuccess: isSuccess,
-    inputsErrors: inputsErrors,
-    setInputsErrors: setInputsErrors
+    methods: methods,
+    submitFunction: handleSubmit(onSubmit),
+    resetPasswordResult: resetPasswordResult
   };
 };
-var defaultInputsConfig$9 = [{
-  label: "New Password",
-  field: "password",
-  checkerFuncs: ["checkRequiredField", "checkPassword"],
-  config: {
-    enableTypeChanging: true
-  },
-  type: "password",
-  placeholder: "Type your new password"
-}, {
-  label: "Repeat New Password",
-  field: "passwordConfirmation",
-  checkerFuncs: ["checkRequiredField", "checkEqualTo"],
-  config: {
-    equalTo: "password",
-    enableTypeChanging: true
-  },
-  type: "password",
-  placeholder: "Repeat your new password"
-}, {
-  title: "Code",
-  field: "code",
-  checkerFuncs: ["checkRequiredField"],
-  type: "hidden"
-}];
 
 var useSendEmailConfirmation = function useSendEmailConfirmation(_ref) {
   var profilesApi = _ref.profilesApi,
     _ref$inputsConfig = _ref.inputsConfig,
-    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$8 : _ref$inputsConfig,
+    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$2 : _ref$inputsConfig,
     _ref$inputPropsType = _ref.inputPropsType,
     inputPropsType = _ref$inputPropsType === void 0 ? "object" : _ref$inputPropsType;
   var _profilesApi$useSendE = profilesApi.useSendEmailConfirmationMutation(),
@@ -18228,7 +18223,7 @@ var useSendEmailConfirmation = function useSendEmailConfirmation(_ref) {
     data: data
   };
 };
-var defaultInputsConfig$8 = [{
+var defaultInputsConfig$2 = [{
   label: "Email",
   field: "email",
   checkerFuncs: ["checkRequiredField", "checkEmailMask"],
@@ -18237,12 +18232,8 @@ var defaultInputsConfig$8 = [{
   placeholder: "Type your email"
 }];
 
-function ownKeys$a(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread$a(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$a(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$a(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 var useConfirmEmail = function useConfirmEmail(_ref) {
   var profilesApi = _ref.profilesApi,
-    _ref$inputsConfig = _ref.inputsConfig,
-    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$7 : _ref$inputsConfig,
     _ref$ping = _ref.ping,
     ping = _ref$ping === void 0 ? 30 : _ref$ping,
     _ref$initialPing = _ref.initialPing,
@@ -18250,79 +18241,78 @@ var useConfirmEmail = function useConfirmEmail(_ref) {
     _ref$resendOnMount = _ref.resendOnMount,
     resendOnMount = _ref$resendOnMount === void 0 ? false : _ref$resendOnMount,
     useSelector = _ref.useSelector,
-    _ref$inputPropsType = _ref.inputPropsType,
-    inputPropsType = _ref$inputPropsType === void 0 ? "object" : _ref$inputPropsType;
-  var _useState = React.useState(!resendOnMount),
-    onMountEmailWasSent = _useState[0],
-    setOnMountEmailWasSent = _useState[1];
+    _ref$useRouter = _ref.useRouter,
+    useRouter = _ref$useRouter === void 0 ? function () {
+      return {};
+    } : _ref$useRouter;
+    _ref.createNotification;
+  var router = useRouter();
   var user = useSelector(function (state) {
     var _state$auth;
     return (_state$auth = state.auth) === null || _state$auth === void 0 ? void 0 : _state$auth.user;
   }); //?
-  var _profilesApi$useConfi = profilesApi.useConfirmEmailMutation(),
-    _profilesApi$useConfi2 = _slicedToArray(_profilesApi$useConfi, 2),
-    confirmEmail = _profilesApi$useConfi2[0],
-    _profilesApi$useConfi3 = _profilesApi$useConfi2[1],
-    isSuccess = _profilesApi$useConfi3.isSuccess,
-    error = _profilesApi$useConfi3.error,
-    data = _profilesApi$useConfi3.data,
-    isLoading = _profilesApi$useConfi3.isLoading;
-  var submitFunc = function submitFunc(_ref2) {
-    var inputs = _ref2.inputs;
-    var headers = {};
-    if (user !== null && user !== void 0 && user.nextAuthFactorKey) {
-      headers = {
-        "Next-Auth-Factor-Key": user.nextAuthFactorKey
-      };
-    }
-    confirmEmail({
-      data: inputs,
-      headers: headers
-    });
-  };
-  var _profilesApi$useSendE = profilesApi.useSendEmailConfirmationMutation(),
-    _profilesApi$useSendE2 = _slicedToArray(_profilesApi$useSendE, 2),
-    sendEmailConfirmation = _profilesApi$useSendE2[0],
-    _profilesApi$useSendE3 = _profilesApi$useSendE2[1],
-    resendEmailConfirmationError = _profilesApi$useSendE3.error,
-    resendEmailConfirmationIsLoading = _profilesApi$useSendE3.isLoading,
-    resendEmailConfirmationIsSuccess = _profilesApi$useSendE3.isSuccess,
-    resendEmailConfirmationData = _profilesApi$useSendE3.data;
+
+  var _useState = React.useState(!resendOnMount),
+    onMountEmailWasSent = _useState[0],
+    setOnMountEmailWasSent = _useState[1];
   var _useState2 = React.useState(initialPing),
     counter = _useState2[0],
     setCounter = _useState2[1];
+  var inputs = React.useMemo(function () {
+    return [{
+      type: "text",
+      name: "code",
+      label: "Code from email",
+      placeholder: "Type code from email"
+    }, {
+      type: "text",
+      name: "email",
+      className: "hidden"
+    }];
+  }, []);
+  var _profilesApi$useConfi = profilesApi.useConfirmEmailMutation({}),
+    _profilesApi$useConfi2 = _slicedToArray(_profilesApi$useConfi, 2),
+    confirmEmail = _profilesApi$useConfi2[0],
+    confirmEmailResult = _profilesApi$useConfi2[1];
+  var _profilesApi$useSendE = profilesApi.useSendEmailConfirmationMutation(),
+    _profilesApi$useSendE2 = _slicedToArray(_profilesApi$useSendE, 2),
+    sendEmailConfirmation = _profilesApi$useSendE2[0],
+    resendEmailConfirmationResult = _profilesApi$useSendE2[1];
+  var methods = reactHookForm.useForm({
+    mode: "all"
+  });
+  var watch = methods.watch,
+    setError = methods.setError,
+    setValue = methods.setValue,
+    handleSubmit = methods.handleSubmit;
+  var watchData = watch();
   React.useEffect(function () {
-    var timer = counter > 0 && setInterval(function () {
-      return setCounter(counter - 1);
-    }, 1000);
-    return function () {
-      return clearInterval(timer);
-    };
+    if (counter > 0) {
+      var timer = setInterval(function () {
+        return setCounter(counter - 1);
+      }, 1000);
+      return function () {
+        return clearInterval(timer);
+      };
+    }
   }, [counter]);
-  var memoInputsConfig = React.useMemo(function () {
-    return inputsConfig;
-  }, [inputsConfig]);
-  var _useForm = useForm({
-      inputsConfig: memoInputsConfig,
-      submitFunc: submitFunc,
-      inputPropsType: inputPropsType
-    }),
-    inputs = _useForm.inputs,
-    onSubmit = _useForm.onSubmit,
-    setInputsValues = _useForm.setInputsValues,
-    inputsValues = _useForm.inputsValues,
-    inputsErrors = _useForm.errors,
-    setInputsErrors = _useForm.setErrors;
+  React.useEffect(function () {
+    if ((!watchData.email || watchData.email === "") && user !== null && user !== void 0 && user.email) {
+      setValue("email", user.email);
+    }
+  }, [user, watchData]);
+  React.useEffect(function () {
+    if (resendOnMount && !onMountEmailWasSent && watchData !== null && watchData !== void 0 && watchData.email) {
+      resendEmailConfirmation();
+      setOnMountEmailWasSent(true);
+    }
+  }, [watchData === null || watchData === void 0 ? void 0 : watchData.email, onMountEmailWasSent]);
   var resendEmailConfirmation = React.useCallback(function () {
-    if (!inputsValues.email) {
+    if (!watchData.email) {
       console.error("Pass email for resending code");
-      setInputsErrors(function (prev) {
-        var newErrors = _objectSpread$a({}, prev);
-        newErrors.email = {
-          id: "ValidationError",
-          message: "Empty email address"
-        };
-        return newErrors;
+      setError("email", {
+        type: "required",
+        message: "Empty email address"
       });
       return;
     }
@@ -18330,73 +18320,88 @@ var useConfirmEmail = function useConfirmEmail(_ref) {
     setOnMountEmailWasSent(true);
     sendEmailConfirmation({
       data: {
-        email: inputsValues.email
+        email: watchData.email
       }
     });
-  }, [inputsValues]);
-  React.useEffect(function () {
-    if (resendOnMount && !onMountEmailWasSent && inputsValues !== null && inputsValues !== void 0 && inputsValues.email) {
-      resendEmailConfirmation();
-      setOnMountEmailWasSent(true);
-    }
-  }, [inputsValues, onMountEmailWasSent]);
+  }, [watchData === null || watchData === void 0 ? void 0 : watchData.email]);
   React.useEffect(function () {
     if (user) {
       if (user.email) {
-        setInputsValues(_objectSpread$a(_objectSpread$a({}, inputsValues), {}, {
-          email: user.email
-        }));
+        setValue("email", user.email);
         return;
       }
     }
     if (typeof window !== "undefined") {
-      var _URLSearchParams, _URL, _window, _URLSearchParams2, _URL2, _window2;
-      var code = (_URLSearchParams = new URLSearchParams((_URL = new URL((_window = window) === null || _window === void 0 ? void 0 : _window.location)) === null || _URL === void 0 ? void 0 : _URL.search)) === null || _URLSearchParams === void 0 ? void 0 : _URLSearchParams.get("code");
-      var email = (_URLSearchParams2 = new URLSearchParams((_URL2 = new URL((_window2 = window) === null || _window2 === void 0 ? void 0 : _window2.location)) === null || _URL2 === void 0 ? void 0 : _URL2.search)) === null || _URLSearchParams2 === void 0 ? void 0 : _URLSearchParams2.get("email");
-      setInputsValues(_objectSpread$a(_objectSpread$a({}, inputsValues), {}, {
-        code: code,
-        email: email
-      }));
+      var _URLSearchParams, _window, _window$location, _URLSearchParams2, _window2, _window2$location;
+      var code = (_URLSearchParams = new URLSearchParams((_window = window) === null || _window === void 0 ? void 0 : (_window$location = _window.location) === null || _window$location === void 0 ? void 0 : _window$location.search)) === null || _URLSearchParams === void 0 ? void 0 : _URLSearchParams.get("code");
+      var email = (_URLSearchParams2 = new URLSearchParams((_window2 = window) === null || _window2 === void 0 ? void 0 : (_window2$location = _window2.location) === null || _window2$location === void 0 ? void 0 : _window2$location.search)) === null || _URLSearchParams2 === void 0 ? void 0 : _URLSearchParams2.get("email");
+      if (code) {
+        setValue("code", code);
+      }
+      if (email) {
+        setValue("email", email);
+      }
     }
   }, [user]);
+  React.useEffect(function () {
+    // console.log(`🚀 ~ useEffect ~ watchData`, watchData);
+  }, [watchData]);
+  function onSubmit(_x) {
+    return _onSubmit.apply(this, arguments);
+  }
+  function _onSubmit() {
+    _onSubmit = _asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(data) {
+      var headers;
+      return regenerator.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              headers = {};
+              if (user !== null && user !== void 0 && user.nextAuthFactorKey) {
+                headers = {
+                  "Next-Auth-Factor-Key": user.nextAuthFactorKey
+                };
+              }
+              confirmEmail({
+                data: data,
+                headers: headers
+              });
+            case 3:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+    return _onSubmit.apply(this, arguments);
+  }
+  React.useEffect(function () {
+    // console.log(`🚀 ~ ConfirmEmail ~ data`, data);
+    var data = confirmEmailResult.data;
+    if (!data) {
+      return;
+    }
+    if (router !== null && router !== void 0 && router.push) {
+      if (data.nextAuthFactor === "user.checkOtp") {
+        router.push("/auth/otp");
+      }
+    }
+  }, [confirmEmailResult, router]);
   return {
     counter: counter,
     resendEmailConfirmation: resendEmailConfirmation,
-    resendEmailConfirmationError: resendEmailConfirmationError,
-    resendEmailConfirmationIsLoading: resendEmailConfirmationIsLoading,
-    resendEmailConfirmationIsSuccess: resendEmailConfirmationIsSuccess,
-    resendEmailConfirmationData: resendEmailConfirmationData,
-    data: data,
-    isLoading: isLoading,
-    inputsValues: inputsValues,
-    setInputsValues: setInputsValues,
-    error: error,
+    resendEmailConfirmationResult: resendEmailConfirmationResult,
+    submitFunction: handleSubmit(onSubmit),
+    confirmEmailResult: confirmEmailResult,
     inputs: inputs,
-    onSubmit: onSubmit,
-    isSuccess: isSuccess,
-    inputsErrors: inputsErrors,
-    setInputsErrors: setInputsErrors
+    methods: methods
   };
 };
-var defaultInputsConfig$7 = [{
-  field: "email",
-  checkerFuncs: ["checkRequiredField"],
-  type: "text",
-  placeholder: "Type your email",
-  label: "Email"
-}, {
-  title: "Code",
-  field: "code",
-  checkerFuncs: ["checkRequiredField"],
-  label: "Code",
-  placeholder: "Type code here",
-  type: "text"
-}];
 
 var useSendPhoneConfirmation = function useSendPhoneConfirmation(_ref) {
   var profilesApi = _ref.profilesApi,
     _ref$inputsConfig = _ref.inputsConfig,
-    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$6 : _ref$inputsConfig,
+    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$1 : _ref$inputsConfig,
     _ref$inputPropsType = _ref.inputPropsType,
     inputPropsType = _ref$inputPropsType === void 0 ? "object" : _ref$inputPropsType;
   var _profilesApi$useSendP = profilesApi.useSendPhoneConfirmationMutation(),
@@ -18440,7 +18445,7 @@ var useSendPhoneConfirmation = function useSendPhoneConfirmation(_ref) {
     data: data
   };
 };
-var defaultInputsConfig$6 = [{
+var defaultInputsConfig$1 = [{
   label: "Phone",
   field: "phone_number",
   checkerFuncs: ["checkRequiredField"],
@@ -18449,12 +18454,12 @@ var defaultInputsConfig$6 = [{
   placeholder: "Type your phone"
 }];
 
-function ownKeys$9(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread$9(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$9(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$9(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function ownKeys$7(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$7(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$7(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$7(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 var useConfirmPhone = function useConfirmPhone(_ref) {
   var profilesApi = _ref.profilesApi,
     _ref$inputsConfig = _ref.inputsConfig,
-    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$5 : _ref$inputsConfig,
+    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig : _ref$inputsConfig,
     _ref$ping = _ref.ping,
     ping = _ref$ping === void 0 ? 30 : _ref$ping,
     _ref$initialPing = _ref.initialPing,
@@ -18529,7 +18534,7 @@ var useConfirmPhone = function useConfirmPhone(_ref) {
     if (!inputsValues.phone) {
       console.error("Pass phone for resending code");
       setInputsErrors(function (prev) {
-        var newErrors = _objectSpread$9({}, prev);
+        var newErrors = _objectSpread$7({}, prev);
         newErrors.phone = {
           id: "ValidationError",
           message: "Empty phone address"
@@ -18554,7 +18559,7 @@ var useConfirmPhone = function useConfirmPhone(_ref) {
   React.useEffect(function () {
     if (user) {
       if (user.phone) {
-        setInputsValues(_objectSpread$9(_objectSpread$9({}, inputsValues), {}, {
+        setInputsValues(_objectSpread$7(_objectSpread$7({}, inputsValues), {}, {
           phone: user.phone
         }));
         return;
@@ -18564,7 +18569,7 @@ var useConfirmPhone = function useConfirmPhone(_ref) {
       var _URLSearchParams, _URL, _window, _URLSearchParams2, _URL2, _window2;
       var code = (_URLSearchParams = new URLSearchParams((_URL = new URL((_window = window) === null || _window === void 0 ? void 0 : _window.location)) === null || _URL === void 0 ? void 0 : _URL.search)) === null || _URLSearchParams === void 0 ? void 0 : _URLSearchParams.get("code");
       var phone = (_URLSearchParams2 = new URLSearchParams((_URL2 = new URL((_window2 = window) === null || _window2 === void 0 ? void 0 : _window2.location)) === null || _URL2 === void 0 ? void 0 : _URL2.search)) === null || _URLSearchParams2 === void 0 ? void 0 : _URLSearchParams2.get("phone");
-      setInputsValues(_objectSpread$9(_objectSpread$9({}, inputsValues), {}, {
+      setInputsValues(_objectSpread$7(_objectSpread$7({}, inputsValues), {}, {
         code: code,
         phone: phone
       }));
@@ -18589,7 +18594,7 @@ var useConfirmPhone = function useConfirmPhone(_ref) {
     setInputsErrors: setInputsErrors
   };
 };
-var defaultInputsConfig$5 = [{
+var defaultInputsConfig = [{
   field: "phone_number",
   checkerFuncs: ["checkRequiredField"],
   type: "text",
@@ -18629,7 +18634,7 @@ const sliceCreator = (profilesApi) => {
                 .addMatcher(profilesApi.endpoints.loginWithEmailAndPassword.matchFulfilled, (state, action) => {
                 setUser(state, action);
             })
-                .addMatcher(profilesApi.endpoints.register.matchFulfilled, (state, action) => {
+                .addMatcher(profilesApi.endpoints.registration.matchFulfilled, (state, action) => {
                 setUser(state, action);
             })
                 .addMatcher(profilesApi.endpoints.checkOtp.matchFulfilled, (state, action) => {
@@ -18684,63 +18689,60 @@ var authSlice = /*#__PURE__*/Object.freeze({
 
 var useUpdateMe = function useUpdateMe(_ref) {
   var profilesApi = _ref.profilesApi,
-    _ref$inputsConfig = _ref.inputsConfig,
-    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$4 : _ref$inputsConfig,
-    useSelector = _ref.useSelector,
-    _ref$inputPropsType = _ref.inputPropsType,
-    inputPropsType = _ref$inputPropsType === void 0 ? "object" : _ref$inputPropsType;
+    useSelector = _ref.useSelector;
+    _ref.createNotification;
+  var accountId = useSelector(selectors.selectAccountId); //?
   var _profilesApi$useUpdat = profilesApi.useUpdateMeMutation(),
     _profilesApi$useUpdat2 = _slicedToArray(_profilesApi$useUpdat, 2),
     updateMe = _profilesApi$useUpdat2[0],
-    _profilesApi$useUpdat3 = _profilesApi$useUpdat2[1],
-    isSuccess = _profilesApi$useUpdat3.isSuccess,
-    error = _profilesApi$useUpdat3.error,
-    data = _profilesApi$useUpdat3.data,
-    isLoading = _profilesApi$useUpdat3.isLoading;
-  var accountId = useSelector(selectors.selectAccountId); //?
-
-  var submitFunc = function submitFunc(_ref2) {
-    var inputs = _ref2.inputs,
-      files = _ref2.files;
-
-    updateMe({
-      id: accountId,
-      data: inputs,
-      files: files
-    });
-  };
-  var memoInputsConfig = React.useMemo(function () {
-    return inputsConfig;
-  }, [inputsConfig]);
-  var _useForm = useForm({
-      inputsConfig: memoInputsConfig,
-      submitFunc: submitFunc,
-      inputPropsType: inputPropsType
-    }),
-    inputs = _useForm.inputs,
-    onSubmit = _useForm.onSubmit,
-    inputsValues = _useForm.inputsValues,
-    inputsErrors = _useForm.errors,
-    setInputsErrors = _useForm.setErrors;
+    updateMeResult = _profilesApi$useUpdat2[1];
+  var inputs = React.useMemo(function () {
+    return [{
+      variant: "text",
+      name: "username",
+      label: "Username",
+      placeholder: "Type your username"
+    }];
+  }, []);
+  var methods = reactHookForm.useForm({
+    mode: "all"
+  });
+  var handleSubmit = methods.handleSubmit,
+    watch = methods.watch;
+  var watchData = watch();
+  React.useEffect(function () {
+    // console.log(`🚀 ~ useEffect ~ watchData`, watchData);
+  }, [watchData]);
+  function onSubmit(_x) {
+    return _onSubmit.apply(this, arguments);
+  }
+  function _onSubmit() {
+    _onSubmit = _asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(data) {
+      return regenerator.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              updateMe({
+                id: accountId,
+                data: data,
+                files: data.files
+              });
+            case 1:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+    return _onSubmit.apply(this, arguments);
+  }
   return {
-    data: data,
-    isLoading: isLoading,
-    inputsValues: inputsValues,
-    error: error,
     inputs: inputs,
-    onSubmit: onSubmit,
-    isSuccess: isSuccess,
-    inputsErrors: inputsErrors,
-    setInputsErrors: setInputsErrors
+    methods: methods,
+    submitFunction: handleSubmit(onSubmit),
+    updateMeResult: updateMeResult
   };
 };
-var defaultInputsConfig$4 = [{
-  field: "username",
-  checkerFuncs: ["checkRequiredField"],
-  type: "text",
-  placeholder: "Type your username",
-  label: "Username"
-}];
 
 const useMyProfileCreator = ({ profilesApi, populate, useSelector, }) => {
     const accountId = useSelector(selectors.selectAccountId);
@@ -18774,310 +18776,353 @@ const useMyProfileCreator = ({ profilesApi, populate, useSelector, }) => {
     return profile;
 };
 
-function ownKeys$8(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread$8(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$8(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$8(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 var useSetOtp = function useSetOtp(_ref) {
   var profilesApi = _ref.profilesApi,
-    _ref$inputsConfig = _ref.inputsConfig,
-    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$3 : _ref$inputsConfig,
     useSelector = _ref.useSelector,
-    _ref$inputPropsType = _ref.inputPropsType,
-    inputPropsType = _ref$inputPropsType === void 0 ? "object" : _ref$inputPropsType;
+    _ref$createNotificati = _ref.createNotification,
+    createNotification = _ref$createNotificati === void 0 ? function () {
+      return {};
+    } : _ref$createNotificati;
   var accountId = useSelector(selectors.selectAccountId); //?
-  var _profilesApi$useGener = profilesApi.useGenerateOtpSecretQuery({
-      id: accountId
-    }, {
-      skip: !accountId
-    }),
-    generateOtpSecretData = _profilesApi$useGener.data,
-    generateOtpSecretIsSuccess = _profilesApi$useGener.isSuccess,
-    generateOtpSecretIsLoading = _profilesApi$useGener.isLoading;
-  var _profilesApi$useSetOt = profilesApi.useSetOtpMutation(),
+  var generateOtpSecretResult = profilesApi.useGenerateOtpSecretQuery({
+    id: accountId
+  }, {
+    skip: !accountId
+  });
+  var _profilesApi$useSetOt = profilesApi.useSetOtpMutation({}),
     _profilesApi$useSetOt2 = _slicedToArray(_profilesApi$useSetOt, 2),
     setOtp = _profilesApi$useSetOt2[0],
-    _profilesApi$useSetOt3 = _profilesApi$useSetOt2[1],
-    isSuccess = _profilesApi$useSetOt3.isSuccess,
-    error = _profilesApi$useSetOt3.error,
-    data = _profilesApi$useSetOt3.data,
-    isLoading = _profilesApi$useSetOt3.isLoading;
-  var submitFunc = function submitFunc(_ref2) {
-    var inputs = _ref2.inputs,
-      files = _ref2.files;
-    setOtp({
-      id: accountId,
-      data: inputs,
-      files: files
-    });
-  };
-  var memoInputsConfig = React.useMemo(function () {
-    return inputsConfig;
-  }, [inputsConfig]);
-  var _useForm = useForm({
-      inputsConfig: memoInputsConfig,
-      submitFunc: submitFunc,
-      inputPropsType: inputPropsType
-    }),
-    inputs = _useForm.inputs,
-    onSubmit = _useForm.onSubmit,
-    setInputsValues = _useForm.setInputsValues,
-    inputsValues = _useForm.inputsValues,
-    inputsErrors = _useForm.errors,
-    setInputsErrors = _useForm.setErrors;
+    setOtpResult = _profilesApi$useSetOt2[1];
+  var inputs = React.useMemo(function () {
+    return [{
+      variant: "text",
+      name: "code",
+      label: "OTP code",
+      placeholder: "Type One-time-password",
+      rules: {
+        required: {
+          value: true,
+          message: "Required field"
+        }
+      }
+    }, {
+      variant: "text",
+      type: "password",
+      name: "otp_secret",
+      className: "hidden",
+      rules: {
+        required: {
+          value: true,
+          message: "Required field"
+        }
+      }
+    }];
+  }, []);
+  var methods = reactHookForm.useForm({
+    mode: "all"
+  });
+  var handleSubmit = methods.handleSubmit,
+    watch = methods.watch,
+    setValue = methods.setValue;
+  var watchData = watch();
   React.useEffect(function () {
-    setInputsValues(function (prev) {
-      return _objectSpread$8(_objectSpread$8({}, prev), {}, {
-        otp_secret: generateOtpSecretData === null || generateOtpSecretData === void 0 ? void 0 : generateOtpSecretData.secretHashCode
+    var data = generateOtpSecretResult.data;
+    if (data && (!watchData.otp_secret || watchData.otp_secret === "")) {
+      setValue("otp_secret", data.secretHashCode);
+    }
+  }, [watchData, generateOtpSecretResult]);
+  React.useEffect(function () {
+    // console.log(`🚀 ~ useEffect ~ watchData`, watchData);
+  }, [watchData]);
+  function onSubmit(_x) {
+    return _onSubmit.apply(this, arguments);
+  }
+  function _onSubmit() {
+    _onSubmit = _asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(data) {
+      return regenerator.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              setOtp({
+                id: accountId,
+                data: data,
+                files: data.files
+              });
+            case 1:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+    return _onSubmit.apply(this, arguments);
+  }
+  React.useEffect(function () {
+    var data = setOtpResult.data;
+    if (data !== null && data !== void 0 && data.user) {
+      createNotification({
+        title: "Multi-Factor authentification was setted",
+        contentContainerClassName: "@pg pl-2 pr-4 py-4 @bxsw shadow-lg @ttc text-gray-base",
+        containerClassName: "@ow overflow-visible",
+        duration: 40000
       });
-    });
-  }, [setInputsValues, generateOtpSecretData]);
-
-  // useEffect(() => {
-  //   console.log(
-  //     `🚀 ~ useEffect ~ generateOtpSecretData`,
-  //     generateOtpSecretData
-  //   );
-  // }, [generateOtpSecretData]);
-
+    }
+  }, [setOtpResult]);
   return {
-    generateOtpSecretData: generateOtpSecretData,
-    generateOtpSecretIsLoading: generateOtpSecretIsLoading,
-    generateOtpSecretIsSuccess: generateOtpSecretIsSuccess,
-    data: data,
-    inputsValues: inputsValues,
-    isLoading: isLoading,
-    setInputsValues: setInputsValues,
-    error: error,
     inputs: inputs,
-    onSubmit: onSubmit,
-    isSuccess: isSuccess,
-    inputsErrors: inputsErrors,
-    setInputsErrors: setInputsErrors
+    methods: methods,
+    submitFunction: handleSubmit(onSubmit),
+    setOtpResult: setOtpResult,
+    generateOtpSecretResult: generateOtpSecretResult
   };
 };
-var defaultInputsConfig$3 = [{
-  title: "Code",
-  field: "code",
-  checkerFuncs: ["checkRequiredField"],
-  label: "Code",
-  placeholder: "Type code here",
-  type: "otp"
-}];
 
 var useDeleteOtp = function useDeleteOtp(_ref) {
   var profilesApi = _ref.profilesApi,
-    _ref$inputsConfig = _ref.inputsConfig,
-    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$2 : _ref$inputsConfig,
-    useSelector = _ref.useSelector,
-    _ref$inputPropsType = _ref.inputPropsType,
-    inputPropsType = _ref$inputPropsType === void 0 ? "object" : _ref$inputPropsType;
+    _ref$createNotificati = _ref.createNotification,
+    createNotification = _ref$createNotificati === void 0 ? function () {
+      return {};
+    } : _ref$createNotificati,
+    useSelector = _ref.useSelector;
   var accountId = useSelector(selectors.selectAccountId); //?
-  var _profilesApi$useDelet = profilesApi.useDeleteOtpMutation(),
+  var _profilesApi$useDelet = profilesApi.useDeleteOtpMutation({}),
     _profilesApi$useDelet2 = _slicedToArray(_profilesApi$useDelet, 2),
     deleteOtp = _profilesApi$useDelet2[0],
-    _profilesApi$useDelet3 = _profilesApi$useDelet2[1],
-    isSuccess = _profilesApi$useDelet3.isSuccess,
-    error = _profilesApi$useDelet3.error,
-    data = _profilesApi$useDelet3.data,
-    isLoading = _profilesApi$useDelet3.isLoading;
-  var submitFunc = function submitFunc(_ref2) {
-    var inputs = _ref2.inputs,
-      files = _ref2.files;
-    deleteOtp({
-      id: accountId,
-      data: inputs,
-      files: files
-    });
-  };
-  var memoInputsConfig = React.useMemo(function () {
-    return inputsConfig;
-  }, [inputsConfig]);
-  var _useForm = useForm({
-      inputsConfig: memoInputsConfig,
-      submitFunc: submitFunc,
-      inputPropsType: inputPropsType
-    }),
-    inputs = _useForm.inputs,
-    onSubmit = _useForm.onSubmit,
-    setInputsValues = _useForm.setInputsValues,
-    inputsValues = _useForm.inputsValues,
-    inputsErrors = _useForm.errors,
-    setInputsErrors = _useForm.setErrors;
+    deleteOtpResult = _profilesApi$useDelet2[1];
+  var inputs = React.useMemo(function () {
+    return [{
+      variant: "text",
+      name: "code",
+      label: "OTP code",
+      placeholder: "Type One-time-password code",
+      rules: {
+        required: {
+          value: true,
+          message: "Required field"
+        }
+      }
+    }];
+  }, []);
+  var methods = reactHookForm.useForm({
+    mode: "all"
+  });
+  var handleSubmit = methods.handleSubmit,
+    watch = methods.watch;
+  var watchData = watch();
+  React.useEffect(function () {
+    // console.log(`🚀 ~ useEffect ~ watchData`, watchData);
+  }, [watchData]);
+  function onSubmit(_x) {
+    return _onSubmit.apply(this, arguments);
+  }
+  function _onSubmit() {
+    _onSubmit = _asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(data) {
+      return regenerator.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              deleteOtp({
+                id: accountId,
+                data: data
+              });
+            case 1:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+    return _onSubmit.apply(this, arguments);
+  }
+  React.useEffect(function () {
+    var data = deleteOtpResult.data;
+    if (data !== null && data !== void 0 && data.user) {
+      createNotification({
+        title: "Password successfully changed",
+        contentContainerClassName: "@pg pl-2 pr-4 py-4 @bxsw shadow-lg @ttc text-gray-base",
+        containerClassName: "@ow overflow-visible",
+        duration: 40000
+      });
+    }
+  }, [deleteOtpResult]);
   return {
-    data: data,
-    isLoading: isLoading,
-    setInputsValues: setInputsValues,
-    inputsValues: inputsValues,
-    error: error,
     inputs: inputs,
-    onSubmit: onSubmit,
-    isSuccess: isSuccess,
-    inputsErrors: inputsErrors,
-    setInputsErrors: setInputsErrors
+    methods: methods,
+    submitFunction: handleSubmit(onSubmit)
   };
 };
-var defaultInputsConfig$2 = [{
-  title: "Code",
-  field: "code",
-  checkerFuncs: ["checkRequiredField"],
-  label: "Code",
-  placeholder: "Type code here",
-  type: "otp"
-}];
 
-function ownKeys$7(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread$7(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$7(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$7(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 var useCheckOtp = function useCheckOtp(_ref) {
   var profilesApi = _ref.profilesApi,
-    _ref$inputsConfig = _ref.inputsConfig,
-    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$1 : _ref$inputsConfig,
     useSelector = _ref.useSelector,
-    _ref$inputPropsType = _ref.inputPropsType,
-    inputPropsType = _ref$inputPropsType === void 0 ? "object" : _ref$inputPropsType;
+    _ref$useRouter = _ref.useRouter,
+    useRouter = _ref$useRouter === void 0 ? function () {
+      return {};
+    } : _ref$useRouter;
+    _ref.createNotification;
+  var router = useRouter();
   var user = useSelector(function (state) {
     var _state$auth;
     return (_state$auth = state.auth) === null || _state$auth === void 0 ? void 0 : _state$auth.user;
   }); //?
+
   var _profilesApi$useCheck = profilesApi.useCheckOtpMutation(),
     _profilesApi$useCheck2 = _slicedToArray(_profilesApi$useCheck, 2),
     checkOtp = _profilesApi$useCheck2[0],
-    _profilesApi$useCheck3 = _profilesApi$useCheck2[1],
-    isSuccess = _profilesApi$useCheck3.isSuccess,
-    error = _profilesApi$useCheck3.error,
-    data = _profilesApi$useCheck3.data,
-    isLoading = _profilesApi$useCheck3.isLoading;
-  var submitFunc = function submitFunc(_ref2) {
-    var inputs = _ref2.inputs;
-    var headers = {};
-    if (user !== null && user !== void 0 && user.nextAuthFactorKey) {
-      headers = {
-        "Next-Auth-Factor-Key": user.nextAuthFactorKey
-      };
-    }
-    var userId = user !== null && user !== void 0 && user.id ? user.id : inputs.user;
-    checkOtp({
-      id: userId,
-      data: inputs,
-      headers: headers
-    });
-  };
-  var memoInputsConfig = React.useMemo(function () {
-    return inputsConfig;
-  }, [inputsConfig]);
-  var _useForm = useForm({
-      inputsConfig: memoInputsConfig,
-      submitFunc: submitFunc,
-      inputPropsType: inputPropsType
-    }),
-    inputs = _useForm.inputs,
-    onSubmit = _useForm.onSubmit,
-    setInputsValues = _useForm.setInputsValues,
-    inputsValues = _useForm.inputsValues,
-    inputsErrors = _useForm.errors,
-    setInputsErrors = _useForm.setErrors;
-  React.useEffect(function () {
-    if (typeof window !== "undefined") {
-      var _URLSearchParams, _URL, _window;
-      var _user = (_URLSearchParams = new URLSearchParams((_URL = new URL((_window = window) === null || _window === void 0 ? void 0 : _window.location)) === null || _URL === void 0 ? void 0 : _URL.search)) === null || _URLSearchParams === void 0 ? void 0 : _URLSearchParams.get("user");
-      setInputsValues(_objectSpread$7(_objectSpread$7({}, inputsValues), {}, {
-        user: _user
-      }));
-    }
+    checkOtpResult = _profilesApi$useCheck2[1];
+  var inputs = React.useMemo(function () {
+    return [{
+      name: "code",
+      variant: "text",
+      label: "One-time-password code",
+      placeholder: "Type code for confirmation"
+    }];
   }, []);
+  var methods = reactHookForm.useForm({
+    mode: "all"
+  });
+  var watch = methods.watch,
+    handleSubmit = methods.handleSubmit;
+  var watchData = watch();
+  React.useEffect(function () {
+    // console.log(`🚀 ~ useEffect ~ watchData`, watchData);
+  }, [watchData]);
+  function onSubmit(_x) {
+    return _onSubmit.apply(this, arguments);
+  }
+  function _onSubmit() {
+    _onSubmit = _asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(data) {
+      var headers;
+      return regenerator.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              // console.log(`🚀 ~ onSubmit ~ data`, data);
+              headers = {};
+              if (user !== null && user !== void 0 && user.nextAuthFactorKey) {
+                headers = {
+                  "Next-Auth-Factor-Key": user.nextAuthFactorKey
+                };
+              }
+              checkOtp({
+                id: user.id,
+                data: data,
+                headers: headers
+              });
+            case 3:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+    return _onSubmit.apply(this, arguments);
+  }
+  React.useEffect(function () {
+    var data = checkOtpResult.data;
+    if (!data) {
+      return;
+    }
+
+    // console.log(`🚀 ~ useEffect ~ data`, data);
+  }, [checkOtpResult, router]);
   return {
-    data: data,
-    isLoading: isLoading,
-    inputsValues: inputsValues,
-    setInputsValues: setInputsValues,
-    error: error,
     inputs: inputs,
-    onSubmit: onSubmit,
-    isSuccess: isSuccess,
-    inputsErrors: inputsErrors,
-    setInputsErrors: setInputsErrors
+    methods: methods,
+    submitFunction: handleSubmit(onSubmit),
+    checkOtpResult: checkOtpResult
   };
 };
-var defaultInputsConfig$1 = [{
-  title: "Code",
-  field: "code",
-  checkerFuncs: ["checkRequiredField"],
-  label: "Code",
-  placeholder: "Type code here",
-  type: "otp"
-}];
 
 var useChangePassword = function useChangePassword(_ref) {
-  var profilesApi = _ref.profilesApi,
-    _ref$inputsConfig = _ref.inputsConfig,
-    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig : _ref$inputsConfig,
-    _ref$inputPropsType = _ref.inputPropsType,
-    inputPropsType = _ref$inputPropsType === void 0 ? "object" : _ref$inputPropsType;
-  var _profilesApi$useChang = profilesApi.useChangePasswordMutation(),
+  var profilesApi = _ref.profilesApi;
+    _ref.createNotification;
+  var _profilesApi$useChang = profilesApi.useChangePasswordMutation({}),
     _profilesApi$useChang2 = _slicedToArray(_profilesApi$useChang, 2),
     changePassword = _profilesApi$useChang2[0],
-    _profilesApi$useChang3 = _profilesApi$useChang2[1],
-    isSuccess = _profilesApi$useChang3.isSuccess,
-    error = _profilesApi$useChang3.error,
-    data = _profilesApi$useChang3.data,
-    isLoading = _profilesApi$useChang3.isLoading;
-  var submitFunc = function submitFunc(_ref2) {
-    var inputs = _ref2.inputs,
-      files = _ref2.files;
-    changePassword({
-      data: inputs,
-      files: files
-    });
-  };
-  var memoInputsConfig = React.useMemo(function () {
-    return inputsConfig;
-  }, [inputsConfig]);
-  var _useForm = useForm({
-      inputsConfig: memoInputsConfig,
-      submitFunc: submitFunc,
-      inputPropsType: inputPropsType
-    }),
-    inputs = _useForm.inputs,
-    onSubmit = _useForm.onSubmit,
-    inputsValues = _useForm.inputsValues,
-    inputsErrors = _useForm.errors,
-    setInputsErrors = _useForm.setErrors;
+    changePasswordResult = _profilesApi$useChang2[1];
+  var inputs = React.useMemo(function () {
+    return [{
+      variant: "text",
+      type: "password",
+      name: "currentPassword",
+      label: "Current password",
+      placeholder: "Type your current password",
+      rules: {
+        required: {
+          value: true,
+          message: "Required field"
+        }
+      }
+    }, {
+      variant: "text",
+      type: "password",
+      name: "password",
+      label: "New password",
+      placeholder: "Type new password",
+      rules: {
+        required: {
+          value: true,
+          message: "Required field"
+        }
+      }
+    }, {
+      variant: "text",
+      type: "password",
+      name: "passwordConfirmation",
+      label: "Repeat new password",
+      placeholder: "Repeat new password",
+      rules: {
+        required: {
+          value: true,
+          message: "Required field"
+        }
+      }
+    }];
+  }, []);
+  var methods = reactHookForm.useForm({
+    mode: "all"
+  });
+  var handleSubmit = methods.handleSubmit,
+    watch = methods.watch;
+  var watchData = watch();
+  React.useEffect(function () {
+    // console.log(`🚀 ~ useEffect ~ watchData`, watchData);
+  }, [watchData]);
+  function onSubmit(_x) {
+    return _onSubmit.apply(this, arguments);
+  }
+  function _onSubmit() {
+    _onSubmit = _asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(data) {
+      return regenerator.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              changePassword({
+                data: data
+              });
+            case 1:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+    return _onSubmit.apply(this, arguments);
+  }
   return {
-    data: data,
-    isLoading: isLoading,
-    error: error,
-    inputsValues: inputsValues,
     inputs: inputs,
-    onSubmit: onSubmit,
-    isSuccess: isSuccess,
-    inputsErrors: inputsErrors,
-    setInputsErrors: setInputsErrors
+    methods: methods,
+    submitFunction: handleSubmit(onSubmit),
+    changePasswordResult: changePasswordResult
   };
 };
-var defaultInputsConfig = [{
-  label: "Current Password",
-  field: "password",
-  checkerFuncs: ["checkRequiredField"],
-  config: {
-    enableTypeChanging: true
-  },
-  type: "password",
-  placeholder: "Type your current password"
-}, {
-  label: "New Password",
-  field: "passwordConfirmation",
-  checkerFuncs: ["checkRequiredField"],
-  config: {
-    equalTo: "password",
-    enableTypeChanging: true
-  },
-  type: "password",
-  placeholder: "Type new password"
-}];
 
 var useAuth = {
   useSendEmailConfirmation: useSendEmailConfirmation,
   useForgotPassword: useForgotPassword,
   useLogin: useLogin,
-  useRegister: useRegister,
+  useRegistration: useRegister,
   useResetPassword: useResetPassword,
   useSendPhoneConfirmation: useSendPhoneConfirmation,
   useConfirmEmail: useConfirmEmail,
@@ -32884,20 +32929,6 @@ const transformPageBlock = (block, transformers) => {
     }
     return transformers[key](block);
 };
-const appendFilesToFormData = (formData, files) => {
-    if (Object.keys(files).length) {
-        for (const key of Object.keys(files)) {
-            if (Array.isArray(files[key])) {
-                for (const [_, file] of files[key].entries()) {
-                    formData.append(`files.${key}`, file);
-                }
-            }
-            else {
-                formData.append(`files.${key}`, files[key]);
-            }
-        }
-    }
-};
 const unlunkRemovedFiles = ({ data }) => {
     var _a;
     let sanitized;
@@ -33014,15 +33045,57 @@ const handleApiError = (error) => {
             : `Something went wrong :(`,
     });
 };
+const appendFilesToFormData = (formData, files) => {
+    if (Object.keys(files).length) {
+        for (const key of Object.keys(files)) {
+            if (Array.isArray(files[key])) {
+                for (const [_, file] of files[key].entries()) {
+                    formData.append(`files.${key}`, file);
+                }
+            }
+            else {
+                formData.append(`files.${key}`, files[key]);
+            }
+        }
+    }
+};
 const prepareFormDataToSend = (params) => {
-    console.log(`🚀 ~ prepareFormDataToSend ~ params`, params);
     const { data, files } = params;
-    // console.log(`🚀 ~ prepareDataToSend ~ data`, data);
-    const clearedData = removeEmptyFields({ data, files });
-    // console.log(`🚀 ~ prepareDataToSend ~ clearedData`, clearedData);
+    console.log(`🚀 ~ prepareFormDataToSend ~ files`, files);
+    let passData = Object.assign({}, data);
+    delete passData.files;
+    if (files) {
+        for (const key of Object.keys(data.files)) {
+            const delPath = key.replaceAll(`[`, `.`).replaceAll(`]`, ``).split(`.`);
+            const delByPath = (obj, path) => {
+                console.log(`🚀 ~ delByPath ~ obj`, obj);
+                console.log(`🚀 ~ delByPath ~ path`, path);
+                if (path.length > 1) {
+                    if (Array.isArray(obj)) {
+                        const passArray = [];
+                        for (const [index, el] of obj.entries()) {
+                            if (`${index}` === path[0]) {
+                                passArray.push(delByPath(obj[path[0]], ramda.drop(1, path)));
+                                continue;
+                            }
+                            passArray.push(el);
+                        }
+                        return passArray;
+                    }
+                    else {
+                        return Object.assign(Object.assign({}, obj), { [path[0]]: delByPath(obj[path[0]], ramda.drop(1, path)) });
+                    }
+                }
+                delete obj[path[0]];
+                return obj;
+            };
+            const cleared = delByPath(Object.assign({}, passData), delPath);
+            console.log(`🚀 ~ prepareFormDataToSend ~ cleared`, cleared);
+            passData = cleared;
+        }
+    }
     const formData = new FormData();
-    formData.append(`data`, JSON.stringify(clearedData));
-    // console.log(`🚀 ~ prepareDataToSend ~ files`, files);
+    formData.append(`data`, JSON.stringify(passData));
     if (files) {
         appendFilesToFormData(formData, files);
     }
@@ -33036,11 +33109,11 @@ var apiUtils = /*#__PURE__*/Object.freeze({
     getFileUrl: getFileUrl,
     getImageUrl: getImageUrl,
     transformPageBlock: transformPageBlock,
-    appendFilesToFormData: appendFilesToFormData,
     unlunkRemovedFiles: unlunkRemovedFiles,
     removeEmptyFields: removeEmptyFields,
     getPageData: getPageData,
     handleApiError: handleApiError,
+    appendFilesToFormData: appendFilesToFormData,
     prepareFormDataToSend: prepareFormDataToSend,
     ApiClient: ApiClient,
     transformResponseItem: transformResponseItem
@@ -33086,100 +33159,6 @@ var formatters = /*#__PURE__*/Object.freeze({
 
 function ownKeys$3(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 function _objectSpread$3(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$3(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$3(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-
-// interface IStrapiParams {
-//   filters?: object;
-//   populate?: object;
-//   fields?: object;
-//   sort?: Array<string>;
-//   pagination?: object;
-// }
-
-// type IQueryParams = {
-//   id: string;
-//   filters?: object;
-//   populate?: object;
-//   fields?: object;
-//   sort?: Array<string>;
-//   pagination?: object;
-// };
-
-// type IUseGetQuery = UseQuery<
-//   QueryDefinition<
-//     any,
-//     BaseQueryFn<
-//       string | FetchArgs,
-//       unknown,
-//       FetchBaseQueryError,
-//       any,
-//       FetchBaseQueryMeta
-//     >,
-//     string,
-//     any,
-//     "backend"
-//   >
-// >;
-
-// type IUseMutation = UseMutation<
-//   MutationDefinition<
-//     any,
-//     BaseQueryFn<
-//       string | FetchArgs,
-//       unknown,
-//       FetchBaseQueryError,
-//       any,
-//       FetchBaseQueryMeta
-//     >,
-//     string,
-//     any,
-//     "backend"
-//   >
-// >;
-
-// type TBuild = EndpointBuilder<
-//   BaseQueryFn<
-//     string | FetchArgs,
-//     unknown,
-//     FetchBaseQueryError,
-//     any,
-//     FetchBaseQueryMeta
-//   >,
-//   string,
-//   "backend"
-// >;
-
-// type TProfilesHooks = {
-//   useGetMeQuery: IUseGetQuery;
-//   useLazyGetMeQuery: IUseGetQuery;
-//   useGetProfileByIdQuery: IUseGetQuery;
-//   useLazyGetProfileByIdQuery: IUseGetQuery;
-//   useConfirmPhoneMutation: IUseMutation;
-//   useLoginWithEmailAndPasswordMutation: IUseMutation;
-//   useSendConfirmPhoneMutation: IUseMutation;
-//   useConfirmEmailMutation: IUseMutation;
-//   useForgotPasswordMutation: IUseMutation;
-//   useResetPasswordMutation: IUseMutation;
-//   useCheckOtpMutation: IUseMutation;
-//   useSendEmailCodeMutation: IUseMutation;
-//   useUpdateMeMutation: IUseMutation;
-//   useRegisterMutation: IUseMutation;
-//   useGenerateOtpQuery: IUseGetQuery;
-// };
-
-// type TBackendServicApi = Api<
-//   BaseQueryFn<
-//     string | FetchArgs,
-//     unknown,
-//     FetchBaseQueryError,
-//     any,
-//     FetchBaseQueryMeta
-//   >,
-//   any,
-//   "backend",
-//   string,
-//   any
-// >;
-
 function profileInvalidate(result, _error) {
   return result ? [{
     type: "Profile",
@@ -33323,7 +33302,7 @@ function createProfilesApi(backendServiceApi) {
           },
           transformResponse: transformResponseItem
         }),
-        register: build.mutation({
+        registration: build.mutation({
           query: function query(params) {
             var formData = prepareFormDataToSend(params);
             return {
@@ -33411,15 +33390,13 @@ function createProfilesApi(backendServiceApi) {
     useConfirmPhoneMutation = profilesApi.useConfirmPhoneMutation,
     useConfirmEmailMutation = profilesApi.useConfirmEmailMutation,
     useLoginWithEmailAndPasswordMutation = profilesApi.useLoginWithEmailAndPasswordMutation,
-    useSendPhoneConfitmationMutation = profilesApi.useSendPhoneConfitmationMutation,
     useSendEmailConfirmationMutation = profilesApi.useSendEmailConfirmationMutation,
     useForgotPasswordMutation = profilesApi.useForgotPasswordMutation,
     useResetPasswordMutation = profilesApi.useResetPasswordMutation,
-    useCheckOtpMutation = profilesApi.useCheckOtpMutation,
     useChangePasswordMutation = profilesApi.useChangePasswordMutation,
-    useSendConfirmEmailMutation = profilesApi.useSendConfirmEmailMutation,
+    useCheckOtpMutation = profilesApi.useCheckOtpMutation,
     useUpdateMeMutation = profilesApi.useUpdateMeMutation,
-    useRegisterMutation = profilesApi.useRegisterMutation,
+    useRegistrationMutation = profilesApi.useRegistrationMutation,
     useGenerateOtpSecretQuery = profilesApi.useGenerateOtpSecretQuery,
     useSetOtpMutation = profilesApi.useSetOtpMutation,
     useDeleteOtpMutation = profilesApi.useDeleteOtpMutation;
@@ -33433,15 +33410,13 @@ function createProfilesApi(backendServiceApi) {
       useConfirmPhoneMutation: useConfirmPhoneMutation,
       useConfirmEmailMutation: useConfirmEmailMutation,
       useLoginWithEmailAndPasswordMutation: useLoginWithEmailAndPasswordMutation,
-      useSendPhoneConfitmationMutation: useSendPhoneConfitmationMutation,
       useSendEmailConfirmationMutation: useSendEmailConfirmationMutation,
       useForgotPasswordMutation: useForgotPasswordMutation,
       useResetPasswordMutation: useResetPasswordMutation,
       useChangePasswordMutation: useChangePasswordMutation,
       useCheckOtpMutation: useCheckOtpMutation,
-      useSendConfirmEmailMutation: useSendConfirmEmailMutation,
       useUpdateMeMutation: useUpdateMeMutation,
-      useRegisterMutation: useRegisterMutation,
+      useRegistrationMutation: useRegistrationMutation,
       useGenerateOtpSecretQuery: useGenerateOtpSecretQuery,
       useSetOtpMutation: useSetOtpMutation,
       useDeleteOtpMutation: useDeleteOtpMutation

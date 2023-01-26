@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import * as apiUtils from "./api";
 import * as formatters from "./formatters";
 import * as vanilla from "./vanilla";
@@ -29,188 +28,102 @@ declare const _default: {
             isSuccess: any;
             data: any;
         };
-        useForgotPassword: ({ profilesApi, inputsConfig, authSlice, useDispatch, inputPropsType, }: {
+        useForgotPassword: ({ profilesApi, createNotification, useRouter, }: {
             profilesApi: any;
-            inputsConfig?: {
-                title: string;
-                label: string;
-                field: string;
-                checkerFuncs: string[];
-                type: string;
+            createNotification?: () => {};
+            useRouter?: () => {};
+        }) => {
+            inputs: {
+                name: string;
+                variant: string;
                 placeholder: string;
+                label: string;
             }[];
+            methods: import("react-hook-form").UseFormReturn<import("react-hook-form").FieldValues, any>;
+            submitFunction: (e?: import("react").BaseSyntheticEvent<object, any, any>) => Promise<void>;
+            forgotPasswordResult: any;
+        };
+        useLogin: ({ profilesApi, useRouter, createNotification, }: {
+            profilesApi: any;
+            useRouter?: () => {};
+            createNotification?: () => {};
+        }) => {
+            inputs: ({
+                variant: string;
+                name: string;
+                label: string;
+                placeholder: string;
+                type?: undefined;
+            } | {
+                variant: string;
+                type: string;
+                name: string;
+                label: string;
+                placeholder: string;
+            })[];
+            methods: import("react-hook-form").UseFormReturn<import("react-hook-form").FieldValues, any>;
+            submitFunction: (e?: import("react").BaseSyntheticEvent<object, any, any>) => Promise<void>;
+            loginWithEmailAndPasswordResult: any;
+        };
+        useRegistration: ({ profilesApi, useRouter, createNotification, }: {
+            profilesApi: any;
+            useRouter?: () => {};
+            createNotification?: () => {};
+        }) => {
+            inputs: ({
+                variant: string;
+                name: string;
+                label: string;
+                placeholder: string;
+                type?: undefined;
+            } | {
+                label: string;
+                name: string;
+                type: string;
+                placeholder: string;
+                variant?: undefined;
+            } | {
+                variant: string;
+                type: string;
+                label: string;
+                name: string;
+                placeholder: string;
+            } | {
+                label: string;
+                name: string;
+                variant: string;
+                placeholder?: undefined;
+                type?: undefined;
+            })[];
+            methods: import("react-hook-form").UseFormReturn<import("react-hook-form").FieldValues, any>;
+            submitFunction: (e?: import("react").BaseSyntheticEvent<object, any, any>) => Promise<void>;
+            registrationResult: any;
+        };
+        useResetPassword: ({ profilesApi, authSlice, useDispatch, useRouter, createNotification, }: {
+            profilesApi: any;
             authSlice: any;
             useDispatch: any;
-            inputPropsType?: string;
+            useRouter?: () => {};
+            createNotification?: () => {};
         }) => {
-            isLoading: any;
-            data: any;
-            isSuccess: any;
-            inputsValues: {};
-            setErrors: import("react").Dispatch<import("react").SetStateAction<{}>>;
-            setInputsValues: import("react").Dispatch<import("react").SetStateAction<{}>>;
-            inputs: {};
-            onSubmit: (e: any, submitProps?: {}) => any;
-            setPassed: any;
-        };
-        useLogin: ({ profilesApi, inputsConfig, inputPropsType, }: {
-            profilesApi: any;
-            inputsConfig?: ({
-                field: string;
-                checkerFuncs: string[];
+            inputs: ({
+                label: string;
+                name: string;
+                variant: string;
                 type: string;
                 placeholder: string;
-                label: string;
-                config?: undefined;
-                defaultValue?: undefined;
-                id?: undefined;
+                className?: undefined;
             } | {
-                field: string;
-                checkerFuncs: string[];
-                config: {
-                    enableTypeChanging: boolean;
-                };
-                label: string;
-                type: string;
-                placeholder: string;
-                defaultValue?: undefined;
-                id?: undefined;
-            } | {
-                field: string;
-                checkerFuncs: any[];
-                type: string;
-                defaultValue: boolean;
-                id: string;
-                label: string;
-                placeholder?: undefined;
-                config?: undefined;
-            })[];
-            inputPropsType?: string;
-        }) => {
-            inputs: {};
-            inputsValues: {};
-            onSubmit: (e: any, submitProps?: {}) => any;
-            changeBlockedInputs: (inputs: any) => void;
-            clearInputs: () => void;
-            error: any;
-            data: any;
-            isSuccess: any;
-            isLoading: any;
-            isFetching: any;
-        };
-        useRegister: ({ profilesApi, inputsConfig, inputPropsType, }: {
-            profilesApi: any;
-            inputsConfig?: ({
-                label: string;
-                field: string;
-                checkerFuncs: string[];
-                type: string;
-                placeholder: string;
-                id?: undefined;
-                config?: undefined;
-                defaultValue?: undefined;
-            } | {
-                label: string;
-                field: string;
-                checkerFuncs: string[];
-                type: string;
-                id: string;
-                placeholder: string;
-                config?: undefined;
-                defaultValue?: undefined;
-            } | {
-                label: string;
-                field: string;
-                checkerFuncs: string[];
-                config: {
-                    enableTypeChanging: boolean;
-                    equalTo?: undefined;
-                };
-                type: string;
-                placeholder: string;
-                id?: undefined;
-                defaultValue?: undefined;
-            } | {
-                label: string;
-                field: string;
-                checkerFuncs: string[];
-                config: {
-                    equalTo: string;
-                    enableTypeChanging: boolean;
-                };
-                type: string;
-                placeholder: string;
-                id?: undefined;
-                defaultValue?: undefined;
-            } | {
-                label: string;
-                field: string;
-                checkerFuncs: any[];
-                type: string;
-                defaultValue: boolean;
-                placeholder?: undefined;
-                id?: undefined;
-                config?: undefined;
-            })[];
-            inputPropsType?: string;
-        }) => {
-            data: any;
-            inputs: {};
-            inputsValues: {};
-            onSubmit: (e: any, submitProps?: {}) => any;
-            isSuccess: any;
-            isLoading: any;
-            error: any;
-            setPassed: any;
-            inputsErrors: {};
-            inputsSetErrors: import("react").Dispatch<import("react").SetStateAction<{}>>;
-        };
-        useResetPassword: ({ profilesApi, inputsConfig, authSlice, useDispatch, inputPropsType, }: {
-            profilesApi: any;
-            inputsConfig?: ({
-                label: string;
-                field: string;
-                checkerFuncs: string[];
-                config: {
-                    enableTypeChanging: boolean;
-                    equalTo?: undefined;
-                };
-                type: string;
-                placeholder: string;
-                title?: undefined;
-            } | {
-                label: string;
-                field: string;
-                checkerFuncs: string[];
-                config: {
-                    equalTo: string;
-                    enableTypeChanging: boolean;
-                };
-                type: string;
-                placeholder: string;
-                title?: undefined;
-            } | {
-                title: string;
-                field: string;
-                checkerFuncs: string[];
-                type: string;
+                name: string;
+                variant: string;
+                className: string;
                 label?: undefined;
-                config?: undefined;
+                type?: undefined;
                 placeholder?: undefined;
             })[];
-            authSlice: any;
-            useDispatch: any;
-            inputPropsType?: string;
-        }) => {
-            data: any;
-            isLoading: any;
-            error: any;
-            inputsValues: {};
-            inputs: {};
-            onSubmit: (e: any, submitProps?: {}) => any;
-            isSuccess: any;
-            inputsErrors: {};
-            setInputsErrors: import("react").Dispatch<import("react").SetStateAction<{}>>;
+            methods: import("react-hook-form").UseFormReturn<import("react-hook-form").FieldValues, any>;
+            submitFunction: (e?: import("react").BaseSyntheticEvent<object, any, any>) => Promise<void>;
+            resetPasswordResult: any;
         };
         useSendPhoneConfirmation: ({ profilesApi, inputsConfig, inputPropsType, }: {
             profilesApi: any;
@@ -234,45 +147,34 @@ declare const _default: {
             isSuccess: any;
             data: any;
         };
-        useConfirmEmail: ({ profilesApi, inputsConfig, ping, initialPing, resendOnMount, useSelector, inputPropsType, }: {
+        useConfirmEmail: ({ profilesApi, ping, initialPing, resendOnMount, useSelector, useRouter, createNotification, }: {
             profilesApi: any;
-            inputsConfig?: ({
-                field: string;
-                checkerFuncs: string[];
-                type: string;
-                placeholder: string;
-                label: string;
-                title?: undefined;
-            } | {
-                title: string;
-                field: string;
-                checkerFuncs: string[];
-                label: string;
-                placeholder: string;
-                type: string;
-            })[];
             ping?: number;
             initialPing?: number;
             resendOnMount?: boolean;
             useSelector: any;
-            inputPropsType?: string;
+            useRouter?: () => {};
+            createNotification?: () => {};
         }) => {
             counter: number;
             resendEmailConfirmation: () => void;
-            resendEmailConfirmationError: any;
-            resendEmailConfirmationIsLoading: any;
-            resendEmailConfirmationIsSuccess: any;
-            resendEmailConfirmationData: any;
-            data: any;
-            isLoading: any;
-            inputsValues: {};
-            setInputsValues: import("react").Dispatch<import("react").SetStateAction<{}>>;
-            error: any;
-            inputs: {};
-            onSubmit: (e: any, submitProps?: {}) => any;
-            isSuccess: any;
-            inputsErrors: {};
-            setInputsErrors: import("react").Dispatch<import("react").SetStateAction<{}>>;
+            resendEmailConfirmationResult: any;
+            submitFunction: (e?: import("react").BaseSyntheticEvent<object, any, any>) => Promise<void>;
+            confirmEmailResult: any;
+            inputs: ({
+                type: string;
+                name: string;
+                label: string;
+                placeholder: string;
+                className?: undefined;
+            } | {
+                type: string;
+                name: string;
+                className: string;
+                label?: undefined;
+                placeholder?: undefined;
+            })[];
+            methods: import("react-hook-form").UseFormReturn<import("react-hook-form").FieldValues, any>;
         };
         useConfirmPhone: ({ profilesApi, inputsConfig, ping, initialPing, resendOnMount, useSelector, inputPropsType, }: {
             profilesApi: any;
@@ -367,88 +269,62 @@ declare const _default: {
             inputsErrors: {};
             setInputsErrors: import("react").Dispatch<import("react").SetStateAction<{}>>;
         };
-        useDeleteOtp: ({ profilesApi, inputsConfig, useSelector, inputPropsType, }: {
+        useDeleteOtp: ({ profilesApi, createNotification, useSelector, }: {
             profilesApi: any;
-            inputsConfig?: {
-                title: string;
-                field: string;
-                checkerFuncs: string[];
-                label: string;
-                placeholder: string;
-                type: string;
-            }[];
+            createNotification?: () => {};
             useSelector: any;
-            inputPropsType?: string;
         }) => {
-            data: any;
-            isLoading: any;
-            setInputsValues: import("react").Dispatch<import("react").SetStateAction<{}>>;
-            inputsValues: {};
-            error: any;
-            inputs: {};
-            onSubmit: (e: any, submitProps?: {}) => any;
-            isSuccess: any;
-            inputsErrors: {};
-            setInputsErrors: import("react").Dispatch<import("react").SetStateAction<{}>>;
-        };
-        useCheckOtp: ({ profilesApi, inputsConfig, useSelector, inputPropsType, }: {
-            profilesApi: any;
-            inputsConfig?: {
-                title: string;
-                field: string;
-                checkerFuncs: string[];
+            inputs: {
+                variant: string;
+                name: string;
                 label: string;
                 placeholder: string;
-                type: string;
+                rules: {
+                    required: {
+                        value: boolean;
+                        message: string;
+                    };
+                };
             }[];
-            useSelector: any;
-            inputPropsType?: string;
-        }) => {
-            data: any;
-            isLoading: any;
-            inputsValues: {};
-            setInputsValues: import("react").Dispatch<import("react").SetStateAction<{}>>;
-            error: any;
-            inputs: {};
-            onSubmit: (e: any, submitProps?: {}) => any;
-            isSuccess: any;
-            inputsErrors: {};
-            setInputsErrors: import("react").Dispatch<import("react").SetStateAction<{}>>;
+            methods: import("react-hook-form").UseFormReturn<import("react-hook-form").FieldValues, any>;
+            submitFunction: (e?: import("react").BaseSyntheticEvent<object, any, any>) => Promise<void>;
         };
-        useChangePassword: ({ profilesApi, inputsConfig, inputPropsType, }: {
+        useCheckOtp: ({ profilesApi, useSelector, useRouter, createNotification, }: {
             profilesApi: any;
-            inputsConfig?: ({
-                label: string;
-                field: string;
-                checkerFuncs: string[];
-                config: {
-                    enableTypeChanging: boolean;
-                    equalTo?: undefined;
-                };
-                type: string;
-                placeholder: string;
-            } | {
-                label: string;
-                field: string;
-                checkerFuncs: string[];
-                config: {
-                    equalTo: string;
-                    enableTypeChanging: boolean;
-                };
-                type: string;
-                placeholder: string;
-            })[];
-            inputPropsType?: string;
+            useSelector: any;
+            useRouter?: () => {};
+            createNotification?: () => {};
         }) => {
-            data: any;
-            isLoading: any;
-            error: any;
-            inputsValues: {};
-            inputs: {};
-            onSubmit: (e: any, submitProps?: {}) => any;
-            isSuccess: any;
-            inputsErrors: {};
-            setInputsErrors: import("react").Dispatch<import("react").SetStateAction<{}>>;
+            inputs: {
+                name: string;
+                variant: string;
+                label: string;
+                placeholder: string;
+            }[];
+            methods: import("react-hook-form").UseFormReturn<import("react-hook-form").FieldValues, any>;
+            submitFunction: (e?: import("react").BaseSyntheticEvent<object, any, any>) => Promise<void>;
+            checkOtpResult: any;
+        };
+        useChangePassword: ({ profilesApi, createNotification, }: {
+            profilesApi: any;
+            createNotification?: () => {};
+        }) => {
+            inputs: {
+                variant: string;
+                type: string;
+                name: string;
+                label: string;
+                placeholder: string;
+                rules: {
+                    required: {
+                        value: boolean;
+                        message: string;
+                    };
+                };
+            }[];
+            methods: import("react-hook-form").UseFormReturn<import("react-hook-form").FieldValues, any>;
+            submitFunction: (e?: import("react").BaseSyntheticEvent<object, any, any>) => Promise<void>;
+            changePasswordResult: any;
         };
         useDetectMouseover: (el: any, initialState: any) => any[];
         useDetectOutsideClick: (trigger: any, initialState: any) => any[];

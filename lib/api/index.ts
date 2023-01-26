@@ -1,4 +1,5 @@
 // import qs from "qs";
+import { drop } from "ramda";
 import {
   Api,
   transformResponseItem as transformResponseItemFunc,
@@ -40,20 +41,6 @@ export const transformPageBlock = (block, transformers) => {
   }
 
   return transformers[key](block);
-};
-
-export const appendFilesToFormData = (formData, files) => {
-  if (Object.keys(files).length) {
-    for (const key of Object.keys(files)) {
-      if (Array.isArray(files[key])) {
-        for (const [_, file] of files[key].entries()) {
-          formData.append(`files.${key}`, file);
-        }
-      } else {
-        formData.append(`files.${key}`, files[key]);
-      }
-    }
-  }
 };
 
 export const unlunkRemovedFiles = ({ data }) => {
@@ -156,8 +143,8 @@ export const getPageData = async (params: {
   locale?: string;
   keys?: string[];
   additionalBlocks?: string[];
-  transformers?: {};
-  query?: {};
+  transformers?: any;
+  query?: any;
 }) => {
   const {
     url,
@@ -231,20 +218,73 @@ export const handleApiError = (error: any) => ({
     : `Something went wrong :(`,
 });
 
-export const prepareFormDataToSend = (params) => {
-  console.log(`🚀 ~ prepareFormDataToSend ~ params`, params);
+export const appendFilesToFormData = (formData: any, files: any) => {
+  if (Object.keys(files).length) {
+    for (const key of Object.keys(files)) {
+      if (Array.isArray(files[key])) {
+        for (const [_, file] of files[key].entries()) {
+          formData.append(`files.${key}`, file);
+        }
+      } else {
+        formData.append(`files.${key}`, files[key]);
+      }
+    }
+  }
+};
+
+export const prepareFormDataToSend = (params: any) => {
   const { data, files } = params;
+  console.log(`🚀 ~ prepareFormDataToSend ~ files`, files);
 
-  // console.log(`🚀 ~ prepareDataToSend ~ data`, data);
+  let passData = { ...data };
+  delete passData.files;
 
-  const clearedData = removeEmptyFields({ data, files });
+  if (files) {
+    for (const key of Object.keys(data.files)) {
+      const delPath = key.replaceAll(`[`, `.`).replaceAll(`]`, ``).split(`.`);
 
-  // console.log(`🚀 ~ prepareDataToSend ~ clearedData`, clearedData);
+      const delByPath = (obj: any, path: any[]): any => {
+        console.log(`🚀 ~ delByPath ~ obj`, obj);
+        console.log(`🚀 ~ delByPath ~ path`, path);
+
+        if (path.length > 1) {
+          if (Array.isArray(obj)) {
+            const passArray = [];
+
+            for (const [index, el] of obj.entries()) {
+              if (`${index}` === path[0]) {
+                passArray.push(delByPath(obj[path[0]], drop(1, path)));
+
+                continue;
+              }
+
+              passArray.push(el);
+            }
+
+            return passArray;
+          } else {
+            return {
+              ...obj,
+              [path[0]]: delByPath(obj[path[0]], drop(1, path)),
+            };
+          }
+        }
+
+        delete obj[path[0]];
+
+        return obj;
+      };
+
+      const cleared = delByPath({ ...passData }, delPath);
+
+      console.log(`🚀 ~ prepareFormDataToSend ~ cleared`, cleared);
+
+      passData = cleared;
+    }
+  }
 
   const formData = new FormData();
-  formData.append(`data`, JSON.stringify(clearedData));
-
-  // console.log(`🚀 ~ prepareDataToSend ~ files`, files);
+  formData.append(`data`, JSON.stringify(passData));
 
   if (files) {
     appendFilesToFormData(formData, files);
