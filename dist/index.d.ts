@@ -1,3 +1,4 @@
+/// <reference types="react" />
 import * as apiUtils from "./api";
 import * as formatters from "./formatters";
 import * as vanilla from "./vanilla";
@@ -157,8 +158,8 @@ declare const _default: {
             createNotification?: () => {};
         }) => {
             counter: number;
-            resendEmailConfirmation: () => void;
-            resendEmailConfirmationResult: any;
+            resend: () => void;
+            resendResult: any;
             submitFunction: (e?: import("react").BaseSyntheticEvent<object, any, any>) => Promise<void>;
             confirmEmailResult: any;
             inputs: ({
@@ -176,98 +177,90 @@ declare const _default: {
             })[];
             methods: import("react-hook-form").UseFormReturn<import("react-hook-form").FieldValues, any>;
         };
-        useConfirmPhone: ({ profilesApi, inputsConfig, ping, initialPing, resendOnMount, useSelector, inputPropsType, }: {
+        useConfirmPhone: ({ profilesApi, ping, initialPing, resendOnMount, useSelector, useRouter, createNotification, }: {
             profilesApi: any;
-            inputsConfig?: ({
-                field: string;
-                checkerFuncs: string[];
-                type: string;
-                placeholder: string;
-                label: string;
-                title?: undefined;
-            } | {
-                title: string;
-                field: string;
-                checkerFuncs: string[];
-                label: string;
-                placeholder: string;
-                type: string;
-            })[];
             ping?: number;
             initialPing?: number;
             resendOnMount?: boolean;
             useSelector: any;
-            inputPropsType?: string;
+            useRouter?: () => {};
+            createNotification?: () => {};
         }) => {
             counter: number;
-            resendPhoneConfirmation: () => void;
-            resendPhoneConfirmationError: any;
-            resendPhoneConfirmationIsLoading: any;
-            resendPhoneConfirmationIsSuccess: any;
-            resendPhoneConfirmationData: any;
-            data: any;
-            isLoading: any;
-            inputsValues: {};
-            setInputsValues: import("react").Dispatch<import("react").SetStateAction<{}>>;
-            error: any;
-            inputs: {};
-            onSubmit: (e: any, submitProps?: {}) => any;
-            isSuccess: any;
-            inputsErrors: {};
-            setInputsErrors: import("react").Dispatch<import("react").SetStateAction<{}>>;
-        };
-        useUpdateMe: ({ profilesApi, inputsConfig, useSelector, inputPropsType, }: {
-            profilesApi: any;
-            inputsConfig?: {
-                field: string;
-                checkerFuncs: string[];
+            resend: () => void;
+            resendResult: any;
+            submitFunction: (e?: import("react").BaseSyntheticEvent<object, any, any>) => Promise<void>;
+            confirmPhoneResult: any;
+            inputs: ({
                 type: string;
-                placeholder: string;
+                name: string;
                 label: string;
-            }[];
+                placeholder: string;
+                className?: undefined;
+            } | {
+                type: string;
+                name: string;
+                className: string;
+                label?: undefined;
+                placeholder?: undefined;
+            })[];
+            methods: import("react-hook-form").UseFormReturn<import("react-hook-form").FieldValues, any>;
+        };
+        useUpdateMe: ({ profilesApi, useSelector, createNotification, }: {
+            profilesApi: any;
             useSelector: any;
-            inputPropsType?: string;
+            createNotification?: () => {};
         }) => {
-            data: any;
-            isLoading: any;
-            inputsValues: {};
-            error: any;
-            inputs: {};
-            onSubmit: (e: any, submitProps?: {}) => any;
-            isSuccess: any;
-            inputsErrors: {};
-            setInputsErrors: import("react").Dispatch<import("react").SetStateAction<{}>>;
+            inputs: {
+                variant: string;
+                name: string;
+                label: string;
+                placeholder: string;
+            }[];
+            methods: import("react-hook-form").UseFormReturn<import("react-hook-form").FieldValues, any>;
+            submitFunction: (e?: import("react").BaseSyntheticEvent<object, any, any>) => Promise<void>;
+            updateMeResult: any;
         };
         useMyProfileCreator: ({ profilesApi, populate, useSelector, }: import("./hooks/use-auth/use-my-profile-creator").IUseMyProfile) => {
             me: any;
             refetch: () => void;
         };
-        useSetOtp: ({ profilesApi, inputsConfig, useSelector, inputPropsType, }: {
+        useSetOtp: ({ profilesApi, useSelector, createNotification, }: {
             profilesApi: any;
-            inputsConfig?: {
-                title: string;
-                field: string;
-                checkerFuncs: string[];
+            useSelector: any;
+            createNotification?: () => {};
+        }) => {
+            inputs: ({
+                variant: string;
+                name: string;
                 label: string;
                 placeholder: string;
+                rules: {
+                    required: {
+                        value: boolean;
+                        message: string;
+                    };
+                };
+                type?: undefined;
+                className?: undefined;
+            } | {
+                variant: string;
                 type: string;
-            }[];
-            useSelector: any;
-            inputPropsType?: string;
-        }) => {
-            generateOtpSecretData: any;
-            generateOtpSecretIsLoading: any;
-            generateOtpSecretIsSuccess: any;
-            data: any;
-            inputsValues: {};
-            isLoading: any;
-            setInputsValues: import("react").Dispatch<import("react").SetStateAction<{}>>;
-            error: any;
-            inputs: {};
-            onSubmit: (e: any, submitProps?: {}) => any;
-            isSuccess: any;
-            inputsErrors: {};
-            setInputsErrors: import("react").Dispatch<import("react").SetStateAction<{}>>;
+                name: string;
+                className: string;
+                rules: {
+                    required: {
+                        value: boolean;
+                        message: string;
+                    };
+                };
+                label?: undefined;
+                placeholder?: undefined;
+            })[];
+            methods: import("react-hook-form").UseFormReturn<import("react-hook-form").FieldValues, any>;
+            submitFunction: (e?: import("react").BaseSyntheticEvent<object, any, any>) => Promise<void>;
+            setOtpResult: any;
+            generateOtpSecretResult: any;
         };
         useDeleteOtp: ({ profilesApi, createNotification, useSelector, }: {
             profilesApi: any;

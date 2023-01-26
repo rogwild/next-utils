@@ -1,5 +1,5 @@
 // import qs from "qs";
-import { drop } from "ramda";
+import { drop, isEmpty } from "ramda";
 import {
   Api,
   transformResponseItem as transformResponseItemFunc,
@@ -234,50 +234,20 @@ export const appendFilesToFormData = (formData: any, files: any) => {
 
 export const prepareFormDataToSend = (params: any) => {
   const { data, files } = params;
-  console.log(`🚀 ~ prepareFormDataToSend ~ files`, files);
+  // console.log(`🚀 ~ prepareFormDataToSend ~ files`, files);
 
   let passData = { ...data };
   delete passData.files;
 
   if (files) {
     for (const key of Object.keys(data.files)) {
+      // console.log(`🚀 ~ prepareFormDataToSend ~ key`, key, data.files[key]);
+
       const delPath = key.replaceAll(`[`, `.`).replaceAll(`]`, ``).split(`.`);
-
-      const delByPath = (obj: any, path: any[]): any => {
-        console.log(`🚀 ~ delByPath ~ obj`, obj);
-        console.log(`🚀 ~ delByPath ~ path`, path);
-
-        if (path.length > 1) {
-          if (Array.isArray(obj)) {
-            const passArray = [];
-
-            for (const [index, el] of obj.entries()) {
-              if (`${index}` === path[0]) {
-                passArray.push(delByPath(obj[path[0]], drop(1, path)));
-
-                continue;
-              }
-
-              passArray.push(el);
-            }
-
-            return passArray;
-          } else {
-            return {
-              ...obj,
-              [path[0]]: delByPath(obj[path[0]], drop(1, path)),
-            };
-          }
-        }
-
-        delete obj[path[0]];
-
-        return obj;
-      };
 
       const cleared = delByPath({ ...passData }, delPath);
 
-      console.log(`🚀 ~ prepareFormDataToSend ~ cleared`, cleared);
+      // console.log(`🚀 ~ prepareFormDataToSend ~ cleared`, cleared);
 
       passData = cleared;
     }
@@ -290,8 +260,39 @@ export const prepareFormDataToSend = (params: any) => {
     appendFilesToFormData(formData, files);
   }
 
+  // console.log(`🚀 ~ prepareFormDataToSend ~ passData`, passData, files);
+
   return formData;
 };
 
 export const ApiClient = Api;
 export const transformResponseItem = transformResponseItemFunc;
+
+function delByPath(obj: any, path: any[]): any {
+  if (path.length > 1) {
+    if (Array.isArray(obj)) {
+      const passArray = [];
+
+      for (const [index, el] of obj.entries()) {
+        if (`${index}` === path[0]) {
+          passArray.push(delByPath(obj[path[0]], drop(1, path)));
+
+          continue;
+        }
+
+        passArray.push(el);
+      }
+
+      return passArray;
+    } else {
+      return {
+        ...obj,
+        [path[0]]: delByPath(obj[path[0]], drop(1, path)),
+      };
+    }
+  }
+
+  obj[path[0]] = null;
+
+  return obj;
+}
