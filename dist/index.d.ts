@@ -36,7 +36,7 @@ declare const _default: {
         }) => {
             inputs: {
                 name: string;
-                variant: string;
+                component: string;
                 placeholder: string;
                 label: string;
             }[];
@@ -50,13 +50,13 @@ declare const _default: {
             createNotification?: () => {};
         }) => {
             inputs: ({
-                variant: string;
+                component: string;
                 name: string;
                 label: string;
                 placeholder: string;
                 type?: undefined;
             } | {
-                variant: string;
+                component: string;
                 type: string;
                 name: string;
                 label: string;
@@ -72,7 +72,7 @@ declare const _default: {
             createNotification?: () => {};
         }) => {
             inputs: ({
-                variant: string;
+                component: string;
                 name: string;
                 label: string;
                 placeholder: string;
@@ -82,9 +82,9 @@ declare const _default: {
                 name: string;
                 type: string;
                 placeholder: string;
-                variant?: undefined;
+                component?: undefined;
             } | {
-                variant: string;
+                component: string;
                 type: string;
                 label: string;
                 name: string;
@@ -92,7 +92,7 @@ declare const _default: {
             } | {
                 label: string;
                 name: string;
-                variant: string;
+                component: string;
                 placeholder?: undefined;
                 type?: undefined;
             })[];
@@ -110,13 +110,13 @@ declare const _default: {
             inputs: ({
                 label: string;
                 name: string;
-                variant: string;
+                component: string;
                 type: string;
                 placeholder: string;
                 className?: undefined;
             } | {
                 name: string;
-                variant: string;
+                component: string;
                 className: string;
                 label?: undefined;
                 type?: undefined;
@@ -212,7 +212,7 @@ declare const _default: {
             createNotification?: () => {};
         }) => {
             inputs: {
-                variant: string;
+                component: string;
                 name: string;
                 label: string;
                 placeholder: string;
@@ -231,7 +231,7 @@ declare const _default: {
             createNotification?: () => {};
         }) => {
             inputs: ({
-                variant: string;
+                component: string;
                 name: string;
                 label: string;
                 placeholder: string;
@@ -244,7 +244,7 @@ declare const _default: {
                 type?: undefined;
                 className?: undefined;
             } | {
-                variant: string;
+                component: string;
                 type: string;
                 name: string;
                 className: string;
@@ -268,7 +268,7 @@ declare const _default: {
             useSelector: any;
         }) => {
             inputs: {
-                variant: string;
+                component: string;
                 name: string;
                 label: string;
                 placeholder: string;
@@ -290,7 +290,7 @@ declare const _default: {
         }) => {
             inputs: {
                 name: string;
-                variant: string;
+                component: string;
                 label: string;
                 placeholder: string;
             }[];
@@ -303,7 +303,7 @@ declare const _default: {
             createNotification?: () => {};
         }) => {
             inputs: {
-                variant: string;
+                component: string;
                 type: string;
                 name: string;
                 label: string;

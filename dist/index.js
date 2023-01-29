@@ -17843,12 +17843,12 @@ var useRegister = function useRegister(_ref) {
     _ref.createNotification;
   var inputs = React.useMemo(function () {
     return [{
-      variant: "text",
+      component: "text",
       name: "username",
       label: "Username",
       placeholder: "Type your username"
     }, {
-      variant: "text",
+      component: "text",
       name: "email",
       label: "Email",
       placeholder: "Type your email"
@@ -17858,7 +17858,7 @@ var useRegister = function useRegister(_ref) {
       type: "password",
       placeholder: "Type your password"
     }, {
-      variant: "text",
+      component: "text",
       type: "password",
       label: "Repeat password",
       name: "confirm_password",
@@ -17866,7 +17866,7 @@ var useRegister = function useRegister(_ref) {
     }, {
       label: "I agree with terms and conditions",
       name: "agreement_checkbox",
-      variant: "switch"
+      component: "switch"
     }];
   }, []);
   var _profilesApi$useRegis = profilesApi.useRegistrationMutation({}),
@@ -17939,12 +17939,12 @@ var useLogin = function useLogin(_ref) {
     loginWithEmailAndPasswordResult = _profilesApi$useLogin2[1];
   var inputs = React.useMemo(function () {
     return [{
-      variant: "text",
+      component: "text",
       name: "identifier",
       label: "Email",
       placeholder: "Type your email"
     }, {
-      variant: "text",
+      component: "text",
       type: "password",
       name: "password",
       label: "Password",
@@ -18018,7 +18018,7 @@ var useForgotPassword = function useForgotPassword(_ref) {
   var inputs = React.useMemo(function () {
     return [{
       name: "email",
-      variant: "text",
+      component: "text",
       placeholder: "Type your email",
       label: "Email"
     }];
@@ -18105,18 +18105,18 @@ var useResetPassword = function useResetPassword(_ref) {
     return [{
       label: "New Password",
       name: "password",
-      variant: "text",
+      component: "text",
       type: "password",
       placeholder: "Type your new password"
     }, {
       label: "Repeat New Password",
       name: "passwordConfirmation",
-      variant: "text",
+      component: "text",
       type: "password",
       placeholder: "Repeat your new password"
     }, {
       name: "code",
-      variant: "text",
+      component: "text",
       className: "hidden"
     }];
   }, []);
@@ -18723,7 +18723,7 @@ var useUpdateMe = function useUpdateMe(_ref) {
     updateMeResult = _profilesApi$useUpdat2[1];
   var inputs = React.useMemo(function () {
     return [{
-      variant: "text",
+      component: "text",
       name: "username",
       label: "Username",
       placeholder: "Type your username"
@@ -18820,7 +18820,7 @@ var useSetOtp = function useSetOtp(_ref) {
     setOtpResult = _profilesApi$useSetOt2[1];
   var inputs = React.useMemo(function () {
     return [{
-      variant: "text",
+      component: "text",
       name: "code",
       label: "OTP code",
       placeholder: "Type One-time-password",
@@ -18831,7 +18831,7 @@ var useSetOtp = function useSetOtp(_ref) {
         }
       }
     }, {
-      variant: "text",
+      component: "text",
       type: "password",
       name: "otp_secret",
       className: "hidden",
@@ -18916,7 +18916,7 @@ var useDeleteOtp = function useDeleteOtp(_ref) {
     deleteOtpResult = _profilesApi$useDelet2[1];
   var inputs = React.useMemo(function () {
     return [{
-      variant: "text",
+      component: "text",
       name: "code",
       label: "OTP code",
       placeholder: "Type One-time-password code",
@@ -18998,7 +18998,7 @@ var useCheckOtp = function useCheckOtp(_ref) {
   var inputs = React.useMemo(function () {
     return [{
       name: "code",
-      variant: "text",
+      component: "text",
       label: "One-time-password code",
       placeholder: "Type code for confirmation"
     }];
@@ -19074,7 +19074,7 @@ var useChangePassword = function useChangePassword(_ref) {
     changePasswordResult = _profilesApi$useChang2[1];
   var inputs = React.useMemo(function () {
     return [{
-      variant: "text",
+      component: "text",
       type: "password",
       name: "currentPassword",
       label: "Current password",
@@ -19086,7 +19086,7 @@ var useChangePassword = function useChangePassword(_ref) {
         }
       }
     }, {
-      variant: "text",
+      component: "text",
       type: "password",
       name: "password",
       label: "New password",
@@ -19098,7 +19098,7 @@ var useChangePassword = function useChangePassword(_ref) {
         }
       }
     }, {
-      variant: "text",
+      component: "text",
       type: "password",
       name: "passwordConfirmation",
       label: "Repeat new password",
