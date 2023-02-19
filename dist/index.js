@@ -19525,12 +19525,42 @@ var useCheckFactors = function useCheckFactors(_ref) {
     var _state$auth;
     return (_state$auth = state.auth) === null || _state$auth === void 0 ? void 0 : _state$auth.user;
   }); //?
-  var _useState = React.useState(initialPing),
-    emailCounter = _useState[0],
-    setEmailCounter = _useState[1];
-  var _useState2 = React.useState(initialPing),
-    phoneCounter = _useState2[0],
-    setPhoneCounter = _useState2[1];
+  var _useState = React.useState(),
+    email = _useState[0],
+    setEmail = _useState[1];
+  var _useState2 = React.useState(),
+    phone = _useState2[0],
+    setPhone = _useState2[1];
+  var _useSendEmailConfirma = useSendEmailConfirmation({
+      profilesApi: profilesApi,
+      ping: ping,
+      initialPing: initialPing,
+      useSelector: useSelector,
+      email: email,
+      useRouter: useRouter,
+      createNotification: createNotification,
+      translate: translate,
+      notificationDuration: notificationDuration,
+      AdditionalHeadersContext: AdditionalHeadersContext
+    }),
+    emailCounter = _useSendEmailConfirma.counter,
+    sendEmailConfirmation = _useSendEmailConfirma.submitFunction,
+    resendEmailConfirmationResult = _useSendEmailConfirma.result;
+  var _useSendPhoneConfirma = useSendPhoneConfirmation({
+      profilesApi: profilesApi,
+      ping: ping,
+      initialPing: initialPing,
+      useSelector: useSelector,
+      phone: phone,
+      useRouter: useRouter,
+      createNotification: createNotification,
+      translate: translate,
+      notificationDuration: notificationDuration,
+      AdditionalHeadersContext: AdditionalHeadersContext
+    }),
+    phoneCounter = _useSendPhoneConfirma.counter,
+    sendPhoneConfirmation = _useSendPhoneConfirma.submitFunction,
+    resendPhoneConfirmationResult = _useSendPhoneConfirma.result;
   var nextAuthFactor = useSelector(function (state) {
     var _state$auth2;
     return (_state$auth2 = state.auth) === null || _state$auth2 === void 0 ? void 0 : _state$auth2.nextAuthFactor;
@@ -19542,14 +19572,6 @@ var useCheckFactors = function useCheckFactors(_ref) {
     _profilesApi$useCheck2 = _slicedToArray(_profilesApi$useCheck, 2),
     checkFactors = _profilesApi$useCheck2[0],
     checkFactorsResult = _profilesApi$useCheck2[1];
-  var _profilesApi$useSendE = profilesApi.useSendEmailConfirmationMutation(),
-    _profilesApi$useSendE2 = _slicedToArray(_profilesApi$useSendE, 2),
-    sendEmailConfirmation = _profilesApi$useSendE2[0],
-    resendEmailConfirmationResult = _profilesApi$useSendE2[1];
-  var _profilesApi$useSendP = profilesApi.useSendPhoneConfirmationMutation(),
-    _profilesApi$useSendP2 = _slicedToArray(_profilesApi$useSendP, 2),
-    sendPhoneConfirmation = _profilesApi$useSendP2[0],
-    resendPhoneConfirmationResult = _profilesApi$useSendP2[1];
   var inputs = React.useMemo(function () {
     var localInputs = [];
     if (!user) {
@@ -19586,8 +19608,8 @@ var useCheckFactors = function useCheckFactors(_ref) {
   });
   var handleSubmit = methods.handleSubmit,
     watch = methods.watch,
-    setValue = methods.setValue,
-    setError = methods.setError;
+    setValue = methods.setValue;
+    methods.setError;
   var watchData = watch();
 
   // useEffect(() => {
@@ -19656,90 +19678,14 @@ var useCheckFactors = function useCheckFactors(_ref) {
       // console.log(`🚀 ~ useEffect ~ watchData`, watchData);
 
       if (watchData !== null && watchData !== void 0 && watchData.phone) {
-        resendEmail();
+        sendPhoneConfirmation();
       }
       if (watchData !== null && watchData !== void 0 && watchData.email) {
-        resendPhone();
+        sendEmailConfirmation();
       }
       setOnMountEmailWasSent(true);
     }
   }, [watchData, onMountEmailWasSent, user]);
-  React.useEffect(function () {
-    if (emailCounter > 0) {
-      var timer = setInterval(function () {
-        return setEmailCounter(emailCounter - 1);
-      }, 1000);
-      return function () {
-        return clearInterval(timer);
-      };
-    }
-  }, [emailCounter]);
-  React.useEffect(function () {
-    if (phoneCounter > 0) {
-      var timer = setInterval(function () {
-        return setPhoneCounter(phoneCounter - 1);
-      }, 1000);
-      return function () {
-        return clearInterval(timer);
-      };
-    }
-  }, [phoneCounter]);
-  var resendEmail = React.useCallback(function () {
-    if (emailCounter > 0) {
-      return;
-    }
-    if (!watchData.email) {
-      console.error("Empty email address field");
-      setError("email", {
-        type: "required",
-        message: "Empty email field"
-      });
-      return;
-    }
-    setEmailCounter(ping);
-    setOnMountEmailWasSent(true);
-    sendEmailConfirmation({
-      data: {
-        email: watchData.email
-      }
-    });
-  }, [sendEmailConfirmation, watchData === null || watchData === void 0 ? void 0 : watchData.email]);
-  var resendPhone = React.useCallback(function () {
-    if (phoneCounter > 0) {
-      return;
-    }
-    if (!watchData.phone) {
-      console.error("Empty phone field");
-      setError("phone", {
-        type: "required",
-        message: "Empty phone field"
-      });
-      return;
-    }
-    setPhoneCounter(ping);
-    setOnMountEmailWasSent(true);
-    sendPhoneConfirmation({
-      data: {
-        phone: watchData.phone
-      }
-    });
-  }, [sendEmailConfirmation, watchData === null || watchData === void 0 ? void 0 : watchData.email]);
-  React.useEffect(function () {
-    if (resendEmailConfirmationResult.isSuccess) {
-      createNotification({
-        title: translate("Code was sent to your email"),
-        duration: notificationDuration
-      });
-    }
-  }, [resendEmailConfirmationResult]);
-  React.useEffect(function () {
-    if (resendPhoneConfirmationResult.isSuccess) {
-      createNotification({
-        title: translate("Code was sent to your phone"),
-        duration: notificationDuration
-      });
-    }
-  }, [resendPhoneConfirmationResult]);
   React.useEffect(function () {
     if (user) {
       if (!watchData.email || !watchData.id || !watchData.phone || !watchData.current) {
@@ -19747,6 +19693,8 @@ var useCheckFactors = function useCheckFactors(_ref) {
         setValue("email", user.email);
         setValue("phone", user.phone);
         setValue("current", nextAuthFactor);
+        setEmail(user.email);
+        setPhone(user.phone);
         return;
       }
     }
@@ -19757,10 +19705,10 @@ var useCheckFactors = function useCheckFactors(_ref) {
     submitFunction: handleSubmit(onSubmit),
     checkFactorsResult: checkFactorsResult,
     emailCounter: emailCounter,
-    resendEmail: resendEmail,
+    resendEmail: sendEmailConfirmation,
     resendEmailConfirmationResult: resendEmailConfirmationResult,
     phoneCounter: phoneCounter,
-    resendPhone: resendPhone,
+    resendPhone: sendPhoneConfirmation,
     resendPhoneConfirmationResult: resendPhoneConfirmationResult
   };
 };

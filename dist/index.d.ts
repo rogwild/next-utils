@@ -355,10 +355,10 @@ declare const _default: {
             submitFunction: (e?: import("react").BaseSyntheticEvent<object, any, any>) => Promise<void>;
             checkFactorsResult: any;
             emailCounter: number;
-            resendEmail: () => void;
+            resendEmail: () => Promise<void>;
             resendEmailConfirmationResult: any;
             phoneCounter: number;
-            resendPhone: () => void;
+            resendPhone: () => Promise<void>;
             resendPhoneConfirmationResult: any;
         };
         useDetectMouseover: (el: any, initialState: any) => any[];
