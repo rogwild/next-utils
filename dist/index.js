@@ -17849,7 +17849,10 @@ var useRegister = function useRegister(_ref) {
       return string;
     } : _ref$translate,
     _ref$notificationDura = _ref.notificationDuration,
-    notificationDuration = _ref$notificationDura === void 0 ? 10000 : _ref$notificationDura;
+    notificationDuration = _ref$notificationDura === void 0 ? 10000 : _ref$notificationDura,
+    _ref$AdditionalHeader = _ref.AdditionalHeadersContext,
+    AdditionalHeadersContext = _ref$AdditionalHeader === void 0 ? /*#__PURE__*/React.createContext(null) : _ref$AdditionalHeader;
+  var additionalHeaders = React.useContext(AdditionalHeadersContext);
   var inputs = React.useMemo(function () {
     return [{
       component: "text",
@@ -17896,16 +17899,24 @@ var useRegister = function useRegister(_ref) {
   }
   function _onSubmit() {
     _onSubmit = _asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(data) {
+      var headers, _i, _Object$keys, key;
       return regenerator.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              // console.log(`🚀 ~ onSubmit ~ data`, data);
+              headers = {};
+              if (additionalHeaders !== null && additionalHeaders !== void 0 && additionalHeaders.headers) {
+                for (_i = 0, _Object$keys = Object.keys(additionalHeaders.headers); _i < _Object$keys.length; _i++) {
+                  key = _Object$keys[_i];
+                  headers[key] = JSON.stringify(additionalHeaders.headers[key]);
+                }
+              }
               registration({
                 data: data,
-                files: data.files
+                files: data.files,
+                headers: headers
               });
-            case 1:
+            case 3:
             case "end":
               return _context.stop();
           }
@@ -17991,6 +18002,9 @@ var useLogin = function useLogin(_ref) {
     _ref.createNotification;
     _ref.translate;
     _ref.notificationDuration;
+    var _ref$AdditionalHeader = _ref.AdditionalHeadersContext,
+    AdditionalHeadersContext = _ref$AdditionalHeader === void 0 ? /*#__PURE__*/React.createContext(null) : _ref$AdditionalHeader;
+  var additionalHeaders = React.useContext(AdditionalHeadersContext);
   var router = useRouter();
   var _profilesApi$useLogin = profilesApi.useLoginWithEmailAndPasswordMutation(),
     _profilesApi$useLogin2 = _slicedToArray(_profilesApi$useLogin, 2),
@@ -18024,17 +18038,24 @@ var useLogin = function useLogin(_ref) {
   }
   function _onSubmit() {
     _onSubmit = _asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(data) {
+      var headers, _i, _Object$keys, key;
       return regenerator.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              // console.log(`🚀 ~ onSubmit ~ data`, data);
-
+              headers = {};
+              if (additionalHeaders !== null && additionalHeaders !== void 0 && additionalHeaders.headers) {
+                for (_i = 0, _Object$keys = Object.keys(additionalHeaders.headers); _i < _Object$keys.length; _i++) {
+                  key = _Object$keys[_i];
+                  headers[key] = JSON.stringify(additionalHeaders.headers[key]);
+                }
+              }
               loginWithEmailAndPassword({
                 data: data,
-                files: data.files
+                files: data.files,
+                headers: headers
               });
-            case 1:
+            case 3:
             case "end":
               return _context.stop();
           }
@@ -18078,7 +18099,10 @@ var useForgotPassword = function useForgotPassword(_ref) {
       return string;
     } : _ref$translate,
     _ref$notificationDura = _ref.notificationDuration,
-    notificationDuration = _ref$notificationDura === void 0 ? 10000 : _ref$notificationDura;
+    notificationDuration = _ref$notificationDura === void 0 ? 10000 : _ref$notificationDura,
+    _ref$AdditionalHeader = _ref.AdditionalHeadersContext,
+    AdditionalHeadersContext = _ref$AdditionalHeader === void 0 ? /*#__PURE__*/React.createContext(null) : _ref$AdditionalHeader;
+  var additionalHeaders = React.useContext(AdditionalHeadersContext);
   var router = useRouter();
   var inputs = React.useMemo(function () {
     return [{
@@ -18106,17 +18130,26 @@ var useForgotPassword = function useForgotPassword(_ref) {
   }
   function _onSubmit() {
     _onSubmit = _asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(data) {
+      var headers, _i, _Object$keys, key;
       return regenerator.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
+              headers = {};
+              if (additionalHeaders !== null && additionalHeaders !== void 0 && additionalHeaders.headers) {
+                for (_i = 0, _Object$keys = Object.keys(additionalHeaders.headers); _i < _Object$keys.length; _i++) {
+                  key = _Object$keys[_i];
+                  headers[key] = JSON.stringify(additionalHeaders.headers[key]);
+                }
+              }
               // console.log(`🚀 ~ onSubmit ~ data`, data);
 
               forgotPassword({
                 data: data,
-                files: data.files
+                files: data.files,
+                headers: headers
               });
-            case 1:
+            case 3:
             case "end":
               return _context.stop();
           }
@@ -18161,7 +18194,10 @@ var useResetPassword = function useResetPassword(_ref) {
       return string;
     } : _ref$translate,
     _ref$notificationDura = _ref.notificationDuration,
-    notificationDuration = _ref$notificationDura === void 0 ? 10000 : _ref$notificationDura;
+    notificationDuration = _ref$notificationDura === void 0 ? 10000 : _ref$notificationDura,
+    _ref$AdditionalHeader = _ref.AdditionalHeadersContext,
+    AdditionalHeadersContext = _ref$AdditionalHeader === void 0 ? /*#__PURE__*/React.createContext(null) : _ref$AdditionalHeader;
+  var additionalHeaders = React.useContext(AdditionalHeadersContext);
   var dispatch = useDispatch();
   var router = useRouter();
   React.useEffect(function () {
@@ -18214,17 +18250,24 @@ var useResetPassword = function useResetPassword(_ref) {
   }
   function _onSubmit() {
     _onSubmit = _asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(data) {
+      var headers, _i, _Object$keys, key;
       return regenerator.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              // console.log(`🚀 ~ onSubmit ~ data`, data);
-
+              headers = {};
+              if (additionalHeaders !== null && additionalHeaders !== void 0 && additionalHeaders.headers) {
+                for (_i = 0, _Object$keys = Object.keys(additionalHeaders.headers); _i < _Object$keys.length; _i++) {
+                  key = _Object$keys[_i];
+                  headers[key] = JSON.stringify(additionalHeaders.headers[key]);
+                }
+              }
               resetPassword({
                 data: data,
-                files: data.files
+                files: data.files,
+                headers: headers
               });
-            case 1:
+            case 3:
             case "end":
               return _context.stop();
           }
@@ -18339,7 +18382,10 @@ var useConfirmEmail = function useConfirmEmail(_ref) {
       return string;
     } : _ref$translate,
     _ref$notificationDura = _ref.notificationDuration,
-    notificationDuration = _ref$notificationDura === void 0 ? 10000 : _ref$notificationDura;
+    notificationDuration = _ref$notificationDura === void 0 ? 10000 : _ref$notificationDura,
+    _ref$AdditionalHeader = _ref.AdditionalHeadersContext,
+    AdditionalHeadersContext = _ref$AdditionalHeader === void 0 ? /*#__PURE__*/React.createContext(null) : _ref$AdditionalHeader;
+  var additionalHeaders = React.useContext(AdditionalHeadersContext);
   var router = useRouter();
   var user = useSelector(function (state) {
     var _state$auth;
@@ -18447,7 +18493,7 @@ var useConfirmEmail = function useConfirmEmail(_ref) {
   }
   function _onSubmit() {
     _onSubmit = _asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(data) {
-      var headers;
+      var headers, _i, _Object$keys, key;
       return regenerator.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
@@ -18458,11 +18504,17 @@ var useConfirmEmail = function useConfirmEmail(_ref) {
                   "Next-Auth-Factor-Key": user.nextAuthFactorKey
                 };
               }
+              if (additionalHeaders !== null && additionalHeaders !== void 0 && additionalHeaders.headers) {
+                for (_i = 0, _Object$keys = Object.keys(additionalHeaders.headers); _i < _Object$keys.length; _i++) {
+                  key = _Object$keys[_i];
+                  headers[key] = JSON.stringify(additionalHeaders.headers[key]);
+                }
+              }
               confirmEmail({
                 data: data,
                 headers: headers
               });
-            case 3:
+            case 4:
             case "end":
               return _context.stop();
           }
@@ -18600,8 +18652,11 @@ var useConfirmPhone = function useConfirmPhone(_ref) {
       return string;
     } : _ref$translate,
     _ref$notificationDura = _ref.notificationDuration,
-    notificationDuration = _ref$notificationDura === void 0 ? 10000 : _ref$notificationDura;
+    notificationDuration = _ref$notificationDura === void 0 ? 10000 : _ref$notificationDura,
+    _ref$AdditionalHeader = _ref.AdditionalHeadersContext,
+    AdditionalHeadersContext = _ref$AdditionalHeader === void 0 ? /*#__PURE__*/React.createContext(null) : _ref$AdditionalHeader;
   var router = useRouter();
+  var additionalHeaders = React.useContext(AdditionalHeadersContext);
   var user = useSelector(function (state) {
     var _state$auth;
     return (_state$auth = state.auth) === null || _state$auth === void 0 ? void 0 : _state$auth.user;
@@ -18707,7 +18762,7 @@ var useConfirmPhone = function useConfirmPhone(_ref) {
   }
   function _onSubmit() {
     _onSubmit = _asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(data) {
-      var headers;
+      var headers, _i, _Object$keys, key;
       return regenerator.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
@@ -18718,11 +18773,17 @@ var useConfirmPhone = function useConfirmPhone(_ref) {
                   "Next-Auth-Factor-Key": user.nextAuthFactorKey
                 };
               }
+              if (additionalHeaders !== null && additionalHeaders !== void 0 && additionalHeaders.headers) {
+                for (_i = 0, _Object$keys = Object.keys(additionalHeaders.headers); _i < _Object$keys.length; _i++) {
+                  key = _Object$keys[_i];
+                  headers[key] = JSON.stringify(additionalHeaders.headers[key]);
+                }
+              }
               confirmPhone({
                 data: data,
                 headers: headers
               });
-            case 3:
+            case 4:
             case "end":
               return _context.stop();
           }
@@ -18860,7 +18921,10 @@ var useUpdateMe = function useUpdateMe(_ref) {
       return string;
     } : _ref$translate,
     _ref$notificationDura = _ref.notificationDuration,
-    notificationDuration = _ref$notificationDura === void 0 ? 10000 : _ref$notificationDura;
+    notificationDuration = _ref$notificationDura === void 0 ? 10000 : _ref$notificationDura,
+    _ref$AdditionalHeader = _ref.AdditionalHeadersContext,
+    AdditionalHeadersContext = _ref$AdditionalHeader === void 0 ? /*#__PURE__*/React.createContext(null) : _ref$AdditionalHeader;
+  var additionalHeaders = React.useContext(AdditionalHeadersContext);
   var accountId = useSelector(selectors.selectAccountId); //?
   var _profilesApi$useUpdat = profilesApi.useUpdateMeMutation(),
     _profilesApi$useUpdat2 = _slicedToArray(_profilesApi$useUpdat, 2),
@@ -18888,16 +18952,25 @@ var useUpdateMe = function useUpdateMe(_ref) {
   }
   function _onSubmit() {
     _onSubmit = _asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(data) {
+      var headers, _i, _Object$keys, key;
       return regenerator.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
+              headers = {};
+              if (additionalHeaders !== null && additionalHeaders !== void 0 && additionalHeaders.headers) {
+                for (_i = 0, _Object$keys = Object.keys(additionalHeaders.headers); _i < _Object$keys.length; _i++) {
+                  key = _Object$keys[_i];
+                  headers[key] = JSON.stringify(additionalHeaders.headers[key]);
+                }
+              }
               updateMe({
                 id: accountId,
                 data: data,
-                files: data.files
+                files: data.files,
+                headers: headers
               });
-            case 1:
+            case 3:
             case "end":
               return _context.stop();
           }
@@ -18966,7 +19039,10 @@ var useSetOtp = function useSetOtp(_ref) {
       return string;
     } : _ref$translate,
     _ref$notificationDura = _ref.notificationDuration,
-    notificationDuration = _ref$notificationDura === void 0 ? 10000 : _ref$notificationDura;
+    notificationDuration = _ref$notificationDura === void 0 ? 10000 : _ref$notificationDura,
+    _ref$AdditionalHeader = _ref.AdditionalHeadersContext,
+    AdditionalHeadersContext = _ref$AdditionalHeader === void 0 ? /*#__PURE__*/React.createContext(null) : _ref$AdditionalHeader;
+  var additionalHeaders = React.useContext(AdditionalHeadersContext);
   var accountId = useSelector(selectors.selectAccountId); //?
   var generateOtpSecretResult = profilesApi.useGenerateOtpSecretQuery({
     id: accountId
@@ -19023,16 +19099,25 @@ var useSetOtp = function useSetOtp(_ref) {
   }
   function _onSubmit() {
     _onSubmit = _asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(data) {
+      var headers, _i, _Object$keys, key;
       return regenerator.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
+              headers = {};
+              if (additionalHeaders !== null && additionalHeaders !== void 0 && additionalHeaders.headers) {
+                for (_i = 0, _Object$keys = Object.keys(additionalHeaders.headers); _i < _Object$keys.length; _i++) {
+                  key = _Object$keys[_i];
+                  headers[key] = JSON.stringify(additionalHeaders.headers[key]);
+                }
+              }
               setOtp({
                 id: accountId,
                 data: data,
-                files: data.files
+                files: data.files,
+                headers: headers
               });
-            case 1:
+            case 3:
             case "end":
               return _context.stop();
           }
@@ -19071,7 +19156,10 @@ var useDeleteOtp = function useDeleteOtp(_ref) {
       return string;
     } : _ref$translate,
     _ref$notificationDura = _ref.notificationDuration,
-    notificationDuration = _ref$notificationDura === void 0 ? 10000 : _ref$notificationDura;
+    notificationDuration = _ref$notificationDura === void 0 ? 10000 : _ref$notificationDura,
+    _ref$AdditionalHeader = _ref.AdditionalHeadersContext,
+    AdditionalHeadersContext = _ref$AdditionalHeader === void 0 ? /*#__PURE__*/React.createContext(null) : _ref$AdditionalHeader;
+  var additionalHeaders = React.useContext(AdditionalHeadersContext);
   var accountId = useSelector(selectors.selectAccountId); //?
   var _profilesApi$useDelet = profilesApi.useDeleteOtpMutation({}),
     _profilesApi$useDelet2 = _slicedToArray(_profilesApi$useDelet, 2),
@@ -19105,15 +19193,24 @@ var useDeleteOtp = function useDeleteOtp(_ref) {
   }
   function _onSubmit() {
     _onSubmit = _asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(data) {
+      var headers, _i, _Object$keys, key;
       return regenerator.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
+              headers = {};
+              if (additionalHeaders !== null && additionalHeaders !== void 0 && additionalHeaders.headers) {
+                for (_i = 0, _Object$keys = Object.keys(additionalHeaders.headers); _i < _Object$keys.length; _i++) {
+                  key = _Object$keys[_i];
+                  headers[key] = JSON.stringify(additionalHeaders.headers[key]);
+                }
+              }
               deleteOtp({
                 id: accountId,
-                data: data
+                data: data,
+                headers: headers
               });
-            case 1:
+            case 3:
             case "end":
               return _context.stop();
           }
@@ -19153,7 +19250,10 @@ var useCheckOtp = function useCheckOtp(_ref) {
       return string;
     } : _ref$translate,
     _ref$notificationDura = _ref.notificationDuration,
-    notificationDuration = _ref$notificationDura === void 0 ? 10000 : _ref$notificationDura;
+    notificationDuration = _ref$notificationDura === void 0 ? 10000 : _ref$notificationDura,
+    _ref$AdditionalHeader = _ref.AdditionalHeadersContext,
+    AdditionalHeadersContext = _ref$AdditionalHeader === void 0 ? /*#__PURE__*/React.createContext(null) : _ref$AdditionalHeader;
+  var additionalHeaders = React.useContext(AdditionalHeadersContext);
   var router = useRouter();
   var user = useSelector(function (state) {
     var _state$auth;
@@ -19186,7 +19286,7 @@ var useCheckOtp = function useCheckOtp(_ref) {
   }
   function _onSubmit() {
     _onSubmit = _asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(data) {
-      var headers;
+      var headers, _i, _Object$keys, key;
       return regenerator.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
@@ -19198,12 +19298,18 @@ var useCheckOtp = function useCheckOtp(_ref) {
                   "Next-Auth-Factor-Key": user.nextAuthFactorKey
                 };
               }
+              if (additionalHeaders !== null && additionalHeaders !== void 0 && additionalHeaders.headers) {
+                for (_i = 0, _Object$keys = Object.keys(additionalHeaders.headers); _i < _Object$keys.length; _i++) {
+                  key = _Object$keys[_i];
+                  headers[key] = JSON.stringify(additionalHeaders.headers[key]);
+                }
+              }
               checkOtp({
                 id: user.id,
                 data: data,
                 headers: headers
               });
-            case 3:
+            case 4:
             case "end":
               return _context.stop();
           }
@@ -19249,7 +19355,10 @@ var useChangePassword = function useChangePassword(_ref) {
     _ref$translate = _ref.translate,
     translate = _ref$translate === void 0 ? function (string) {
       return string;
-    } : _ref$translate;
+    } : _ref$translate,
+    _ref$AdditionalHeader = _ref.AdditionalHeadersContext,
+    AdditionalHeadersContext = _ref$AdditionalHeader === void 0 ? /*#__PURE__*/React.createContext(null) : _ref$AdditionalHeader;
+  var additionalHeaders = React.useContext(AdditionalHeadersContext);
   var _profilesApi$useChang = profilesApi.useChangePasswordMutation({}),
     _profilesApi$useChang2 = _slicedToArray(_profilesApi$useChang, 2),
     changePassword = _profilesApi$useChang2[0],
@@ -19315,14 +19424,23 @@ var useChangePassword = function useChangePassword(_ref) {
   }
   function _onSubmit() {
     _onSubmit = _asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(data) {
+      var headers, _i, _Object$keys, key;
       return regenerator.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
+              headers = {};
+              if (additionalHeaders !== null && additionalHeaders !== void 0 && additionalHeaders.headers) {
+                for (_i = 0, _Object$keys = Object.keys(additionalHeaders.headers); _i < _Object$keys.length; _i++) {
+                  key = _Object$keys[_i];
+                  headers[key] = JSON.stringify(additionalHeaders.headers[key]);
+                }
+              }
               changePassword({
-                data: data
+                data: data,
+                headers: headers
               });
-            case 1:
+            case 3:
             case "end":
               return _context.stop();
           }
@@ -19362,8 +19480,11 @@ var useCheckFactors = function useCheckFactors(_ref) {
     _ref$translate = _ref.translate,
     translate = _ref$translate === void 0 ? function (string) {
       return string;
-    } : _ref$translate;
+    } : _ref$translate,
+    _ref$AdditionalHeader = _ref.AdditionalHeadersContext,
+    AdditionalHeadersContext = _ref$AdditionalHeader === void 0 ? /*#__PURE__*/React.createContext(null) : _ref$AdditionalHeader;
   var router = useRouter();
+  var additionalHeaders = React.useContext(AdditionalHeadersContext);
   var user = useSelector(function (state) {
     var _state$auth;
     return (_state$auth = state.auth) === null || _state$auth === void 0 ? void 0 : _state$auth.user;
@@ -19441,7 +19562,7 @@ var useCheckFactors = function useCheckFactors(_ref) {
   }
   function _onSubmit() {
     _onSubmit = _asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(data) {
-      var headers;
+      var headers, _i, _Object$keys, key;
       return regenerator.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
@@ -19452,12 +19573,18 @@ var useCheckFactors = function useCheckFactors(_ref) {
                   "Next-Auth-Factor-Key": user.nextAuthFactorKey
                 };
               }
+              if (additionalHeaders !== null && additionalHeaders !== void 0 && additionalHeaders.headers) {
+                for (_i = 0, _Object$keys = Object.keys(additionalHeaders.headers); _i < _Object$keys.length; _i++) {
+                  key = _Object$keys[_i];
+                  headers[key] = JSON.stringify(additionalHeaders.headers[key]);
+                }
+              }
               checkFactors({
                 data: data,
                 files: data.files,
                 headers: headers
               });
-            case 3:
+            case 4:
             case "end":
               return _context.stop();
           }
@@ -33750,7 +33877,6 @@ function createProfilesApi(backendServiceApi) {
             var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
             var headers = params.headers;
             var formData = prepareFormDataToSend(params);
-            console.log("\uD83D\uDE80 ~ createProfilesApi ~ params", params);
             return {
               url: "auth/check-factors",
               method: "POST",
@@ -33806,12 +33932,15 @@ function createProfilesApi(backendServiceApi) {
         }),
         updateMe: build.mutation({
           query: function query(params) {
-            var id = params.id; //?
+            var id = params.id,
+              _params$headers2 = params.headers,
+              headers = _params$headers2 === void 0 ? {} : _params$headers2; //?
 
             var formData = prepareFormDataToSend(params);
             return {
               url: "users/".concat(id),
               method: "PUT",
+              headers: headers,
               body: formData
             };
           },
@@ -33859,8 +33988,8 @@ function createProfilesApi(backendServiceApi) {
           query: function query(params) {
             var id = params.id,
               data = params.data,
-              _params$headers2 = params.headers,
-              headers = _params$headers2 === void 0 ? {} : _params$headers2;
+              _params$headers3 = params.headers,
+              headers = _params$headers3 === void 0 ? {} : _params$headers3;
             return {
               url: "users/".concat(id, "/otp"),
               params: _objectSpread$3({}, data),
