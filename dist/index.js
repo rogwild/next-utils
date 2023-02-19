@@ -17928,9 +17928,12 @@ var useRegister = function useRegister(_ref) {
   React.useEffect(function () {
     if (registrationResult !== null && registrationResult !== void 0 && registrationResult.isSuccess) {
       createNotification({
-        title: translate("Account succesfully registered"),
+        title: translate("Account succesfully created"),
         duration: notificationDuration
       });
+      if (additionalHeaders !== null && additionalHeaders !== void 0 && additionalHeaders.headers) {
+        additionalHeaders.setHeaders(null);
+      }
     }
   }, [registrationResult]);
   return {
@@ -18069,6 +18072,9 @@ var useLogin = function useLogin(_ref) {
     if (!data) {
       return;
     }
+    if (additionalHeaders !== null && additionalHeaders !== void 0 && additionalHeaders.headers) {
+      additionalHeaders.setHeaders(null);
+    }
     if (router !== null && router !== void 0 && router.push) {
       nextAuthHandler({
         router: router,
@@ -18160,11 +18166,12 @@ var useForgotPassword = function useForgotPassword(_ref) {
   }
   React.useEffect(function () {
     if (forgotPasswordResult !== null && forgotPasswordResult !== void 0 && forgotPasswordResult.isSuccess) {
-      if (createNotification) {
-        createNotification({
-          title: translate("Recovery link was sent to your email"),
-          duration: notificationDuration
-        });
+      createNotification({
+        title: translate("Recovery link was sent to your email"),
+        duration: notificationDuration
+      });
+      if (additionalHeaders !== null && additionalHeaders !== void 0 && additionalHeaders.headers) {
+        additionalHeaders.setHeaders(null);
       }
       router.push("/auth/login");
     }
@@ -18282,6 +18289,9 @@ var useResetPassword = function useResetPassword(_ref) {
         title: translate("New password was set"),
         duration: notificationDuration
       });
+      if (additionalHeaders !== null && additionalHeaders !== void 0 && additionalHeaders.headers) {
+        additionalHeaders.setHeaders(null);
+      }
       router.push("/auth/login");
     }
   }, [resetPasswordResult]);
@@ -18295,75 +18305,107 @@ var useResetPassword = function useResetPassword(_ref) {
 
 var useSendEmailConfirmation = function useSendEmailConfirmation(_ref) {
   var profilesApi = _ref.profilesApi,
-    _ref$inputsConfig = _ref.inputsConfig,
-    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$1 : _ref$inputsConfig,
+    _ref$ping = _ref.ping,
+    ping = _ref$ping === void 0 ? 30 : _ref$ping,
+    _ref$initialPing = _ref.initialPing,
+    initialPing = _ref$initialPing === void 0 ? 0 : _ref$initialPing;
+    _ref.useSelector;
+    var email = _ref.email,
     _ref$createNotificati = _ref.createNotification,
     createNotification = _ref$createNotificati === void 0 ? function () {
       return {};
     } : _ref$createNotificati,
-    _ref$inputPropsType = _ref.inputPropsType,
-    inputPropsType = _ref$inputPropsType === void 0 ? "object" : _ref$inputPropsType,
-    _ref$notificationDura = _ref.notificationDuration,
-    notificationDuration = _ref$notificationDura === void 0 ? 10000 : _ref$notificationDura,
     _ref$translate = _ref.translate,
     translate = _ref$translate === void 0 ? function (string) {
       return string;
-    } : _ref$translate;
+    } : _ref$translate,
+    _ref$notificationDura = _ref.notificationDuration,
+    notificationDuration = _ref$notificationDura === void 0 ? 10000 : _ref$notificationDura,
+    _ref$AdditionalHeader = _ref.AdditionalHeadersContext,
+    AdditionalHeadersContext = _ref$AdditionalHeader === void 0 ? /*#__PURE__*/React.createContext(null) : _ref$AdditionalHeader;
+  var additionalHeaders = React.useContext(AdditionalHeadersContext);
   var _profilesApi$useSendE = profilesApi.useSendEmailConfirmationMutation(),
     _profilesApi$useSendE2 = _slicedToArray(_profilesApi$useSendE, 2),
     sendEmailConfirmation = _profilesApi$useSendE2[0],
     result = _profilesApi$useSendE2[1];
-  var submitFunc = function submitFunc(_ref2) {
-    var inputs = _ref2.inputs,
-      files = _ref2.files;
-    sendEmailConfirmation({
-      data: inputs,
-      files: files
-    });
-  };
-  var memoInputsConfig = React.useMemo(function () {
-    return inputsConfig;
-  }, [inputsConfig]);
-  var _useForm = useForm({
-      inputsConfig: memoInputsConfig,
-      submitFunc: submitFunc,
-      inputPropsType: inputPropsType
-    }),
-    inputs = _useForm.inputs,
-    inputsErrors = _useForm.errors,
-    inputsValues = _useForm.inputsValues,
-    onSubmit = _useForm.onSubmit,
-    inputsSetErrors = _useForm.setErrors;
+  var _useState = React.useState(initialPing),
+    counter = _useState[0],
+    setCounter = _useState[1];
+  React.useEffect(function () {
+    if (counter > 0) {
+      var timer = setInterval(function () {
+        return setCounter(counter - 1);
+      }, 1000);
+      return function () {
+        return clearInterval(timer);
+      };
+    }
+  }, [counter]);
+  function onSubmit() {
+    return _onSubmit.apply(this, arguments);
+  }
+  function _onSubmit() {
+    _onSubmit = _asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
+      var headers, _i, _Object$keys, key;
+      return regenerator.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              if (!(counter > 0)) {
+                _context.next = 2;
+                break;
+              }
+              return _context.abrupt("return");
+            case 2:
+              if (email) {
+                _context.next = 5;
+                break;
+              }
+              console.error("Pass email for resending code");
+              return _context.abrupt("return");
+            case 5:
+              headers = {};
+              if (additionalHeaders !== null && additionalHeaders !== void 0 && additionalHeaders.headers) {
+                for (_i = 0, _Object$keys = Object.keys(additionalHeaders.headers); _i < _Object$keys.length; _i++) {
+                  key = _Object$keys[_i];
+                  headers[key] = JSON.stringify(additionalHeaders.headers[key]);
+                }
+              }
+              sendEmailConfirmation({
+                data: {
+                  email: email
+                },
+                headers: headers
+              });
+            case 8:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+    return _onSubmit.apply(this, arguments);
+  }
   React.useEffect(function () {
     if (result !== null && result !== void 0 && result.isSuccess) {
       createNotification({
         title: translate("Code was sent to your email"),
         duration: notificationDuration
       });
+      setCounter(ping);
     }
   }, [result]);
   return {
-    inputs: inputs,
-    inputsErrors: inputsErrors,
-    inputsSetErrors: inputsSetErrors,
-    inputsValues: inputsValues,
-    onSubmit: onSubmit,
+    counter: counter,
+    submitFunction: onSubmit,
     result: result
   };
 };
-var defaultInputsConfig$1 = [{
-  label: "Email",
-  field: "email",
-  checkerFuncs: ["checkRequiredField", "checkEmailMask"],
-  type: "email",
-  id: "email",
-  placeholder: "Type your email"
-}];
 
 var useConfirmEmail = function useConfirmEmail(_ref) {
   var profilesApi = _ref.profilesApi,
     _ref$ping = _ref.ping,
-    ping = _ref$ping === void 0 ? 30 : _ref$ping,
+    ping = _ref$ping === void 0 ? 10 : _ref$ping,
     _ref$initialPing = _ref.initialPing,
     initialPing = _ref$initialPing === void 0 ? 0 : _ref$initialPing,
     _ref$resendOnMount = _ref.resendOnMount,
@@ -18391,13 +18433,27 @@ var useConfirmEmail = function useConfirmEmail(_ref) {
     var _state$auth;
     return (_state$auth = state.auth) === null || _state$auth === void 0 ? void 0 : _state$auth.user;
   }); //?
-
-  var _useState = React.useState(!resendOnMount),
-    onMountEmailWasSent = _useState[0],
-    setOnMountEmailWasSent = _useState[1];
-  var _useState2 = React.useState(initialPing),
-    counter = _useState2[0],
-    setCounter = _useState2[1];
+  var _useState = React.useState(),
+    email = _useState[0],
+    setEmail = _useState[1];
+  var _useSendEmailConfirma = useSendEmailConfirmation({
+      profilesApi: profilesApi,
+      ping: ping,
+      initialPing: initialPing,
+      useSelector: useSelector,
+      email: email,
+      useRouter: useRouter,
+      createNotification: createNotification,
+      translate: translate,
+      notificationDuration: notificationDuration,
+      AdditionalHeadersContext: AdditionalHeadersContext
+    }),
+    counter = _useSendEmailConfirma.counter,
+    sendEmailConfirmation = _useSendEmailConfirma.submitFunction,
+    resendResult = _useSendEmailConfirma.result;
+  var _useState2 = React.useState(!resendOnMount),
+    onMountEmailWasSent = _useState2[0],
+    setOnMountEmailWasSent = _useState2[1];
   var inputs = React.useMemo(function () {
     return [{
       type: "text",
@@ -18414,56 +18470,26 @@ var useConfirmEmail = function useConfirmEmail(_ref) {
     _profilesApi$useConfi2 = _slicedToArray(_profilesApi$useConfi, 2),
     confirmEmail = _profilesApi$useConfi2[0],
     confirmEmailResult = _profilesApi$useConfi2[1];
-  var _profilesApi$useSendE = profilesApi.useSendEmailConfirmationMutation(),
-    _profilesApi$useSendE2 = _slicedToArray(_profilesApi$useSendE, 2),
-    sendEmailConfirmation = _profilesApi$useSendE2[0],
-    resendResult = _profilesApi$useSendE2[1];
   var methods = reactHookForm.useForm({
     mode: "all"
   });
-  var watch = methods.watch,
-    setError = methods.setError,
-    setValue = methods.setValue,
+  var watch = methods.watch;
+    methods.setError;
+    var setValue = methods.setValue,
     handleSubmit = methods.handleSubmit;
   var watchData = watch();
   React.useEffect(function () {
-    if (counter > 0) {
-      var timer = setInterval(function () {
-        return setCounter(counter - 1);
-      }, 1000);
-      return function () {
-        return clearInterval(timer);
-      };
-    }
-  }, [counter]);
-  React.useEffect(function () {
     if ((!watchData.email || watchData.email === "") && user !== null && user !== void 0 && user.email) {
       setValue("email", user.email);
+      setEmail(user.email);
     }
   }, [user, watchData]);
   React.useEffect(function () {
     if (resendOnMount && !onMountEmailWasSent && watchData !== null && watchData !== void 0 && watchData.email) {
-      resend();
+      sendEmailConfirmation();
       setOnMountEmailWasSent(true);
     }
   }, [watchData === null || watchData === void 0 ? void 0 : watchData.email, onMountEmailWasSent]);
-  var resend = React.useCallback(function () {
-    if (!watchData.email) {
-      console.error("Pass email for resending code");
-      setError("email", {
-        type: "required",
-        message: "Empty email address"
-      });
-      return;
-    }
-    setCounter(ping);
-    setOnMountEmailWasSent(true);
-    sendEmailConfirmation({
-      data: {
-        email: watchData.email
-      }
-    });
-  }, [watchData === null || watchData === void 0 ? void 0 : watchData.email]);
   React.useEffect(function () {
     if (user) {
       if (user.email) {
@@ -18475,19 +18501,18 @@ var useConfirmEmail = function useConfirmEmail(_ref) {
     if (typeof window !== "undefined") {
       var _URLSearchParams, _window, _window$location, _URLSearchParams2, _window2, _window2$location;
       var code = (_URLSearchParams = new URLSearchParams((_window = window) === null || _window === void 0 ? void 0 : (_window$location = _window.location) === null || _window$location === void 0 ? void 0 : _window$location.search)) === null || _URLSearchParams === void 0 ? void 0 : _URLSearchParams.get("code");
-      var email = (_URLSearchParams2 = new URLSearchParams((_window2 = window) === null || _window2 === void 0 ? void 0 : (_window2$location = _window2.location) === null || _window2$location === void 0 ? void 0 : _window2$location.search)) === null || _URLSearchParams2 === void 0 ? void 0 : _URLSearchParams2.get("email");
+      var _email = (_URLSearchParams2 = new URLSearchParams((_window2 = window) === null || _window2 === void 0 ? void 0 : (_window2$location = _window2.location) === null || _window2$location === void 0 ? void 0 : _window2$location.search)) === null || _URLSearchParams2 === void 0 ? void 0 : _URLSearchParams2.get("email");
       if (code) {
         setValue("code", code);
       }
-      if (email) {
-        setValue("email", email);
+      if (_email) {
+        setValue("email", _email);
       }
     }
   }, [user]);
   React.useEffect(function () {
     // console.log(`🚀 ~ useEffect ~ watchData`, watchData);
   }, [watchData]);
-  console.log("\uD83D\uDE80 ~ onSubmit ~ user", user);
   function onSubmit(_x) {
     return _onSubmit.apply(this, arguments);
   }
@@ -18540,17 +18565,9 @@ var useConfirmEmail = function useConfirmEmail(_ref) {
       });
     }
   }, [confirmEmailResult, router]);
-  React.useEffect(function () {
-    if (resendResult !== null && resendResult !== void 0 && resendResult.isSuccess) {
-      createNotification({
-        title: translate("Code was sent to your email"),
-        duration: notificationDuration
-      });
-    }
-  }, [resendResult]);
   return {
     counter: counter,
-    resend: resend,
+    resend: sendEmailConfirmation,
     resendResult: resendResult,
     submitFunction: handleSubmit(onSubmit),
     confirmEmailResult: confirmEmailResult,
@@ -18561,74 +18578,102 @@ var useConfirmEmail = function useConfirmEmail(_ref) {
 
 var useSendPhoneConfirmation = function useSendPhoneConfirmation(_ref) {
   var profilesApi = _ref.profilesApi,
-    _ref$inputsConfig = _ref.inputsConfig,
-    inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig : _ref$inputsConfig,
-    _ref$inputPropsType = _ref.inputPropsType,
-    inputPropsType = _ref$inputPropsType === void 0 ? "object" : _ref$inputPropsType,
+    _ref$ping = _ref.ping,
+    ping = _ref$ping === void 0 ? 30 : _ref$ping,
+    _ref$initialPing = _ref.initialPing,
+    initialPing = _ref$initialPing === void 0 ? 0 : _ref$initialPing;
+    _ref.useSelector;
+    var phone = _ref.phone,
     _ref$createNotificati = _ref.createNotification,
     createNotification = _ref$createNotificati === void 0 ? function () {
       return {};
     } : _ref$createNotificati,
+    _ref$translate = _ref.translate,
+    translate = _ref$translate === void 0 ? function (string) {
+      return string;
+    } : _ref$translate,
     _ref$notificationDura = _ref.notificationDuration,
-    notificationDuration = _ref$notificationDura === void 0 ? 10000 : _ref$notificationDura;
-    _ref.translate;
+    notificationDuration = _ref$notificationDura === void 0 ? 10000 : _ref$notificationDura,
+    _ref$AdditionalHeader = _ref.AdditionalHeadersContext,
+    AdditionalHeadersContext = _ref$AdditionalHeader === void 0 ? /*#__PURE__*/React.createContext(null) : _ref$AdditionalHeader;
+  var additionalHeaders = React.useContext(AdditionalHeadersContext);
   var _profilesApi$useSendP = profilesApi.useSendPhoneConfirmationMutation(),
     _profilesApi$useSendP2 = _slicedToArray(_profilesApi$useSendP, 2),
     sendPhoneConfirmation = _profilesApi$useSendP2[0],
-    _profilesApi$useSendP3 = _profilesApi$useSendP2[1],
-    error = _profilesApi$useSendP3.error,
-    isLoading = _profilesApi$useSendP3.isLoading,
-    isSuccess = _profilesApi$useSendP3.isSuccess,
-    data = _profilesApi$useSendP3.data;
-  var submitFunc = function submitFunc(_ref2) {
-    var inputs = _ref2.inputs,
-      files = _ref2.files;
-    sendPhoneConfirmation({
-      data: inputs,
-      files: files
-    });
-  };
-  var memoInputsConfig = React.useMemo(function () {
-    return inputsConfig;
-  }, [inputsConfig]);
-  var _useForm = useForm({
-      inputsConfig: memoInputsConfig,
-      submitFunc: submitFunc,
-      inputPropsType: inputPropsType
-    }),
-    inputs = _useForm.inputs,
-    inputsErrors = _useForm.errors,
-    inputsValues = _useForm.inputsValues,
-    onSubmit = _useForm.onSubmit,
-    inputsSetErrors = _useForm.setErrors;
+    result = _profilesApi$useSendP2[1];
+  var _useState = React.useState(initialPing),
+    counter = _useState[0],
+    setCounter = _useState[1];
   React.useEffect(function () {
-    if (isSuccess) {
+    if (counter > 0) {
+      var timer = setInterval(function () {
+        return setCounter(counter - 1);
+      }, 1000);
+      return function () {
+        return clearInterval(timer);
+      };
+    }
+  }, [counter]);
+  function onSubmit() {
+    return _onSubmit.apply(this, arguments);
+  }
+  function _onSubmit() {
+    _onSubmit = _asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
+      var headers, _i, _Object$keys, key;
+      return regenerator.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              if (!(counter > 0)) {
+                _context.next = 2;
+                break;
+              }
+              return _context.abrupt("return");
+            case 2:
+              if (phone) {
+                _context.next = 5;
+                break;
+              }
+              console.error("Pass phone for resending code");
+              return _context.abrupt("return");
+            case 5:
+              headers = {};
+              if (additionalHeaders !== null && additionalHeaders !== void 0 && additionalHeaders.headers) {
+                for (_i = 0, _Object$keys = Object.keys(additionalHeaders.headers); _i < _Object$keys.length; _i++) {
+                  key = _Object$keys[_i];
+                  headers[key] = JSON.stringify(additionalHeaders.headers[key]);
+                }
+              }
+              sendPhoneConfirmation({
+                data: {
+                  phone: phone
+                },
+                headers: headers
+              });
+            case 8:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+    return _onSubmit.apply(this, arguments);
+  }
+  React.useEffect(function () {
+    if (result !== null && result !== void 0 && result.isSuccess) {
       createNotification({
-        title: "Code was sent to your phone",
+        title: translate("Code was sent to your phone"),
         duration: notificationDuration
       });
+      setCounter(ping);
     }
-  }, [isSuccess]);
+  }, [result]);
   return {
-    inputs: inputs,
-    inputsErrors: inputsErrors,
-    inputsSetErrors: inputsSetErrors,
-    error: error,
-    inputsValues: inputsValues,
-    onSubmit: onSubmit,
-    isLoading: isLoading,
-    isSuccess: isSuccess,
-    data: data
+    counter: counter,
+    submitFunction: onSubmit,
+    result: result
   };
 };
-var defaultInputsConfig = [{
-  label: "Phone",
-  field: "phone_number",
-  checkerFuncs: ["checkRequiredField"],
-  type: "text",
-  id: "phone",
-  placeholder: "Type your phone"
-}];
 
 var useConfirmPhone = function useConfirmPhone(_ref) {
   var profilesApi = _ref.profilesApi,
@@ -18661,13 +18706,27 @@ var useConfirmPhone = function useConfirmPhone(_ref) {
     var _state$auth;
     return (_state$auth = state.auth) === null || _state$auth === void 0 ? void 0 : _state$auth.user;
   }); //?
-
-  var _useState = React.useState(!resendOnMount),
-    onMountPhoneWasSent = _useState[0],
-    setOnMountPhoneWasSent = _useState[1];
-  var _useState2 = React.useState(initialPing),
-    counter = _useState2[0],
-    setCounter = _useState2[1];
+  var _useState = React.useState(),
+    phone = _useState[0],
+    setPhone = _useState[1];
+  var _useSendPhoneConfirma = useSendPhoneConfirmation({
+      profilesApi: profilesApi,
+      ping: ping,
+      initialPing: initialPing,
+      useSelector: useSelector,
+      phone: phone,
+      useRouter: useRouter,
+      createNotification: createNotification,
+      translate: translate,
+      notificationDuration: notificationDuration,
+      AdditionalHeadersContext: AdditionalHeadersContext
+    }),
+    counter = _useSendPhoneConfirma.counter,
+    sendPhoneConfirmation = _useSendPhoneConfirma.submitFunction,
+    resendResult = _useSendPhoneConfirma.result;
+  var _useState2 = React.useState(!resendOnMount),
+    onMountPhoneWasSent = _useState2[0],
+    setOnMountPhoneWasSent = _useState2[1];
   var inputs = React.useMemo(function () {
     return [{
       type: "text",
@@ -18684,56 +18743,26 @@ var useConfirmPhone = function useConfirmPhone(_ref) {
     _profilesApi$useConfi2 = _slicedToArray(_profilesApi$useConfi, 2),
     confirmPhone = _profilesApi$useConfi2[0],
     confirmPhoneResult = _profilesApi$useConfi2[1];
-  var _profilesApi$useSendP = profilesApi.useSendPhoneConfirmationMutation(),
-    _profilesApi$useSendP2 = _slicedToArray(_profilesApi$useSendP, 2),
-    sendPhoneConfirmation = _profilesApi$useSendP2[0],
-    resendResult = _profilesApi$useSendP2[1];
   var methods = reactHookForm.useForm({
     mode: "all"
   });
-  var watch = methods.watch,
-    setError = methods.setError,
-    setValue = methods.setValue,
+  var watch = methods.watch;
+    methods.setError;
+    var setValue = methods.setValue,
     handleSubmit = methods.handleSubmit;
   var watchData = watch();
   React.useEffect(function () {
-    if (counter > 0) {
-      var timer = setInterval(function () {
-        return setCounter(counter - 1);
-      }, 1000);
-      return function () {
-        return clearInterval(timer);
-      };
-    }
-  }, [counter]);
-  React.useEffect(function () {
     if ((!watchData.phone || watchData.phone === "") && user !== null && user !== void 0 && user.phone) {
       setValue("phone", user.phone);
+      setPhone(user.phone);
     }
   }, [user, watchData]);
   React.useEffect(function () {
-    if (resendOnMount && !onMountPhoneWasSent && watchData !== null && watchData !== void 0 && watchData.phone) {
-      resend();
+    if (resendOnMount && !onMountPhoneWasSent && phone) {
+      sendPhoneConfirmation();
       setOnMountPhoneWasSent(true);
     }
   }, [watchData === null || watchData === void 0 ? void 0 : watchData.phone, onMountPhoneWasSent]);
-  var resend = React.useCallback(function () {
-    if (!watchData.phone) {
-      console.error("Pass phone for resending code");
-      setError("phone", {
-        type: "required",
-        message: "Empty phone address"
-      });
-      return;
-    }
-    setCounter(ping);
-    setOnMountPhoneWasSent(true);
-    sendPhoneConfirmation({
-      data: {
-        phone: watchData.phone
-      }
-    });
-  }, [watchData === null || watchData === void 0 ? void 0 : watchData.phone]);
   React.useEffect(function () {
     if (user) {
       if (user.phone) {
@@ -18745,12 +18774,12 @@ var useConfirmPhone = function useConfirmPhone(_ref) {
     if (typeof window !== "undefined") {
       var _URLSearchParams, _window, _window$location, _URLSearchParams2, _window2, _window2$location;
       var code = (_URLSearchParams = new URLSearchParams((_window = window) === null || _window === void 0 ? void 0 : (_window$location = _window.location) === null || _window$location === void 0 ? void 0 : _window$location.search)) === null || _URLSearchParams === void 0 ? void 0 : _URLSearchParams.get("code");
-      var phone = (_URLSearchParams2 = new URLSearchParams((_window2 = window) === null || _window2 === void 0 ? void 0 : (_window2$location = _window2.location) === null || _window2$location === void 0 ? void 0 : _window2$location.search)) === null || _URLSearchParams2 === void 0 ? void 0 : _URLSearchParams2.get("phone");
+      var _phone = (_URLSearchParams2 = new URLSearchParams((_window2 = window) === null || _window2 === void 0 ? void 0 : (_window2$location = _window2.location) === null || _window2$location === void 0 ? void 0 : _window2$location.search)) === null || _URLSearchParams2 === void 0 ? void 0 : _URLSearchParams2.get("phone");
       if (code) {
         setValue("code", code);
       }
-      if (phone) {
-        setValue("phone", phone);
+      if (_phone) {
+        setValue("phone", _phone);
       }
     }
   }, [user]);
@@ -18802,6 +18831,9 @@ var useConfirmPhone = function useConfirmPhone(_ref) {
       title: translate("Phone confirmed succesfully"),
       duration: notificationDuration
     });
+    if (additionalHeaders !== null && additionalHeaders !== void 0 && additionalHeaders.headers) {
+      additionalHeaders.setHeaders(null);
+    }
     if (router !== null && router !== void 0 && router.push) {
       nextAuthHandler({
         router: router,
@@ -18809,17 +18841,9 @@ var useConfirmPhone = function useConfirmPhone(_ref) {
       });
     }
   }, [confirmPhoneResult, router]);
-  React.useEffect(function () {
-    if (resendResult !== null && resendResult !== void 0 && resendResult.isSuccess) {
-      createNotification({
-        title: translate("Code was sent to your phone"),
-        duration: notificationDuration
-      });
-    }
-  }, [resendResult]);
   return {
     counter: counter,
-    resend: resend,
+    resend: sendPhoneConfirmation,
     resendResult: resendResult,
     submitFunction: handleSubmit(onSubmit),
     confirmPhoneResult: confirmPhoneResult,
@@ -18985,6 +19009,9 @@ var useUpdateMe = function useUpdateMe(_ref) {
         title: translate("Profile succesfully updated"),
         duration: notificationDuration
       });
+      if (additionalHeaders !== null && additionalHeaders !== void 0 && additionalHeaders.headers) {
+        additionalHeaders.setHeaders(null);
+      }
     }
   }, [updateMeResult]);
   return {
@@ -19225,6 +19252,9 @@ var useDeleteOtp = function useDeleteOtp(_ref) {
         title: translate("OTP succesfully deleted"),
         duration: notificationDuration
       });
+      if (additionalHeaders !== null && additionalHeaders !== void 0 && additionalHeaders.headers) {
+        additionalHeaders.setHeaders(null);
+      }
     }
   }, [deleteOtpResult]);
   return {
@@ -19327,6 +19357,9 @@ var useCheckOtp = function useCheckOtp(_ref) {
       title: translate("One-time-password authentification passed succesfully"),
       duration: notificationDuration
     });
+    if (additionalHeaders !== null && additionalHeaders !== void 0 && additionalHeaders.headers) {
+      additionalHeaders.setHeaders(null);
+    }
     if (router !== null && router !== void 0 && router.push) {
       nextAuthHandler({
         router: router,
@@ -19413,6 +19446,9 @@ var useChangePassword = function useChangePassword(_ref) {
         title: translate("Password was successfully changed"),
         duration: notificationDuration
       });
+      if (additionalHeaders !== null && additionalHeaders !== void 0 && additionalHeaders.headers) {
+        additionalHeaders.setHeaders(null);
+      }
     }
   }, [changePasswordResult]);
   var watchData = watch();
@@ -19605,6 +19641,9 @@ var useCheckFactors = function useCheckFactors(_ref) {
       title: translate("Multi factor authentification passed succesfully"),
       duration: notificationDuration
     });
+    if (additionalHeaders !== null && additionalHeaders !== void 0 && additionalHeaders.headers) {
+      additionalHeaders.setHeaders(null);
+    }
     if (router !== null && router !== void 0 && router.push) {
       nextAuthHandler({
         router: router,

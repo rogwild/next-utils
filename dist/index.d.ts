@@ -1,3 +1,4 @@
+/// <reference types="react" />
 import * as apiUtils from "./api";
 import * as formatters from "./formatters";
 import * as vanilla from "./vanilla";
@@ -6,34 +7,28 @@ declare const _default: {
     formatters: typeof formatters;
     vanilla: typeof vanilla;
     hooks: {
-        useSendEmailConfirmation: ({ profilesApi, inputsConfig, createNotification, inputPropsType, notificationDuration, translate, }: {
+        useSendEmailConfirmation: ({ profilesApi, ping, initialPing, useSelector, email, createNotification, translate, notificationDuration, AdditionalHeadersContext, }: {
             profilesApi: any;
-            inputsConfig?: {
-                label: string;
-                field: string;
-                checkerFuncs: string[];
-                type: string;
-                id: string;
-                placeholder: string;
-            }[];
+            ping?: number;
+            initialPing?: number;
+            useSelector: any;
+            email: any;
             createNotification?: () => {};
-            inputPropsType?: string;
-            notificationDuration?: number;
             translate?: (string: any) => any;
+            notificationDuration?: number;
+            AdditionalHeadersContext?: import("react").Context<any>;
         }) => {
-            inputs: {};
-            inputsErrors: {};
-            inputsSetErrors: import("react").Dispatch<import("react").SetStateAction<{}>>;
-            inputsValues: {};
-            onSubmit: (e: any, submitProps?: {}) => any;
+            counter: number;
+            submitFunction: () => Promise<void>;
             result: any;
         };
-        useForgotPassword: ({ profilesApi, createNotification, useRouter, translate, notificationDuration, }: {
+        useForgotPassword: ({ profilesApi, createNotification, useRouter, translate, notificationDuration, AdditionalHeadersContext, }: {
             profilesApi: any;
             createNotification?: () => {};
             useRouter?: () => {};
             translate?: (string: any) => any;
             notificationDuration?: number;
+            AdditionalHeadersContext?: import("react").Context<any>;
         }) => {
             inputs: {
                 name: string;
@@ -45,12 +40,13 @@ declare const _default: {
             submitFunction: (e?: import("react").BaseSyntheticEvent<object, any, any>) => Promise<void>;
             forgotPasswordResult: any;
         };
-        useLogin: ({ profilesApi, useRouter, createNotification, translate, notificationDuration, }: {
+        useLogin: ({ profilesApi, useRouter, createNotification, translate, notificationDuration, AdditionalHeadersContext, }: {
             profilesApi: any;
             useRouter?: () => {};
             createNotification?: () => {};
             translate?: (string: any) => any;
             notificationDuration?: number;
+            AdditionalHeadersContext?: import("react").Context<any>;
         }) => {
             inputs: ({
                 component: string;
@@ -69,12 +65,13 @@ declare const _default: {
             submitFunction: (e?: import("react").BaseSyntheticEvent<object, any, any>) => Promise<void>;
             loginWithEmailAndPasswordResult: any;
         };
-        useRegistration: ({ profilesApi, useRouter, createNotification, translate, notificationDuration, }: {
+        useRegistration: ({ profilesApi, useRouter, createNotification, translate, notificationDuration, AdditionalHeadersContext, }: {
             profilesApi: any;
             useRouter?: () => {};
             createNotification?: () => {};
             translate?: (string: any) => any;
             notificationDuration?: number;
+            AdditionalHeadersContext?: import("react").Context<any>;
         }) => {
             inputs: ({
                 component: string;
@@ -105,7 +102,7 @@ declare const _default: {
             submitFunction: (e?: import("react").BaseSyntheticEvent<object, any, any>) => Promise<void>;
             registrationResult: any;
         };
-        useResetPassword: ({ profilesApi, authSlice, useDispatch, useRouter, createNotification, translate, notificationDuration, }: {
+        useResetPassword: ({ profilesApi, authSlice, useDispatch, useRouter, createNotification, translate, notificationDuration, AdditionalHeadersContext, }: {
             profilesApi: any;
             authSlice: any;
             useDispatch: any;
@@ -113,6 +110,7 @@ declare const _default: {
             createNotification?: () => {};
             translate?: (string: any) => any;
             notificationDuration?: number;
+            AdditionalHeadersContext?: import("react").Context<any>;
         }) => {
             inputs: ({
                 label: string;
@@ -133,32 +131,22 @@ declare const _default: {
             submitFunction: (e?: import("react").BaseSyntheticEvent<object, any, any>) => Promise<void>;
             resetPasswordResult: any;
         };
-        useSendPhoneConfirmation: ({ profilesApi, inputsConfig, inputPropsType, createNotification, notificationDuration, translate, }: {
+        useSendPhoneConfirmation: ({ profilesApi, ping, initialPing, useSelector, phone, createNotification, translate, notificationDuration, AdditionalHeadersContext, }: {
             profilesApi: any;
-            inputsConfig?: {
-                label: string;
-                field: string;
-                checkerFuncs: string[];
-                type: string;
-                id: string;
-                placeholder: string;
-            }[];
-            inputPropsType?: string;
+            ping?: number;
+            initialPing?: number;
+            useSelector: any;
+            phone: any;
             createNotification?: () => {};
-            notificationDuration?: number;
             translate?: (string: any) => any;
+            notificationDuration?: number;
+            AdditionalHeadersContext?: import("react").Context<any>;
         }) => {
-            inputs: {};
-            inputsErrors: {};
-            inputsSetErrors: import("react").Dispatch<import("react").SetStateAction<{}>>;
-            error: any;
-            inputsValues: {};
-            onSubmit: (e: any, submitProps?: {}) => any;
-            isLoading: any;
-            isSuccess: any;
-            data: any;
+            counter: number;
+            submitFunction: () => Promise<void>;
+            result: any;
         };
-        useConfirmEmail: ({ profilesApi, ping, initialPing, resendOnMount, useSelector, useRouter, createNotification, translate, notificationDuration, }: {
+        useConfirmEmail: ({ profilesApi, ping, initialPing, resendOnMount, useSelector, useRouter, createNotification, translate, notificationDuration, AdditionalHeadersContext, }: {
             profilesApi: any;
             ping?: number;
             initialPing?: number;
@@ -168,9 +156,10 @@ declare const _default: {
             createNotification?: () => {};
             translate?: (string: any) => any;
             notificationDuration?: number;
+            AdditionalHeadersContext?: import("react").Context<any>;
         }) => {
             counter: number;
-            resend: () => void;
+            resend: () => Promise<void>;
             resendResult: any;
             submitFunction: (e?: import("react").BaseSyntheticEvent<object, any, any>) => Promise<void>;
             confirmEmailResult: any;
@@ -189,7 +178,7 @@ declare const _default: {
             })[];
             methods: import("react-hook-form").UseFormReturn<import("react-hook-form").FieldValues, any>;
         };
-        useConfirmPhone: ({ profilesApi, ping, initialPing, resendOnMount, useSelector, useRouter, createNotification, translate, notificationDuration, }: {
+        useConfirmPhone: ({ profilesApi, ping, initialPing, resendOnMount, useSelector, useRouter, createNotification, translate, notificationDuration, AdditionalHeadersContext, }: {
             profilesApi: any;
             ping?: number;
             initialPing?: number;
@@ -199,9 +188,10 @@ declare const _default: {
             createNotification?: () => {};
             translate?: (string: any) => any;
             notificationDuration?: number;
+            AdditionalHeadersContext?: import("react").Context<any>;
         }) => {
             counter: number;
-            resend: () => void;
+            resend: () => Promise<void>;
             resendResult: any;
             submitFunction: (e?: import("react").BaseSyntheticEvent<object, any, any>) => Promise<void>;
             confirmPhoneResult: any;
@@ -220,12 +210,13 @@ declare const _default: {
             })[];
             methods: import("react-hook-form").UseFormReturn<import("react-hook-form").FieldValues, any>;
         };
-        useUpdateMe: ({ profilesApi, useSelector, createNotification, translate, notificationDuration, }: {
+        useUpdateMe: ({ profilesApi, useSelector, createNotification, translate, notificationDuration, AdditionalHeadersContext, }: {
             profilesApi: any;
             useSelector: any;
             createNotification?: () => {};
             translate?: (string: any) => any;
             notificationDuration?: number;
+            AdditionalHeadersContext?: import("react").Context<any>;
         }) => {
             inputs: {
                 component: string;
@@ -241,12 +232,13 @@ declare const _default: {
             me: any;
             refetch: () => void;
         };
-        useSetOtp: ({ profilesApi, useSelector, createNotification, translate, notificationDuration, }: {
+        useSetOtp: ({ profilesApi, useSelector, createNotification, translate, notificationDuration, AdditionalHeadersContext, }: {
             profilesApi: any;
             useSelector: any;
             createNotification?: () => {};
             translate?: (string: any) => any;
             notificationDuration?: number;
+            AdditionalHeadersContext?: import("react").Context<any>;
         }) => {
             inputs: ({
                 component: string;
@@ -280,12 +272,13 @@ declare const _default: {
             setOtpResult: any;
             generateOtpSecretResult: any;
         };
-        useDeleteOtp: ({ profilesApi, createNotification, useSelector, translate, notificationDuration, }: {
+        useDeleteOtp: ({ profilesApi, createNotification, useSelector, translate, notificationDuration, AdditionalHeadersContext, }: {
             profilesApi: any;
             createNotification?: () => {};
             useSelector: any;
             translate?: (string: any) => any;
             notificationDuration?: number;
+            AdditionalHeadersContext?: import("react").Context<any>;
         }) => {
             inputs: {
                 component: string;
@@ -302,13 +295,14 @@ declare const _default: {
             methods: import("react-hook-form").UseFormReturn<import("react-hook-form").FieldValues, any>;
             submitFunction: (e?: import("react").BaseSyntheticEvent<object, any, any>) => Promise<void>;
         };
-        useCheckOtp: ({ profilesApi, useSelector, useRouter, createNotification, translate, notificationDuration, }: {
+        useCheckOtp: ({ profilesApi, useSelector, useRouter, createNotification, translate, notificationDuration, AdditionalHeadersContext, }: {
             profilesApi: any;
             useSelector: any;
             useRouter?: () => {};
             createNotification?: () => {};
             translate?: (string: any) => any;
             notificationDuration?: number;
+            AdditionalHeadersContext?: import("react").Context<any>;
         }) => {
             inputs: {
                 name: string;
@@ -320,11 +314,12 @@ declare const _default: {
             submitFunction: (e?: import("react").BaseSyntheticEvent<object, any, any>) => Promise<void>;
             checkOtpResult: any;
         };
-        useChangePassword: ({ profilesApi, createNotification, notificationDuration, translate, }: {
+        useChangePassword: ({ profilesApi, createNotification, notificationDuration, translate, AdditionalHeadersContext, }: {
             profilesApi: any;
             createNotification?: () => {};
             notificationDuration?: number;
             translate?: (string: any) => any;
+            AdditionalHeadersContext?: import("react").Context<any>;
         }) => {
             inputs: {
                 component: string;
@@ -343,7 +338,7 @@ declare const _default: {
             submitFunction: (e?: import("react").BaseSyntheticEvent<object, any, any>) => Promise<void>;
             changePasswordResult: any;
         };
-        useCheckFactors: ({ profilesApi, ping, initialPing, resendOnMount, useSelector, useRouter, createNotification, notificationDuration, translate, }: {
+        useCheckFactors: ({ profilesApi, ping, initialPing, resendOnMount, useSelector, useRouter, createNotification, notificationDuration, translate, AdditionalHeadersContext, }: {
             profilesApi: any;
             ping?: number;
             initialPing?: number;
@@ -353,6 +348,7 @@ declare const _default: {
             createNotification?: () => {};
             notificationDuration?: number;
             translate?: (string: any) => any;
+            AdditionalHeadersContext?: import("react").Context<any>;
         }) => {
             inputs: any[];
             methods: import("react-hook-form").UseFormReturn<import("react-hook-form").FieldValues, any>;
