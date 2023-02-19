@@ -17917,39 +17917,44 @@ function _createForOfIteratorHelper$1(o, allowArrayLike) { var it = typeof Symbo
 function _unsupportedIterableToArray$1(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray$1(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$1(o, minLen); }
 function _arrayLikeToArray$1(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 var nextAuthHandler = function nextAuthHandler(_ref) {
+  var _data$nextAuthFactor, _data$nextAuthFactor2, _data$nextAuthFactor3;
   var data = _ref.data,
     router = _ref.router;
-  if (Array.isArray(data.nextAuthFactor) && data.user) {
-    var user = data.user;
-    var _iterator = _createForOfIteratorHelper$1(data.nextAuthFactor),
-      _step;
-    try {
-      for (_iterator.s(); !(_step = _iterator.n()).done;) {
-        var authFactor = _step.value;
-        if (authFactor === "auth.emailConfirmation" && user.isEmailConfirmationEnabled) {
-          router.push("/auth/confirm-email");
-          return;
-        }
-        if (authFactor === "auth.phoneConfirmation" && user.isPhoneConfirmationEnabled) {
-          router === null || router === void 0 ? void 0 : router.push("/auth/confirm-phone");
-          return;
-        }
-        if (authFactor === "user.checkOtp" && user.isOtpConfirmationEnabled) {
-          router === null || router === void 0 ? void 0 : router.push("/auth/otp");
-          return;
+  if (data.user && data !== null && data !== void 0 && data.nextAuthFactor) {
+    if (data.nextAuthFactor.type === "one") {
+      if (Array.isArray(data.nextAuthFactor.handler)) {
+        var user = data.user;
+        var _iterator = _createForOfIteratorHelper$1(data.nextAuthFactor.handler),
+          _step;
+        try {
+          for (_iterator.s(); !(_step = _iterator.n()).done;) {
+            var authFactor = _step.value;
+            if (authFactor === "auth.emailConfirmation" && user.isEmailConfirmationEnabled) {
+              router.push("/auth/confirm-email");
+              return;
+            }
+            if (authFactor === "auth.phoneConfirmation" && user.isPhoneConfirmationEnabled) {
+              router === null || router === void 0 ? void 0 : router.push("/auth/confirm-phone");
+              return;
+            }
+            if (authFactor === "user.checkOtp" && user.isOtpConfirmationEnabled) {
+              router === null || router === void 0 ? void 0 : router.push("/auth/otp");
+              return;
+            }
+          }
+        } catch (err) {
+          _iterator.e(err);
+        } finally {
+          _iterator.f();
         }
       }
-    } catch (err) {
-      _iterator.e(err);
-    } finally {
-      _iterator.f();
     }
   }
-  if (data.nextAuthFactor === "auth.emailConfirmation") {
+  if ((data === null || data === void 0 ? void 0 : (_data$nextAuthFactor = data.nextAuthFactor) === null || _data$nextAuthFactor === void 0 ? void 0 : _data$nextAuthFactor.hander) === "auth.emailConfirmation") {
     router.push("/auth/confirm-email");
-  } else if (data.nextAuthFactor === "auth.phoneConfirmation") {
+  } else if ((data === null || data === void 0 ? void 0 : (_data$nextAuthFactor2 = data.nextAuthFactor) === null || _data$nextAuthFactor2 === void 0 ? void 0 : _data$nextAuthFactor2.hander) === "auth.phoneConfirmation") {
     router === null || router === void 0 ? void 0 : router.push("/auth/confirm-phone");
-  } else if (data.nextAuthFactor === "user.checkOtp") {
+  } else if ((data === null || data === void 0 ? void 0 : (_data$nextAuthFactor3 = data.nextAuthFactor) === null || _data$nextAuthFactor3 === void 0 ? void 0 : _data$nextAuthFactor3.hander) === "user.checkOtp") {
     router === null || router === void 0 ? void 0 : router.push("/auth/otp");
   }
 };
