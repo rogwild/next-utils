@@ -590,405 +590,6 @@ try {
   }
 }
 
-var _shortByFull;
-var fullByShort = {
-  "@prop": "@prop",
-  "@base": "@base",
-  "@anc": "@alignContent",
-  "@ani": "@alignItems",
-  "@ans": "@alignSelf",
-  "@an": "@animation",
-  "@ae": "@appearance",
-  "@bda": "@backgroundAttachment",
-  "@bdcp": "@backgroundClip",
-  "@bdc": "@backgroundColor",
-  "@bdi": "@backgroundImage",
-  "@bdo": "@backgroundOpacity",
-  "@bdp": "@backgroundPosition",
-  "@bdr": "@backgroundRepeat",
-  "@bds": "@backgroundSize",
-  "@brce": "@borderCollapse",
-  "@brc": "@borderColor",
-  "@bro": "@borderOpacity",
-  "@brr": "@borderRadius",
-  "@brs": "@borderStyle",
-  "@brw": "@borderWidth",
-  "@bxsw": "@boxShadow",
-  "@bxsg": "@boxSizing",
-  "@cr": "@cursor",
-  "@dy": "@display",
-  "@dec": "@divideColor",
-  "@deo": "@divideOpacity",
-  "@des": "@divideStyle",
-  "@dew": "@divideWidth",
-  "@fl": "@fill",
-  "@fx": "@flex",
-  "@fxsk": "@flexShrink",
-  "@fxd": "@flexDirection",
-  "@fxg": "@flexGrow",
-  "@fxs": "@flexShrink",
-  "@fxw": "@flexWrap",
-  "@ftf": "@fontFamily",
-  "@fts": "@fontSize",
-  "@ftsg": "@fontSmoothing",
-  "@ftse": "@fontStyle",
-  "@ftvn": "@fontVariantNumeric",
-  "@ftw": "@fontWeight",
-  "@gp": "@gap",
-  "@gtcs": "@gradientColorStops",
-  "@ht": "@height",
-  "@it": "@inset",
-  "@jyc": "@justifyContent",
-  "@jyi": "@justifyItems",
-  "@jys": "@justifySelf",
-  "@lrs": "@letterSpacing",
-  "@leh": "@lineHeight",
-  "@ltsp": "@listStylePosition",
-  "@ltst": "@listStyleType",
-  "@mn": "@margin",
-  "@mxh": "@maxHeight",
-  "@mxw": "@maxWidth",
-  "@mnh": "@minHeight",
-  "@mnw": "@minWidth",
-  "@otf": "@objectFit",
-  "@otp": "@objectPosition",
-  "@oy": "@opacity",
-  "@or": "@order",
-  "@oe": "@outline",
-  "@ow": "@overflow",
-  "@olb": "@overscrollBehavior",
-  "@pg": "@padding",
-  "@pec": "@placeContent",
-  "@pei": "@placeItems",
-  "@pes": "@placeSelf",
-  "@prc": "@placeholderColor",
-  "@pro": "@placeholderOpacity",
-  "@pre": "@pointerEvents",
-  "@pn": "@position",
-  "@rgc": "@ringColor",
-  "@rgoc": "@ringOffsetColor",
-  "@rgow": "@ringOffsetWidth",
-  "@rgo": "@ringOpacity",
-  "@rgw": "@ringWidth",
-  "@re": "@rotate",
-  "@sw": "@skew",
-  "@seb": "@spaceBetween",
-  "@se": "@stroke",
-  "@sew": "@strokeWidth",
-  "@tel": "@tableLayout",
-  "@th": "@touchAction",
-  "@tta": "@textAlign",
-  "@ttc": "@textColor",
-  "@ttd": "@textDecoration",
-  "@ttoy": "@textOpacity",
-  "@ttow": "@textOverflow",
-  "@ttt": "@textTransform",
-  "@tm": "@transform",
-  "@tmo": "@transformOrigin",
-  "@tndy": "@transitionDelay",
-  "@tndn": "@transitionDuration",
-  "@tnp": "@transitionProperty",
-  "@tntf": "@transitionTimingFunction",
-  "@te": "@translate",
-  "@urs": "@userSelect",
-  "@vla": "@verticalAlign",
-  "@vy": "@visibility",
-  "@we": "@whitespace",
-  "@wh": "@width",
-  "@wdb": "@wordBreak",
-  "@zi": "@zIndex"
-};
-var shortByFull = (_shortByFull = {
-  "@alignContent": "@anc",
-  "@alignItems": "@ani",
-  "@alignSelf": "@ans",
-  "@animation": "@an",
-  "@appearance": "@ae",
-  "@backgroundAttachment": "@bda",
-  "@backgroundClip": "@bdcp",
-  "@backgroundColor": "@bdc",
-  "@backgroundImage": "@bdi",
-  "@backgroundOpacity": "@bdo",
-  "@backgroundPosition": "@bdp",
-  "@backgroundRepeat": "@bdr",
-  "@backgroundSize": "@bds",
-  "@borderCollapse": "@brce",
-  "@borderColor": "@brc",
-  "@borderOpacity": "@bro",
-  "@borderRadius": "@brr",
-  "@borderStyle": "@brs",
-  "@borderWidth": "@brw",
-  "@boxShadow": "@bxsw",
-  "@boxSizing": "@bxsg",
-  "@clear": "@cr",
-  "@container": "@cr",
-  "@cursor": "@cr",
-  "@display": "@dy",
-  "@divideColor": "@dec",
-  "@divideOpacity": "@deo",
-  "@divideStyle": "@des",
-  "@divideWidth": "@dew",
-  "@fill": "@fl",
-  "@flex": "@fx",
-  "@flexShrink": "@fxsk",
-  "@flexDirection": "@fxd",
-  "@flexGrow": "@fxg"
-}, _defineProperty(_shortByFull, "@flexShrink", "@fxs"), _defineProperty(_shortByFull, "@flexWrap", "@fxw"), _defineProperty(_shortByFull, "@fontFamily", "@ftf"), _defineProperty(_shortByFull, "@fontSize", "@fts"), _defineProperty(_shortByFull, "@fontSmoothing", "@ftsg"), _defineProperty(_shortByFull, "@fontStyle", "@ftse"), _defineProperty(_shortByFull, "@fontVariantNumeric", "@ftvn"), _defineProperty(_shortByFull, "@fontWeight", "@ftw"), _defineProperty(_shortByFull, "@gap", "@gp"), _defineProperty(_shortByFull, "@gradientColorStops", "@gtcs"), _defineProperty(_shortByFull, "@height", "@ht"), _defineProperty(_shortByFull, "@inset", "@it"), _defineProperty(_shortByFull, "@justifyContent", "@jyc"), _defineProperty(_shortByFull, "@justifyItems", "@jyi"), _defineProperty(_shortByFull, "@justifySelf", "@jys"), _defineProperty(_shortByFull, "@letterSpacing", "@lrs"), _defineProperty(_shortByFull, "@lineHeight", "@leh"), _defineProperty(_shortByFull, "@listStylePosition", "@ltsp"), _defineProperty(_shortByFull, "@listStyleType", "@ltst"), _defineProperty(_shortByFull, "@margin", "@mn"), _defineProperty(_shortByFull, "@maxHeight", "@mxh"), _defineProperty(_shortByFull, "@maxWidth", "@mxw"), _defineProperty(_shortByFull, "@minHeight", "@mnh"), _defineProperty(_shortByFull, "@minWidth", "@mnw"), _defineProperty(_shortByFull, "@objectFit", "@otf"), _defineProperty(_shortByFull, "@objectPosition", "@otp"), _defineProperty(_shortByFull, "@opacity", "@oy"), _defineProperty(_shortByFull, "@order", "@or"), _defineProperty(_shortByFull, "@outline", "@oe"), _defineProperty(_shortByFull, "@overflow", "@ow"), _defineProperty(_shortByFull, "@overscrollBehavior", "@olb"), _defineProperty(_shortByFull, "@padding", "@pg"), _defineProperty(_shortByFull, "@placeContent", "@pec"), _defineProperty(_shortByFull, "@placeItems", "@pei"), _defineProperty(_shortByFull, "@placeSelf", "@pes"), _defineProperty(_shortByFull, "@placeholderColor", "@prc"), _defineProperty(_shortByFull, "@placeholderOpacity", "@pro"), _defineProperty(_shortByFull, "@pointerEvents", "@pre"), _defineProperty(_shortByFull, "@position", "@pn"), _defineProperty(_shortByFull, "@resize", "@re"), _defineProperty(_shortByFull, "@ringColor", "@rgc"), _defineProperty(_shortByFull, "@ringOffsetColor", "@rgoc"), _defineProperty(_shortByFull, "@ringOffsetWidth", "@rgow"), _defineProperty(_shortByFull, "@ringOpacity", "@rgo"), _defineProperty(_shortByFull, "@ringWidth", "@rgw"), _defineProperty(_shortByFull, "@rotate", "@re"), _defineProperty(_shortByFull, "@scale", "@se"), _defineProperty(_shortByFull, "@skew", "@sw"), _defineProperty(_shortByFull, "@spaceBetween", "@seb"), _defineProperty(_shortByFull, "@stroke", "@se"), _defineProperty(_shortByFull, "@strokeWidth", "@sew"), _defineProperty(_shortByFull, "@tableLayout", "@tel"), _defineProperty(_shortByFull, "@touchAction", "@th"), _defineProperty(_shortByFull, "@textAlign", "@tta"), _defineProperty(_shortByFull, "@textColor", "@ttc"), _defineProperty(_shortByFull, "@textDecoration", "@ttd"), _defineProperty(_shortByFull, "@textOpacity", "@ttoy"), _defineProperty(_shortByFull, "@textOverflow", "@ttow"), _defineProperty(_shortByFull, "@textTransform", "@ttt"), _defineProperty(_shortByFull, "@transform", "@tm"), _defineProperty(_shortByFull, "@transformOrigin", "@tmo"), _defineProperty(_shortByFull, "@transitionDelay", "@tndy"), _defineProperty(_shortByFull, "@transitionDuration", "@tndn"), _defineProperty(_shortByFull, "@transitionProperty", "@tnp"), _defineProperty(_shortByFull, "@transitionTimingFunction", "@tntf"), _defineProperty(_shortByFull, "@translate", "@te"), _defineProperty(_shortByFull, "@userSelect", "@urs"), _defineProperty(_shortByFull, "@verticalAlign", "@vla"), _defineProperty(_shortByFull, "@visibility", "@vy"), _defineProperty(_shortByFull, "@whitespace", "@we"), _defineProperty(_shortByFull, "@width", "@wh"), _defineProperty(_shortByFull, "@wordBreak", "@wdb"), _defineProperty(_shortByFull, "@zIndex", "@zi"), _shortByFull);
-
-/* */
-
-// function snakeToCamel(str) {
-//   return str.replace(/([-_][a-z])/gi, (char) => {
-//     return char.toUpperCase().replace("-", "").replace("_", "");
-//   });
-// }
-// let props = [
-//   "Container",
-//   "Box Sizing",
-//   "Display",
-//   "Clear",
-//   "Object Fit",
-//   "Object Position",
-//   "Overflow",
-//   "Overscroll Behavior",
-//   "Position",
-//   "Visibility",
-//   "Z Index",
-//   "Flex Direction",
-//   "Flex Wrap",
-//   "Flex",
-//   "Flex Grow",
-//   "Flex Shrink",
-//   "Order",
-//   "Gap",
-//   "Justify Content",
-//   "Justify Items",
-//   "Justify Self",
-//   "Align Content",
-//   "Align Items",
-//   "Align Self",
-//   "Place Content",
-//   "Place Items",
-//   "Place Self",
-//   "Padding",
-//   "Margin",
-//   "Space Between",
-//   "Width",
-//   "Min Width",
-//   "Max Width",
-//   "Height",
-//   "Min Height",
-//   "Max Height",
-//   "Font Family",
-//   "Font Size",
-//   "Font Smoothing",
-//   "Font Style",
-//   "Font Weight",
-//   "Font Variant Numeric",
-//   "Letter Spacing",
-//   "Line Height",
-//   "List Style Type",
-//   "List Style Position",
-//   "Placeholder Color",
-//   "Placeholder Opacity",
-//   "Text Align",
-//   "Text Color",
-//   "Text Opacity",
-//   "Text Decoration",
-//   "Text Transform",
-//   "Text Overflow",
-//   "Vertical Align",
-//   "Whitespace",
-//   "Word Break",
-//   "Background Attachment",
-//   "Background Clip",
-//   "Background Color",
-//   "Background Opacity",
-//   "Background Position",
-//   "Background Repeat",
-//   "Background Size",
-//   "Background Image",
-//   "Gradient Color Stops",
-//   "Border Radius",
-//   "Border Width",
-//   "Border Color",
-//   "Border Opacity",
-//   "Border Style",
-//   "Divide Width",
-//   "Divide Color",
-//   "Divide Opacity",
-//   "Divide Style",
-//   "Ring Width",
-//   "Ring Color",
-//   "Ring Opacity",
-//   "Ring Offset Width",
-//   "Ring Offset Color",
-//   "Box Shadow",
-//   "Opacity",
-//   "Border Collapse",
-//   "Table Layout",
-//   "Transition Property",
-//   "Transition Duration",
-//   "Transition Timing Function",
-//   "Transition Delay",
-//   "Animation",
-//   "Transform",
-//   "Transform Origin",
-//   "Scale",
-//   "Rotate",
-//   "Translate",
-//   "Skew",
-//   "Appearance",
-//   "Cursor",
-//   "Outline",
-//   "Pointer Events",
-//   "Resize",
-//   "User Select",
-//   "Fill",
-//   "Stroke",
-//   "Stroke Width",
-// ].sort();
-
-// const getShortChars = (str) => {
-//   if (str.length === 1) {
-//     return str;
-//   }
-//   return `${str[0]}${str[str.length - 1]}`;
-// };
-
-// const getShortKey = (string) =>
-//   `${string
-//     .toLowerCase()
-//     .split(" ")
-//     .map((str) => getShortChars(str))
-//     .join("")}`;
-
-// props = props.map((item) => [
-//   item,
-//   item
-//     .toLowerCase()
-//     .split(" ")
-//     .map((str, index) => {
-//       if (index === 0) {
-//         return `${getShortChars(str)}`;
-//       } else {
-//         return str[0];
-//       }
-//     })
-//     .join(""),
-// ]);
-// let copy = [];
-// let duplicate = [];
-
-// let fullKeys = {};
-// let shortKeys = {};
-
-// props.forEach((item) => {
-//   let fullKey = item[0].toLowerCase().split(" ").join("_");
-//   fullKey = snakeToCamel(fullKey);
-//   let shortKey = item[1];
-
-//   if (shortKeys[shortKey]) {
-//     let firstFull = shortKeys[shortKey];
-//     delete shortKeys[shortKey];
-//     shortKey = getShortKey(item[0]);
-//     let shortKeyOfFirstFull = getShortKey(firstFull.replace(/([A-Z])/g, " $1"));
-//     shortKeys[shortKeyOfFirstFull] = firstFull;
-//     fullKeys[firstFull] = shortKeyOfFirstFull;
-//   }
-
-//   fullKeys[fullKey] = shortKey;
-//   shortKeys[shortKey] = fullKey;
-// });
-
-// console.log("====================================");
-// console.log(fullKeys);
-// console.log("====================================");
-
-// props.forEach((item) => {
-//   let entries = Object.entries(item)[0];
-//   let key = entries[0];
-//   let value = entries[1];
-//   let dup = copy.find((str) => str === value);
-//   if (!dup) {
-//     copy.push(value);
-//   } else {
-//     let first = props.find((x) => {
-//       let en = Object.entries(x)[0];
-//       return en[1] === value && en[0] !== key;
-//     });
-//     // dup[entries[0]] = value;
-//     duplicate.push({ ...item, ...first });
-//     // throw new Error(
-//     //   `duplicate ${entries[0]} ${value} ${copy.find((str) => str === value)}`
-//     // );
-//   }
-// });
-
-function ownKeys$f(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread$f(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$f(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$f(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-var useStyleRewriter$6 = function useStyleRewriter(baseClassName, className) {
-  var cleared = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
-  return React.useMemo(function () {
-    var styleObj = getStyleObj("@base ".concat(baseClassName), cleared);
-    var styleObjProps = getStyleObj("@prop ".concat(className), cleared);
-    var computedStyleObj = _objectSpread$f(_objectSpread$f({}, styleObj), styleObjProps);
-    var resultClassName = Object.values(computedStyleObj).join(" ").replace(/\n/g, "");
-    return resultClassName.replace(/\s+/g, " ");
-  }, [baseClassName, className]);
-};
-var getStyleObj = function getStyleObj() {
-  var className = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
-  var cleared = arguments.length > 1 ? arguments[1] : undefined;
-  if (!className || !className.trim()) {
-    return {};
-  }
-  var classesArr = className.replace(/@([a-z:]*)/g, "__@$1__").split("__").filter(function (str) {
-    return str;
-  });
-  var styleObj = {};
-  classesArr.forEach(function (item, index) {
-    if (item) {
-      var isKey = item.includes("@");
-      var nextValue = classesArr[index + 1];
-      if (isKey) {
-        var isKeyNextValue = nextValue && nextValue.includes("@");
-        if (!(fullByShort[item] || shortByFull[item])) {
-          throw new Error("Invalid key ".concat(item, " for styleRewriter in className ").concat(className));
-        }
-        if (!isKeyNextValue) {
-          setValue({
-            styleObj: styleObj,
-            key: item,
-            value: nextValue,
-            cleared: cleared
-          });
-        } else {
-          setValue({
-            styleObj: styleObj,
-            key: item,
-            value: "",
-            cleared: cleared
-          });
-        }
-      }
-    }
-  });
-  return styleObj;
-};
-var setValue = function setValue(_ref) {
-  var styleObj = _ref.styleObj,
-    key = _ref.key,
-    value = _ref.value,
-    cleared = _ref.cleared;
-  if (cleared) {
-    styleObj[key] = value;
-  } else {
-    var stringKey = key === "@base" || key === "@prop" ? "" : key;
-    styleObj[key] = "".concat(stringKey, " ").concat(value);
-  }
-};
-
 var protocols = ['http', 'https', 'mailto', 'tel'];
 
 /**
@@ -11238,8 +10839,8 @@ function u(type, props, value) {
   return node;
 };
 
-function ownKeys$e(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread$e(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$e(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$e(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function ownKeys$f(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$f(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$f(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$f(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 var own$5 = {}.hasOwnProperty;
 
 /**
@@ -11284,7 +10885,7 @@ function one(h, node, parent) {
  */
 function returnNode(h, node) {
   // @ts-expect-error: Pass through custom node.
-  return 'children' in node ? _objectSpread$e(_objectSpread$e({}, node), {}, {
+  return 'children' in node ? _objectSpread$f(_objectSpread$f({}, node), {}, {
     children: all(h, node)
   }) : node;
 }
@@ -11856,8 +11457,8 @@ function wrap(nodes, loose) {
   return result;
 }
 
-function ownKeys$d(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread$d(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$d(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$d(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function ownKeys$e(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$e(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$e(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$e(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 /**
  * @param {H} h
@@ -11956,7 +11557,7 @@ function footer(h) {
     children: [{
       type: 'element',
       tagName: h.footnoteLabelTagName,
-      properties: _objectSpread$d(_objectSpread$d({}, JSON.parse(JSON.stringify(h.footnoteLabelProperties))), {}, {
+      properties: _objectSpread$e(_objectSpread$e({}, JSON.parse(JSON.stringify(h.footnoteLabelProperties))), {}, {
         id: 'footnote-label'
       }),
       children: [u('text', h.footnoteLabel)]
@@ -12619,8 +12220,8 @@ function ignore() {
   return null;
 }
 
-function ownKeys$c(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread$c(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$c(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$c(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function ownKeys$d(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$d(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$d(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$d(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 var own$3 = {}.hasOwnProperty;
 
 /**
@@ -12653,7 +12254,7 @@ function factory(tree, options) {
   /** @type {Record<string, number>} */
   h.footnoteCounts = {};
   h.augment = augment;
-  h.handlers = _objectSpread$c(_objectSpread$c({}, handlers), settings.handlers);
+  h.handlers = _objectSpread$d(_objectSpread$d({}, handlers), settings.handlers);
   h.unknownHandler = settings.unknownHandler;
   h.passThrough = settings.passThrough;
   visit(tree, 'footnoteDefinition', function (definition) {
@@ -12693,7 +12294,7 @@ function factory(tree, options) {
         right.tagName = data.hName;
       }
       if (right.type === 'element' && data.hProperties) {
-        right.properties = _objectSpread$c(_objectSpread$c({}, right.properties), data.hProperties);
+        right.properties = _objectSpread$d(_objectSpread$d({}, right.properties), data.hProperties);
       }
       if ('children' in right && right.children && data.hChildren) {
         right.children = data.hChildren;
@@ -16319,8 +15920,8 @@ function flattenPosition(pos) {
   return [pos.start.line, ':', pos.start.column, '-', pos.end.line, ':', pos.end.column].map(String).join('');
 }
 
-function ownKeys$b(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread$b(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$b(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$b(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function ownKeys$c(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$c(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$c(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$c(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 var own = {}.hasOwnProperty;
 var changelog = 'https://github.com/remarkjs/react-markdown/blob/main/changelog.md';
 
@@ -16379,7 +15980,7 @@ function ReactMarkdown(options) {
       delete deprecated[key];
     }
   }
-  var processor = unified().use(remarkParse).use(options.remarkPlugins || []).use(remarkRehype, _objectSpread$b(_objectSpread$b({}, options.remarkRehypeOptions), {}, {
+  var processor = unified().use(remarkParse).use(options.remarkPlugins || []).use(remarkRehype, _objectSpread$c(_objectSpread$c({}, options.remarkRehypeOptions), {}, {
     allowDangerousHtml: true
   })).use(options.rehypePlugins || []).use(rehypeFilter, options);
   var file = new VFile();
@@ -16473,8 +16074,8 @@ function _slicedToArray(arr, i) {
   return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray$4(arr, i) || _nonIterableRest();
 }
 
-function ownKeys$a(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread$a(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$a(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$a(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function ownKeys$b(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$b(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$b(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$b(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 /**
  * Filter function by text content
@@ -16587,7 +16188,7 @@ var useLookupTable = function useLookupTable(_ref) {
     return state;
   }, [sortBy, filters, localSelectedRowIds]);
   var filterTypes = React.useMemo(function () {
-    return _objectSpread$a(_objectSpread$a({}, baseFilters), config.filterTypes);
+    return _objectSpread$b(_objectSpread$b({}, baseFilters), config.filterTypes);
   }, []);
   React.useEffect(function () {
     if (data.length && config.selectedRowIds) {
@@ -16806,7 +16407,7 @@ var returnDoc = createArgDocumentation({
 ({
   component: useLookupTable,
   title: "Hooks/useLookupTable",
-  argTypes: _objectSpread$a(_objectSpread$a(_objectSpread$a(_objectSpread$a({}, columnsDoc), dataDoc), configDoc), returnDoc),
+  argTypes: _objectSpread$b(_objectSpread$b(_objectSpread$b(_objectSpread$b({}, columnsDoc), dataDoc), configDoc), returnDoc),
   parameters: {
     docs: {
       description: {
@@ -17050,6 +16651,405 @@ var useBreakpoint$1 = function useBreakpoint(breakpoint) {
     };
   }, []);
   return !width || width >= BREAKPOINTS[breakpoint];
+};
+
+var _shortByFull;
+var fullByShort = {
+  "@prop": "@prop",
+  "@base": "@base",
+  "@anc": "@alignContent",
+  "@ani": "@alignItems",
+  "@ans": "@alignSelf",
+  "@an": "@animation",
+  "@ae": "@appearance",
+  "@bda": "@backgroundAttachment",
+  "@bdcp": "@backgroundClip",
+  "@bdc": "@backgroundColor",
+  "@bdi": "@backgroundImage",
+  "@bdo": "@backgroundOpacity",
+  "@bdp": "@backgroundPosition",
+  "@bdr": "@backgroundRepeat",
+  "@bds": "@backgroundSize",
+  "@brce": "@borderCollapse",
+  "@brc": "@borderColor",
+  "@bro": "@borderOpacity",
+  "@brr": "@borderRadius",
+  "@brs": "@borderStyle",
+  "@brw": "@borderWidth",
+  "@bxsw": "@boxShadow",
+  "@bxsg": "@boxSizing",
+  "@cr": "@cursor",
+  "@dy": "@display",
+  "@dec": "@divideColor",
+  "@deo": "@divideOpacity",
+  "@des": "@divideStyle",
+  "@dew": "@divideWidth",
+  "@fl": "@fill",
+  "@fx": "@flex",
+  "@fxsk": "@flexShrink",
+  "@fxd": "@flexDirection",
+  "@fxg": "@flexGrow",
+  "@fxs": "@flexShrink",
+  "@fxw": "@flexWrap",
+  "@ftf": "@fontFamily",
+  "@fts": "@fontSize",
+  "@ftsg": "@fontSmoothing",
+  "@ftse": "@fontStyle",
+  "@ftvn": "@fontVariantNumeric",
+  "@ftw": "@fontWeight",
+  "@gp": "@gap",
+  "@gtcs": "@gradientColorStops",
+  "@ht": "@height",
+  "@it": "@inset",
+  "@jyc": "@justifyContent",
+  "@jyi": "@justifyItems",
+  "@jys": "@justifySelf",
+  "@lrs": "@letterSpacing",
+  "@leh": "@lineHeight",
+  "@ltsp": "@listStylePosition",
+  "@ltst": "@listStyleType",
+  "@mn": "@margin",
+  "@mxh": "@maxHeight",
+  "@mxw": "@maxWidth",
+  "@mnh": "@minHeight",
+  "@mnw": "@minWidth",
+  "@otf": "@objectFit",
+  "@otp": "@objectPosition",
+  "@oy": "@opacity",
+  "@or": "@order",
+  "@oe": "@outline",
+  "@ow": "@overflow",
+  "@olb": "@overscrollBehavior",
+  "@pg": "@padding",
+  "@pec": "@placeContent",
+  "@pei": "@placeItems",
+  "@pes": "@placeSelf",
+  "@prc": "@placeholderColor",
+  "@pro": "@placeholderOpacity",
+  "@pre": "@pointerEvents",
+  "@pn": "@position",
+  "@rgc": "@ringColor",
+  "@rgoc": "@ringOffsetColor",
+  "@rgow": "@ringOffsetWidth",
+  "@rgo": "@ringOpacity",
+  "@rgw": "@ringWidth",
+  "@re": "@rotate",
+  "@sw": "@skew",
+  "@seb": "@spaceBetween",
+  "@se": "@stroke",
+  "@sew": "@strokeWidth",
+  "@tel": "@tableLayout",
+  "@th": "@touchAction",
+  "@tta": "@textAlign",
+  "@ttc": "@textColor",
+  "@ttd": "@textDecoration",
+  "@ttoy": "@textOpacity",
+  "@ttow": "@textOverflow",
+  "@ttt": "@textTransform",
+  "@tm": "@transform",
+  "@tmo": "@transformOrigin",
+  "@tndy": "@transitionDelay",
+  "@tndn": "@transitionDuration",
+  "@tnp": "@transitionProperty",
+  "@tntf": "@transitionTimingFunction",
+  "@te": "@translate",
+  "@urs": "@userSelect",
+  "@vla": "@verticalAlign",
+  "@vy": "@visibility",
+  "@we": "@whitespace",
+  "@wh": "@width",
+  "@wdb": "@wordBreak",
+  "@zi": "@zIndex"
+};
+var shortByFull = (_shortByFull = {
+  "@alignContent": "@anc",
+  "@alignItems": "@ani",
+  "@alignSelf": "@ans",
+  "@animation": "@an",
+  "@appearance": "@ae",
+  "@backgroundAttachment": "@bda",
+  "@backgroundClip": "@bdcp",
+  "@backgroundColor": "@bdc",
+  "@backgroundImage": "@bdi",
+  "@backgroundOpacity": "@bdo",
+  "@backgroundPosition": "@bdp",
+  "@backgroundRepeat": "@bdr",
+  "@backgroundSize": "@bds",
+  "@borderCollapse": "@brce",
+  "@borderColor": "@brc",
+  "@borderOpacity": "@bro",
+  "@borderRadius": "@brr",
+  "@borderStyle": "@brs",
+  "@borderWidth": "@brw",
+  "@boxShadow": "@bxsw",
+  "@boxSizing": "@bxsg",
+  "@clear": "@cr",
+  "@container": "@cr",
+  "@cursor": "@cr",
+  "@display": "@dy",
+  "@divideColor": "@dec",
+  "@divideOpacity": "@deo",
+  "@divideStyle": "@des",
+  "@divideWidth": "@dew",
+  "@fill": "@fl",
+  "@flex": "@fx",
+  "@flexShrink": "@fxsk",
+  "@flexDirection": "@fxd",
+  "@flexGrow": "@fxg"
+}, _defineProperty(_shortByFull, "@flexShrink", "@fxs"), _defineProperty(_shortByFull, "@flexWrap", "@fxw"), _defineProperty(_shortByFull, "@fontFamily", "@ftf"), _defineProperty(_shortByFull, "@fontSize", "@fts"), _defineProperty(_shortByFull, "@fontSmoothing", "@ftsg"), _defineProperty(_shortByFull, "@fontStyle", "@ftse"), _defineProperty(_shortByFull, "@fontVariantNumeric", "@ftvn"), _defineProperty(_shortByFull, "@fontWeight", "@ftw"), _defineProperty(_shortByFull, "@gap", "@gp"), _defineProperty(_shortByFull, "@gradientColorStops", "@gtcs"), _defineProperty(_shortByFull, "@height", "@ht"), _defineProperty(_shortByFull, "@inset", "@it"), _defineProperty(_shortByFull, "@justifyContent", "@jyc"), _defineProperty(_shortByFull, "@justifyItems", "@jyi"), _defineProperty(_shortByFull, "@justifySelf", "@jys"), _defineProperty(_shortByFull, "@letterSpacing", "@lrs"), _defineProperty(_shortByFull, "@lineHeight", "@leh"), _defineProperty(_shortByFull, "@listStylePosition", "@ltsp"), _defineProperty(_shortByFull, "@listStyleType", "@ltst"), _defineProperty(_shortByFull, "@margin", "@mn"), _defineProperty(_shortByFull, "@maxHeight", "@mxh"), _defineProperty(_shortByFull, "@maxWidth", "@mxw"), _defineProperty(_shortByFull, "@minHeight", "@mnh"), _defineProperty(_shortByFull, "@minWidth", "@mnw"), _defineProperty(_shortByFull, "@objectFit", "@otf"), _defineProperty(_shortByFull, "@objectPosition", "@otp"), _defineProperty(_shortByFull, "@opacity", "@oy"), _defineProperty(_shortByFull, "@order", "@or"), _defineProperty(_shortByFull, "@outline", "@oe"), _defineProperty(_shortByFull, "@overflow", "@ow"), _defineProperty(_shortByFull, "@overscrollBehavior", "@olb"), _defineProperty(_shortByFull, "@padding", "@pg"), _defineProperty(_shortByFull, "@placeContent", "@pec"), _defineProperty(_shortByFull, "@placeItems", "@pei"), _defineProperty(_shortByFull, "@placeSelf", "@pes"), _defineProperty(_shortByFull, "@placeholderColor", "@prc"), _defineProperty(_shortByFull, "@placeholderOpacity", "@pro"), _defineProperty(_shortByFull, "@pointerEvents", "@pre"), _defineProperty(_shortByFull, "@position", "@pn"), _defineProperty(_shortByFull, "@resize", "@re"), _defineProperty(_shortByFull, "@ringColor", "@rgc"), _defineProperty(_shortByFull, "@ringOffsetColor", "@rgoc"), _defineProperty(_shortByFull, "@ringOffsetWidth", "@rgow"), _defineProperty(_shortByFull, "@ringOpacity", "@rgo"), _defineProperty(_shortByFull, "@ringWidth", "@rgw"), _defineProperty(_shortByFull, "@rotate", "@re"), _defineProperty(_shortByFull, "@scale", "@se"), _defineProperty(_shortByFull, "@skew", "@sw"), _defineProperty(_shortByFull, "@spaceBetween", "@seb"), _defineProperty(_shortByFull, "@stroke", "@se"), _defineProperty(_shortByFull, "@strokeWidth", "@sew"), _defineProperty(_shortByFull, "@tableLayout", "@tel"), _defineProperty(_shortByFull, "@touchAction", "@th"), _defineProperty(_shortByFull, "@textAlign", "@tta"), _defineProperty(_shortByFull, "@textColor", "@ttc"), _defineProperty(_shortByFull, "@textDecoration", "@ttd"), _defineProperty(_shortByFull, "@textOpacity", "@ttoy"), _defineProperty(_shortByFull, "@textOverflow", "@ttow"), _defineProperty(_shortByFull, "@textTransform", "@ttt"), _defineProperty(_shortByFull, "@transform", "@tm"), _defineProperty(_shortByFull, "@transformOrigin", "@tmo"), _defineProperty(_shortByFull, "@transitionDelay", "@tndy"), _defineProperty(_shortByFull, "@transitionDuration", "@tndn"), _defineProperty(_shortByFull, "@transitionProperty", "@tnp"), _defineProperty(_shortByFull, "@transitionTimingFunction", "@tntf"), _defineProperty(_shortByFull, "@translate", "@te"), _defineProperty(_shortByFull, "@userSelect", "@urs"), _defineProperty(_shortByFull, "@verticalAlign", "@vla"), _defineProperty(_shortByFull, "@visibility", "@vy"), _defineProperty(_shortByFull, "@whitespace", "@we"), _defineProperty(_shortByFull, "@width", "@wh"), _defineProperty(_shortByFull, "@wordBreak", "@wdb"), _defineProperty(_shortByFull, "@zIndex", "@zi"), _shortByFull);
+
+/* */
+
+// function snakeToCamel(str) {
+//   return str.replace(/([-_][a-z])/gi, (char) => {
+//     return char.toUpperCase().replace("-", "").replace("_", "");
+//   });
+// }
+// let props = [
+//   "Container",
+//   "Box Sizing",
+//   "Display",
+//   "Clear",
+//   "Object Fit",
+//   "Object Position",
+//   "Overflow",
+//   "Overscroll Behavior",
+//   "Position",
+//   "Visibility",
+//   "Z Index",
+//   "Flex Direction",
+//   "Flex Wrap",
+//   "Flex",
+//   "Flex Grow",
+//   "Flex Shrink",
+//   "Order",
+//   "Gap",
+//   "Justify Content",
+//   "Justify Items",
+//   "Justify Self",
+//   "Align Content",
+//   "Align Items",
+//   "Align Self",
+//   "Place Content",
+//   "Place Items",
+//   "Place Self",
+//   "Padding",
+//   "Margin",
+//   "Space Between",
+//   "Width",
+//   "Min Width",
+//   "Max Width",
+//   "Height",
+//   "Min Height",
+//   "Max Height",
+//   "Font Family",
+//   "Font Size",
+//   "Font Smoothing",
+//   "Font Style",
+//   "Font Weight",
+//   "Font Variant Numeric",
+//   "Letter Spacing",
+//   "Line Height",
+//   "List Style Type",
+//   "List Style Position",
+//   "Placeholder Color",
+//   "Placeholder Opacity",
+//   "Text Align",
+//   "Text Color",
+//   "Text Opacity",
+//   "Text Decoration",
+//   "Text Transform",
+//   "Text Overflow",
+//   "Vertical Align",
+//   "Whitespace",
+//   "Word Break",
+//   "Background Attachment",
+//   "Background Clip",
+//   "Background Color",
+//   "Background Opacity",
+//   "Background Position",
+//   "Background Repeat",
+//   "Background Size",
+//   "Background Image",
+//   "Gradient Color Stops",
+//   "Border Radius",
+//   "Border Width",
+//   "Border Color",
+//   "Border Opacity",
+//   "Border Style",
+//   "Divide Width",
+//   "Divide Color",
+//   "Divide Opacity",
+//   "Divide Style",
+//   "Ring Width",
+//   "Ring Color",
+//   "Ring Opacity",
+//   "Ring Offset Width",
+//   "Ring Offset Color",
+//   "Box Shadow",
+//   "Opacity",
+//   "Border Collapse",
+//   "Table Layout",
+//   "Transition Property",
+//   "Transition Duration",
+//   "Transition Timing Function",
+//   "Transition Delay",
+//   "Animation",
+//   "Transform",
+//   "Transform Origin",
+//   "Scale",
+//   "Rotate",
+//   "Translate",
+//   "Skew",
+//   "Appearance",
+//   "Cursor",
+//   "Outline",
+//   "Pointer Events",
+//   "Resize",
+//   "User Select",
+//   "Fill",
+//   "Stroke",
+//   "Stroke Width",
+// ].sort();
+
+// const getShortChars = (str) => {
+//   if (str.length === 1) {
+//     return str;
+//   }
+//   return `${str[0]}${str[str.length - 1]}`;
+// };
+
+// const getShortKey = (string) =>
+//   `${string
+//     .toLowerCase()
+//     .split(" ")
+//     .map((str) => getShortChars(str))
+//     .join("")}`;
+
+// props = props.map((item) => [
+//   item,
+//   item
+//     .toLowerCase()
+//     .split(" ")
+//     .map((str, index) => {
+//       if (index === 0) {
+//         return `${getShortChars(str)}`;
+//       } else {
+//         return str[0];
+//       }
+//     })
+//     .join(""),
+// ]);
+// let copy = [];
+// let duplicate = [];
+
+// let fullKeys = {};
+// let shortKeys = {};
+
+// props.forEach((item) => {
+//   let fullKey = item[0].toLowerCase().split(" ").join("_");
+//   fullKey = snakeToCamel(fullKey);
+//   let shortKey = item[1];
+
+//   if (shortKeys[shortKey]) {
+//     let firstFull = shortKeys[shortKey];
+//     delete shortKeys[shortKey];
+//     shortKey = getShortKey(item[0]);
+//     let shortKeyOfFirstFull = getShortKey(firstFull.replace(/([A-Z])/g, " $1"));
+//     shortKeys[shortKeyOfFirstFull] = firstFull;
+//     fullKeys[firstFull] = shortKeyOfFirstFull;
+//   }
+
+//   fullKeys[fullKey] = shortKey;
+//   shortKeys[shortKey] = fullKey;
+// });
+
+// console.log("====================================");
+// console.log(fullKeys);
+// console.log("====================================");
+
+// props.forEach((item) => {
+//   let entries = Object.entries(item)[0];
+//   let key = entries[0];
+//   let value = entries[1];
+//   let dup = copy.find((str) => str === value);
+//   if (!dup) {
+//     copy.push(value);
+//   } else {
+//     let first = props.find((x) => {
+//       let en = Object.entries(x)[0];
+//       return en[1] === value && en[0] !== key;
+//     });
+//     // dup[entries[0]] = value;
+//     duplicate.push({ ...item, ...first });
+//     // throw new Error(
+//     //   `duplicate ${entries[0]} ${value} ${copy.find((str) => str === value)}`
+//     // );
+//   }
+// });
+
+function ownKeys$a(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$a(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$a(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$a(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+var useStyleRewriter$6 = function useStyleRewriter(baseClassName, className) {
+  var cleared = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+  return React.useMemo(function () {
+    var styleObj = getStyleObj("@base ".concat(baseClassName), cleared);
+    var styleObjProps = getStyleObj("@prop ".concat(className), cleared);
+    var computedStyleObj = _objectSpread$a(_objectSpread$a({}, styleObj), styleObjProps);
+    var resultClassName = Object.values(computedStyleObj).join(" ").replace(/\n/g, "");
+    return resultClassName.replace(/\s+/g, " ");
+  }, [baseClassName, className]);
+};
+var getStyleObj = function getStyleObj() {
+  var className = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
+  var cleared = arguments.length > 1 ? arguments[1] : undefined;
+  if (!className || !className.trim()) {
+    return {};
+  }
+  var classesArr = className.replace(/@([a-z:]*)/g, "__@$1__").split("__").filter(function (str) {
+    return str;
+  });
+  var styleObj = {};
+  classesArr.forEach(function (item, index) {
+    if (item) {
+      var isKey = item.includes("@");
+      var nextValue = classesArr[index + 1];
+      if (isKey) {
+        var isKeyNextValue = nextValue && nextValue.includes("@");
+        if (!(fullByShort[item] || shortByFull[item])) {
+          throw new Error("Invalid key ".concat(item, " for styleRewriter in className ").concat(className));
+        }
+        if (!isKeyNextValue) {
+          setValue({
+            styleObj: styleObj,
+            key: item,
+            value: nextValue,
+            cleared: cleared
+          });
+        } else {
+          setValue({
+            styleObj: styleObj,
+            key: item,
+            value: "",
+            cleared: cleared
+          });
+        }
+      }
+    }
+  });
+  return styleObj;
+};
+var setValue = function setValue(_ref) {
+  var styleObj = _ref.styleObj,
+    key = _ref.key,
+    value = _ref.value,
+    cleared = _ref.cleared;
+  if (cleared) {
+    styleObj[key] = value;
+  } else {
+    var stringKey = key === "@base" || key === "@prop" ? "" : key;
+    styleObj[key] = "".concat(stringKey, " ").concat(value);
+  }
 };
 
 var useDetectMouseover$1 = function useDetectMouseover(el, initialState) {
@@ -17840,7 +17840,16 @@ const useDebounce = (value, delay) => {
 var useRegister = function useRegister(_ref) {
   var profilesApi = _ref.profilesApi;
     _ref.useRouter;
-    _ref.createNotification;
+    var _ref$createNotificati = _ref.createNotification,
+    createNotification = _ref$createNotificati === void 0 ? function () {
+      return {};
+    } : _ref$createNotificati,
+    _ref$translate = _ref.translate,
+    translate = _ref$translate === void 0 ? function (string) {
+      return string;
+    } : _ref$translate,
+    _ref$notificationDura = _ref.notificationDuration,
+    notificationDuration = _ref$notificationDura === void 0 ? 10000 : _ref$notificationDura;
   var inputs = React.useMemo(function () {
     return [{
       component: "text",
@@ -17905,6 +17914,14 @@ var useRegister = function useRegister(_ref) {
     }));
     return _onSubmit.apply(this, arguments);
   }
+  React.useEffect(function () {
+    if (registrationResult !== null && registrationResult !== void 0 && registrationResult.isSuccess) {
+      createNotification({
+        title: translate("Account succesfully registered"),
+        duration: notificationDuration
+      });
+    }
+  }, [registrationResult]);
   return {
     inputs: inputs,
     methods: methods,
@@ -17923,7 +17940,6 @@ var nextAuthHandler = function nextAuthHandler(_ref) {
   if (data.user && data !== null && data !== void 0 && data.nextAuthFactor) {
     if (data.nextAuthFactor.type === "one") {
       if (Array.isArray(data.nextAuthFactor.handler)) {
-        console.log("\uD83D\uDE80 ~ nextAuthHandler ~ data.nextAuthFactor.handler", data.nextAuthFactor.handler);
         var user = data.user;
         var _iterator = _createForOfIteratorHelper$1(data.nextAuthFactor.handler),
           _step;
@@ -17935,11 +17951,11 @@ var nextAuthHandler = function nextAuthHandler(_ref) {
               return;
             }
             if (authFactor === "auth.phoneConfirmation" && user.isPhoneConfirmationEnabled) {
-              router === null || router === void 0 ? void 0 : router.push("/auth/confirm-phone");
+              router.push("/auth/confirm-phone");
               return;
             }
             if (authFactor === "user.checkOtp" && user.isOtpConfirmationEnabled) {
-              router === null || router === void 0 ? void 0 : router.push("/auth/otp");
+              router.push("/auth/otp");
               return;
             }
           }
@@ -17954,12 +17970,15 @@ var nextAuthHandler = function nextAuthHandler(_ref) {
       return;
     }
   }
-  if ((data === null || data === void 0 ? void 0 : (_data$nextAuthFactor = data.nextAuthFactor) === null || _data$nextAuthFactor === void 0 ? void 0 : _data$nextAuthFactor.hander) === "auth.emailConfirmation") {
+  if ((data === null || data === void 0 ? void 0 : (_data$nextAuthFactor = data.nextAuthFactor) === null || _data$nextAuthFactor === void 0 ? void 0 : _data$nextAuthFactor.handler) === "auth.emailConfirmation") {
     router.push("/auth/confirm-email");
-  } else if ((data === null || data === void 0 ? void 0 : (_data$nextAuthFactor2 = data.nextAuthFactor) === null || _data$nextAuthFactor2 === void 0 ? void 0 : _data$nextAuthFactor2.hander) === "auth.phoneConfirmation") {
+    return;
+  } else if ((data === null || data === void 0 ? void 0 : (_data$nextAuthFactor2 = data.nextAuthFactor) === null || _data$nextAuthFactor2 === void 0 ? void 0 : _data$nextAuthFactor2.handler) === "auth.phoneConfirmation") {
     router === null || router === void 0 ? void 0 : router.push("/auth/confirm-phone");
-  } else if ((data === null || data === void 0 ? void 0 : (_data$nextAuthFactor3 = data.nextAuthFactor) === null || _data$nextAuthFactor3 === void 0 ? void 0 : _data$nextAuthFactor3.hander) === "user.checkOtp") {
+    return;
+  } else if ((data === null || data === void 0 ? void 0 : (_data$nextAuthFactor3 = data.nextAuthFactor) === null || _data$nextAuthFactor3 === void 0 ? void 0 : _data$nextAuthFactor3.handler) === "user.checkOtp") {
     router === null || router === void 0 ? void 0 : router.push("/auth/otp");
+    return;
   }
 };
 
@@ -17970,6 +17989,8 @@ var useLogin = function useLogin(_ref) {
       return {};
     } : _ref$useRouter;
     _ref.createNotification;
+    _ref.translate;
+    _ref.notificationDuration;
   var router = useRouter();
   var _profilesApi$useLogin = profilesApi.useLoginWithEmailAndPasswordMutation(),
     _profilesApi$useLogin2 = _slicedToArray(_profilesApi$useLogin, 2),
@@ -18051,7 +18072,13 @@ var useForgotPassword = function useForgotPassword(_ref) {
     _ref$useRouter = _ref.useRouter,
     useRouter = _ref$useRouter === void 0 ? function () {
       return {};
-    } : _ref$useRouter;
+    } : _ref$useRouter,
+    _ref$translate = _ref.translate,
+    translate = _ref$translate === void 0 ? function (string) {
+      return string;
+    } : _ref$translate,
+    _ref$notificationDura = _ref.notificationDuration,
+    notificationDuration = _ref$notificationDura === void 0 ? 10000 : _ref$notificationDura;
   var router = useRouter();
   var inputs = React.useMemo(function () {
     return [{
@@ -18099,14 +18126,11 @@ var useForgotPassword = function useForgotPassword(_ref) {
     return _onSubmit.apply(this, arguments);
   }
   React.useEffect(function () {
-    var data = forgotPasswordResult.data;
-    if (data !== null && data !== void 0 && data.ok) {
+    if (forgotPasswordResult !== null && forgotPasswordResult !== void 0 && forgotPasswordResult.isSuccess) {
       if (createNotification) {
         createNotification({
-          title: "Recovery link was sent to your email",
-          contentContainerClassName: "@pg pl-2 pr-4 py-4 @bxsw shadow-lg @ttc text-gray-base",
-          containerClassName: "@ow overflow-visible",
-          duration: 5000
+          title: translate("Recovery link was sent to your email"),
+          duration: notificationDuration
         });
       }
       router.push("/auth/login");
@@ -18131,7 +18155,13 @@ var useResetPassword = function useResetPassword(_ref) {
     _ref$createNotificati = _ref.createNotification,
     createNotification = _ref$createNotificati === void 0 ? function () {
       return {};
-    } : _ref$createNotificati;
+    } : _ref$createNotificati,
+    _ref$translate = _ref.translate,
+    translate = _ref$translate === void 0 ? function (string) {
+      return string;
+    } : _ref$translate,
+    _ref$notificationDura = _ref.notificationDuration,
+    notificationDuration = _ref$notificationDura === void 0 ? 10000 : _ref$notificationDura;
   var dispatch = useDispatch();
   var router = useRouter();
   React.useEffect(function () {
@@ -18204,16 +18234,11 @@ var useResetPassword = function useResetPassword(_ref) {
     return _onSubmit.apply(this, arguments);
   }
   React.useEffect(function () {
-    var data = resetPasswordResult.data;
-    if (data !== null && data !== void 0 && data.ok) {
-      if (createNotification) {
-        createNotification({
-          title: "New password was set",
-          contentContainerClassName: "@pg pl-2 pr-4 py-4 @bxsw shadow-lg @ttc text-gray-base",
-          containerClassName: "@ow overflow-visible",
-          duration: 5000
-        });
-      }
+    if (resetPasswordResult !== null && resetPasswordResult !== void 0 && resetPasswordResult.isSuccess) {
+      createNotification({
+        title: translate("New password was set"),
+        duration: notificationDuration
+      });
       router.push("/auth/login");
     }
   }, [resetPasswordResult]);
@@ -18229,16 +18254,22 @@ var useSendEmailConfirmation = function useSendEmailConfirmation(_ref) {
   var profilesApi = _ref.profilesApi,
     _ref$inputsConfig = _ref.inputsConfig,
     inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig$1 : _ref$inputsConfig,
+    _ref$createNotificati = _ref.createNotification,
+    createNotification = _ref$createNotificati === void 0 ? function () {
+      return {};
+    } : _ref$createNotificati,
     _ref$inputPropsType = _ref.inputPropsType,
-    inputPropsType = _ref$inputPropsType === void 0 ? "object" : _ref$inputPropsType;
+    inputPropsType = _ref$inputPropsType === void 0 ? "object" : _ref$inputPropsType,
+    _ref$notificationDura = _ref.notificationDuration,
+    notificationDuration = _ref$notificationDura === void 0 ? 10000 : _ref$notificationDura,
+    _ref$translate = _ref.translate,
+    translate = _ref$translate === void 0 ? function (string) {
+      return string;
+    } : _ref$translate;
   var _profilesApi$useSendE = profilesApi.useSendEmailConfirmationMutation(),
     _profilesApi$useSendE2 = _slicedToArray(_profilesApi$useSendE, 2),
     sendEmailConfirmation = _profilesApi$useSendE2[0],
-    _profilesApi$useSendE3 = _profilesApi$useSendE2[1],
-    error = _profilesApi$useSendE3.error,
-    isLoading = _profilesApi$useSendE3.isLoading,
-    isSuccess = _profilesApi$useSendE3.isSuccess,
-    data = _profilesApi$useSendE3.data;
+    result = _profilesApi$useSendE2[1];
   var submitFunc = function submitFunc(_ref2) {
     var inputs = _ref2.inputs,
       files = _ref2.files;
@@ -18260,16 +18291,21 @@ var useSendEmailConfirmation = function useSendEmailConfirmation(_ref) {
     inputsValues = _useForm.inputsValues,
     onSubmit = _useForm.onSubmit,
     inputsSetErrors = _useForm.setErrors;
+  React.useEffect(function () {
+    if (result !== null && result !== void 0 && result.isSuccess) {
+      createNotification({
+        title: translate("Code was sent to your email"),
+        duration: notificationDuration
+      });
+    }
+  }, [result]);
   return {
     inputs: inputs,
     inputsErrors: inputsErrors,
     inputsSetErrors: inputsSetErrors,
-    error: error,
     inputsValues: inputsValues,
     onSubmit: onSubmit,
-    isLoading: isLoading,
-    isSuccess: isSuccess,
-    data: data
+    result: result
   };
 };
 var defaultInputsConfig$1 = [{
@@ -18293,8 +18329,17 @@ var useConfirmEmail = function useConfirmEmail(_ref) {
     _ref$useRouter = _ref.useRouter,
     useRouter = _ref$useRouter === void 0 ? function () {
       return {};
-    } : _ref$useRouter;
-    _ref.createNotification;
+    } : _ref$useRouter,
+    _ref$createNotificati = _ref.createNotification,
+    createNotification = _ref$createNotificati === void 0 ? function () {
+      return {};
+    } : _ref$createNotificati,
+    _ref$translate = _ref.translate,
+    translate = _ref$translate === void 0 ? function (string) {
+      return string;
+    } : _ref$translate,
+    _ref$notificationDura = _ref.notificationDuration,
+    notificationDuration = _ref$notificationDura === void 0 ? 10000 : _ref$notificationDura;
   var router = useRouter();
   var user = useSelector(function (state) {
     var _state$auth;
@@ -18432,6 +18477,10 @@ var useConfirmEmail = function useConfirmEmail(_ref) {
     if (!data) {
       return;
     }
+    createNotification({
+      title: translate("Email confirmed succesfully"),
+      duration: notificationDuration
+    });
     if (router !== null && router !== void 0 && router.push) {
       nextAuthHandler({
         router: router,
@@ -18439,6 +18488,14 @@ var useConfirmEmail = function useConfirmEmail(_ref) {
       });
     }
   }, [confirmEmailResult, router]);
+  React.useEffect(function () {
+    if (resendResult !== null && resendResult !== void 0 && resendResult.isSuccess) {
+      createNotification({
+        title: translate("Code was sent to your email"),
+        duration: notificationDuration
+      });
+    }
+  }, [resendResult]);
   return {
     counter: counter,
     resend: resend,
@@ -18455,7 +18512,14 @@ var useSendPhoneConfirmation = function useSendPhoneConfirmation(_ref) {
     _ref$inputsConfig = _ref.inputsConfig,
     inputsConfig = _ref$inputsConfig === void 0 ? defaultInputsConfig : _ref$inputsConfig,
     _ref$inputPropsType = _ref.inputPropsType,
-    inputPropsType = _ref$inputPropsType === void 0 ? "object" : _ref$inputPropsType;
+    inputPropsType = _ref$inputPropsType === void 0 ? "object" : _ref$inputPropsType,
+    _ref$createNotificati = _ref.createNotification,
+    createNotification = _ref$createNotificati === void 0 ? function () {
+      return {};
+    } : _ref$createNotificati,
+    _ref$notificationDura = _ref.notificationDuration,
+    notificationDuration = _ref$notificationDura === void 0 ? 10000 : _ref$notificationDura;
+    _ref.translate;
   var _profilesApi$useSendP = profilesApi.useSendPhoneConfirmationMutation(),
     _profilesApi$useSendP2 = _slicedToArray(_profilesApi$useSendP, 2),
     sendPhoneConfirmation = _profilesApi$useSendP2[0],
@@ -18485,6 +18549,14 @@ var useSendPhoneConfirmation = function useSendPhoneConfirmation(_ref) {
     inputsValues = _useForm.inputsValues,
     onSubmit = _useForm.onSubmit,
     inputsSetErrors = _useForm.setErrors;
+  React.useEffect(function () {
+    if (isSuccess) {
+      createNotification({
+        title: "Code was sent to your phone",
+        duration: notificationDuration
+      });
+    }
+  }, [isSuccess]);
   return {
     inputs: inputs,
     inputsErrors: inputsErrors,
@@ -18518,8 +18590,17 @@ var useConfirmPhone = function useConfirmPhone(_ref) {
     _ref$useRouter = _ref.useRouter,
     useRouter = _ref$useRouter === void 0 ? function () {
       return {};
-    } : _ref$useRouter;
-    _ref.createNotification;
+    } : _ref$useRouter,
+    _ref$createNotificati = _ref.createNotification,
+    createNotification = _ref$createNotificati === void 0 ? function () {
+      return {};
+    } : _ref$createNotificati,
+    _ref$translate = _ref.translate,
+    translate = _ref$translate === void 0 ? function (string) {
+      return string;
+    } : _ref$translate,
+    _ref$notificationDura = _ref.notificationDuration,
+    notificationDuration = _ref$notificationDura === void 0 ? 10000 : _ref$notificationDura;
   var router = useRouter();
   var user = useSelector(function (state) {
     var _state$auth;
@@ -18656,6 +18737,10 @@ var useConfirmPhone = function useConfirmPhone(_ref) {
     if (!data) {
       return;
     }
+    createNotification({
+      title: translate("Phone confirmed succesfully"),
+      duration: notificationDuration
+    });
     if (router !== null && router !== void 0 && router.push) {
       nextAuthHandler({
         router: router,
@@ -18663,6 +18748,14 @@ var useConfirmPhone = function useConfirmPhone(_ref) {
       });
     }
   }, [confirmPhoneResult, router]);
+  React.useEffect(function () {
+    if (resendResult !== null && resendResult !== void 0 && resendResult.isSuccess) {
+      createNotification({
+        title: translate("Code was sent to your phone"),
+        duration: notificationDuration
+      });
+    }
+  }, [resendResult]);
   return {
     counter: counter,
     resend: resend,
@@ -18757,8 +18850,17 @@ var authSlice = /*#__PURE__*/Object.freeze({
 
 var useUpdateMe = function useUpdateMe(_ref) {
   var profilesApi = _ref.profilesApi,
-    useSelector = _ref.useSelector;
-    _ref.createNotification;
+    useSelector = _ref.useSelector,
+    _ref$createNotificati = _ref.createNotification,
+    createNotification = _ref$createNotificati === void 0 ? function () {
+      return {};
+    } : _ref$createNotificati,
+    _ref$translate = _ref.translate,
+    translate = _ref$translate === void 0 ? function (string) {
+      return string;
+    } : _ref$translate,
+    _ref$notificationDura = _ref.notificationDuration,
+    notificationDuration = _ref$notificationDura === void 0 ? 10000 : _ref$notificationDura;
   var accountId = useSelector(selectors.selectAccountId); //?
   var _profilesApi$useUpdat = profilesApi.useUpdateMeMutation(),
     _profilesApi$useUpdat2 = _slicedToArray(_profilesApi$useUpdat, 2),
@@ -18804,6 +18906,14 @@ var useUpdateMe = function useUpdateMe(_ref) {
     }));
     return _onSubmit.apply(this, arguments);
   }
+  React.useEffect(function () {
+    if (updateMeResult !== null && updateMeResult !== void 0 && updateMeResult.isSuccess) {
+      createNotification({
+        title: translate("Profile succesfully updated"),
+        duration: notificationDuration
+      });
+    }
+  }, [updateMeResult]);
   return {
     inputs: inputs,
     methods: methods,
@@ -18850,7 +18960,13 @@ var useSetOtp = function useSetOtp(_ref) {
     _ref$createNotificati = _ref.createNotification,
     createNotification = _ref$createNotificati === void 0 ? function () {
       return {};
-    } : _ref$createNotificati;
+    } : _ref$createNotificati,
+    _ref$translate = _ref.translate,
+    translate = _ref$translate === void 0 ? function (string) {
+      return string;
+    } : _ref$translate,
+    _ref$notificationDura = _ref.notificationDuration,
+    notificationDuration = _ref$notificationDura === void 0 ? 10000 : _ref$notificationDura;
   var accountId = useSelector(selectors.selectAccountId); //?
   var generateOtpSecretResult = profilesApi.useGenerateOtpSecretQuery({
     id: accountId
@@ -18929,10 +19045,8 @@ var useSetOtp = function useSetOtp(_ref) {
     var data = setOtpResult.data;
     if (data !== null && data !== void 0 && data.user) {
       createNotification({
-        title: "Multi-Factor authentification was setted",
-        contentContainerClassName: "@pg pl-2 pr-4 py-4 @bxsw shadow-lg @ttc text-gray-base",
-        containerClassName: "@ow overflow-visible",
-        duration: 40000
+        title: translate("Multi-Factor authentification was setted"),
+        duration: notificationDuration
       });
     }
   }, [setOtpResult]);
@@ -18951,7 +19065,13 @@ var useDeleteOtp = function useDeleteOtp(_ref) {
     createNotification = _ref$createNotificati === void 0 ? function () {
       return {};
     } : _ref$createNotificati,
-    useSelector = _ref.useSelector;
+    useSelector = _ref.useSelector,
+    _ref$translate = _ref.translate,
+    translate = _ref$translate === void 0 ? function (string) {
+      return string;
+    } : _ref$translate,
+    _ref$notificationDura = _ref.notificationDuration,
+    notificationDuration = _ref$notificationDura === void 0 ? 10000 : _ref$notificationDura;
   var accountId = useSelector(selectors.selectAccountId); //?
   var _profilesApi$useDelet = profilesApi.useDeleteOtpMutation({}),
     _profilesApi$useDelet2 = _slicedToArray(_profilesApi$useDelet, 2),
@@ -19003,13 +19123,10 @@ var useDeleteOtp = function useDeleteOtp(_ref) {
     return _onSubmit.apply(this, arguments);
   }
   React.useEffect(function () {
-    var data = deleteOtpResult.data;
-    if (data !== null && data !== void 0 && data.user) {
+    if (deleteOtpResult !== null && deleteOtpResult !== void 0 && deleteOtpResult.isSuccess) {
       createNotification({
-        title: "Password successfully changed",
-        contentContainerClassName: "@pg pl-2 pr-4 py-4 @bxsw shadow-lg @ttc text-gray-base",
-        containerClassName: "@ow overflow-visible",
-        duration: 40000
+        title: translate("OTP succesfully deleted"),
+        duration: notificationDuration
       });
     }
   }, [deleteOtpResult]);
@@ -19026,8 +19143,17 @@ var useCheckOtp = function useCheckOtp(_ref) {
     _ref$useRouter = _ref.useRouter,
     useRouter = _ref$useRouter === void 0 ? function () {
       return {};
-    } : _ref$useRouter;
-    _ref.createNotification;
+    } : _ref$useRouter,
+    _ref$createNotificati = _ref.createNotification,
+    createNotification = _ref$createNotificati === void 0 ? function () {
+      return {};
+    } : _ref$createNotificati,
+    _ref$translate = _ref.translate,
+    translate = _ref$translate === void 0 ? function (string) {
+      return string;
+    } : _ref$translate,
+    _ref$notificationDura = _ref.notificationDuration,
+    notificationDuration = _ref$notificationDura === void 0 ? 10000 : _ref$notificationDura;
   var router = useRouter();
   var user = useSelector(function (state) {
     var _state$auth;
@@ -19091,6 +19217,10 @@ var useCheckOtp = function useCheckOtp(_ref) {
     if (!data) {
       return;
     }
+    createNotification({
+      title: translate("One-time-password authentification passed succesfully"),
+      duration: notificationDuration
+    });
     if (router !== null && router !== void 0 && router.push) {
       nextAuthHandler({
         router: router,
@@ -19109,8 +19239,17 @@ var useCheckOtp = function useCheckOtp(_ref) {
 };
 
 var useChangePassword = function useChangePassword(_ref) {
-  var profilesApi = _ref.profilesApi;
-    _ref.createNotification;
+  var profilesApi = _ref.profilesApi,
+    _ref$createNotificati = _ref.createNotification,
+    createNotification = _ref$createNotificati === void 0 ? function () {
+      return {};
+    } : _ref$createNotificati,
+    _ref$notificationDura = _ref.notificationDuration,
+    notificationDuration = _ref$notificationDura === void 0 ? 10000 : _ref$notificationDura,
+    _ref$translate = _ref.translate,
+    translate = _ref$translate === void 0 ? function (string) {
+      return string;
+    } : _ref$translate;
   var _profilesApi$useChang = profilesApi.useChangePasswordMutation({}),
     _profilesApi$useChang2 = _slicedToArray(_profilesApi$useChang, 2),
     changePassword = _profilesApi$useChang2[0],
@@ -19159,6 +19298,14 @@ var useChangePassword = function useChangePassword(_ref) {
   });
   var handleSubmit = methods.handleSubmit,
     watch = methods.watch;
+  React.useEffect(function () {
+    if (changePasswordResult.isSuccess) {
+      createNotification({
+        title: translate("Password was successfully changed"),
+        duration: notificationDuration
+      });
+    }
+  }, [changePasswordResult]);
   var watchData = watch();
   React.useEffect(function () {
     // console.log(`🚀 ~ useEffect ~ watchData`, watchData);
@@ -19194,30 +19341,58 @@ var useChangePassword = function useChangePassword(_ref) {
 
 var useCheckFactors = function useCheckFactors(_ref) {
   var _nextAuthFactor$handl;
-  var profilesApi = _ref.profilesApi;
-    _ref.ping;
-    _ref.initialPing;
-    _ref.resendOnMount;
-    var useSelector = _ref.useSelector,
+  var profilesApi = _ref.profilesApi,
+    _ref$ping = _ref.ping,
+    ping = _ref$ping === void 0 ? 30 : _ref$ping,
+    _ref$initialPing = _ref.initialPing,
+    initialPing = _ref$initialPing === void 0 ? 0 : _ref$initialPing,
+    _ref$resendOnMount = _ref.resendOnMount,
+    resendOnMount = _ref$resendOnMount === void 0 ? false : _ref$resendOnMount,
+    useSelector = _ref.useSelector,
     _ref$useRouter = _ref.useRouter,
     useRouter = _ref$useRouter === void 0 ? function () {
       return {};
-    } : _ref$useRouter;
-    _ref.createNotification;
+    } : _ref$useRouter,
+    _ref$createNotificati = _ref.createNotification,
+    createNotification = _ref$createNotificati === void 0 ? function () {
+      return {};
+    } : _ref$createNotificati,
+    _ref$notificationDura = _ref.notificationDuration,
+    notificationDuration = _ref$notificationDura === void 0 ? 10000 : _ref$notificationDura,
+    _ref$translate = _ref.translate,
+    translate = _ref$translate === void 0 ? function (string) {
+      return string;
+    } : _ref$translate;
   var router = useRouter();
   var user = useSelector(function (state) {
     var _state$auth;
     return (_state$auth = state.auth) === null || _state$auth === void 0 ? void 0 : _state$auth.user;
   }); //?
+  var _useState = React.useState(initialPing),
+    emailCounter = _useState[0],
+    setEmailCounter = _useState[1];
+  var _useState2 = React.useState(initialPing),
+    phoneCounter = _useState2[0],
+    setPhoneCounter = _useState2[1];
   var nextAuthFactor = useSelector(function (state) {
     var _state$auth2;
     return (_state$auth2 = state.auth) === null || _state$auth2 === void 0 ? void 0 : _state$auth2.nextAuthFactor;
   }); //?
-
+  var _useState3 = React.useState(!resendOnMount),
+    onMountEmailWasSent = _useState3[0],
+    setOnMountEmailWasSent = _useState3[1];
   var _profilesApi$useCheck = profilesApi.useCheckFactorsMutation(),
     _profilesApi$useCheck2 = _slicedToArray(_profilesApi$useCheck, 2),
     checkFactors = _profilesApi$useCheck2[0],
     checkFactorsResult = _profilesApi$useCheck2[1];
+  var _profilesApi$useSendE = profilesApi.useSendEmailConfirmationMutation(),
+    _profilesApi$useSendE2 = _slicedToArray(_profilesApi$useSendE, 2),
+    sendEmailConfirmation = _profilesApi$useSendE2[0],
+    resendEmailConfirmationResult = _profilesApi$useSendE2[1];
+  var _profilesApi$useSendP = profilesApi.useSendPhoneConfirmationMutation(),
+    _profilesApi$useSendP2 = _slicedToArray(_profilesApi$useSendP, 2),
+    sendPhoneConfirmation = _profilesApi$useSendP2[0],
+    resendPhoneConfirmationResult = _profilesApi$useSendP2[1];
   var inputs = React.useMemo(function () {
     var localInputs = [];
     if (!user) {
@@ -19254,11 +19429,13 @@ var useCheckFactors = function useCheckFactors(_ref) {
   });
   var handleSubmit = methods.handleSubmit,
     watch = methods.watch,
-    setValue = methods.setValue;
+    setValue = methods.setValue,
+    setError = methods.setError;
   var watchData = watch();
-  React.useEffect(function () {
-    // console.log(`🚀 ~ useEffect ~ watchData`, watchData);
-  }, [watchData]);
+
+  // useEffect(() => {
+  //   console.log(`🚀 ~ useCheckFactors ~ useEffect ~ watchData`, watchData);
+  // }, [watchData]);
   function onSubmit(_x) {
     return _onSubmit.apply(this, arguments);
   }
@@ -19291,10 +19468,16 @@ var useCheckFactors = function useCheckFactors(_ref) {
   }
   React.useEffect(function () {
     var data = checkFactorsResult.data;
-    console.log("\uD83D\uDE80 ~ useEffect ~ data", data);
+
+    // console.log(`🚀 ~ useEffect ~ data`, data);
+
     if (!data) {
       return;
     }
+    createNotification({
+      title: translate("Multi factor authentification passed succesfully"),
+      duration: notificationDuration
+    });
     if (router !== null && router !== void 0 && router.push) {
       nextAuthHandler({
         router: router,
@@ -19303,9 +19486,100 @@ var useCheckFactors = function useCheckFactors(_ref) {
     }
   }, [checkFactorsResult, router]);
   React.useEffect(function () {
+    if (resendOnMount && !onMountEmailWasSent && Object.keys(watchData).length > 0) {
+      // console.log(`🚀 ~ useEffect ~ watchData`, watchData);
+
+      if (watchData !== null && watchData !== void 0 && watchData.phone) {
+        resendEmail();
+      }
+      if (watchData !== null && watchData !== void 0 && watchData.email) {
+        resendPhone();
+      }
+      setOnMountEmailWasSent(true);
+    }
+  }, [watchData, onMountEmailWasSent, user]);
+  React.useEffect(function () {
+    if (emailCounter > 0) {
+      var timer = setInterval(function () {
+        return setEmailCounter(emailCounter - 1);
+      }, 1000);
+      return function () {
+        return clearInterval(timer);
+      };
+    }
+  }, [emailCounter]);
+  React.useEffect(function () {
+    if (phoneCounter > 0) {
+      var timer = setInterval(function () {
+        return setPhoneCounter(phoneCounter - 1);
+      }, 1000);
+      return function () {
+        return clearInterval(timer);
+      };
+    }
+  }, [phoneCounter]);
+  var resendEmail = React.useCallback(function () {
+    if (emailCounter > 0) {
+      return;
+    }
+    if (!watchData.email) {
+      console.error("Empty email address field");
+      setError("email", {
+        type: "required",
+        message: "Empty email field"
+      });
+      return;
+    }
+    setEmailCounter(ping);
+    setOnMountEmailWasSent(true);
+    sendEmailConfirmation({
+      data: {
+        email: watchData.email
+      }
+    });
+  }, [sendEmailConfirmation, watchData === null || watchData === void 0 ? void 0 : watchData.email]);
+  var resendPhone = React.useCallback(function () {
+    if (phoneCounter > 0) {
+      return;
+    }
+    if (!watchData.phone) {
+      console.error("Empty phone field");
+      setError("phone", {
+        type: "required",
+        message: "Empty phone field"
+      });
+      return;
+    }
+    setPhoneCounter(ping);
+    setOnMountEmailWasSent(true);
+    sendPhoneConfirmation({
+      data: {
+        phone: watchData.phone
+      }
+    });
+  }, [sendEmailConfirmation, watchData === null || watchData === void 0 ? void 0 : watchData.email]);
+  React.useEffect(function () {
+    if (resendEmailConfirmationResult.isSuccess) {
+      createNotification({
+        title: translate("Code was sent to your email"),
+        duration: notificationDuration
+      });
+    }
+  }, [resendEmailConfirmationResult]);
+  React.useEffect(function () {
+    if (resendPhoneConfirmationResult.isSuccess) {
+      createNotification({
+        title: translate("Code was sent to your phone"),
+        duration: notificationDuration
+      });
+    }
+  }, [resendPhoneConfirmationResult]);
+  React.useEffect(function () {
     if (user) {
-      if (user.id) {
+      if (!watchData.email || !watchData.id || !watchData.phone || !watchData.current) {
         setValue("id", user.id);
+        setValue("email", user.email);
+        setValue("phone", user.phone);
         setValue("current", nextAuthFactor);
         return;
       }
@@ -19315,7 +19589,13 @@ var useCheckFactors = function useCheckFactors(_ref) {
     inputs: inputs,
     methods: methods,
     submitFunction: handleSubmit(onSubmit),
-    checkFactorsResult: checkFactorsResult
+    checkFactorsResult: checkFactorsResult,
+    emailCounter: emailCounter,
+    resendEmail: resendEmail,
+    resendEmailConfirmationResult: resendEmailConfirmationResult,
+    phoneCounter: phoneCounter,
+    resendPhone: resendPhone,
+    resendPhoneConfirmationResult: resendPhoneConfirmationResult
   };
 };
 
@@ -19551,57 +19831,48 @@ var Notification = /*#__PURE__*/React__default["default"].forwardRef(function (p
     _props$message = props.message,
     message = _props$message === void 0 ? "" : _props$message,
     _props$remove = props.remove,
-    remove = _props$remove === void 0 ? function () {} : _props$remove,
-    _props$containerClass = props.containerClassName,
-    containerClassName = _props$containerClass === void 0 ? "" : _props$containerClass,
-    _props$contentContain = props.contentContainerClassName,
-    contentContainerClassName = _props$contentContain === void 0 ? "" : _props$contentContain,
-    _props$headerClassNam = props.headerClassName,
-    headerClassName = _props$headerClassNam === void 0 ? "" : _props$headerClassNam,
-    _props$bodyClassName = props.bodyClassName,
-    bodyClassName = _props$bodyClassName === void 0 ? "" : _props$bodyClassName,
+    remove = _props$remove === void 0 ? function () {
+      return {};
+    } : _props$remove,
     styles = props.styles,
     Child = props.Child,
     CloseIcon = props.CloseIcon,
     _props$showDefault = props.showDefault,
     showDefault = _props$showDefault === void 0 ? true : _props$showDefault;
-  var srContainerClassName = useStyleRewriter$6(alertContainerClassName, containerClassName);
-  var srContentContainerClassName = useStyleRewriter$6(contentWrapperClassName, contentContainerClassName);
-  var srHeaderClassName = useStyleRewriter$6(alertHeaderClassName, headerClassName);
-  var srBodyClassName = useStyleRewriter$6(alertBodyClassName, bodyClassName);
   var CloseIconComp = CloseIcon ? function (props) {
     return __jsx$r(CloseIcon, props);
   } : function (props) {
     return __jsx$r(CloseButton, props);
   };
   return __jsx$r(web.animated.div, {
-    className: srContainerClassName,
+    className: "notification_container",
     style: _objectSpread$5({}, styles)
   }, __jsx$r("div", {
-    className: srContentContainerClassName,
+    className: "wrapper",
     ref: ref
   }, Child ? __jsx$r(Child, props) : null, showDefault ? __jsx$r("div", {
-    className: "flex flex-col items-start ".concat(message ? "gap-2" : "")
+    className: "body",
+    "data-message": message ? true : false,
+    "data-heading": title ? true : false
   }, __jsx$r("div", {
-    className: "markdown ".concat(srHeaderClassName)
+    className: "heading",
+    "data-heading": title ? true : false
   }, __jsx$r(ReactMarkdown, null, title)), __jsx$r("div", {
-    className: "markdown ".concat(srBodyClassName)
+    className: "message",
+    "data-message": message ? true : false
   }, __jsx$r(ReactMarkdown, null, message))) : null, __jsx$r(CloseIconComp, {
     remove: remove
   })));
 });
-var alertContainerClassName = "\n  @pn relative\n  @ow overflow-hidden";
-var contentWrapperClassName = "\n  @pn relative\n  @dy flex\n  @fxd flex-row\n  @ani items-start\n  @brr rounded-sm\n  @bxsw drop-shadow-md\n  @pg pr-8 py-2\n  @bdc bg-white";
-var alertHeaderClassName = "\n  @pg pl-2\n  @fts font-sm";
-var alertBodyClassName = "\n  @pg pl-2\n  @fts text-xs";
 var CloseButton = function CloseButton(_ref) {
   var _ref$remove = _ref.remove,
-    remove = _ref$remove === void 0 ? function () {} : _ref$remove;
+    remove = _ref$remove === void 0 ? function () {
+      return {};
+    } : _ref$remove;
   return __jsx$r(SmartButton, {
     onClick: remove,
-    className: "@pn absolute @it right-1 top-1 @ttc text-black @wh w-3 @zi z-50 @cr cursor-pointer"
+    className: "close_button"
   }, __jsx$r("svg", {
-    className: "fill-current w-3",
     viewBox: "0 0 20 20",
     fill: "none",
     xmlns: "http://www.w3.org/2000/svg"
@@ -19613,15 +19884,17 @@ var CloseButton = function CloseButton(_ref) {
 };
 
 var __jsx$q = React__default["default"].createElement;
-var notificationsContainerClassName = "z-50 fixed right-0 flex items-end flex-col mx-4";
 var defaultNotificationHeight = 44;
 var Overlay = function Overlay(_ref) {
   var _ref$notifications = _ref.notifications,
     notifications = _ref$notifications === void 0 ? [] : _ref$notifications,
     _ref$remove = _ref.remove,
-    _remove = _ref$remove === void 0 ? function () {} : _ref$remove,
+    _remove = _ref$remove === void 0 ? function () {
+      return {};
+    } : _ref$remove,
     _ref$isFromTop = _ref.isFromTop,
-    isFromTop = _ref$isFromTop === void 0 ? false : _ref$isFromTop;
+    isFromTop = _ref$isFromTop === void 0 ? false : _ref$isFromTop,
+    className = _ref.className;
   // use weakmap to get div height for alert items
   //
   // prevents memory leaks by garbage collecting removed items
@@ -19718,7 +19991,7 @@ var Overlay = function Overlay(_ref) {
   };
   var transitions = web.useTransition(notifications, transitionConfigWithHeightAnimation);
   return __jsx$q("div", {
-    className: "".concat(notificationsContainerClassName, " ").concat(isFromTop ? "top-0 mt-4" : "bottom-0 mb-4")
+    className: "spring_notification ".concat(className, " ").concat(isFromTop ? "is_from_top" : "")
   }, transitions(function (styles, item) {
     return __jsx$q(Notification, _extends({
       key: item.id,
