@@ -17923,6 +17923,7 @@ var nextAuthHandler = function nextAuthHandler(_ref) {
   if (data.user && data !== null && data !== void 0 && data.nextAuthFactor) {
     if (data.nextAuthFactor.type === "one") {
       if (Array.isArray(data.nextAuthFactor.handler)) {
+        console.log("\uD83D\uDE80 ~ nextAuthHandler ~ data.nextAuthFactor.handler", data.nextAuthFactor.handler);
         var user = data.user;
         var _iterator = _createForOfIteratorHelper$1(data.nextAuthFactor.handler),
           _step;
@@ -17948,6 +17949,9 @@ var nextAuthHandler = function nextAuthHandler(_ref) {
           _iterator.f();
         }
       }
+    } else if (data.nextAuthFactor.type === "parallel") {
+      router === null || router === void 0 ? void 0 : router.push("/auth/check-factors");
+      return;
     }
   }
   if ((data === null || data === void 0 ? void 0 : (_data$nextAuthFactor = data.nextAuthFactor) === null || _data$nextAuthFactor === void 0 ? void 0 : _data$nextAuthFactor.hander) === "auth.emailConfirmation") {
@@ -18373,6 +18377,7 @@ var useConfirmEmail = function useConfirmEmail(_ref) {
     if (user) {
       if (user.email) {
         setValue("email", user.email);
+        setValue("id", user.id);
         return;
       }
     }
@@ -18597,6 +18602,7 @@ var useConfirmPhone = function useConfirmPhone(_ref) {
     if (user) {
       if (user.phone) {
         setValue("phone", user.phone);
+        setValue("id", user.id);
         return;
       }
     }
@@ -18706,6 +18712,9 @@ const sliceCreator = (profilesApi) => {
                 setUser(state, action);
             })
                 .addMatcher(profilesApi.endpoints.confirmPhone.matchFulfilled, (state, action) => {
+                setUser(state, action);
+            })
+                .addMatcher(profilesApi.endpoints.checkFactors.matchFulfilled, (state, action) => {
                 setUser(state, action);
             })
                 .addMatcher(profilesApi.endpoints.getMe.matchFulfilled, (state, action) => {
@@ -19183,6 +19192,133 @@ var useChangePassword = function useChangePassword(_ref) {
   };
 };
 
+var useCheckFactors = function useCheckFactors(_ref) {
+  var _nextAuthFactor$handl;
+  var profilesApi = _ref.profilesApi;
+    _ref.ping;
+    _ref.initialPing;
+    _ref.resendOnMount;
+    var useSelector = _ref.useSelector,
+    _ref$useRouter = _ref.useRouter,
+    useRouter = _ref$useRouter === void 0 ? function () {
+      return {};
+    } : _ref$useRouter;
+    _ref.createNotification;
+  var router = useRouter();
+  var user = useSelector(function (state) {
+    var _state$auth;
+    return (_state$auth = state.auth) === null || _state$auth === void 0 ? void 0 : _state$auth.user;
+  }); //?
+  var nextAuthFactor = useSelector(function (state) {
+    var _state$auth2;
+    return (_state$auth2 = state.auth) === null || _state$auth2 === void 0 ? void 0 : _state$auth2.nextAuthFactor;
+  }); //?
+
+  var _profilesApi$useCheck = profilesApi.useCheckFactorsMutation(),
+    _profilesApi$useCheck2 = _slicedToArray(_profilesApi$useCheck, 2),
+    checkFactors = _profilesApi$useCheck2[0],
+    checkFactorsResult = _profilesApi$useCheck2[1];
+  var inputs = React.useMemo(function () {
+    var localInputs = [];
+    if (!user) {
+      return localInputs;
+    }
+    if (user.isOtpConfirmationEnabled && nextAuthFactor.handler.includes("user.checkOtp")) {
+      localInputs.push({
+        component: "text",
+        name: "user.checkOtp",
+        label: "OTP code",
+        placeholder: "Type your otp code"
+      });
+    }
+    if (user.isPhoneConfirmationEnabled && nextAuthFactor.handler.includes("auth.phoneConfirmation")) {
+      localInputs.push({
+        component: "text",
+        name: "auth.phoneConfirmation",
+        label: "Phone code",
+        placeholder: "Type your phone code"
+      });
+    }
+    if (user.isEmailConfirmationEnabled && nextAuthFactor.handler.includes("auth.emailConfirmation")) {
+      localInputs.push({
+        component: "text",
+        name: "auth.emailConfirmation",
+        label: "Email code",
+        placeholder: "Type your email code"
+      });
+    }
+    return localInputs;
+  }, [nextAuthFactor === null || nextAuthFactor === void 0 ? void 0 : (_nextAuthFactor$handl = nextAuthFactor.handler) === null || _nextAuthFactor$handl === void 0 ? void 0 : _nextAuthFactor$handl.length, user === null || user === void 0 ? void 0 : user.id]);
+  var methods = reactHookForm.useForm({
+    mode: "all"
+  });
+  var handleSubmit = methods.handleSubmit,
+    watch = methods.watch,
+    setValue = methods.setValue;
+  var watchData = watch();
+  React.useEffect(function () {
+    // console.log(`🚀 ~ useEffect ~ watchData`, watchData);
+  }, [watchData]);
+  function onSubmit(_x) {
+    return _onSubmit.apply(this, arguments);
+  }
+  function _onSubmit() {
+    _onSubmit = _asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(data) {
+      var headers;
+      return regenerator.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              headers = {};
+              if (user !== null && user !== void 0 && user.nextAuthFactorKey) {
+                headers = {
+                  "Next-Auth-Factor-Key": user.nextAuthFactorKey
+                };
+              }
+              checkFactors({
+                data: data,
+                files: data.files,
+                headers: headers
+              });
+            case 3:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+    return _onSubmit.apply(this, arguments);
+  }
+  React.useEffect(function () {
+    var data = checkFactorsResult.data;
+    console.log("\uD83D\uDE80 ~ useEffect ~ data", data);
+    if (!data) {
+      return;
+    }
+    if (router !== null && router !== void 0 && router.push) {
+      nextAuthHandler({
+        router: router,
+        data: data
+      });
+    }
+  }, [checkFactorsResult, router]);
+  React.useEffect(function () {
+    if (user) {
+      if (user.id) {
+        setValue("id", user.id);
+        setValue("current", nextAuthFactor);
+        return;
+      }
+    }
+  }, [user, setValue]);
+  return {
+    inputs: inputs,
+    methods: methods,
+    submitFunction: handleSubmit(onSubmit),
+    checkFactorsResult: checkFactorsResult
+  };
+};
+
 var useAuth = {
   useSendEmailConfirmation: useSendEmailConfirmation,
   useForgotPassword: useForgotPassword,
@@ -19197,7 +19333,8 @@ var useAuth = {
   useSetOtp: useSetOtp,
   useDeleteOtp: useDeleteOtp,
   useCheckOtp: useCheckOtp,
-  useChangePassword: useChangePassword
+  useChangePassword: useChangePassword,
+  useCheckFactors: useCheckFactors
 };
 
 function ownKeys$6(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
@@ -33335,6 +33472,21 @@ function createProfilesApi(backendServiceApi) {
           },
           transformResponse: transformResponseItem
         }),
+        checkFactors: build.mutation({
+          query: function query() {
+            var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+            var headers = params.headers;
+            var formData = prepareFormDataToSend(params);
+            console.log("\uD83D\uDE80 ~ createProfilesApi ~ params", params);
+            return {
+              url: "auth/check-factors",
+              method: "POST",
+              headers: headers,
+              body: formData
+            };
+          },
+          transformResponse: transformResponseItem
+        }),
         forgotPassword: build.mutation({
           query: function query(params) {
             var formData = prepareFormDataToSend(params);
@@ -33466,7 +33618,8 @@ function createProfilesApi(backendServiceApi) {
     useRegistrationMutation = profilesApi.useRegistrationMutation,
     useGenerateOtpSecretQuery = profilesApi.useGenerateOtpSecretQuery,
     useSetOtpMutation = profilesApi.useSetOtpMutation,
-    useDeleteOtpMutation = profilesApi.useDeleteOtpMutation;
+    useDeleteOtpMutation = profilesApi.useDeleteOtpMutation,
+    useCheckFactorsMutation = profilesApi.useCheckFactorsMutation;
   return {
     profilesApi: profilesApi,
     hooks: {
@@ -33487,7 +33640,8 @@ function createProfilesApi(backendServiceApi) {
       useRegistrationMutation: useRegistrationMutation,
       useGenerateOtpSecretQuery: useGenerateOtpSecretQuery,
       useSetOtpMutation: useSetOtpMutation,
-      useDeleteOtpMutation: useDeleteOtpMutation
+      useDeleteOtpMutation: useDeleteOtpMutation,
+      useCheckFactorsMutation: useCheckFactorsMutation
     }
   };
 }

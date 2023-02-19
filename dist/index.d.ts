@@ -1,3 +1,4 @@
+/// <reference types="react" />
 import * as apiUtils from "./api";
 import * as formatters from "./formatters";
 import * as vanilla from "./vanilla";
@@ -317,6 +318,20 @@ declare const _default: {
             methods: import("react-hook-form").UseFormReturn<import("react-hook-form").FieldValues, any>;
             submitFunction: (e?: import("react").BaseSyntheticEvent<object, any, any>) => Promise<void>;
             changePasswordResult: any;
+        };
+        useCheckFactors: ({ profilesApi, ping, initialPing, resendOnMount, useSelector, useRouter, createNotification, }: {
+            profilesApi: any;
+            ping?: number;
+            initialPing?: number;
+            resendOnMount?: boolean;
+            useSelector: any;
+            useRouter?: () => {};
+            createNotification?: () => {};
+        }) => {
+            inputs: any[];
+            methods: import("react-hook-form").UseFormReturn<import("react-hook-form").FieldValues, any>;
+            submitFunction: (e?: import("react").BaseSyntheticEvent<object, any, any>) => Promise<void>;
+            checkFactorsResult: any;
         };
         useDetectMouseover: (el: any, initialState: any) => any[];
         useDetectOutsideClick: (trigger: any, initialState: any) => any[];

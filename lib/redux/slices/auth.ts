@@ -75,6 +75,12 @@ export const sliceCreator = (profilesApi) => {
           }
         )
         .addMatcher(
+          profilesApi.endpoints.checkFactors.matchFulfilled,
+          (state, action) => {
+            setUser(state, action);
+          }
+        )
+        .addMatcher(
           profilesApi.endpoints.getMe.matchFulfilled,
           (state, action) => {
             state.id = action.payload.id;
