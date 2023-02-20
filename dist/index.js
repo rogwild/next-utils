@@ -20105,7 +20105,7 @@ var Overlay = function Overlay(_ref) {
   };
   var transitions = web.useTransition(notifications, transitionConfigWithHeightAnimation);
   return __jsx$q("div", {
-    className: "spring_notification ".concat(className, " ").concat(isFromTop ? "is_from_top" : "")
+    className: "spring_notification ".concat(className ? className : "", " ").concat(isFromTop ? "is_from_top" : "")
   }, transitions(function (styles, item) {
     return __jsx$q(Notification, _extends({
       key: item.id,
