@@ -17837,10 +17837,68 @@ const useDebounce = (value, delay) => {
     return depouncedValue;
 };
 
+function _createForOfIteratorHelper$1(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray$1(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+function _unsupportedIterableToArray$1(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray$1(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$1(o, minLen); }
+function _arrayLikeToArray$1(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+var nextAuthHandler = function nextAuthHandler(_ref) {
+  var _data$nextAuthFactor, _data$nextAuthFactor2, _data$nextAuthFactor3;
+  var data = _ref.data,
+    router = _ref.router;
+  if (data.user && data !== null && data !== void 0 && data.nextAuthFactor) {
+    if (data.nextAuthFactor.type === "one") {
+      if (Array.isArray(data.nextAuthFactor.handler)) {
+        var user = data.user;
+        var _iterator = _createForOfIteratorHelper$1(data.nextAuthFactor.handler),
+          _step;
+        try {
+          for (_iterator.s(); !(_step = _iterator.n()).done;) {
+            var authFactor = _step.value;
+            if (authFactor === "auth.emailConfirmation" && user.isEmailConfirmationEnabled) {
+              router.push("/auth/confirm-email");
+              return;
+            }
+            if (authFactor === "auth.phoneConfirmation" && user.isPhoneConfirmationEnabled) {
+              router.push("/auth/confirm-phone");
+              return;
+            }
+            if (authFactor === "user.checkOtp" && user.isOtpConfirmationEnabled) {
+              router.push("/auth/otp");
+              return;
+            }
+          }
+        } catch (err) {
+          _iterator.e(err);
+        } finally {
+          _iterator.f();
+        }
+      }
+    } else if (data.nextAuthFactor.type === "parallel") {
+      router === null || router === void 0 ? void 0 : router.push("/auth/check-factors");
+      return;
+    }
+  }
+  if ((data === null || data === void 0 ? void 0 : (_data$nextAuthFactor = data.nextAuthFactor) === null || _data$nextAuthFactor === void 0 ? void 0 : _data$nextAuthFactor.handler) === "auth.emailConfirmation") {
+    router.push("/auth/confirm-email");
+    return;
+  } else if ((data === null || data === void 0 ? void 0 : (_data$nextAuthFactor2 = data.nextAuthFactor) === null || _data$nextAuthFactor2 === void 0 ? void 0 : _data$nextAuthFactor2.handler) === "auth.phoneConfirmation") {
+    router === null || router === void 0 ? void 0 : router.push("/auth/confirm-phone");
+    return;
+  } else if ((data === null || data === void 0 ? void 0 : (_data$nextAuthFactor3 = data.nextAuthFactor) === null || _data$nextAuthFactor3 === void 0 ? void 0 : _data$nextAuthFactor3.handler) === "user.checkOtp") {
+    router === null || router === void 0 ? void 0 : router.push("/auth/otp");
+    return;
+  } else if (data !== null && data !== void 0 && data.emailConfirmed || data !== null && data !== void 0 && data.phoneConfirmed) {
+    router === null || router === void 0 ? void 0 : router.push("/auth/login");
+    return;
+  }
+};
+
 var useRegister = function useRegister(_ref) {
-  var profilesApi = _ref.profilesApi;
-    _ref.useRouter;
-    var _ref$createNotificati = _ref.createNotification,
+  var profilesApi = _ref.profilesApi,
+    _ref$useRouter = _ref.useRouter,
+    useRouter = _ref$useRouter === void 0 ? function () {
+      return {};
+    } : _ref$useRouter,
+    _ref$createNotificati = _ref.createNotification,
     createNotification = _ref$createNotificati === void 0 ? function () {
       return {};
     } : _ref$createNotificati,
@@ -17852,6 +17910,7 @@ var useRegister = function useRegister(_ref) {
     notificationDuration = _ref$notificationDura === void 0 ? 10000 : _ref$notificationDura,
     _ref$AdditionalHeader = _ref.AdditionalHeadersContext,
     AdditionalHeadersContext = _ref$AdditionalHeader === void 0 ? /*#__PURE__*/React.createContext(null) : _ref$AdditionalHeader;
+  var router = useRouter();
   var additionalHeaders = React.useContext(AdditionalHeadersContext);
   var inputs = React.useMemo(function () {
     return [{
@@ -17934,6 +17993,12 @@ var useRegister = function useRegister(_ref) {
       if (additionalHeaders !== null && additionalHeaders !== void 0 && additionalHeaders.headers) {
         additionalHeaders.setHeaders(null);
       }
+      if (router !== null && router !== void 0 && router.push) {
+        nextAuthHandler({
+          router: router,
+          data: registrationResult.data
+        });
+      }
     }
   }, [registrationResult]);
   return {
@@ -17942,58 +18007,6 @@ var useRegister = function useRegister(_ref) {
     submitFunction: handleSubmit(onSubmit),
     registrationResult: registrationResult
   };
-};
-
-function _createForOfIteratorHelper$1(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray$1(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
-function _unsupportedIterableToArray$1(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray$1(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$1(o, minLen); }
-function _arrayLikeToArray$1(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-var nextAuthHandler = function nextAuthHandler(_ref) {
-  var _data$nextAuthFactor, _data$nextAuthFactor2, _data$nextAuthFactor3;
-  var data = _ref.data,
-    router = _ref.router;
-  if (data.user && data !== null && data !== void 0 && data.nextAuthFactor) {
-    if (data.nextAuthFactor.type === "one") {
-      if (Array.isArray(data.nextAuthFactor.handler)) {
-        var user = data.user;
-        var _iterator = _createForOfIteratorHelper$1(data.nextAuthFactor.handler),
-          _step;
-        try {
-          for (_iterator.s(); !(_step = _iterator.n()).done;) {
-            var authFactor = _step.value;
-            if (authFactor === "auth.emailConfirmation" && user.isEmailConfirmationEnabled) {
-              router.push("/auth/confirm-email");
-              return;
-            }
-            if (authFactor === "auth.phoneConfirmation" && user.isPhoneConfirmationEnabled) {
-              router.push("/auth/confirm-phone");
-              return;
-            }
-            if (authFactor === "user.checkOtp" && user.isOtpConfirmationEnabled) {
-              router.push("/auth/otp");
-              return;
-            }
-          }
-        } catch (err) {
-          _iterator.e(err);
-        } finally {
-          _iterator.f();
-        }
-      }
-    } else if (data.nextAuthFactor.type === "parallel") {
-      router === null || router === void 0 ? void 0 : router.push("/auth/check-factors");
-      return;
-    }
-  }
-  if ((data === null || data === void 0 ? void 0 : (_data$nextAuthFactor = data.nextAuthFactor) === null || _data$nextAuthFactor === void 0 ? void 0 : _data$nextAuthFactor.handler) === "auth.emailConfirmation") {
-    router.push("/auth/confirm-email");
-    return;
-  } else if ((data === null || data === void 0 ? void 0 : (_data$nextAuthFactor2 = data.nextAuthFactor) === null || _data$nextAuthFactor2 === void 0 ? void 0 : _data$nextAuthFactor2.handler) === "auth.phoneConfirmation") {
-    router === null || router === void 0 ? void 0 : router.push("/auth/confirm-phone");
-    return;
-  } else if ((data === null || data === void 0 ? void 0 : (_data$nextAuthFactor3 = data.nextAuthFactor) === null || _data$nextAuthFactor3 === void 0 ? void 0 : _data$nextAuthFactor3.handler) === "user.checkOtp") {
-    router === null || router === void 0 ? void 0 : router.push("/auth/otp");
-    return;
-  }
 };
 
 var useLogin = function useLogin(_ref) {
@@ -18068,7 +18081,11 @@ var useLogin = function useLogin(_ref) {
     return _onSubmit.apply(this, arguments);
   }
   React.useEffect(function () {
+    var _loginWithEmailAndPas, _loginWithEmailAndPas2, _loginWithEmailAndPas3;
     var data = loginWithEmailAndPasswordResult.data;
+    if ((loginWithEmailAndPasswordResult === null || loginWithEmailAndPasswordResult === void 0 ? void 0 : (_loginWithEmailAndPas = loginWithEmailAndPasswordResult.error) === null || _loginWithEmailAndPas === void 0 ? void 0 : (_loginWithEmailAndPas2 = _loginWithEmailAndPas.data) === null || _loginWithEmailAndPas2 === void 0 ? void 0 : (_loginWithEmailAndPas3 = _loginWithEmailAndPas2.error) === null || _loginWithEmailAndPas3 === void 0 ? void 0 : _loginWithEmailAndPas3.message) === "Your account email is not confirmed") {
+      router.push("/auth/confirm-email?email=".concat(watchData.identifier));
+    }
     if (!data) {
       return;
     }
@@ -18229,6 +18246,10 @@ var useResetPassword = function useResetPassword(_ref) {
       name: "code",
       component: "text",
       className: "hidden"
+    }, {
+      name: "email",
+      component: "text",
+      className: "hidden"
     }];
   }, []);
   var _profilesApi$useReset = profilesApi.useResetPasswordMutation(),
@@ -18247,9 +18268,15 @@ var useResetPassword = function useResetPassword(_ref) {
   }, [watchData]);
   React.useEffect(function () {
     if (typeof window !== "undefined" && (!watchData.code || watchData.code === "")) {
-      var _URLSearchParams, _window, _window$location;
+      var _URLSearchParams, _window, _window$location, _URLSearchParams2, _window2, _window2$location;
       var code = (_URLSearchParams = new URLSearchParams((_window = window) === null || _window === void 0 ? void 0 : (_window$location = _window.location) === null || _window$location === void 0 ? void 0 : _window$location.search)) === null || _URLSearchParams === void 0 ? void 0 : _URLSearchParams.get("code");
-      setValue("code", code);
+      var email = (_URLSearchParams2 = new URLSearchParams((_window2 = window) === null || _window2 === void 0 ? void 0 : (_window2$location = _window2.location) === null || _window2$location === void 0 ? void 0 : _window2$location.search)) === null || _URLSearchParams2 === void 0 ? void 0 : _URLSearchParams2.get("email");
+      if (code) {
+        setValue("code", code);
+      }
+      if (email) {
+        setValue("email", email);
+      }
     }
   }, [router.query, watchData]);
   function onSubmit(_x) {
@@ -18479,9 +18506,11 @@ var useConfirmEmail = function useConfirmEmail(_ref) {
     handleSubmit = methods.handleSubmit;
   var watchData = watch();
   React.useEffect(function () {
-    if ((!watchData.email || watchData.email === "") && user !== null && user !== void 0 && user.email) {
+    if (user !== null && user !== void 0 && user.email && email !== (user === null || user === void 0 ? void 0 : user.email)) {
       setValue("email", user.email);
       setEmail(user.email);
+    } else if (watchData.email && watchData.email !== "" && email !== watchData.email) {
+      setEmail(watchData.email);
     }
   }, [user, watchData]);
   React.useEffect(function () {
@@ -18509,7 +18538,7 @@ var useConfirmEmail = function useConfirmEmail(_ref) {
         setValue("email", _email);
       }
     }
-  }, [user]);
+  }, [user, window]);
   React.useEffect(function () {
     // console.log(`🚀 ~ useEffect ~ watchData`, watchData);
   }, [watchData]);
@@ -33953,7 +33982,7 @@ function createProfilesApi(backendServiceApi) {
             var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
             var id = params.id;
             return {
-              url: "user/".concat(id, "/otp/generate")
+              url: "users/".concat(id, "/otp/generate")
             };
           },
           transformResponse: transformResponseItem
