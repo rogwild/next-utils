@@ -745,18 +745,40 @@ function _wrapNativeSuper(Class) {
 }
 
 /**
- * @typedef {import('unist').Point} Point
  * @typedef {import('unist').Node} Node
+ * @typedef {import('unist').Point} Point
  * @typedef {import('unist').Position} Position
- * @typedef {object & {type: string, position?: Position|undefined}} NodeLike
  */
 
 /**
- * Stringify one point, a position (start and end points), or a node’s
- * positional information.
+ * @typedef NodeLike
+ * @property {string} type
+ * @property {PositionLike | null | undefined} [position]
  *
- * @param {Node|NodeLike|Position|Point|null} [value]
+ * @typedef PositionLike
+ * @property {PointLike | null | undefined} [start]
+ * @property {PointLike | null | undefined} [end]
+ *
+ * @typedef PointLike
+ * @property {number | null | undefined} [line]
+ * @property {number | null | undefined} [column]
+ * @property {number | null | undefined} [offset]
+ */
+
+/**
+ * Serialize the positional info of a point, position (start and end points),
+ * or node.
+ *
+ * @param {Node | NodeLike | Position | PositionLike | Point | PointLike | null | undefined} [value]
+ *   Node, position, or point.
  * @returns {string}
+ *   Pretty printed positional info of a node (`string`).
+ *
+ *   In the format of a range `ls:cs-le:ce` (when given `node` or `position`)
+ *   or a point `l:c` (when given `point`), where `l` stands for line, `c` for
+ *   column, `s` for `start`, and `e` for end.
+ *   An empty string (`''`) is returned if the given value is neither `node`,
+ *   `position`, nor `point`.
  */
 function stringifyPosition(value) {
   // Nothing.
@@ -766,17 +788,17 @@ function stringifyPosition(value) {
 
   // Node.
   if ('position' in value || 'type' in value) {
-    return position(value.position);
+    return position$1(value.position);
   }
 
   // Position.
   if ('start' in value || 'end' in value) {
-    return position(value);
+    return position$1(value);
   }
 
   // Point.
   if ('line' in value || 'column' in value) {
-    return point$1(value);
+    return point$2(value);
   }
 
   // ?
@@ -784,23 +806,23 @@ function stringifyPosition(value) {
 }
 
 /**
- * @param {Point|undefined} point
+ * @param {Point | PointLike | null | undefined} point
  * @returns {string}
  */
-function point$1(point) {
+function point$2(point) {
   return index$1(point && point.line) + ':' + index$1(point && point.column);
 }
 
 /**
- * @param {Position|undefined} pos
+ * @param {Position | PositionLike | null | undefined} pos
  * @returns {string}
  */
-function position(pos) {
-  return point$1(pos && pos.start) + '-' + point$1(pos && pos.end);
+function position$1(pos) {
+  return point$2(pos && pos.start) + '-' + point$2(pos && pos.end);
 }
 
 /**
- * @param {number|undefined} value
+ * @param {number | null | undefined} value
  * @returns {number}
  */
 function index$1(value) {
@@ -809,6 +831,10 @@ function index$1(value) {
 
 function _createSuper$1(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct$1(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 function _isNativeReflectConstruct$1() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+/**
+ * Message.
+ */
 var VFileMessage = /*#__PURE__*/function (_Error) {
   _inherits(VFileMessage, _Error);
   var _super = _createSuper$1(VFileMessage);
@@ -817,18 +843,23 @@ var VFileMessage = /*#__PURE__*/function (_Error) {
    *
    * When an error is passed in as `reason`, the `stack` is copied.
    *
-   * @param {string|Error|VFileMessage} reason
-   *   Reason for message.
-   *   Uses the stack and message of the error if given.
-   * @param {Node|NodeLike|Position|Point} [place]
-   *   Place at which the message occurred in a file.
-   * @param {string} [origin]
-   *   Place in code the message originates from (example `'my-package:my-rule-name'`)
+   * @param {string | Error | VFileMessage} reason
+   *   Reason for message, uses the stack and message of the error if given.
+   *
+   *   > 👉 **Note**: you should use markdown.
+   * @param {Node | NodeLike | Position | Point | null | undefined} [place]
+   *   Place in file where the message occurred.
+   * @param {string | null | undefined} [origin]
+   *   Place in code where the message originates (example:
+   *   `'my-package:my-rule'` or `'my-rule'`).
+   * @returns
+   *   Instance of `VFileMessage`.
    */
+  // To do: next major: expose `undefined` everywhere instead of `null`.
   function VFileMessage(reason, place, origin) {
     var _this;
     _classCallCheck(this, VFileMessage);
-    /** @type {[string|null, string|null]} */
+    /** @type {[string | null, string | null]} */
     var parts = [null, null];
     /** @type {Position} */
     var position = {
@@ -861,6 +892,7 @@ var VFileMessage = /*#__PURE__*/function (_Error) {
       // Node.
       if ('type' in place || 'position' in place) {
         if (place.position) {
+          // To do: next major: deep clone.
           // @ts-expect-error: looks like a position.
           position = place.position;
         }
@@ -868,19 +900,40 @@ var VFileMessage = /*#__PURE__*/function (_Error) {
       // Position.
       else if ('start' in place || 'end' in place) {
         // @ts-expect-error: looks like a position.
+        // To do: next major: deep clone.
         position = place;
       }
       // Point.
       else if ('line' in place || 'column' in place) {
+        // To do: next major: deep clone.
         position.start = place;
       }
     }
 
-    // Fields from `Error`
+    // Fields from `Error`.
+    /**
+     * Serialized positional info of error.
+     *
+     * On normal errors, this would be something like `ParseError`, buit in
+     * `VFile` messages we use this space to show where an error happened.
+     */
     _this.name = stringifyPosition(place) || '1:1';
-    /** @type {string} */
+
+    /**
+     * Reason for message.
+     *
+     * @type {string}
+     */
     _this.message = typeof reason === 'object' ? reason.message : reason;
-    /** @type {string} */
+
+    /**
+     * Stack of message.
+     *
+     * This is used by normal errors to show where something happened in
+     * programming code, irrelevant for `VFile` messages,
+     *
+     * @type {string}
+     */
     _this.stack = '';
     if (typeof reason === 'object' && reason.stack) {
       _this.stack = reason.stack;
@@ -889,64 +942,63 @@ var VFileMessage = /*#__PURE__*/function (_Error) {
     /**
      * Reason for message.
      *
+     * > 👉 **Note**: you should use markdown.
+     *
      * @type {string}
      */
     _this.reason = _this.message;
 
     /* eslint-disable no-unused-expressions */
     /**
-     * Whether this is a fatal problem that marks an associated file as no
-     * longer processable.
-     * If `true`, marks associated file as no longer processable.
-     * If `false`, necessitates a (potential) change.
-     * The value can also be `null` or `undefined`, for things that might not
-     * need changing.
+     * State of problem.
      *
-     * @type {boolean?}
+     * * `true` — marks associated file as no longer processable (error)
+     * * `false` — necessitates a (potential) change (warning)
+     * * `null | undefined` — for things that might not need changing (info)
+     *
+     * @type {boolean | null | undefined}
      */
     _this.fatal;
 
     /**
      * Starting line of error.
      *
-     * @type {number?}
+     * @type {number | null}
      */
     _this.line = position.start.line;
 
     /**
      * Starting column of error.
      *
-     * @type {number?}
+     * @type {number | null}
      */
     _this.column = position.start.column;
 
     /**
-     * Full range information, when available.
-     * Has `start` and `end` fields, both set to an object with `line` and
-     * `column`, set to `number?`.
+     * Full unist position.
      *
-     * @type {Position?}
+     * @type {Position | null}
      */
     _this.position = position;
 
     /**
-     * Namespace of warning (example: `'my-package'`).
+     * Namespace of message (example: `'my-package'`).
      *
-     * @type {string?}
+     * @type {string | null}
      */
     _this.source = parts[0];
 
     /**
-     * Category of message (example: `'my-rule-name'`).
+     * Category of message (example: `'my-rule'`).
      *
-     * @type {string?}
+     * @type {string | null}
      */
     _this.ruleId = parts[1];
 
     /**
-     * Path of a file (used throughout the VFile ecosystem).
+     * Path of a file (used throughout the `VFile` ecosystem).
      *
-     * @type {string?}
+     * @type {string | null}
      */
     _this.file;
 
@@ -958,29 +1010,31 @@ var VFileMessage = /*#__PURE__*/function (_Error) {
      * Specify the source value that’s being reported, which is deemed
      * incorrect.
      *
-     * @type {string?}
+     * @type {string | null}
      */
     _this.actual;
 
     /**
-     * Suggest values that should be used instead of `actual`, one or more
-     * values that are deemed as acceptable.
+     * Suggest acceptable values that can be used instead of `actual`.
      *
-     * @type {Array<string>?}
+     * @type {Array<string> | null}
      */
     _this.expected;
 
     /**
-     * Link to documentation for the message.
+     * Link to docs for the message.
      *
-     * @type {string?}
+     * > 👉 **Note**: this must be an absolute URL that can be passed as `x`
+     * > to `new URL(x)`.
+     *
+     * @type {string | null}
      */
     _this.url;
 
     /**
-     * Long form description of the message (supported by `vfile-reporter`).
+     * Long form description of the message (you should use markdown).
      *
-     * @type {string?}
+     * @type {string | null}
      */
     _this.note;
     /* eslint-enable no-unused-expressions */
@@ -1019,48 +1073,60 @@ VFileMessage.prototype.position = null;
  */
 
 /**
- * @param {unknown} fileURLOrPath
- * @returns {fileURLOrPath is URL}
+ * Check if `fileUrlOrPath` looks like a URL.
+ *
+ * @param {unknown} fileUrlOrPath
+ *   File path or URL.
+ * @returns {fileUrlOrPath is URL}
+ *   Whether it’s a URL.
  */
 // From: <https://github.com/nodejs/node/blob/fcf8ba4/lib/internal/url.js#L1501>
-function isUrl(fileURLOrPath) {
-  return fileURLOrPath !== null && typeof fileURLOrPath === 'object' &&
+function isUrl(fileUrlOrPath) {
+  return fileUrlOrPath !== null && typeof fileUrlOrPath === 'object' &&
   // @ts-expect-error: indexable.
-  fileURLOrPath.href &&
+  fileUrlOrPath.href &&
   // @ts-expect-error: indexable.
-  fileURLOrPath.origin;
+  fileUrlOrPath.origin;
 }
 
-// Order of setting (least specific to most), we need this because otherwise
-// `{stem: 'a', path: '~/b.js'}` would throw, as a path is needed before a
-// stem can be set.
+/**
+ * Order of setting (least specific to most), we need this because otherwise
+ * `{stem: 'a', path: '~/b.js'}` would throw, as a path is needed before a
+ * stem can be set.
+ *
+ * @type {Array<'basename' | 'dirname' | 'extname' | 'history' | 'path' | 'stem'>}
+ */
 var order = ['history', 'path', 'basename', 'stem', 'extname', 'dirname'];
 var VFile = /*#__PURE__*/function () {
   /**
    * Create a new virtual file.
    *
-   * If `options` is `string` or `Buffer`, it’s treated as `{value: options}`.
-   * If `options` is a `URL`, it’s treated as `{path: options}`.
-   * If `options` is a `VFile`, shallow copies its data over to the new file.
-   * All fields in `options` are set on the newly created `VFile`.
+   * `options` is treated as:
+   *
+   * *   `string` or `Buffer` — `{value: options}`
+   * *   `URL` — `{path: options}`
+   * *   `VFile` — shallow copies its data over to the new file
+   * *   `object` — all fields are shallow copied over to the new file
    *
    * Path related fields are set in the following order (least specific to
    * most specific): `history`, `path`, `basename`, `stem`, `extname`,
    * `dirname`.
    *
-   * It’s not possible to set either `dirname` or `extname` without setting
-   * either `history`, `path`, `basename`, or `stem` as well.
+   * You cannot set `dirname` or `extname` without setting either `history`,
+   * `path`, `basename`, or `stem` too.
    *
-   * @param {Compatible} [value]
+   * @param {Compatible | null | undefined} [value]
+   *   File value.
+   * @returns
+   *   New instance.
    */
   function VFile(value) {
     _classCallCheck(this, VFile);
-    /** @type {Options} */
+    /** @type {Options | VFile} */
     var options;
     if (!value) {
       options = {};
-    } else if (typeof value === 'string' || isBuffer(value)) {
-      // @ts-expect-error Looks like a buffer.
+    } else if (typeof value === 'string' || buffer(value)) {
       options = {
         value: value
       };
@@ -1069,33 +1135,38 @@ var VFile = /*#__PURE__*/function () {
         path: value
       };
     } else {
-      // @ts-expect-error Looks like file or options.
       options = value;
     }
 
     /**
      * Place to store custom information (default: `{}`).
+     *
      * It’s OK to store custom data directly on the file but moving it to
      * `data` is recommended.
+     *
      * @type {Data}
      */
     this.data = {};
 
     /**
      * List of messages associated with the file.
+     *
      * @type {Array<VFileMessage>}
      */
     this.messages = [];
 
     /**
      * List of filepaths the file moved between.
+     *
      * The first is the original path and the last is the current path.
+     *
      * @type {Array<string>}
      */
     this.history = [];
 
     /**
      * Base of `path` (default: `process.cwd()` or `'/'` in browsers).
+     *
      * @type {string}
      */
     this.cwd = proc__default["default"].cwd();
@@ -1103,6 +1174,7 @@ var VFile = /*#__PURE__*/function () {
     /* eslint-disable no-unused-expressions */
     /**
      * Raw value.
+     *
      * @type {Value}
      */
     this.value;
@@ -1112,26 +1184,30 @@ var VFile = /*#__PURE__*/function () {
 
     /**
      * Whether a file was saved to disk.
+     *
      * This is used by vfile reporters.
+     *
      * @type {boolean}
      */
     this.stored;
 
     /**
-     * Sometimes files have a non-string, compiled, representation.
-     * This can be stored in the `result` field.
-     * One example is when turning markdown into React nodes.
+     * Custom, non-string, compiled, representation.
+     *
      * This is used by unified to store non-string results.
+     * One example is when turning markdown into React nodes.
+     *
      * @type {unknown}
      */
     this.result;
 
     /**
-     * Sometimes files have a source map associated with them.
-     * This can be stored in the `map` field.
-     * This should be a `Map` type, which is equivalent to the `RawSourceMap`
-     * type from the `source-map` module.
-     * @type {Map|undefined}
+     * Source map.
+     *
+     * This type is equivalent to the `RawSourceMap` type from the `source-map`
+     * module.
+     *
+     * @type {Map | null | undefined}
      */
     this.map;
     /* eslint-enable no-unused-expressions */
@@ -1143,8 +1219,8 @@ var VFile = /*#__PURE__*/function () {
 
       // Note: we specifically use `in` instead of `hasOwnProperty` to accept
       // `vfile`s too.
-      if (_prop in options && options[_prop] !== undefined) {
-        // @ts-expect-error: TS is confused by the different types for `history`.
+      if (_prop in options && options[_prop] !== undefined && options[_prop] !== null) {
+        // @ts-expect-error: TS doesn’t understand basic reality.
         this[_prop] = _prop === 'history' ? _toConsumableArray(options[_prop]) : options[_prop];
       }
     }
@@ -1155,12 +1231,16 @@ var VFile = /*#__PURE__*/function () {
     // Set non-path related properties.
     for (prop in options) {
       // @ts-expect-error: fine to set other things.
-      if (!order.includes(prop)) this[prop] = options[prop];
+      if (!order.includes(prop)) {
+        // @ts-expect-error: fine to set other things.
+        this[prop] = options[prop];
+      }
     }
   }
 
   /**
    * Get the full path (example: `'~/index.min.js'`).
+   *
    * @returns {string}
    */
   _createClass(VFile, [{
@@ -1171,10 +1251,12 @@ var VFile = /*#__PURE__*/function () {
 
     /**
      * Set the full path (example: `'~/index.min.js'`).
+     *
      * Cannot be nullified.
      * You can set a file URL (a `URL` object with a `file:` protocol) which will
      * be turned into a path with `url.fileURLToPath`.
-     * @param {string|URL} path
+     *
+     * @param {string | URL} path
      */,
     set: function set(path) {
       if (isUrl(path)) {
@@ -1197,6 +1279,7 @@ var VFile = /*#__PURE__*/function () {
 
     /**
      * Set the parent path (example: `'~'`).
+     *
      * Cannot be set if there’s no `path` yet.
      */,
     set: function set(dirname) {
@@ -1215,6 +1298,7 @@ var VFile = /*#__PURE__*/function () {
 
     /**
      * Set basename (including extname) (`'index.min.js'`).
+     *
      * Cannot contain path separators (`'/'` on unix, macOS, and browsers, `'\'`
      * on windows).
      * Cannot be nullified (use `file.path = file.dirname` instead).
@@ -1236,6 +1320,7 @@ var VFile = /*#__PURE__*/function () {
 
     /**
      * Set the extname (including dot) (example: `'.js'`).
+     *
      * Cannot contain path separators (`'/'` on unix, macOS, and browsers, `'\'`
      * on windows).
      * Cannot be set if there’s no `path` yet.
@@ -1265,6 +1350,7 @@ var VFile = /*#__PURE__*/function () {
 
     /**
      * Set the stem (basename w/o extname) (example: `'index.min'`).
+     *
      * Cannot contain path separators (`'/'` on unix, macOS, and browsers, `'\'`
      * on windows).
      * Cannot be nullified (use `file.path = file.dirname` instead).
@@ -1278,29 +1364,31 @@ var VFile = /*#__PURE__*/function () {
     /**
      * Serialize the file.
      *
-     * @param {BufferEncoding} [encoding='utf8']
-     *   When `value` is a `Buffer`, `encoding` is a character encoding to
-     *   understand it as (default: `'utf8'`).
+     * @param {BufferEncoding | null | undefined} [encoding='utf8']
+     *   Character encoding to understand `value` as when it’s a `Buffer`
+     *   (default: `'utf8'`).
      * @returns {string}
      *   Serialized file.
      */
   }, {
     key: "toString",
     value: function toString(encoding) {
-      return (this.value || '').toString(encoding);
+      return (this.value || '').toString(encoding || undefined);
     }
 
     /**
-     * Constructs a new `VFileMessage`, where `fatal` is set to `false`, and
-     * associates it with the file by adding it to `vfile.messages` and setting
-     * `message.file` to the current filepath.
+     * Create a warning message associated with the file.
      *
-     * @param {string|Error|VFileMessage} reason
-     *   Human readable reason for the message, uses the stack and message of the error if given.
-     * @param {Node|NodeLike|Position|Point} [place]
-     *   Place where the message occurred in the file.
-     * @param {string} [origin]
-     *   Computer readable reason for the message
+     * Its `fatal` is set to `false` and `file` is set to the current file path.
+     * Its added to `file.messages`.
+     *
+     * @param {string | Error | VFileMessage} reason
+     *   Reason for message, uses the stack and message of the error if given.
+     * @param {Node | NodeLike | Position | Point | null | undefined} [place]
+     *   Place in file where the message occurred.
+     * @param {string | null | undefined} [origin]
+     *   Place in code where the message originates (example:
+     *   `'my-package:my-rule'` or `'my-rule'`).
      * @returns {VFileMessage}
      *   Message.
      */
@@ -1318,15 +1406,18 @@ var VFile = /*#__PURE__*/function () {
     }
 
     /**
-     * Like `VFile#message()`, but associates an informational message where
-     * `fatal` is set to `null`.
+     * Create an info message associated with the file.
      *
-     * @param {string|Error|VFileMessage} reason
-     *   Human readable reason for the message, uses the stack and message of the error if given.
-     * @param {Node|NodeLike|Position|Point} [place]
-     *   Place where the message occurred in the file.
-     * @param {string} [origin]
-     *   Computer readable reason for the message
+     * Its `fatal` is set to `null` and `file` is set to the current file path.
+     * Its added to `file.messages`.
+     *
+     * @param {string | Error | VFileMessage} reason
+     *   Reason for message, uses the stack and message of the error if given.
+     * @param {Node | NodeLike | Position | Point | null | undefined} [place]
+     *   Place in file where the message occurred.
+     * @param {string | null | undefined} [origin]
+     *   Place in code where the message originates (example:
+     *   `'my-package:my-rule'` or `'my-rule'`).
      * @returns {VFileMessage}
      *   Message.
      */
@@ -1339,18 +1430,23 @@ var VFile = /*#__PURE__*/function () {
     }
 
     /**
-     * Like `VFile#message()`, but associates a fatal message where `fatal` is
-     * set to `true`, and then immediately throws it.
+     * Create a fatal error associated with the file.
+     *
+     * Its `fatal` is set to `true` and `file` is set to the current file path.
+     * Its added to `file.messages`.
      *
      * > 👉 **Note**: a fatal error means that a file is no longer processable.
      *
-     * @param {string|Error|VFileMessage} reason
-     *   Human readable reason for the message, uses the stack and message of the error if given.
-     * @param {Node|NodeLike|Position|Point} [place]
-     *   Place where the message occurred in the file.
-     * @param {string} [origin]
-     *   Computer readable reason for the message
+     * @param {string | Error | VFileMessage} reason
+     *   Reason for message, uses the stack and message of the error if given.
+     * @param {Node | NodeLike | Position | Point | null | undefined} [place]
+     *   Place in file where the message occurred.
+     * @param {string | null | undefined} [origin]
+     *   Place in code where the message originates (example:
+     *   `'my-package:my-rule'` or `'my-rule'`).
      * @returns {never}
+     *   Message.
+     * @throws {VFileMessage}
      *   Message.
      */
   }, {
@@ -1367,9 +1463,12 @@ var VFile = /*#__PURE__*/function () {
 /**
  * Assert that `part` is not a path (as in, does not contain `path.sep`).
  *
- * @param {string|undefined} part
+ * @param {string | null | undefined} part
+ *   File path part.
  * @param {string} name
+ *   Part name.
  * @returns {void}
+ *   Nothing.
  */
 function assertPart(part, name) {
   if (part && part.includes(path__default["default"].sep)) {
@@ -1380,9 +1479,12 @@ function assertPart(part, name) {
 /**
  * Assert that `part` is not empty.
  *
- * @param {string|undefined} part
+ * @param {string | undefined} part
+ *   Thing.
  * @param {string} name
+ *   Part name.
  * @returns {asserts part is string}
+ *   Nothing.
  */
 function assertNonEmpty(part, name) {
   if (!part) {
@@ -1393,14 +1495,29 @@ function assertNonEmpty(part, name) {
 /**
  * Assert `path` exists.
  *
- * @param {string|undefined} path
+ * @param {string | undefined} path
+ *   Path.
  * @param {string} name
+ *   Dependency name.
  * @returns {asserts path is string}
+ *   Nothing.
  */
 function assertPath(path, name) {
   if (!path) {
     throw new Error('Setting `' + name + '` requires `path` to be set too');
   }
+}
+
+/**
+ * Assert `value` is a buffer.
+ *
+ * @param {unknown} value
+ *   thing.
+ * @returns {value is Buffer}
+ *   Whether `value` is a Node.js buffer.
+ */
+function buffer(value) {
+  return isBuffer(value);
 }
 
 function _arrayWithHoles(arr) {
@@ -1716,7 +1833,7 @@ function wrap$1(middleware, callback) {
 
 // Expose a frozen processor.
 var unified = base().freeze();
-var own$8 = {}.hasOwnProperty;
+var own$7 = {}.hasOwnProperty;
 
 // Function to create the first processor.
 /**
@@ -1786,7 +1903,7 @@ function base() {
       }
 
       // Get `key`.
-      return own$8.call(namespace, key) && namespace[key] || null;
+      return own$7.call(namespace, key) && namespace[key] || null;
     }
 
     // Set space.
@@ -2138,7 +2255,7 @@ function keys(value) {
   /** @type {string} */
   var key;
   for (key in value) {
-    if (own$8.call(value, key)) {
+    if (own$7.call(value, key)) {
       return true;
     }
   }
@@ -2238,54 +2355,76 @@ function looksLikeAVFileValue(value) {
 }
 
 /**
+ * @typedef {import('mdast').Root|import('mdast').Content} Node
+ *
  * @typedef Options
- * @property {boolean} [includeImageAlt=true]
+ *   Configuration (optional).
+ * @property {boolean | null | undefined} [includeImageAlt=true]
+ *   Whether to use `alt` for `image`s.
  */
 
 /**
- * Get the text content of a node.
- * Prefer the node’s plain-text fields, otherwise serialize its children,
+ * Get the text content of a node or list of nodes.
+ *
+ * Prefers the node’s plain-text fields, otherwise serializes its children,
  * and if the given value is an array, serialize the nodes in it.
  *
- * @param {unknown} node
- * @param {Options} [options]
+ * @param {unknown} value
+ *   Thing to serialize, typically `Node`.
+ * @param {Options | null | undefined} [options]
+ *   Configuration (optional).
  * @returns {string}
+ *   Serialized `value`.
  */
-function toString(node, options) {
-  var _ref = options || {},
-    _ref$includeImageAlt = _ref.includeImageAlt,
-    includeImageAlt = _ref$includeImageAlt === void 0 ? true : _ref$includeImageAlt;
-  return one$1(node, includeImageAlt);
+function toString(value, options) {
+  var includeImageAlt = (options || {}).includeImageAlt;
+  return one$1(value, typeof includeImageAlt === 'boolean' ? includeImageAlt : true);
 }
 
 /**
- * @param {unknown} node
+ * One node or several nodes.
+ *
+ * @param {unknown} value
+ *   Thing to serialize.
  * @param {boolean} includeImageAlt
+ *   Include image `alt`s.
  * @returns {string}
+ *   Serialized node.
  */
-function one$1(node, includeImageAlt) {
-  return node && typeof node === 'object' && (
-  // @ts-ignore looks like a literal.
-  node.value || (
-  // @ts-ignore looks like an image.
-  includeImageAlt ? node.alt : '') ||
-  // @ts-ignore looks like a parent.
-  'children' in node && all$1(node.children, includeImageAlt) || Array.isArray(node) && all$1(node, includeImageAlt)) || '';
+function one$1(value, includeImageAlt) {
+  return node(value) && ('value' in value && value.value || includeImageAlt && 'alt' in value && value.alt || 'children' in value && all$1(value.children, includeImageAlt)) || Array.isArray(value) && all$1(value, includeImageAlt) || '';
 }
 
 /**
- * @param {Array.<unknown>} values
+ * Serialize a list of nodes.
+ *
+ * @param {Array<unknown>} values
+ *   Thing to serialize.
  * @param {boolean} includeImageAlt
+ *   Include image `alt`s.
  * @returns {string}
+ *   Serialized nodes.
  */
 function all$1(values, includeImageAlt) {
-  /** @type {Array.<string>} */
+  /** @type {Array<string>} */
   var result = [];
   var index = -1;
   while (++index < values.length) {
     result[index] = one$1(values[index], includeImageAlt);
   }
   return result.join('');
+}
+
+/**
+ * Check if `value` looks like a node.
+ *
+ * @param {unknown} value
+ *   Thing.
+ * @returns {value is Node}
+ *   Whether `value` is a node.
+ */
+function node(value) {
+  return Boolean(value && typeof value === 'object');
 }
 
 /**
@@ -5668,7 +5807,7 @@ var characterEntities = {
   zwnj: '‌'
 };
 
-var own$7 = {}.hasOwnProperty;
+var own$6 = {}.hasOwnProperty;
 
 /**
  * Decode a single character reference (without the `&` or `;`).
@@ -5682,7 +5821,7 @@ var own$7 = {}.hasOwnProperty;
  *   Decoded reference.
  */
 function decodeNamedCharacterReference(value) {
-  return own$7.call(characterEntities, value) ? characterEntities[value] : false;
+  return own$6.call(characterEntities, value) ? characterEntities[value] : false;
 }
 
 /**
@@ -9547,7 +9686,7 @@ var defaultConstructs = /*#__PURE__*/Object.freeze({
  * @returns {ParseContext}
  */
 
-function parse$1() {
+function parse() {
   var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   /** @type {FullNormalizedExtension} */
   // @ts-expect-error `defaultConstructs` is full, so the result will be too.
@@ -9780,25 +9919,30 @@ function decode($0, $1, $2) {
   return decodeNamedCharacterReference($2) || $0;
 }
 
-var own$6 = {}.hasOwnProperty;
-/**
- * @param value Markdown to parse (`string` or `Buffer`).
- * @param [encoding] Character encoding to understand `value` as when it’s a `Buffer` (`string`, default: `'utf8'`).
- * @param [options] Configuration
- */
+var own$5 = {}.hasOwnProperty;
 
+/**
+ * @param value
+ *   Markdown to parse.
+ * @param encoding
+ *   Character encoding for when `value` is `Buffer`.
+ * @param options
+ *   Configuration.
+ * @returns
+ *   mdast tree.
+ */
 var fromMarkdown =
 /**
  * @type {(
- *   ((value: Value, encoding: Encoding, options?: Options) => Root) &
- *   ((value: Value, options?: Options) => Root)
+ *   ((value: Value, encoding: Encoding, options?: Options | null | undefined) => Root) &
+ *   ((value: Value, options?: Options | null | undefined) => Root)
  * )}
  */
 
 /**
  * @param {Value} value
- * @param {Encoding} [encoding]
- * @param {Options} [options]
+ * @param {Encoding | Options | null | undefined} [encoding]
+ * @param {Options | null | undefined} [options]
  * @returns {Root}
  */
 function fromMarkdown(value, encoding, options) {
@@ -9806,19 +9950,19 @@ function fromMarkdown(value, encoding, options) {
     options = encoding;
     encoding = undefined;
   }
-  return compiler(options)(postprocess(parse$1(options).document().write(preprocess()(value, encoding, true))));
+  return compiler(options)(postprocess(
+  // @ts-expect-error: micromark types need to accept `null`.
+  parse(options).document().write(preprocess()(value, encoding, true))));
 };
+
 /**
  * Note this compiler only understand complete buffering, not streaming.
  *
- * @param {Options} [options]
+ * @param {Options | null | undefined} [options]
  */
-
-function compiler() {
-  var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  /** @type {NormalizedExtension} */
-  // @ts-expect-error: our base has all required fields, so the result will too.
-  var config = configure({
+function compiler(options) {
+  /** @type {Config} */
+  var config = {
     transforms: [],
     canContainEols: ['emphasis', 'fragment', 'heading', 'paragraph', 'strong'],
     enter: {
@@ -9914,36 +10058,31 @@ function compiler() {
       strong: closer(),
       thematicBreak: closer()
     }
-  }, options.mdastExtensions || []);
-  /** @type {CompileData} */
+  };
+  configure(config, (options || {}).mdastExtensions || []);
 
+  /** @type {CompileData} */
   var data = {};
   return compile;
-  /**
-   * @param {Array<Event>} events
-   * @returns {Root}
-   */
 
+  /**
+   * Turn micromark events into an mdast tree.
+   *
+   * @param {Array<Event>} events
+   *   Events.
+   * @returns {Root}
+   *   mdast tree.
+   */
   function compile(events) {
     /** @type {Root} */
     var tree = {
       type: 'root',
       children: []
     };
-    /** @type {CompileContext['stack']} */
-
-    var stack = [tree];
-    /** @type {CompileContext['tokenStack']} */
-
-    var tokenStack = [];
-    /** @type {Array<number>} */
-
-    var listStack = [];
     /** @type {Omit<CompileContext, 'sliceSerialize'>} */
-
     var context = {
-      stack: stack,
-      tokenStack: tokenStack,
+      stack: [tree],
+      tokenStack: [],
       config: config,
       enter: enter,
       exit: exit,
@@ -9952,6 +10091,8 @@ function compiler() {
       setData: setData,
       getData: getData
     };
+    /** @type {Array<number>} */
+    var listStack = [];
     var index = -1;
     while (++index < events.length) {
       // We preprocess lists to add `listItem` tokens, and to infer whether
@@ -9968,58 +10109,59 @@ function compiler() {
     index = -1;
     while (++index < events.length) {
       var handler = config[events[index][0]];
-      if (own$6.call(handler, events[index][1].type)) {
+      if (own$5.call(handler, events[index][1].type)) {
         handler[events[index][1].type].call(Object.assign({
           sliceSerialize: events[index][2].sliceSerialize
         }, context), events[index][1]);
       }
     }
-    if (tokenStack.length > 0) {
-      var _tail = tokenStack[tokenStack.length - 1];
+
+    // Handle tokens still being open.
+    if (context.tokenStack.length > 0) {
+      var _tail = context.tokenStack[context.tokenStack.length - 1];
       var _handler = _tail[1] || defaultOnError;
       _handler.call(context, undefined, _tail[0]);
-    } // Figure out `root` position.
+    }
 
+    // Figure out `root` position.
     tree.position = {
-      start: point(events.length > 0 ? events[0][1].start : {
+      start: point$1(events.length > 0 ? events[0][1].start : {
         line: 1,
         column: 1,
         offset: 0
       }),
-      end: point(events.length > 0 ? events[events.length - 2][1].end : {
+      end: point$1(events.length > 0 ? events[events.length - 2][1].end : {
         line: 1,
         column: 1,
         offset: 0
       })
     };
+
+    // Call transforms.
     index = -1;
     while (++index < config.transforms.length) {
       tree = config.transforms[index](tree) || tree;
     }
     return tree;
   }
+
   /**
    * @param {Array<Event>} events
    * @param {number} start
    * @param {number} length
    * @returns {number}
    */
-
   function prepareList(events, start, length) {
     var index = start - 1;
     var containerBalance = -1;
     var listSpread = false;
-    /** @type {Token|undefined} */
-
+    /** @type {Token | undefined} */
     var listItem;
-    /** @type {number|undefined} */
-
+    /** @type {number | undefined} */
     var lineIndex;
-    /** @type {number|undefined} */
-
+    /** @type {number | undefined} */
     var firstBlankLineIndex;
-    /** @type {boolean|undefined} */
-
+    /** @type {boolean | undefined} */
     var atMarker;
     while (++index <= length) {
       var event = events[index];
@@ -10061,22 +10203,24 @@ function compiler() {
           if (firstBlankLineIndex && (!lineIndex || firstBlankLineIndex < lineIndex)) {
             // @ts-expect-error Patched.
             listItem._spread = true;
-          } // Fix position.
+          }
 
+          // Fix position.
           listItem.end = Object.assign({}, lineIndex ? events[lineIndex][1].start : event[1].end);
           events.splice(lineIndex || index, 0, ['exit', listItem, event[2]]);
           index++;
           length++;
-        } // Create a new list item.
+        }
 
+        // Create a new list item.
         if (event[1].type === 'listItemPrefix') {
           listItem = {
             type: 'listItem',
             // @ts-expect-error Patched
             _spread: false,
             start: Object.assign({}, event[1].start)
-          }; // @ts-expect-error: `listItem` is most definitely defined, TS...
-
+          };
+          // @ts-expect-error: `listItem` is most definitely defined, TS...
           events.splice(index, 0, ['enter', listItem, event[2]]);
           index++;
           length++;
@@ -10084,116 +10228,137 @@ function compiler() {
           atMarker = true;
         }
       }
-    } // @ts-expect-error Patched.
+    }
 
+    // @ts-expect-error Patched.
     events[start][1]._spread = listSpread;
     return length;
   }
-  /**
-   * @type {CompileContext['setData']}
-   * @param [value]
-   */
 
+  /**
+   * Set data.
+   *
+   * @template {keyof CompileData} Key
+   *   Field type.
+   * @param {Key} key
+   *   Key of field.
+   * @param {CompileData[Key]} [value]
+   *   New value.
+   * @returns {void}
+   *   Nothing.
+   */
   function setData(key, value) {
     data[key] = value;
   }
-  /**
-   * @type {CompileContext['getData']}
-   * @template {string} K
-   * @param {K} key
-   * @returns {CompileData[K]}
-   */
 
+  /**
+   * Get data.
+   *
+   * @template {keyof CompileData} Key
+   *   Field type.
+   * @param {Key} key
+   *   Key of field.
+   * @returns {CompileData[Key]}
+   *   Value.
+   */
   function getData(key) {
     return data[key];
   }
-  /**
-   * @param {Point} d
-   * @returns {Point}
-   */
 
-  function point(d) {
-    return {
-      line: d.line,
-      column: d.column,
-      offset: d.offset
-    };
-  }
   /**
+   * Create an opener handle.
+   *
    * @param {(token: Token) => Node} create
+   *   Create a node.
    * @param {Handle} [and]
+   *   Optional function to also run.
    * @returns {Handle}
+   *   Handle.
    */
-
   function opener(create, and) {
     return open;
+
     /**
      * @this {CompileContext}
      * @param {Token} token
      * @returns {void}
      */
-
     function open(token) {
       enter.call(this, create(token), token);
       if (and) and.call(this, token);
     }
   }
-  /** @type {CompileContext['buffer']} */
 
+  /**
+   * @this {CompileContext}
+   * @returns {void}
+   */
   function buffer() {
     this.stack.push({
       type: 'fragment',
       children: []
     });
   }
-  /**
-   * @type {CompileContext['enter']}
-   * @template {Node} N
-   * @this {CompileContext}
-   * @param {N} node
-   * @param {Token} token
-   * @param {OnEnterError} [errorHandler]
-   * @returns {N}
-   */
 
+  /**
+   * @template {Node} Kind
+   *   Node type.
+   * @this {CompileContext}
+   *   Context.
+   * @param {Kind} node
+   *   Node to enter.
+   * @param {Token} token
+   *   Corresponding token.
+   * @param {OnEnterError | undefined} [errorHandler]
+   *   Handle the case where this token is open, but it is closed by something else.
+   * @returns {Kind}
+   *   The given node.
+   */
   function enter(node, token, errorHandler) {
     var parent = this.stack[this.stack.length - 1];
     // @ts-expect-error: Assume `Node` can exist as a child of `parent`.
     parent.children.push(node);
     this.stack.push(node);
-    this.tokenStack.push([token, errorHandler]); // @ts-expect-error: `end` will be patched later.
-
+    this.tokenStack.push([token, errorHandler]);
+    // @ts-expect-error: `end` will be patched later.
     node.position = {
-      start: point(token.start)
+      start: point$1(token.start)
     };
     return node;
   }
-  /**
-   * @param {Handle} [and]
-   * @returns {Handle}
-   */
 
+  /**
+   * Create a closer handle.
+   *
+   * @param {Handle} [and]
+   *   Optional function to also run.
+   * @returns {Handle}
+   *   Handle.
+   */
   function closer(and) {
     return close;
+
     /**
      * @this {CompileContext}
      * @param {Token} token
      * @returns {void}
      */
-
     function close(token) {
       if (and) and.call(this, token);
       exit.call(this, token);
     }
   }
-  /**
-   * @type {CompileContext['exit']}
-   * @this {CompileContext}
-   * @param {Token} token
-   * @param {OnExitError} [onExitError]
-   * @returns {Node}
-   */
 
+  /**
+   * @this {CompileContext}
+   *   Context.
+   * @param {Token} token
+   *   Corresponding token.
+   * @param {OnExitError | undefined} [onExitError]
+   *   Handle the case where another token is open.
+   * @returns {Node}
+   *   The closed node.
+   */
   function exit(token, onExitError) {
     var node = this.stack.pop();
     var open = this.tokenStack.pop();
@@ -10210,165 +10375,205 @@ function compiler() {
         handler.call(this, token, open[0]);
       }
     }
-    node.position.end = point(token.end);
+    node.position.end = point$1(token.end);
     return node;
   }
+
   /**
    * @this {CompileContext}
    * @returns {string}
    */
-
   function resume() {
     return toString(this.stack.pop());
-  } //
+  }
+
+  //
   // Handlers.
   //
 
-  /** @type {Handle} */
-
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
   function onenterlistordered() {
     setData('expectingFirstListItemValue', true);
   }
-  /** @type {Handle} */
 
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
   function onenterlistitemvalue(token) {
     if (getData('expectingFirstListItemValue')) {
-      var ancestor = /** @type {List} */
-      this.stack[this.stack.length - 2];
+      var ancestor = this.stack[this.stack.length - 2];
       ancestor.start = Number.parseInt(this.sliceSerialize(token), 10);
       setData('expectingFirstListItemValue');
     }
   }
-  /** @type {Handle} */
 
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
   function onexitcodefencedfenceinfo() {
     var data = this.resume();
-    var node = /** @type {Code} */
-    this.stack[this.stack.length - 1];
+    var node = this.stack[this.stack.length - 1];
     node.lang = data;
   }
-  /** @type {Handle} */
 
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
   function onexitcodefencedfencemeta() {
     var data = this.resume();
-    var node = /** @type {Code} */
-    this.stack[this.stack.length - 1];
+    var node = this.stack[this.stack.length - 1];
     node.meta = data;
   }
-  /** @type {Handle} */
 
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
   function onexitcodefencedfence() {
     // Exit if this is the closing fence.
     if (getData('flowCodeInside')) return;
     this.buffer();
     setData('flowCodeInside', true);
   }
-  /** @type {Handle} */
 
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
   function onexitcodefenced() {
     var data = this.resume();
-    var node = /** @type {Code} */
-    this.stack[this.stack.length - 1];
+    var node = this.stack[this.stack.length - 1];
     node.value = data.replace(/^(\r?\n|\r)|(\r?\n|\r)$/g, '');
     setData('flowCodeInside');
   }
-  /** @type {Handle} */
 
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
   function onexitcodeindented() {
     var data = this.resume();
-    var node = /** @type {Code} */
-    this.stack[this.stack.length - 1];
+    var node = this.stack[this.stack.length - 1];
     node.value = data.replace(/(\r?\n|\r)$/g, '');
   }
-  /** @type {Handle} */
 
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
   function onexitdefinitionlabelstring(token) {
-    // Discard label, use the source content instead.
     var label = this.resume();
-    var node = /** @type {Definition} */
-    this.stack[this.stack.length - 1];
+    var node = this.stack[this.stack.length - 1];
     node.label = label;
     node.identifier = normalizeIdentifier(this.sliceSerialize(token)).toLowerCase();
   }
-  /** @type {Handle} */
 
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
   function onexitdefinitiontitlestring() {
     var data = this.resume();
-    var node = /** @type {Definition} */
-    this.stack[this.stack.length - 1];
+    var node = this.stack[this.stack.length - 1];
     node.title = data;
   }
-  /** @type {Handle} */
 
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
   function onexitdefinitiondestinationstring() {
     var data = this.resume();
-    var node = /** @type {Definition} */
-    this.stack[this.stack.length - 1];
+    var node = this.stack[this.stack.length - 1];
     node.url = data;
   }
-  /** @type {Handle} */
 
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
   function onexitatxheadingsequence(token) {
-    var node = /** @type {Heading} */
-    this.stack[this.stack.length - 1];
+    var node = this.stack[this.stack.length - 1];
     if (!node.depth) {
       var depth = this.sliceSerialize(token).length;
       node.depth = depth;
     }
   }
-  /** @type {Handle} */
 
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
   function onexitsetextheadingtext() {
     setData('setextHeadingSlurpLineEnding', true);
   }
-  /** @type {Handle} */
 
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
   function onexitsetextheadinglinesequence(token) {
-    var node = /** @type {Heading} */
-    this.stack[this.stack.length - 1];
+    var node = this.stack[this.stack.length - 1];
     node.depth = this.sliceSerialize(token).charCodeAt(0) === 61 ? 1 : 2;
   }
-  /** @type {Handle} */
 
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
   function onexitsetextheading() {
     setData('setextHeadingSlurpLineEnding');
   }
-  /** @type {Handle} */
+
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
 
   function onenterdata(token) {
-    var parent = /** @type {Parent} */
-    this.stack[this.stack.length - 1];
-    /** @type {Node} */
-
-    var tail = parent.children[parent.children.length - 1];
+    var node = this.stack[this.stack.length - 1];
+    var tail = node.children[node.children.length - 1];
     if (!tail || tail.type !== 'text') {
       // Add a new text node.
-      tail = text(); // @ts-expect-error: we’ll add `end` later.
-
+      tail = text();
+      // @ts-expect-error: we’ll add `end` later.
       tail.position = {
-        start: point(token.start)
-      }; // @ts-expect-error: Assume `parent` accepts `text`.
-
-      parent.children.push(tail);
+        start: point$1(token.start)
+      };
+      // @ts-expect-error: Assume `parent` accepts `text`.
+      node.children.push(tail);
     }
     this.stack.push(tail);
   }
-  /** @type {Handle} */
+
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
 
   function onexitdata(token) {
     var tail = this.stack.pop();
     tail.value += this.sliceSerialize(token);
-    tail.position.end = point(token.end);
+    tail.position.end = point$1(token.end);
   }
-  /** @type {Handle} */
+
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
 
   function onexitlineending(token) {
     var context = this.stack[this.stack.length - 1];
-
     // If we’re at a hard break, include the line ending in there.
     if (getData('atHardBreak')) {
       var tail = context.children[context.children.length - 1];
-      tail.position.end = point(token.end);
+      tail.position.end = point$1(token.end);
       setData('atHardBreak');
       return;
     }
@@ -10377,194 +10582,262 @@ function compiler() {
       onexitdata.call(this, token);
     }
   }
-  /** @type {Handle} */
+
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
 
   function onexithardbreak() {
     setData('atHardBreak', true);
   }
-  /** @type {Handle} */
+
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
 
   function onexithtmlflow() {
     var data = this.resume();
-    var node = /** @type {HTML} */
-    this.stack[this.stack.length - 1];
+    var node = this.stack[this.stack.length - 1];
     node.value = data;
   }
-  /** @type {Handle} */
+
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
 
   function onexithtmltext() {
     var data = this.resume();
-    var node = /** @type {HTML} */
-    this.stack[this.stack.length - 1];
+    var node = this.stack[this.stack.length - 1];
     node.value = data;
   }
-  /** @type {Handle} */
+
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
 
   function onexitcodetext() {
     var data = this.resume();
-    var node = /** @type {InlineCode} */
-    this.stack[this.stack.length - 1];
+    var node = this.stack[this.stack.length - 1];
     node.value = data;
   }
-  /** @type {Handle} */
+
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
 
   function onexitlink() {
-    var context = /** @type {Link & {identifier: string, label: string}} */
-    this.stack[this.stack.length - 1]; // To do: clean.
+    var node = this.stack[this.stack.length - 1];
+    // Note: there are also `identifier` and `label` fields on this link node!
+    // These are used / cleaned here.
 
+    // To do: clean.
     if (getData('inReference')) {
-      context.type += 'Reference'; // @ts-expect-error: mutate.
-
-      context.referenceType = getData('referenceType') || 'shortcut'; // @ts-expect-error: mutate.
-
-      delete context.url;
-      delete context.title;
+      /** @type {ReferenceType} */
+      var referenceType = getData('referenceType') || 'shortcut';
+      node.type += 'Reference';
+      // @ts-expect-error: mutate.
+      node.referenceType = referenceType;
+      // @ts-expect-error: mutate.
+      delete node.url;
+      delete node.title;
     } else {
       // @ts-expect-error: mutate.
-      delete context.identifier; // @ts-expect-error: mutate.
-
-      delete context.label;
+      delete node.identifier;
+      // @ts-expect-error: mutate.
+      delete node.label;
     }
     setData('referenceType');
   }
-  /** @type {Handle} */
+
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
 
   function onexitimage() {
-    var context = /** @type {Image & {identifier: string, label: string}} */
-    this.stack[this.stack.length - 1]; // To do: clean.
+    var node = this.stack[this.stack.length - 1];
+    // Note: there are also `identifier` and `label` fields on this link node!
+    // These are used / cleaned here.
 
+    // To do: clean.
     if (getData('inReference')) {
-      context.type += 'Reference'; // @ts-expect-error: mutate.
-
-      context.referenceType = getData('referenceType') || 'shortcut'; // @ts-expect-error: mutate.
-
-      delete context.url;
-      delete context.title;
+      /** @type {ReferenceType} */
+      var referenceType = getData('referenceType') || 'shortcut';
+      node.type += 'Reference';
+      // @ts-expect-error: mutate.
+      node.referenceType = referenceType;
+      // @ts-expect-error: mutate.
+      delete node.url;
+      delete node.title;
     } else {
       // @ts-expect-error: mutate.
-      delete context.identifier; // @ts-expect-error: mutate.
-
-      delete context.label;
+      delete node.identifier;
+      // @ts-expect-error: mutate.
+      delete node.label;
     }
     setData('referenceType');
   }
-  /** @type {Handle} */
+
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
 
   function onexitlabeltext(token) {
-    var ancestor = /** @type {(Link|Image) & {identifier: string, label: string}} */
-    this.stack[this.stack.length - 2];
     var string = this.sliceSerialize(token);
+    var ancestor = this.stack[this.stack.length - 2];
+    // @ts-expect-error: stash this on the node, as it might become a reference
+    // later.
     ancestor.label = decodeString(string);
+    // @ts-expect-error: same as above.
     ancestor.identifier = normalizeIdentifier(string).toLowerCase();
   }
-  /** @type {Handle} */
+
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
 
   function onexitlabel() {
-    var fragment = /** @type {Fragment} */
-    this.stack[this.stack.length - 1];
+    var fragment = this.stack[this.stack.length - 1];
     var value = this.resume();
-    var node = /** @type {(Link|Image) & {identifier: string, label: string}} */
-    this.stack[this.stack.length - 1]; // Assume a reference.
-
+    var node = this.stack[this.stack.length - 1];
+    // Assume a reference.
     setData('inReference', true);
     if (node.type === 'link') {
+      /** @type {Array<StaticPhrasingContent>} */
       // @ts-expect-error: Assume static phrasing content.
-      node.children = fragment.children;
+      var children = fragment.children;
+      node.children = children;
     } else {
       node.alt = value;
     }
   }
-  /** @type {Handle} */
+
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
 
   function onexitresourcedestinationstring() {
     var data = this.resume();
-    var node = /** @type {Link|Image} */
-    this.stack[this.stack.length - 1];
+    var node = this.stack[this.stack.length - 1];
     node.url = data;
   }
-  /** @type {Handle} */
+
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
 
   function onexitresourcetitlestring() {
     var data = this.resume();
-    var node = /** @type {Link|Image} */
-    this.stack[this.stack.length - 1];
+    var node = this.stack[this.stack.length - 1];
     node.title = data;
   }
-  /** @type {Handle} */
+
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
 
   function onexitresource() {
     setData('inReference');
   }
-  /** @type {Handle} */
+
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
 
   function onenterreference() {
     setData('referenceType', 'collapsed');
   }
-  /** @type {Handle} */
+
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
 
   function onexitreferencestring(token) {
     var label = this.resume();
-    var node = /** @type {LinkReference|ImageReference} */
-    this.stack[this.stack.length - 1];
+    var node = this.stack[this.stack.length - 1];
+    // @ts-expect-error: stash this on the node, as it might become a reference
+    // later.
     node.label = label;
+    // @ts-expect-error: same as above.
     node.identifier = normalizeIdentifier(this.sliceSerialize(token)).toLowerCase();
     setData('referenceType', 'full');
   }
-  /** @type {Handle} */
+
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
 
   function onexitcharacterreferencemarker(token) {
     setData('characterReferenceType', token.type);
   }
-  /** @type {Handle} */
 
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
   function onexitcharacterreferencevalue(token) {
     var data = this.sliceSerialize(token);
     var type = getData('characterReferenceType');
     /** @type {string} */
-
     var value;
     if (type) {
       value = decodeNumericCharacterReference(data, type === 'characterReferenceMarkerNumeric' ? 10 : 16);
       setData('characterReferenceType');
     } else {
-      // @ts-expect-error `decodeNamedCharacterReference` can return false for
-      // invalid named character references, but everything we’ve tokenized is
-      // valid.
-      value = decodeNamedCharacterReference(data);
+      var result = decodeNamedCharacterReference(data);
+      value = result;
     }
     var tail = this.stack.pop();
     tail.value += value;
-    tail.position.end = point(token.end);
+    tail.position.end = point$1(token.end);
   }
-  /** @type {Handle} */
 
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
   function onexitautolinkprotocol(token) {
     onexitdata.call(this, token);
-    var node = /** @type {Link} */
-    this.stack[this.stack.length - 1];
+    var node = this.stack[this.stack.length - 1];
     node.url = this.sliceSerialize(token);
   }
-  /** @type {Handle} */
 
+  /**
+   * @this {CompileContext}
+   * @type {Handle}
+   */
   function onexitautolinkemail(token) {
     onexitdata.call(this, token);
-    var node = /** @type {Link} */
-    this.stack[this.stack.length - 1];
+    var node = this.stack[this.stack.length - 1];
     node.url = 'mailto:' + this.sliceSerialize(token);
-  } //
+  }
+
+  //
   // Creaters.
   //
 
   /** @returns {Blockquote} */
-
   function blockQuote() {
     return {
       type: 'blockquote',
       children: []
     };
   }
-  /** @returns {Code} */
 
+  /** @returns {Code} */
   function codeFlow() {
     return {
       type: 'code',
@@ -10573,16 +10846,16 @@ function compiler() {
       value: ''
     };
   }
-  /** @returns {InlineCode} */
 
+  /** @returns {InlineCode} */
   function codeText() {
     return {
       type: 'inlineCode',
       value: ''
     };
   }
-  /** @returns {Definition} */
 
+  /** @returns {Definition} */
   function definition() {
     return {
       type: 'definition',
@@ -10592,16 +10865,16 @@ function compiler() {
       url: ''
     };
   }
-  /** @returns {Emphasis} */
 
+  /** @returns {Emphasis} */
   function emphasis() {
     return {
       type: 'emphasis',
       children: []
     };
   }
-  /** @returns {Heading} */
 
+  /** @returns {Heading} */
   function heading() {
     // @ts-expect-error `depth` will be set later.
     return {
@@ -10610,23 +10883,23 @@ function compiler() {
       children: []
     };
   }
-  /** @returns {Break} */
 
+  /** @returns {Break} */
   function hardBreak() {
     return {
       type: 'break'
     };
   }
-  /** @returns {HTML} */
 
+  /** @returns {HTML} */
   function html() {
     return {
       type: 'html',
       value: ''
     };
   }
-  /** @returns {Image} */
 
+  /** @returns {Image} */
   function image() {
     return {
       type: 'image',
@@ -10635,8 +10908,8 @@ function compiler() {
       alt: null
     };
   }
-  /** @returns {Link} */
 
+  /** @returns {Link} */
   function link() {
     return {
       type: 'link',
@@ -10645,11 +10918,11 @@ function compiler() {
       children: []
     };
   }
+
   /**
    * @param {Token} token
    * @returns {List}
    */
-
   function list(token) {
     return {
       type: 'list',
@@ -10660,11 +10933,11 @@ function compiler() {
       children: []
     };
   }
+
   /**
    * @param {Token} token
    * @returns {ListItem}
    */
-
   function listItem(token) {
     return {
       type: 'listItem',
@@ -10674,44 +10947,60 @@ function compiler() {
       children: []
     };
   }
-  /** @returns {Paragraph} */
 
+  /** @returns {Paragraph} */
   function paragraph() {
     return {
       type: 'paragraph',
       children: []
     };
   }
-  /** @returns {Strong} */
 
+  /** @returns {Strong} */
   function strong() {
     return {
       type: 'strong',
       children: []
     };
   }
-  /** @returns {Text} */
 
+  /** @returns {Text} */
   function text() {
     return {
       type: 'text',
       value: ''
     };
   }
-  /** @returns {ThematicBreak} */
 
+  /** @returns {ThematicBreak} */
   function thematicBreak() {
     return {
       type: 'thematicBreak'
     };
   }
 }
-/**
- * @param {Extension} combined
- * @param {Array<Extension|Array<Extension>>} extensions
- * @returns {Extension}
- */
 
+/**
+ * Copy a point-like value.
+ *
+ * @param {Point} d
+ *   Point-like value.
+ * @returns {Point}
+ *   unist point.
+ */
+function point$1(d) {
+  return {
+    line: d.line,
+    column: d.column,
+    offset: d.offset
+  };
+}
+
+/**
+ * @param {Config} combined
+ * @param {Array<Extension | Array<Extension>>} extensions
+ * @returns {void}
+ */
 function configure(combined, extensions) {
   var index = -1;
   while (++index < extensions.length) {
@@ -10722,38 +11011,41 @@ function configure(combined, extensions) {
       extension(combined, value);
     }
   }
-  return combined;
 }
+
 /**
- * @param {Extension} combined
+ * @param {Config} combined
  * @param {Extension} extension
  * @returns {void}
  */
-
 function extension(combined, extension) {
-  /** @type {string} */
+  /** @type {keyof Extension} */
   var key;
   for (key in extension) {
-    if (own$6.call(extension, key)) {
-      var list = key === 'canContainEols' || key === 'transforms';
-      var maybe = own$6.call(combined, key) ? combined[key] : undefined;
-      /* c8 ignore next */
-
-      var left = maybe || (combined[key] = list ? [] : {});
-      var right = extension[key];
-      if (right) {
-        if (list) {
-          // @ts-expect-error: `left` is an array.
-          combined[key] = [].concat(_toConsumableArray(left), _toConsumableArray(right));
-        } else {
-          Object.assign(left, right);
+    if (own$5.call(extension, key)) {
+      if (key === 'canContainEols') {
+        var right = extension[key];
+        if (right) {
+          var _combined$key;
+          (_combined$key = combined[key]).push.apply(_combined$key, _toConsumableArray(right));
+        }
+      } else if (key === 'transforms') {
+        var _right = extension[key];
+        if (_right) {
+          var _combined$key2;
+          (_combined$key2 = combined[key]).push.apply(_combined$key2, _toConsumableArray(_right));
+        }
+      } else if (key === 'enter' || key === 'exit') {
+        var _right2 = extension[key];
+        if (_right2) {
+          Object.assign(combined[key], _right2);
         }
       }
     }
   }
 }
-/** @type {OnEnterError} */
 
+/** @type {OnEnterError} */
 function defaultOnError(left, right) {
   if (left) {
     throw new Error('Cannot close `' + left.type + '` (' + stringifyPosition({
@@ -10797,578 +11089,179 @@ function remarkParse(options) {
 }
 
 /**
- * @typedef {import('unist').Node} Node
- * @typedef {import('unist').Parent} Parent
- * @typedef {import('unist').Literal} Literal
- * @typedef {Object.<string, unknown>} Props
- * @typedef {Array.<Node>|string} ChildrenOrValue
- *
- * @typedef {(<T extends string, P extends Record<string, unknown>, C extends Node[]>(type: T, props: P, children: C) => {type: T, children: C} & P)} BuildParentWithProps
- * @typedef {(<T extends string, P extends Record<string, unknown>>(type: T, props: P, value: string) => {type: T, value: string} & P)} BuildLiteralWithProps
- * @typedef {(<T extends string, P extends Record<string, unknown>>(type: T, props: P) => {type: T} & P)} BuildVoidWithProps
- * @typedef {(<T extends string, C extends Node[]>(type: T, children: C) => {type: T, children: C})} BuildParent
- * @typedef {(<T extends string>(type: T, value: string) => {type: T, value: string})} BuildLiteral
- * @typedef {(<T extends string>(type: T) => {type: T})} BuildVoid
+ * @typedef {import('hast').Element} Element
+ * @typedef {import('mdast').Blockquote} Blockquote
+ * @typedef {import('../state.js').State} State
  */
 
-var u =
 /**
-* @type {BuildVoid & BuildVoidWithProps & BuildLiteral & BuildLiteralWithProps & BuildParent & BuildParentWithProps}
-*/
-/**
- * @param {string} type Type of node
- * @param {Props|ChildrenOrValue} [props] Additional properties for node (or `children` or `value`)
- * @param {ChildrenOrValue} [value] `children` or `value` of node
- * @returns {Node}
+ * Turn an mdast `blockquote` node into hast.
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @param {Blockquote} node
+ *   mdast node.
+ * @returns {Element}
+ *   hast node.
  */
-function u(type, props, value) {
-  /** @type {Node} */
-  var node = {
-    type: String(type)
+function blockquote(state, node) {
+  /** @type {Element} */
+  var result = {
+    type: 'element',
+    tagName: 'blockquote',
+    properties: {},
+    children: state.wrap(state.all(node), true)
   };
-  if ((value === undefined || value === null) && (typeof props === 'string' || Array.isArray(props))) {
-    value = props;
-  } else {
-    Object.assign(node, props);
-  }
-  if (Array.isArray(value)) {
-    node.children = value;
-  } else if (value !== undefined && value !== null) {
-    node.value = String(value);
-  }
-  return node;
-};
-
-function ownKeys$f(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread$f(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$f(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$f(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-var own$5 = {}.hasOwnProperty;
-
-/**
- * Transform an unknown node.
- * @type {Handler}
- * @param {MdastNode} node
- */
-function unknown(h, node) {
-  var data = node.data || {};
-  if ('value' in node && !(own$5.call(data, 'hName') || own$5.call(data, 'hProperties') || own$5.call(data, 'hChildren'))) {
-    return h.augment(node, u('text', node.value));
-  }
-  return h(node, 'div', all(h, node));
+  state.patch(node, result);
+  return state.applyData(node, result);
 }
 
 /**
- * @type {Handler}
- * @param {MdastNode} node
+ * @typedef {import('hast').Element} Element
+ * @typedef {import('hast').Text} Text
+ * @typedef {import('mdast').Break} Break
+ * @typedef {import('../state.js').State} State
  */
-function one(h, node, parent) {
-  var type = node && node.type;
-  /** @type {Handler} */
-  var fn;
-
-  // Fail on non-nodes.
-  if (!type) {
-    throw new Error('Expected node, got `' + node + '`');
-  }
-  if (own$5.call(h.handlers, type)) {
-    fn = h.handlers[type];
-  } else if (h.passThrough && h.passThrough.includes(type)) {
-    fn = returnNode;
-  } else {
-    fn = h.unknownHandler;
-  }
-  return (typeof fn === 'function' ? fn : unknown)(h, node, parent);
-}
 
 /**
- * @type {Handler}
- * @param {MdastNode} node
- */
-function returnNode(h, node) {
-  // @ts-expect-error: Pass through custom node.
-  return 'children' in node ? _objectSpread$f(_objectSpread$f({}, node), {}, {
-    children: all(h, node)
-  }) : node;
-}
-
-/**
- * @param {H} h
- * @param {MdastNode} parent
- */
-function all(h, parent) {
-  /** @type {Array<Content>} */
-  var values = [];
-  if ('children' in parent) {
-    var nodes = parent.children;
-    var index = -1;
-    while (++index < nodes.length) {
-      var result = one(h, nodes[index], parent);
-      if (result) {
-        if (index && nodes[index - 1].type === 'break') {
-          if (!Array.isArray(result) && result.type === 'text') {
-            result.value = result.value.replace(/^\s+/, '');
-          }
-          if (!Array.isArray(result) && result.type === 'element') {
-            var head = result.children[0];
-            if (head && head.type === 'text') {
-              head.value = head.value.replace(/^\s+/, '');
-            }
-          }
-        }
-        if (Array.isArray(result)) {
-          values.push.apply(values, _toConsumableArray(result));
-        } else {
-          values.push(result);
-        }
-      }
-    }
-  }
-  return values;
-}
-
-/**
- * @typedef {import('unist').Node} Node
- * @typedef {import('unist').Parent} Parent
+ * Turn an mdast `break` node into hast.
  *
- * @typedef {string} Type
- * @typedef {Object<string, unknown>} Props
- *
- * @typedef {null|undefined|Type|Props|TestFunctionAnything|Array.<Type|Props|TestFunctionAnything>} Test
+ * @param {State} state
+ *   Info passed around.
+ * @param {Break} node
+ *   mdast node.
+ * @returns {Array<Element | Text>}
+ *   hast element content.
  */
-var convert =
-/**
- * @type {(
- *   (<T extends Node>(test: T['type']|Partial<T>|TestFunctionPredicate<T>) => AssertPredicate<T>) &
- *   ((test?: Test) => AssertAnything)
- * )}
- */
-
-/**
- * Generate an assertion from a check.
- * @param {Test} [test]
- * When nullish, checks if `node` is a `Node`.
- * When `string`, works like passing `function (node) {return node.type === test}`.
- * When `function` checks if function passed the node is true.
- * When `object`, checks that all keys in test are in node, and that they have (strictly) equal values.
- * When `array`, checks any one of the subtests pass.
- * @returns {AssertAnything}
- */
-function convert(test) {
-  if (test === undefined || test === null) {
-    return ok;
-  }
-  if (typeof test === 'string') {
-    return typeFactory(test);
-  }
-  if (typeof test === 'object') {
-    return Array.isArray(test) ? anyFactory(test) : propsFactory(test);
-  }
-  if (typeof test === 'function') {
-    return castFactory(test);
-  }
-  throw new Error('Expected function, string, or object as test');
-};
-/**
- * @param {Array.<Type|Props|TestFunctionAnything>} tests
- * @returns {AssertAnything}
- */
-function anyFactory(tests) {
-  /** @type {Array.<AssertAnything>} */
-  var checks = [];
-  var index = -1;
-  while (++index < tests.length) {
-    checks[index] = convert(tests[index]);
-  }
-  return castFactory(any);
-
-  /**
-   * @this {unknown}
-   * @param {unknown[]} parameters
-   * @returns {boolean}
-   */
-  function any() {
-    var index = -1;
-    for (var _len = arguments.length, parameters = new Array(_len), _key = 0; _key < _len; _key++) {
-      parameters[_key] = arguments[_key];
-    }
-    while (++index < checks.length) {
-      var _checks$index;
-      if ((_checks$index = checks[index]).call.apply(_checks$index, [this].concat(parameters))) return true;
-    }
-    return false;
-  }
+function hardBreak(state, node) {
+  /** @type {Element} */
+  var result = {
+    type: 'element',
+    tagName: 'br',
+    properties: {},
+    children: []
+  };
+  state.patch(node, result);
+  return [state.applyData(node, result), {
+    type: 'text',
+    value: '\n'
+  }];
 }
 
 /**
- * Utility to assert each property in `test` is represented in `node`, and each
- * values are strictly equal.
+ * @typedef {import('hast').Element} Element
+ * @typedef {import('hast').Properties} Properties
+ * @typedef {import('mdast').Code} Code
+ * @typedef {import('../state.js').State} State
+
+ */
+
+/**
+ * Turn an mdast `code` node into hast.
  *
- * @param {Props} check
- * @returns {AssertAnything}
+ * @param {State} state
+ *   Info passed around.
+ * @param {Code} node
+ *   mdast node.
+ * @returns {Element}
+ *   hast node.
  */
-function propsFactory(check) {
-  return castFactory(all);
-
-  /**
-   * @param {Node} node
-   * @returns {boolean}
-   */
-  function all(node) {
-    /** @type {string} */
-    var key;
-    for (key in check) {
-      // @ts-expect-error: hush, it sure works as an index.
-      if (node[key] !== check[key]) return false;
-    }
-    return true;
+function code(state, node) {
+  var value = node.value ? node.value + '\n' : '';
+  // To do: next major, use `node.lang` w/o regex, the splitting’s been going
+  // on for years in remark now.
+  var lang = node.lang ? node.lang.match(/^[^ \t]+(?=[ \t]|$)/) : null;
+  /** @type {Properties} */
+  var properties = {};
+  if (lang) {
+    properties.className = ['language-' + lang];
   }
-}
 
-/**
- * Utility to convert a string into a function which checks a given node’s type
- * for said string.
- *
- * @param {Type} check
- * @returns {AssertAnything}
- */
-function typeFactory(check) {
-  return castFactory(type);
-
-  /**
-   * @param {Node} node
-   */
-  function type(node) {
-    return node && node.type === check;
-  }
-}
-
-/**
- * Utility to convert a string into a function which checks a given node’s type
- * for said string.
- * @param {TestFunctionAnything} check
- * @returns {AssertAnything}
- */
-function castFactory(check) {
-  return assertion;
-
-  /**
-   * @this {unknown}
-   * @param {Array.<unknown>} parameters
-   * @returns {boolean}
-   */
-  function assertion() {
-    for (var _len2 = arguments.length, parameters = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-      parameters[_key2] = arguments[_key2];
-    }
-    // @ts-expect-error: spreading is fine.
-    return Boolean(check.call.apply(check, [this].concat(parameters)));
-  }
-}
-
-// Utility to return true.
-function ok() {
-  return true;
-}
-
-/**
- * @param {string} d
- * @returns {string}
- */
-function color(d) {
-  return "\x1B[33m" + d + "\x1B[39m";
-}
-
-/**
- * @typedef {import('unist').Node} Node
- * @typedef {import('unist').Parent} Parent
- * @typedef {import('unist-util-is').Test} Test
- * @typedef {import('./complex-types.js').Action} Action
- * @typedef {import('./complex-types.js').Index} Index
- * @typedef {import('./complex-types.js').ActionTuple} ActionTuple
- * @typedef {import('./complex-types.js').VisitorResult} VisitorResult
- * @typedef {import('./complex-types.js').Visitor} Visitor
- */
-
-/**
- * Continue traversing as normal
- */
-var CONTINUE = true;
-/**
- * Do not traverse this node’s children
- */
-var SKIP = 'skip';
-/**
- * Stop traversing immediately
- */
-var EXIT = false;
-
-/**
- * Visit children of tree which pass test.
- *
- * @param tree
- *   Tree to walk
- * @param [test]
- *   `unist-util-is`-compatible test
- * @param visitor
- *   Function called for nodes that pass `test`.
- * @param [reverse=false]
- *   Traverse in reverse preorder (NRL) instead of preorder (NLR) (default).
- */
-var visitParents =
-/**
- * @type {(
- *   (<Tree extends Node, Check extends Test>(tree: Tree, test: Check, visitor: import('./complex-types.js').BuildVisitor<Tree, Check>, reverse?: boolean) => void) &
- *   (<Tree extends Node>(tree: Tree, visitor: import('./complex-types.js').BuildVisitor<Tree>, reverse?: boolean) => void)
- * )}
- */
-
-/**
- * @param {Node} tree
- * @param {Test} test
- * @param {import('./complex-types.js').Visitor<Node>} visitor
- * @param {boolean} [reverse=false]
- */
-function visitParents(tree, test, visitor, reverse) {
-  if (typeof test === 'function' && typeof visitor !== 'function') {
-    reverse = visitor;
-    // @ts-expect-error no visitor given, so `visitor` is test.
-    visitor = test;
-    test = null;
-  }
-  var is = convert(test);
-  var step = reverse ? -1 : 1;
-  factory(tree, null, [])();
-
-  /**
-   * @param {Node} node
-   * @param {number?} index
-   * @param {Array<Parent>} parents
-   */
-  function factory(node, index, parents) {
-    /** @type {Record<string, unknown>} */
-    // @ts-expect-error: hush
-    var value = typeof node === 'object' && node !== null ? node : {};
-    /** @type {string|undefined} */
-    var name;
-    if (typeof value.type === 'string') {
-      name = typeof value.tagName === 'string' ? value.tagName : typeof value.name === 'string' ? value.name : undefined;
-      Object.defineProperty(visit, 'name', {
-        value: 'node (' + color(value.type + (name ? '<' + name + '>' : '')) + ')'
-      });
-    }
-    return visit;
-    function visit() {
-      /** @type {ActionTuple} */
-      var result = [];
-      /** @type {ActionTuple} */
-      var subresult;
-      /** @type {number} */
-      var offset;
-      /** @type {Array<Parent>} */
-      var grandparents;
-      if (!test || is(node, index, parents[parents.length - 1] || null)) {
-        result = toResult(visitor(node, parents));
-        if (result[0] === EXIT) {
-          return result;
-        }
-      }
-
-      // @ts-expect-error looks like a parent.
-      if (node.children && result[0] !== SKIP) {
-        // @ts-expect-error looks like a parent.
-        offset = (reverse ? node.children.length : -1) + step;
-        // @ts-expect-error looks like a parent.
-        grandparents = parents.concat(node);
-
-        // @ts-expect-error looks like a parent.
-        while (offset > -1 && offset < node.children.length) {
-          // @ts-expect-error looks like a parent.
-          subresult = factory(node.children[offset], offset, grandparents)();
-          if (subresult[0] === EXIT) {
-            return subresult;
-          }
-          offset = typeof subresult[1] === 'number' ? subresult[1] : offset + step;
-        }
-      }
-      return result;
-    }
-  }
-};
-
-/**
- * @param {VisitorResult} value
- * @returns {ActionTuple}
- */
-function toResult(value) {
-  if (Array.isArray(value)) {
-    return value;
-  }
-  if (typeof value === 'number') {
-    return [CONTINUE, value];
-  }
-  return [value];
-}
-
-/**
- * @typedef {import('unist').Node} Node
- * @typedef {import('unist').Parent} Parent
- * @typedef {import('unist-util-is').Test} Test
- * @typedef {import('unist-util-visit-parents').VisitorResult} VisitorResult
- * @typedef {import('./complex-types.js').Visitor} Visitor
- */
-
-/**
- * Visit children of tree which pass test.
- *
- * @param tree
- *   Tree to walk
- * @param [test]
- *   `unist-util-is`-compatible test
- * @param visitor
- *   Function called for nodes that pass `test`.
- * @param reverse
- *   Traverse in reverse preorder (NRL) instead of preorder (NLR) (default).
- */
-var visit =
-/**
- * @type {(
- *   (<Tree extends Node, Check extends Test>(tree: Tree, test: Check, visitor: import('./complex-types.js').BuildVisitor<Tree, Check>, reverse?: boolean) => void) &
- *   (<Tree extends Node>(tree: Tree, visitor: import('./complex-types.js').BuildVisitor<Tree>, reverse?: boolean) => void)
- * )}
- */
-
-/**
- * @param {Node} tree
- * @param {Test} test
- * @param {import('./complex-types.js').Visitor} visitor
- * @param {boolean} [reverse]
- */
-function visit(tree, test, visitor, reverse) {
-  if (typeof test === 'function' && typeof visitor !== 'function') {
-    reverse = visitor;
-    visitor = test;
-    test = null;
-  }
-  visitParents(tree, test, overload, reverse);
-
-  /**
-   * @param {Node} node
-   * @param {Array<Parent>} parents
-   */
-  function overload(node, parents) {
-    var parent = parents[parents.length - 1];
-    return visitor(node, parent ? parent.children.indexOf(node) : null, parent);
-  }
-};
-
-/**
- * @typedef {import('unist').Position} Position
- * @typedef {import('unist').Node} Node
- * @typedef {Record<string, unknown> & {type: string, position?: PositionLike|undefined}} NodeLike
- * @typedef {import('unist').Point} Point
- *
- * @typedef {Partial<Point>} PointLike
- *
- * @typedef PositionLike
- * @property {PointLike} [start]
- * @property {PointLike} [end]
- */
-
-var pointStart = point('start');
-var pointEnd = point('end');
-
-/**
- * Get the positional info of `node`.
- *
- * @param {'start'|'end'} type
- */
-function point(type) {
-  return point;
-
-  /**
-   * Get the positional info of `node`.
-   *
-   * @param {NodeLike|Node} [node]
-   * @returns {Point}
-   */
-  function point(node) {
-    var point = node && node.position && node.position[type] || {};
-    return {
-      line: point.line || null,
-      column: point.column || null,
-      offset: point.offset > -1 ? point.offset : null
+  // Create `<code>`.
+  /** @type {Element} */
+  var result = {
+    type: 'element',
+    tagName: 'code',
+    properties: properties,
+    children: [{
+      type: 'text',
+      value: value
+    }]
+  };
+  if (node.meta) {
+    result.data = {
+      meta: node.meta
     };
   }
+  state.patch(node, result);
+  result = state.applyData(node, result);
+
+  // Create `<pre>`.
+  result = {
+    type: 'element',
+    tagName: 'pre',
+    properties: {},
+    children: [result]
+  };
+  state.patch(node, result);
+  return result;
 }
 
 /**
- * @typedef {Object} PointLike
- * @property {number} [line]
- * @property {number} [column]
- * @property {number} [offset]
- *
- * @typedef {Object} PositionLike
- * @property {PointLike} [start]
- * @property {PointLike} [end]
- *
- * @typedef {Object} NodeLike
- * @property {PositionLike} [position]
+ * @typedef {import('hast').Element} Element
+ * @typedef {import('mdast').Delete} Delete
+ * @typedef {import('../state.js').State} State
+
  */
 
 /**
- * Check if `node` is *generated*.
+ * Turn an mdast `delete` node into hast.
  *
- * @param {NodeLike} [node]
- * @returns {boolean}
+ * @param {State} state
+ *   Info passed around.
+ * @param {Delete} node
+ *   mdast node.
+ * @returns {Element}
+ *   hast node.
  */
-function generated(node) {
-  return !node || !node.position || !node.position.start || !node.position.start.line || !node.position.start.column || !node.position.end || !node.position.end.line || !node.position.end.column;
+function strikethrough(state, node) {
+  /** @type {Element} */
+  var result = {
+    type: 'element',
+    tagName: 'del',
+    properties: {},
+    children: state.all(node)
+  };
+  state.patch(node, result);
+  return state.applyData(node, result);
 }
 
 /**
- * @typedef {import('mdast').Root|import('mdast').Content} Node
- * @typedef {import('mdast').Definition} Definition
+ * @typedef {import('hast').Element} Element
+ * @typedef {import('mdast').Emphasis} Emphasis
+ * @typedef {import('../state.js').State} State
  */
-var own$4 = {}.hasOwnProperty;
 
 /**
- * Find definitions in `node`.
- * Uses CommonMark precedence, which means that earlier definitions are
- * preferred over duplicate later definitions.
+ * Turn an mdast `emphasis` node into hast.
  *
- * @param {Node} node
+ * @param {State} state
+ *   Info passed around.
+ * @param {Emphasis} node
+ *   mdast node.
+ * @returns {Element}
+ *   hast node.
  */
-function definitions(node) {
-  /** @type {Record<string, Definition>} */
-  var cache = Object.create(null);
-  if (!node || !node.type) {
-    throw new Error('mdast-util-definitions expected node');
-  }
-  visit(node, 'definition', function (definition) {
-    var id = clean(definition.identifier);
-    if (id && !own$4.call(cache, id)) {
-      cache[id] = definition;
-    }
-  });
-  return definition;
-
-  /**
-   * Get a node from the bound definition cache.
-   *
-   * @param {string} identifier
-   * @returns {Definition|null}
-   */
-  function definition(identifier) {
-    var id = clean(identifier);
-    return id && own$4.call(cache, id) ? cache[id] : null;
-  }
-}
-
-/**
- * @param {string} [value]
- * @returns {string}
- */
-function clean(value) {
-  return String(value || '').toUpperCase();
+function emphasis(state, node) {
+  /** @type {Element} */
+  var result = {
+    type: 'element',
+    tagName: 'em',
+    properties: {},
+    children: state.all(node)
+  };
+  state.patch(node, result);
+  return state.applyData(node, result);
 }
 
 /**
@@ -11429,287 +11322,89 @@ function normalizeUri(value) {
 }
 
 /**
- * @typedef {import('./index.js').Content} Content
+ * @typedef {import('mdast').FootnoteReference} FootnoteReference
+ * @typedef {import('hast').Element} Element
+ * @typedef {import('../state.js').State} State
  */
 
 /**
- * Wrap `nodes` with line feeds between each entry.
- * Optionally adds line feeds at the start and end.
+ * Turn an mdast `footnoteReference` node into hast.
  *
- * @param {Array<Content>} nodes
- * @param {boolean} [loose=false]
- * @returns {Array<Content>}
+ * @param {State} state
+ *   Info passed around.
+ * @param {FootnoteReference} node
+ *   mdast node.
+ * @returns {Element}
+ *   hast node.
  */
-function wrap(nodes, loose) {
-  /** @type {Array<Content>} */
-  var result = [];
-  var index = -1;
-  if (loose) {
-    result.push(u('text', '\n'));
+function footnoteReference(state, node) {
+  var id = String(node.identifier).toUpperCase();
+  var safeId = normalizeUri(id.toLowerCase());
+  var index = state.footnoteOrder.indexOf(id);
+  /** @type {number} */
+  var counter;
+  if (index === -1) {
+    state.footnoteOrder.push(id);
+    state.footnoteCounts[id] = 1;
+    counter = state.footnoteOrder.length;
+  } else {
+    state.footnoteCounts[id]++;
+    counter = index + 1;
   }
-  while (++index < nodes.length) {
-    if (index) result.push(u('text', '\n'));
-    result.push(nodes[index]);
-  }
-  if (loose && nodes.length > 0) {
-    result.push(u('text', '\n'));
-  }
-  return result;
-}
+  var reuseCounter = state.footnoteCounts[id];
 
-function ownKeys$e(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread$e(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$e(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$e(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-
-/**
- * @param {H} h
- * @returns {Element|null}
- */
-function footer(h) {
-  var index = -1;
-  /** @type {Array<ElementContent>} */
-  var listItems = [];
-  while (++index < h.footnoteOrder.length) {
-    var def = h.footnoteById[h.footnoteOrder[index].toUpperCase()];
-    if (!def) {
-      continue;
-    }
-    var content = all(h, def);
-    var id = String(def.identifier);
-    var safeId = normalizeUri(id.toLowerCase());
-    var referenceIndex = 0;
-    /** @type {Array<ElementContent>} */
-    var backReferences = [];
-    while (++referenceIndex <= h.footnoteCounts[id]) {
-      /** @type {Element} */
-      var backReference = {
-        type: 'element',
-        tagName: 'a',
-        properties: {
-          href: '#' + h.clobberPrefix + 'fnref-' + safeId + (referenceIndex > 1 ? '-' + referenceIndex : ''),
-          dataFootnoteBackref: true,
-          className: ['data-footnote-backref'],
-          ariaLabel: h.footnoteBackLabel
-        },
-        children: [{
-          type: 'text',
-          value: '↩'
-        }]
-      };
-      if (referenceIndex > 1) {
-        backReference.children.push({
-          type: 'element',
-          tagName: 'sup',
-          children: [{
-            type: 'text',
-            value: String(referenceIndex)
-          }]
-        });
-      }
-      if (backReferences.length > 0) {
-        backReferences.push({
-          type: 'text',
-          value: ' '
-        });
-      }
-      backReferences.push(backReference);
-    }
-    var tail = content[content.length - 1];
-    if (tail && tail.type === 'element' && tail.tagName === 'p') {
-      var _tail$children;
-      var tailTail = tail.children[tail.children.length - 1];
-      if (tailTail && tailTail.type === 'text') {
-        tailTail.value += ' ';
-      } else {
-        tail.children.push({
-          type: 'text',
-          value: ' '
-        });
-      }
-      (_tail$children = tail.children).push.apply(_tail$children, backReferences);
-    } else {
-      content.push.apply(content, backReferences);
-    }
-
-    /** @type {Element} */
-    var listItem = {
-      type: 'element',
-      tagName: 'li',
-      properties: {
-        id: h.clobberPrefix + 'fn-' + safeId
-      },
-      children: wrap(content, true)
-    };
-    if (def.position) {
-      listItem.position = def.position;
-    }
-    listItems.push(listItem);
-  }
-  if (listItems.length === 0) {
-    return null;
-  }
-  return {
+  /** @type {Element} */
+  var link = {
     type: 'element',
-    tagName: 'section',
+    tagName: 'a',
     properties: {
-      dataFootnotes: true,
-      className: ['footnotes']
+      href: '#' + state.clobberPrefix + 'fn-' + safeId,
+      id: state.clobberPrefix + 'fnref-' + safeId + (reuseCounter > 1 ? '-' + reuseCounter : ''),
+      dataFootnoteRef: true,
+      ariaDescribedBy: ['footnote-label']
     },
     children: [{
-      type: 'element',
-      tagName: h.footnoteLabelTagName,
-      properties: _objectSpread$e(_objectSpread$e({}, JSON.parse(JSON.stringify(h.footnoteLabelProperties))), {}, {
-        id: 'footnote-label'
-      }),
-      children: [u('text', h.footnoteLabel)]
-    }, {
       type: 'text',
-      value: '\n'
-    }, {
-      type: 'element',
-      tagName: 'ol',
-      properties: {},
-      children: wrap(listItems, true)
-    }, {
-      type: 'text',
-      value: '\n'
+      value: String(counter)
     }]
   };
-}
+  state.patch(node, link);
 
-/**
- * @typedef {import('mdast').Blockquote} Blockquote
- * @typedef {import('../index.js').Handler} Handler
- */
-
-/**
- * @type {Handler}
- * @param {Blockquote} node
- */
-function blockquote(h, node) {
-  return h(node, 'blockquote', wrap(all(h, node), true));
+  /** @type {Element} */
+  var sup = {
+    type: 'element',
+    tagName: 'sup',
+    properties: {},
+    children: [link]
+  };
+  state.patch(node, sup);
+  return state.applyData(node, sup);
 }
 
 /**
  * @typedef {import('hast').Element} Element
- * @typedef {import('hast').Text} Text
- * @typedef {import('mdast').Break} Break
- * @typedef {import('../index.js').Handler} Handler
- */
-
-/**
- * @type {Handler}
- * @param {Break} node
- * @returns {Array<Element|Text>}
- */
-function hardBreak(h, node) {
-  return [h(node, 'br'), u('text', '\n')];
-}
-
-/**
- * @typedef {import('mdast').Code} Code
- * @typedef {import('hast').Properties} Properties
- * @typedef {import('../index.js').Handler} Handler
- */
-
-/**
- * @type {Handler}
- * @param {Code} node
- */
-function code(h, node) {
-  var value = node.value ? node.value + '\n' : '';
-  // To do: next major, use `node.lang` w/o regex, the splitting’s been going
-  // on for years in remark now.
-  var lang = node.lang && node.lang.match(/^[^ \t]+(?=[ \t]|$)/);
-  /** @type {Properties} */
-  var props = {};
-  if (lang) {
-    props.className = ['language-' + lang];
-  }
-  var code = h(node, 'code', props, [u('text', value)]);
-  if (node.meta) {
-    code.data = {
-      meta: node.meta
-    };
-  }
-  return h(node.position, 'pre', [code]);
-}
-
-/**
- * @typedef {import('mdast').Delete} Delete
- * @typedef {import('../index.js').Handler} Handler
- */
-
-/**
- * @type {Handler}
- * @param {Delete} node
- */
-function strikethrough(h, node) {
-  return h(node, 'del', all(h, node));
-}
-
-/**
- * @typedef {import('mdast').Emphasis} Emphasis
- * @typedef {import('../index.js').Handler} Handler
- */
-
-/**
- * @type {Handler}
- * @param {Emphasis} node
- */
-function emphasis(h, node) {
-  return h(node, 'em', all(h, node));
-}
-
-/**
- * @typedef {import('mdast').FootnoteReference} FootnoteReference
- * @typedef {import('../index.js').Handler} Handler
- */
-
-/**
- * @type {Handler}
- * @param {FootnoteReference} node
- */
-function footnoteReference(h, node) {
-  var id = String(node.identifier);
-  var safeId = normalizeUri(id.toLowerCase());
-  var index = h.footnoteOrder.indexOf(id);
-  /** @type {number} */
-  var counter;
-  if (index === -1) {
-    h.footnoteOrder.push(id);
-    h.footnoteCounts[id] = 1;
-    counter = h.footnoteOrder.length;
-  } else {
-    h.footnoteCounts[id]++;
-    counter = index + 1;
-  }
-  var reuseCounter = h.footnoteCounts[id];
-  return h(node, 'sup', [h(node.position, 'a', {
-    href: '#' + h.clobberPrefix + 'fn-' + safeId,
-    id: h.clobberPrefix + 'fnref-' + safeId + (reuseCounter > 1 ? '-' + reuseCounter : ''),
-    dataFootnoteRef: true,
-    ariaDescribedBy: 'footnote-label'
-  }, [u('text', String(counter))])]);
-}
-
-/**
  * @typedef {import('mdast').Footnote} Footnote
- * @typedef {import('../index.js').Handler} Handler
- *
- * @todo
- *   `footnote` (or “inline note”) are a pandoc footnotes feature (`^[a note]`)
- *   that does not exist in GFM.
- *   We still have support for it, so that things remain working with
- *   `micromark-extension-footnote` and `mdast-util-footnote`, but in the future
- *   we might be able to remove it?
+ * @typedef {import('../state.js').State} State
  */
 
+// To do: when both:
+// * <https://github.com/micromark/micromark-extension-footnote>
+// * <https://github.com/syntax-tree/mdast-util-footnote>
+// …are archived, remove this (also from mdast).
+// These inline notes are not used in GFM.
+
 /**
- * @type {Handler}
+ * Turn an mdast `footnote` node into hast.
+ *
+ * @param {State} state
+ *   Info passed around.
  * @param {Footnote} node
+ *   mdast node.
+ * @returns {Element}
+ *   hast node.
  */
-function footnote(h, node) {
-  var footnoteById = h.footnoteById;
+function footnote(state, node) {
+  var footnoteById = state.footnoteById;
   var no = 1;
   while (no in footnoteById) {
     no++;
@@ -11724,7 +11419,7 @@ function footnote(h, node) {
     }],
     position: node.position
   };
-  return footnoteReference(h, {
+  return footnoteReference(state, {
     type: 'footnoteReference',
     identifier: identifier,
     position: node.position
@@ -11732,48 +11427,94 @@ function footnote(h, node) {
 }
 
 /**
+ * @typedef {import('hast').Element} Element
  * @typedef {import('mdast').Heading} Heading
- * @typedef {import('../index.js').Handler} Handler
+ * @typedef {import('../state.js').State} State
  */
 
 /**
- * @type {Handler}
- * @param {Heading} node
- */
-function heading(h, node) {
-  return h(node, 'h' + node.depth, all(h, node));
-}
-
-/**
- * @typedef {import('mdast').HTML} HTML
- * @typedef {import('../index.js').Handler} Handler
- */
-
-/**
- * Return either a `raw` node in dangerous mode, otherwise nothing.
+ * Turn an mdast `heading` node into hast.
  *
- * @type {Handler}
- * @param {HTML} node
+ * @param {State} state
+ *   Info passed around.
+ * @param {Heading} node
+ *   mdast node.
+ * @returns {Element}
+ *   hast node.
  */
-function html$2(h, node) {
-  return h.dangerous ? h.augment(node, u('raw', node.value)) : null;
+function heading(state, node) {
+  /** @type {Element} */
+  var result = {
+    type: 'element',
+    tagName: 'h' + node.depth,
+    properties: {},
+    children: state.all(node)
+  };
+  state.patch(node, result);
+  return state.applyData(node, result);
 }
 
 /**
- * @typedef {import('mdast').LinkReference} LinkReference
- * @typedef {import('mdast').ImageReference} ImageReference
- * @typedef {import('./index.js').Handler} Handler
- * @typedef {import('./index.js').Content} Content
+ * @typedef {import('hast').Element} Element
+ * @typedef {import('mdast').HTML} Html
+ * @typedef {import('../state.js').State} State
+ * @typedef {import('../../index.js').Raw} Raw
  */
+
+/**
+ * Turn an mdast `html` node into hast (`raw` node in dangerous mode, otherwise
+ * nothing).
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @param {Html} node
+ *   mdast node.
+ * @returns {Raw | Element | null}
+ *   hast node.
+ */
+function html$2(state, node) {
+  if (state.dangerous) {
+    /** @type {Raw} */
+    var result = {
+      type: 'raw',
+      value: node.value
+    };
+    state.patch(node, result);
+    return state.applyData(node, result);
+  }
+
+  // To do: next major: return `undefined`.
+  return null;
+}
+
+/**
+ * @typedef {import('hast').ElementContent} ElementContent
+ *
+ * @typedef {import('mdast').Content} Content
+ * @typedef {import('mdast').Reference} Reference
+ * @typedef {import('mdast').Root} Root
+ *
+ * @typedef {import('./state.js').State} State
+ */
+
+/**
+ * @typedef {Root | Content} Nodes
+ * @typedef {Extract<Nodes, Reference>} References
+ */
+
+// To do: next major: always return array.
 
 /**
  * Return the content of a reference without definition as plain text.
  *
- * @type {Handler}
- * @param {ImageReference|LinkReference} node
- * @returns {Content|Array<Content>}
+ * @param {State} state
+ *   Info passed around.
+ * @param {References} node
+ *   Reference node (image, link).
+ * @returns {ElementContent | Array<ElementContent>}
+ *   hast content.
  */
-function revert(h, node) {
+function revert(state, node) {
   var subtype = node.referenceType;
   var suffix = ']';
   if (subtype === 'collapsed') {
@@ -11782,202 +11523,357 @@ function revert(h, node) {
     suffix += '[' + (node.label || node.identifier) + ']';
   }
   if (node.type === 'imageReference') {
-    return u('text', '![' + node.alt + suffix);
+    return {
+      type: 'text',
+      value: '![' + node.alt + suffix
+    };
   }
-  var contents = all(h, node);
+  var contents = state.all(node);
   var head = contents[0];
   if (head && head.type === 'text') {
     head.value = '[' + head.value;
   } else {
-    contents.unshift(u('text', '['));
+    contents.unshift({
+      type: 'text',
+      value: '['
+    });
   }
   var tail = contents[contents.length - 1];
   if (tail && tail.type === 'text') {
     tail.value += suffix;
   } else {
-    contents.push(u('text', suffix));
+    contents.push({
+      type: 'text',
+      value: suffix
+    });
   }
   return contents;
 }
 
 /**
- * @typedef {import('mdast').ImageReference} ImageReference
+ * @typedef {import('hast').ElementContent} ElementContent
+ * @typedef {import('hast').Element} Element
  * @typedef {import('hast').Properties} Properties
- * @typedef {import('../index.js').Handler} Handler
+ * @typedef {import('mdast').ImageReference} ImageReference
+ * @typedef {import('../state.js').State} State
  */
 
 /**
- * @type {Handler}
+ * Turn an mdast `imageReference` node into hast.
+ *
+ * @param {State} state
+ *   Info passed around.
  * @param {ImageReference} node
+ *   mdast node.
+ * @returns {ElementContent | Array<ElementContent>}
+ *   hast node.
  */
-function imageReference(h, node) {
-  var def = h.definition(node.identifier);
+function imageReference(state, node) {
+  var def = state.definition(node.identifier);
   if (!def) {
-    return revert(h, node);
+    return revert(state, node);
   }
 
   /** @type {Properties} */
-  var props = {
+  var properties = {
     src: normalizeUri(def.url || ''),
     alt: node.alt
   };
   if (def.title !== null && def.title !== undefined) {
-    props.title = def.title;
+    properties.title = def.title;
   }
-  return h(node, 'img', props);
-}
 
-/**
- * @typedef {import('mdast').Image} Image
- * @typedef {import('hast').Properties} Properties
- * @typedef {import('../index.js').Handler} Handler
- */
-
-/**
- * @type {Handler}
- * @param {Image} node
- */
-function image(h, node) {
-  /** @type {Properties} */
-  var props = {
-    src: normalizeUri(node.url),
-    alt: node.alt
+  /** @type {Element} */
+  var result = {
+    type: 'element',
+    tagName: 'img',
+    properties: properties,
+    children: []
   };
-  if (node.title !== null && node.title !== undefined) {
-    props.title = node.title;
-  }
-  return h(node, 'img', props);
+  state.patch(node, result);
+  return state.applyData(node, result);
 }
 
 /**
- * @typedef {import('mdast').InlineCode} InlineCode
- * @typedef {import('../index.js').Handler} Handler
- */
-
-/**
- * @type {Handler}
- * @param {InlineCode} node
- */
-function inlineCode(h, node) {
-  return h(node, 'code', [u('text', node.value.replace(/\r?\n|\r/g, ' '))]);
-}
-
-/**
- * @typedef {import('mdast').LinkReference} LinkReference
+ * @typedef {import('hast').Element} Element
  * @typedef {import('hast').Properties} Properties
- * @typedef {import('../index.js').Handler} Handler
+ * @typedef {import('mdast').Image} Image
+ * @typedef {import('../state.js').State} State
  */
 
 /**
- * @type {Handler}
- * @param {LinkReference} node
+ * Turn an mdast `image` node into hast.
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @param {Image} node
+ *   mdast node.
+ * @returns {Element}
+ *   hast node.
  */
-function linkReference(h, node) {
-  var def = h.definition(node.identifier);
+function image(state, node) {
+  /** @type {Properties} */
+  var properties = {
+    src: normalizeUri(node.url)
+  };
+  if (node.alt !== null && node.alt !== undefined) {
+    properties.alt = node.alt;
+  }
+  if (node.title !== null && node.title !== undefined) {
+    properties.title = node.title;
+  }
+
+  /** @type {Element} */
+  var result = {
+    type: 'element',
+    tagName: 'img',
+    properties: properties,
+    children: []
+  };
+  state.patch(node, result);
+  return state.applyData(node, result);
+}
+
+/**
+ * @typedef {import('hast').Element} Element
+ * @typedef {import('hast').Text} Text
+ * @typedef {import('mdast').InlineCode} InlineCode
+ * @typedef {import('../state.js').State} State
+ */
+
+/**
+ * Turn an mdast `inlineCode` node into hast.
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @param {InlineCode} node
+ *   mdast node.
+ * @returns {Element}
+ *   hast node.
+ */
+function inlineCode(state, node) {
+  /** @type {Text} */
+  var text = {
+    type: 'text',
+    value: node.value.replace(/\r?\n|\r/g, ' ')
+  };
+  state.patch(node, text);
+
+  /** @type {Element} */
+  var result = {
+    type: 'element',
+    tagName: 'code',
+    properties: {},
+    children: [text]
+  };
+  state.patch(node, result);
+  return state.applyData(node, result);
+}
+
+/**
+ * @typedef {import('hast').Element} Element
+ * @typedef {import('hast').ElementContent} ElementContent
+ * @typedef {import('hast').Properties} Properties
+ * @typedef {import('mdast').LinkReference} LinkReference
+ * @typedef {import('../state.js').State} State
+ */
+
+/**
+ * Turn an mdast `linkReference` node into hast.
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @param {LinkReference} node
+ *   mdast node.
+ * @returns {ElementContent | Array<ElementContent>}
+ *   hast node.
+ */
+function linkReference(state, node) {
+  var def = state.definition(node.identifier);
   if (!def) {
-    return revert(h, node);
+    return revert(state, node);
   }
 
   /** @type {Properties} */
-  var props = {
+  var properties = {
     href: normalizeUri(def.url || '')
   };
   if (def.title !== null && def.title !== undefined) {
-    props.title = def.title;
+    properties.title = def.title;
   }
-  return h(node, 'a', props, all(h, node));
+
+  /** @type {Element} */
+  var result = {
+    type: 'element',
+    tagName: 'a',
+    properties: properties,
+    children: state.all(node)
+  };
+  state.patch(node, result);
+  return state.applyData(node, result);
 }
 
 /**
- * @typedef {import('mdast').Link} Link
+ * @typedef {import('hast').Element} Element
  * @typedef {import('hast').Properties} Properties
- * @typedef {import('../index.js').Handler} Handler
+ * @typedef {import('mdast').Link} Link
+ * @typedef {import('../state.js').State} State
  */
 
 /**
- * @type {Handler}
+ * Turn an mdast `link` node into hast.
+ *
+ * @param {State} state
+ *   Info passed around.
  * @param {Link} node
+ *   mdast node.
+ * @returns {Element}
+ *   hast node.
  */
-function link(h, node) {
+function link(state, node) {
   /** @type {Properties} */
-  var props = {
+  var properties = {
     href: normalizeUri(node.url)
   };
   if (node.title !== null && node.title !== undefined) {
-    props.title = node.title;
+    properties.title = node.title;
   }
-  return h(node, 'a', props, all(h, node));
+
+  /** @type {Element} */
+  var result = {
+    type: 'element',
+    tagName: 'a',
+    properties: properties,
+    children: state.all(node)
+  };
+  state.patch(node, result);
+  return state.applyData(node, result);
 }
 
 /**
- * @type {Handler}
- * @param {ListItem} node
- * @param {List} parent
+ * @typedef {import('hast').Element} Element
+ * @typedef {import('hast').ElementContent} ElementContent
+ * @typedef {import('hast').Properties} Properties
+ * @typedef {import('mdast').Content} Content
+ * @typedef {import('mdast').ListItem} ListItem
+ * @typedef {import('mdast').Parent} Parent
+ * @typedef {import('mdast').Root} Root
+ * @typedef {import('../state.js').State} State
  */
-function listItem(h, node, parent) {
-  var result = all(h, node);
+
+/**
+ * @typedef {Root | Content} Nodes
+ * @typedef {Extract<Nodes, Parent>} Parents
+ */
+
+/**
+ * Turn an mdast `listItem` node into hast.
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @param {ListItem} node
+ *   mdast node.
+ * @param {Parents | null | undefined} parent
+ *   Parent of `node`.
+ * @returns {Element}
+ *   hast node.
+ */
+function listItem(state, node, parent) {
+  var results = state.all(node);
   var loose = parent ? listLoose(parent) : listItemLoose(node);
   /** @type {Properties} */
-  var props = {};
-  /** @type {Array<Content>} */
-  var wrapped = [];
+  var properties = {};
+  /** @type {Array<ElementContent>} */
+  var children = [];
   if (typeof node.checked === 'boolean') {
+    var head = results[0];
     /** @type {Element} */
     var paragraph;
-    if (result[0] && result[0].type === 'element' && result[0].tagName === 'p') {
-      paragraph = result[0];
+    if (head && head.type === 'element' && head.tagName === 'p') {
+      paragraph = head;
     } else {
-      paragraph = h(null, 'p', []);
-      result.unshift(paragraph);
+      paragraph = {
+        type: 'element',
+        tagName: 'p',
+        properties: {},
+        children: []
+      };
+      results.unshift(paragraph);
     }
     if (paragraph.children.length > 0) {
-      paragraph.children.unshift(u('text', ' '));
+      paragraph.children.unshift({
+        type: 'text',
+        value: ' '
+      });
     }
-    paragraph.children.unshift(h(null, 'input', {
-      type: 'checkbox',
-      checked: node.checked,
-      disabled: true
-    }));
+    paragraph.children.unshift({
+      type: 'element',
+      tagName: 'input',
+      properties: {
+        type: 'checkbox',
+        checked: node.checked,
+        disabled: true
+      },
+      children: []
+    });
 
     // According to github-markdown-css, this class hides bullet.
     // See: <https://github.com/sindresorhus/github-markdown-css>.
-    props.className = ['task-list-item'];
+    properties.className = ['task-list-item'];
   }
   var index = -1;
-  while (++index < result.length) {
-    var child = result[index];
+  while (++index < results.length) {
+    var child = results[index];
 
     // Add eols before nodes, except if this is a loose, first paragraph.
     if (loose || index !== 0 || child.type !== 'element' || child.tagName !== 'p') {
-      wrapped.push(u('text', '\n'));
+      children.push({
+        type: 'text',
+        value: '\n'
+      });
     }
     if (child.type === 'element' && child.tagName === 'p' && !loose) {
-      wrapped.push.apply(wrapped, _toConsumableArray(child.children));
+      children.push.apply(children, _toConsumableArray(child.children));
     } else {
-      wrapped.push(child);
+      children.push(child);
     }
   }
-  var tail = result[result.length - 1];
+  var tail = results[results.length - 1];
 
   // Add a final eol.
-  if (tail && (loose || !('tagName' in tail) || tail.tagName !== 'p')) {
-    wrapped.push(u('text', '\n'));
+  if (tail && (loose || tail.type !== 'element' || tail.tagName !== 'p')) {
+    children.push({
+      type: 'text',
+      value: '\n'
+    });
   }
-  return h(node, 'li', props, wrapped);
+
+  /** @type {Element} */
+  var result = {
+    type: 'element',
+    tagName: 'li',
+    properties: properties,
+    children: children
+  };
+  state.patch(node, result);
+  return state.applyData(node, result);
 }
 
 /**
- * @param {List} node
+ * @param {Parents} node
  * @return {Boolean}
  */
 function listLoose(node) {
-  var loose = node.spread;
-  var children = node.children;
-  var index = -1;
-  while (!loose && ++index < children.length) {
-    loose = listItemLoose(children[index]);
+  var loose = false;
+  if (node.type === 'list') {
+    loose = node.spread || false;
+    var children = node.children;
+    var index = -1;
+    while (!loose && ++index < children.length) {
+      loose = listItemLoose(children[index]);
+    }
   }
-  return Boolean(loose);
+  return loose;
 }
 
 /**
@@ -11990,114 +11886,385 @@ function listItemLoose(node) {
 }
 
 /**
- * @typedef {import('mdast').List} List
  * @typedef {import('hast').Element} Element
  * @typedef {import('hast').Properties} Properties
- * @typedef {import('../index.js').Handler} Handler
+ * @typedef {import('mdast').List} List
+ * @typedef {import('../state.js').State} State
  */
 
 /**
- * @type {Handler}
+ * Turn an mdast `list` node into hast.
+ *
+ * @param {State} state
+ *   Info passed around.
  * @param {List} node
+ *   mdast node.
  * @returns {Element}
+ *   hast node.
  */
-function list(h, node) {
+function list(state, node) {
   /** @type {Properties} */
-  var props = {};
-  var name = node.ordered ? 'ol' : 'ul';
-  var items = all(h, node);
+  var properties = {};
+  var results = state.all(node);
   var index = -1;
   if (typeof node.start === 'number' && node.start !== 1) {
-    props.start = node.start;
+    properties.start = node.start;
   }
 
   // Like GitHub, add a class for custom styling.
-  while (++index < items.length) {
-    var item = items[index];
-    if (item.type === 'element' && item.tagName === 'li' && item.properties && Array.isArray(item.properties.className) && item.properties.className.includes('task-list-item')) {
-      props.className = ['contains-task-list'];
+  while (++index < results.length) {
+    var child = results[index];
+    if (child.type === 'element' && child.tagName === 'li' && child.properties && Array.isArray(child.properties.className) && child.properties.className.includes('task-list-item')) {
+      properties.className = ['contains-task-list'];
       break;
     }
   }
-  return h(node, name, props, wrap(items, true));
+
+  /** @type {Element} */
+  var result = {
+    type: 'element',
+    tagName: node.ordered ? 'ol' : 'ul',
+    properties: properties,
+    children: state.wrap(results, true)
+  };
+  state.patch(node, result);
+  return state.applyData(node, result);
 }
 
 /**
- * @typedef {import('mdast').Paragraph} Paragraph
- * @typedef {import('../index.js').Handler} Handler
- */
-
-/**
- * @type {Handler}
- * @param {Paragraph} node
- */
-function paragraph(h, node) {
-  return h(node, 'p', all(h, node));
-}
-
-/**
- * @typedef {import('mdast').Root} Root
- * @typedef {import('../index.js').Handler} Handler
- */
-
-/**
- * @type {Handler}
- * @param {Root} node
- */
-function root(h, node) {
-  // @ts-expect-error `root`s are also fine.
-  return h.augment(node, u('root', wrap(all(h, node))));
-}
-
-/**
- * @typedef {import('mdast').Strong} Strong
- * @typedef {import('../index.js').Handler} Handler
- */
-
-/**
- * @type {Handler}
- * @param {Strong} node
- */
-function strong(h, node) {
-  return h(node, 'strong', all(h, node));
-}
-
-/**
- * @typedef {import('mdast').Table} Table
  * @typedef {import('hast').Element} Element
- * @typedef {import('../index.js').Handler} Handler
- * @typedef {import('../index.js').Content} Content
+ * @typedef {import('mdast').Paragraph} Paragraph
+ * @typedef {import('../state.js').State} State
  */
 
 /**
- * @type {Handler}
- * @param {Table} node
+ * Turn an mdast `paragraph` node into hast.
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @param {Paragraph} node
+ *   mdast node.
+ * @returns {Element}
+ *   hast node.
  */
-function table(h, node) {
-  var rows = node.children;
-  var index = -1;
-  var align = node.align || [];
-  /** @type {Array<Element>} */
-  var result = [];
-  while (++index < rows.length) {
-    var row = rows[index].children;
-    var name = index === 0 ? 'th' : 'td';
-    /** @type {Array<Content>} */
-    var out = [];
-    var cellIndex = -1;
-    var length = node.align ? align.length : row.length;
-    while (++cellIndex < length) {
-      var cell = row[cellIndex];
-      out.push(h(cell, name, {
-        align: align[cellIndex]
-      }, cell ? all(h, cell) : []));
-    }
-    result[index] = h(rows[index], 'tr', wrap(out, true));
+function paragraph(state, node) {
+  /** @type {Element} */
+  var result = {
+    type: 'element',
+    tagName: 'p',
+    properties: {},
+    children: state.all(node)
+  };
+  state.patch(node, result);
+  return state.applyData(node, result);
+}
+
+/**
+ * @typedef {import('hast').Root} HastRoot
+ * @typedef {import('hast').Element} HastElement
+ * @typedef {import('mdast').Root} MdastRoot
+ * @typedef {import('../state.js').State} State
+ */
+
+/**
+ * Turn an mdast `root` node into hast.
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @param {MdastRoot} node
+ *   mdast node.
+ * @returns {HastRoot | HastElement}
+ *   hast node.
+ */
+function root(state, node) {
+  /** @type {HastRoot} */
+  var result = {
+    type: 'root',
+    children: state.wrap(state.all(node))
+  };
+  state.patch(node, result);
+  return state.applyData(node, result);
+}
+
+/**
+ * @typedef {import('hast').Element} Element
+ * @typedef {import('mdast').Strong} Strong
+ * @typedef {import('../state.js').State} State
+ */
+
+/**
+ * Turn an mdast `strong` node into hast.
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @param {Strong} node
+ *   mdast node.
+ * @returns {Element}
+ *   hast node.
+ */
+function strong(state, node) {
+  /** @type {Element} */
+  var result = {
+    type: 'element',
+    tagName: 'strong',
+    properties: {},
+    children: state.all(node)
+  };
+  state.patch(node, result);
+  return state.applyData(node, result);
+}
+
+/**
+ * @typedef {import('unist').Position} Position
+ * @typedef {import('unist').Node} Node
+ * @typedef {import('unist').Point} Point
+ */
+
+/**
+ * @typedef NodeLike
+ * @property {string} type
+ * @property {PositionLike | null | undefined} [position]
+ *
+ * @typedef PositionLike
+ * @property {PointLike | null | undefined} [start]
+ * @property {PointLike | null | undefined} [end]
+ *
+ * @typedef PointLike
+ * @property {number | null | undefined} [line]
+ * @property {number | null | undefined} [column]
+ * @property {number | null | undefined} [offset]
+ */
+
+/**
+ * Get the starting point of `node`.
+ *
+ * @param node
+ *   Node.
+ * @returns
+ *   Point.
+ */
+var pointStart = point('start');
+
+/**
+ * Get the ending point of `node`.
+ *
+ * @param node
+ *   Node.
+ * @returns
+ *   Point.
+ */
+var pointEnd = point('end');
+
+/**
+ * Get the positional info of `node`.
+ *
+ * @param {NodeLike | Node | null | undefined} [node]
+ *   Node.
+ * @returns {Position}
+ *   Position.
+ */
+function position(node) {
+  return {
+    start: pointStart(node),
+    end: pointEnd(node)
+  };
+}
+
+/**
+ * Get the positional info of `node`.
+ *
+ * @param {'start' | 'end'} type
+ *   Side.
+ * @returns
+ *   Getter.
+ */
+function point(type) {
+  return point;
+
+  /**
+   * Get the point info of `node` at a bound side.
+   *
+   * @param {NodeLike | Node | null | undefined} [node]
+   * @returns {Point}
+   */
+  function point(node) {
+    var point = node && node.position && node.position[type] || {};
+
+    // To do: next major: don’t return points when invalid.
+    return {
+      // @ts-expect-error: in practice, null is allowed.
+      line: point.line || null,
+      // @ts-expect-error: in practice, null is allowed.
+      column: point.column || null,
+      // @ts-expect-error: in practice, null is allowed.
+      offset: point.offset > -1 ? point.offset : null
+    };
   }
-  return h(node, 'table', wrap([h(result[0].position, 'thead', wrap([result[0]], true))].concat(result[1] ? h({
-    start: pointStart(result[1]),
-    end: pointEnd(result[result.length - 1])
-  }, 'tbody', wrap(result.slice(1), true)) : []), true));
+}
+
+/**
+ * @typedef {import('hast').Element} Element
+ * @typedef {import('mdast').Table} Table
+ * @typedef {import('../state.js').State} State
+ */
+
+/**
+ * Turn an mdast `table` node into hast.
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @param {Table} node
+ *   mdast node.
+ * @returns {Element}
+ *   hast node.
+ */
+function table(state, node) {
+  var rows = state.all(node);
+  var firstRow = rows.shift();
+  /** @type {Array<Element>} */
+  var tableContent = [];
+  if (firstRow) {
+    /** @type {Element} */
+    var head = {
+      type: 'element',
+      tagName: 'thead',
+      properties: {},
+      children: state.wrap([firstRow], true)
+    };
+    state.patch(node.children[0], head);
+    tableContent.push(head);
+  }
+  if (rows.length > 0) {
+    /** @type {Element} */
+    var body = {
+      type: 'element',
+      tagName: 'tbody',
+      properties: {},
+      children: state.wrap(rows, true)
+    };
+    var start = pointStart(node.children[1]);
+    var end = pointEnd(node.children[node.children.length - 1]);
+    if (start.line && end.line) body.position = {
+      start: start,
+      end: end
+    };
+    tableContent.push(body);
+  }
+
+  /** @type {Element} */
+  var result = {
+    type: 'element',
+    tagName: 'table',
+    properties: {},
+    children: state.wrap(tableContent, true)
+  };
+  state.patch(node, result);
+  return state.applyData(node, result);
+}
+
+/**
+ * @typedef {import('hast').Properties} Properties
+ * @typedef {import('hast').Element} Element
+ * @typedef {import('hast').ElementContent} ElementContent
+ * @typedef {import('mdast').Content} Content
+ * @typedef {import('mdast').Parent} Parent
+ * @typedef {import('mdast').Root} Root
+ * @typedef {import('mdast').TableRow} TableRow
+ * @typedef {import('../state.js').State} State
+ */
+
+/**
+ * @typedef {Root | Content} Nodes
+ * @typedef {Extract<Nodes, Parent>} Parents
+ */
+
+/**
+ * Turn an mdast `tableRow` node into hast.
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @param {TableRow} node
+ *   mdast node.
+ * @param {Parents | null | undefined} parent
+ *   Parent of `node`.
+ * @returns {Element}
+ *   hast node.
+ */
+function tableRow(state, node, parent) {
+  var siblings = parent ? parent.children : undefined;
+  // Generate a body row when without parent.
+  var rowIndex = siblings ? siblings.indexOf(node) : 1;
+  var tagName = rowIndex === 0 ? 'th' : 'td';
+  var align = parent && parent.type === 'table' ? parent.align : undefined;
+  var length = align ? align.length : node.children.length;
+  var cellIndex = -1;
+  /** @type {Array<ElementContent>} */
+  var cells = [];
+  while (++cellIndex < length) {
+    // Note: can also be undefined.
+    var cell = node.children[cellIndex];
+    /** @type {Properties} */
+    var properties = {};
+    var alignValue = align ? align[cellIndex] : undefined;
+    if (alignValue) {
+      properties.align = alignValue;
+    }
+
+    /** @type {Element} */
+    var _result = {
+      type: 'element',
+      tagName: tagName,
+      properties: properties,
+      children: []
+    };
+    if (cell) {
+      _result.children = state.all(cell);
+      state.patch(cell, _result);
+      _result = state.applyData(node, _result);
+    }
+    cells.push(_result);
+  }
+
+  /** @type {Element} */
+  var result = {
+    type: 'element',
+    tagName: 'tr',
+    properties: {},
+    children: state.wrap(cells, true)
+  };
+  state.patch(node, result);
+  return state.applyData(node, result);
+}
+
+/**
+ * @typedef {import('hast').Element} Element
+ * @typedef {import('mdast').TableCell} TableCell
+ * @typedef {import('../state.js').State} State
+ */
+
+/**
+ * Turn an mdast `tableCell` node into hast.
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @param {TableCell} node
+ *   mdast node.
+ * @returns {Element}
+ *   hast node.
+ */
+function tableCell(state, node) {
+  // Note: this function is normally not called: see `table-row` for how rows
+  // and their cells are compiled.
+  /** @type {Element} */
+  var result = {
+    type: 'element',
+    tagName: 'td',
+    // Assume body cell.
+    properties: {},
+    children: state.all(node)
+  };
+  state.patch(node, result);
+  return state.applyData(node, result);
 }
 
 var tab = 9; /* `\t` */
@@ -12159,33 +12326,63 @@ function trimLine(value, start, end) {
 }
 
 /**
- * @typedef {import('mdast').Text} Text
- * @typedef {import('../index.js').Handler} Handler
+ * @typedef {import('hast').Element} HastElement
+ * @typedef {import('hast').Text} HastText
+ * @typedef {import('mdast').Text} MdastText
+ * @typedef {import('../state.js').State} State
  */
 
 /**
- * @type {Handler}
- * @param {Text} node
+ * Turn an mdast `text` node into hast.
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @param {MdastText} node
+ *   mdast node.
+ * @returns {HastText | HastElement}
+ *   hast node.
  */
-function text$1(h, node) {
-  return h.augment(node, u('text', trimLines(String(node.value))));
+function text$1(state, node) {
+  /** @type {HastText} */
+  var result = {
+    type: 'text',
+    value: trimLines(String(node.value))
+  };
+  state.patch(node, result);
+  return state.applyData(node, result);
 }
 
 /**
- * @typedef {import('mdast').ThematicBreak} ThematicBreak
  * @typedef {import('hast').Element} Element
- * @typedef {import('../index.js').Handler} Handler
+ * @typedef {import('mdast').ThematicBreak} ThematicBreak
+ * @typedef {import('../state.js').State} State
  */
 
 /**
- * @type {Handler}
- * @param {ThematicBreak} [node]
+ * Turn an mdast `thematicBreak` node into hast.
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @param {ThematicBreak} node
+ *   mdast node.
  * @returns {Element}
+ *   hast node.
  */
-function thematicBreak(h, node) {
-  return h(node, 'hr');
+function thematicBreak(state, node) {
+  /** @type {Element} */
+  var result = {
+    type: 'element',
+    tagName: 'hr',
+    properties: {},
+    children: []
+  };
+  state.patch(node, result);
+  return state.applyData(node, result);
 }
 
+/**
+ * Default handlers for nodes.
+ */
 var handlers = {
   blockquote: blockquote,
   "break": hardBreak,
@@ -12207,6 +12404,8 @@ var handlers = {
   root: root,
   strong: strong,
   table: table,
+  tableCell: tableCell,
+  tableRow: tableRow,
   text: text$1,
   thematicBreak: thematicBreak,
   toml: ignore,
@@ -12217,46 +12416,524 @@ var handlers = {
 
 // Return nothing for nodes that are ignored.
 function ignore() {
+  // To do: next major: return `undefined`.
   return null;
 }
 
-function ownKeys$d(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread$d(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$d(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$d(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+/**
+ * @typedef {import('unist').Node} Node
+ * @typedef {import('unist').Parent} Parent
+ */
+
+/**
+ * Generate an assertion from a test.
+ *
+ * Useful if you’re going to test many nodes, for example when creating a
+ * utility where something else passes a compatible test.
+ *
+ * The created function is a bit faster because it expects valid input only:
+ * a `node`, `index`, and `parent`.
+ *
+ * @param test
+ *   *   when nullish, checks if `node` is a `Node`.
+ *   *   when `string`, works like passing `(node) => node.type === test`.
+ *   *   when `function` checks if function passed the node is true.
+ *   *   when `object`, checks that all keys in test are in node, and that they have (strictly) equal values.
+ *   *   when `array`, checks if any one of the subtests pass.
+ * @returns
+ *   An assertion.
+ */
+var convert =
+/**
+ * @type {(
+ *   (<Kind extends Node>(test: PredicateTest<Kind>) => AssertPredicate<Kind>) &
+ *   ((test?: Test) => AssertAnything)
+ * )}
+ */
+
+/**
+ * @param {Test} [test]
+ * @returns {AssertAnything}
+ */
+function convert(test) {
+  if (test === undefined || test === null) {
+    return ok;
+  }
+  if (typeof test === 'string') {
+    return typeFactory(test);
+  }
+  if (typeof test === 'object') {
+    return Array.isArray(test) ? anyFactory(test) : propsFactory(test);
+  }
+  if (typeof test === 'function') {
+    return castFactory(test);
+  }
+  throw new Error('Expected function, string, or object as test');
+};
+
+/**
+ * @param {Array<string | Props | TestFunctionAnything>} tests
+ * @returns {AssertAnything}
+ */
+function anyFactory(tests) {
+  /** @type {Array<AssertAnything>} */
+  var checks = [];
+  var index = -1;
+  while (++index < tests.length) {
+    checks[index] = convert(tests[index]);
+  }
+  return castFactory(any);
+
+  /**
+   * @this {unknown}
+   * @param {Array<unknown>} parameters
+   * @returns {boolean}
+   */
+  function any() {
+    var index = -1;
+    for (var _len = arguments.length, parameters = new Array(_len), _key = 0; _key < _len; _key++) {
+      parameters[_key] = arguments[_key];
+    }
+    while (++index < checks.length) {
+      var _checks$index;
+      if ((_checks$index = checks[index]).call.apply(_checks$index, [this].concat(parameters))) return true;
+    }
+    return false;
+  }
+}
+
+/**
+ * Turn an object into a test for a node with a certain fields.
+ *
+ * @param {Props} check
+ * @returns {AssertAnything}
+ */
+function propsFactory(check) {
+  return castFactory(all);
+
+  /**
+   * @param {Node} node
+   * @returns {boolean}
+   */
+  function all(node) {
+    /** @type {string} */
+    var key;
+    for (key in check) {
+      // @ts-expect-error: hush, it sure works as an index.
+      if (node[key] !== check[key]) return false;
+    }
+    return true;
+  }
+}
+
+/**
+ * Turn a string into a test for a node with a certain type.
+ *
+ * @param {string} check
+ * @returns {AssertAnything}
+ */
+function typeFactory(check) {
+  return castFactory(type);
+
+  /**
+   * @param {Node} node
+   */
+  function type(node) {
+    return node && node.type === check;
+  }
+}
+
+/**
+ * Turn a custom test into a test for a node that passes that test.
+ *
+ * @param {TestFunctionAnything} check
+ * @returns {AssertAnything}
+ */
+function castFactory(check) {
+  return assertion;
+
+  /**
+   * @this {unknown}
+   * @param {unknown} node
+   * @param {Array<unknown>} parameters
+   * @returns {boolean}
+   */
+  function assertion(node) {
+    for (var _len2 = arguments.length, parameters = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+      parameters[_key2 - 1] = arguments[_key2];
+    }
+    return Boolean(node && typeof node === 'object' && 'type' in node &&
+    // @ts-expect-error: fine.
+    Boolean(check.call.apply(check, [this, node].concat(parameters))));
+  }
+}
+function ok() {
+  return true;
+}
+
+/**
+ * @param {string} d
+ * @returns {string}
+ */
+function color(d) {
+  return "\x1B[33m" + d + "\x1B[39m";
+}
+
+/**
+ * @typedef {import('unist').Node} Node
+ * @typedef {import('unist').Parent} Parent
+ * @typedef {import('unist-util-is').Test} Test
+ */
+
+/**
+ * Continue traversing as normal.
+ */
+var CONTINUE = true;
+
+/**
+ * Stop traversing immediately.
+ */
+var EXIT = false;
+
+/**
+ * Do not traverse this node’s children.
+ */
+var SKIP = 'skip';
+
+/**
+ * Visit nodes, with ancestral information.
+ *
+ * This algorithm performs *depth-first* *tree traversal* in *preorder*
+ * (**NLR**) or if `reverse` is given, in *reverse preorder* (**NRL**).
+ *
+ * You can choose for which nodes `visitor` is called by passing a `test`.
+ * For complex tests, you should test yourself in `visitor`, as it will be
+ * faster and will have improved type information.
+ *
+ * Walking the tree is an intensive task.
+ * Make use of the return values of the visitor when possible.
+ * Instead of walking a tree multiple times, walk it once, use `unist-util-is`
+ * to check if a node matches, and then perform different operations.
+ *
+ * You can change the tree.
+ * See `Visitor` for more info.
+ *
+ * @param tree
+ *   Tree to traverse.
+ * @param test
+ *   `unist-util-is`-compatible test
+ * @param visitor
+ *   Handle each node.
+ * @param reverse
+ *   Traverse in reverse preorder (NRL) instead of the default preorder (NLR).
+ * @returns
+ *   Nothing.
+ */
+var visitParents =
+/**
+ * @type {(
+ *   (<Tree extends Node, Check extends Test>(tree: Tree, test: Check, visitor: BuildVisitor<Tree, Check>, reverse?: boolean | null | undefined) => void) &
+ *   (<Tree extends Node>(tree: Tree, visitor: BuildVisitor<Tree>, reverse?: boolean | null | undefined) => void)
+ * )}
+ */
+
+/**
+ * @param {Node} tree
+ * @param {Test} test
+ * @param {Visitor<Node>} visitor
+ * @param {boolean | null | undefined} [reverse]
+ * @returns {void}
+ */
+function visitParents(tree, test, visitor, reverse) {
+  if (typeof test === 'function' && typeof visitor !== 'function') {
+    reverse = visitor;
+    // @ts-expect-error no visitor given, so `visitor` is test.
+    visitor = test;
+    test = null;
+  }
+  var is = convert(test);
+  var step = reverse ? -1 : 1;
+  factory(tree, undefined, [])();
+
+  /**
+   * @param {Node} node
+   * @param {number | undefined} index
+   * @param {Array<Parent>} parents
+   */
+  function factory(node, index, parents) {
+    /** @type {Record<string, unknown>} */
+    // @ts-expect-error: hush
+    var value = node && typeof node === 'object' ? node : {};
+    if (typeof value.type === 'string') {
+      var name =
+      // `hast`
+      typeof value.tagName === 'string' ? value.tagName :
+      // `xast`
+      typeof value.name === 'string' ? value.name : undefined;
+      Object.defineProperty(visit, 'name', {
+        value: 'node (' + color(node.type + (name ? '<' + name + '>' : '')) + ')'
+      });
+    }
+    return visit;
+    function visit() {
+      /** @type {ActionTuple} */
+      var result = [];
+      /** @type {ActionTuple} */
+      var subresult;
+      /** @type {number} */
+      var offset;
+      /** @type {Array<Parent>} */
+      var grandparents;
+      if (!test || is(node, index, parents[parents.length - 1] || null)) {
+        result = toResult(visitor(node, parents));
+        if (result[0] === EXIT) {
+          return result;
+        }
+      }
+
+      // @ts-expect-error looks like a parent.
+      if (node.children && result[0] !== SKIP) {
+        // @ts-expect-error looks like a parent.
+        offset = (reverse ? node.children.length : -1) + step;
+        // @ts-expect-error looks like a parent.
+        grandparents = parents.concat(node);
+
+        // @ts-expect-error looks like a parent.
+        while (offset > -1 && offset < node.children.length) {
+          // @ts-expect-error looks like a parent.
+          subresult = factory(node.children[offset], offset, grandparents)();
+          if (subresult[0] === EXIT) {
+            return subresult;
+          }
+          offset = typeof subresult[1] === 'number' ? subresult[1] : offset + step;
+        }
+      }
+      return result;
+    }
+  }
+};
+
+/**
+ * Turn a return value into a clean result.
+ *
+ * @param {VisitorResult} value
+ *   Valid return values from visitors.
+ * @returns {ActionTuple}
+ *   Clean result.
+ */
+function toResult(value) {
+  if (Array.isArray(value)) {
+    return value;
+  }
+  if (typeof value === 'number') {
+    return [CONTINUE, value];
+  }
+  return [value];
+}
+
+/**
+ * @typedef {import('unist').Node} Node
+ * @typedef {import('unist').Parent} Parent
+ * @typedef {import('unist-util-is').Test} Test
+ * @typedef {import('unist-util-visit-parents').VisitorResult} VisitorResult
+ */
+
+/**
+ * Visit nodes.
+ *
+ * This algorithm performs *depth-first* *tree traversal* in *preorder*
+ * (**NLR**) or if `reverse` is given, in *reverse preorder* (**NRL**).
+ *
+ * You can choose for which nodes `visitor` is called by passing a `test`.
+ * For complex tests, you should test yourself in `visitor`, as it will be
+ * faster and will have improved type information.
+ *
+ * Walking the tree is an intensive task.
+ * Make use of the return values of the visitor when possible.
+ * Instead of walking a tree multiple times, walk it once, use `unist-util-is`
+ * to check if a node matches, and then perform different operations.
+ *
+ * You can change the tree.
+ * See `Visitor` for more info.
+ *
+ * @param tree
+ *   Tree to traverse.
+ * @param test
+ *   `unist-util-is`-compatible test
+ * @param visitor
+ *   Handle each node.
+ * @param reverse
+ *   Traverse in reverse preorder (NRL) instead of the default preorder (NLR).
+ * @returns
+ *   Nothing.
+ */
+var visit =
+/**
+ * @type {(
+ *   (<Tree extends Node, Check extends Test>(tree: Tree, test: Check, visitor: BuildVisitor<Tree, Check>, reverse?: boolean | null | undefined) => void) &
+ *   (<Tree extends Node>(tree: Tree, visitor: BuildVisitor<Tree>, reverse?: boolean | null | undefined) => void)
+ * )}
+ */
+
+/**
+ * @param {Node} tree
+ * @param {Test} test
+ * @param {Visitor} visitor
+ * @param {boolean | null | undefined} [reverse]
+ * @returns {void}
+ */
+function visit(tree, test, visitor, reverse) {
+  if (typeof test === 'function' && typeof visitor !== 'function') {
+    reverse = visitor;
+    visitor = test;
+    test = null;
+  }
+  visitParents(tree, test, overload, reverse);
+
+  /**
+   * @param {Node} node
+   * @param {Array<Parent>} parents
+   */
+  function overload(node, parents) {
+    var parent = parents[parents.length - 1];
+    return visitor(node, parent ? parent.children.indexOf(node) : null, parent);
+  }
+};
+
+/**
+ * @typedef PointLike
+ * @property {number | null | undefined} [line]
+ * @property {number | null | undefined} [column]
+ * @property {number | null | undefined} [offset]
+ *
+ * @typedef PositionLike
+ * @property {PointLike | null | undefined} [start]
+ * @property {PointLike | null | undefined} [end]
+ *
+ * @typedef NodeLike
+ * @property {PositionLike | null | undefined} [position]
+ */
+
+/**
+ * Check if `node` is generated.
+ *
+ * @param {NodeLike | null | undefined} [node]
+ *   Node to check.
+ * @returns {boolean}
+ *   Whether `node` is generated (does not have positional info).
+ */
+function generated(node) {
+  return !node || !node.position || !node.position.start || !node.position.start.line || !node.position.start.column || !node.position.end || !node.position.end.line || !node.position.end.column;
+}
+
+/**
+ * @typedef {import('mdast').Root} Root
+ * @typedef {import('mdast').Content} Content
+ * @typedef {import('mdast').Definition} Definition
+ */
+var own$4 = {}.hasOwnProperty;
+
+/**
+ * Find definitions in `tree`.
+ *
+ * Uses CommonMark precedence, which means that earlier definitions are
+ * preferred over duplicate later definitions.
+ *
+ * @param {Node} tree
+ *   Tree to check.
+ * @returns {GetDefinition}
+ *   Getter.
+ */
+function definitions(tree) {
+  /** @type {Record<string, Definition>} */
+  var cache = Object.create(null);
+  if (!tree || !tree.type) {
+    throw new Error('mdast-util-definitions expected node');
+  }
+  visit(tree, 'definition', function (definition) {
+    var id = clean(definition.identifier);
+    if (id && !own$4.call(cache, id)) {
+      cache[id] = definition;
+    }
+  });
+  return definition;
+
+  /** @type {GetDefinition} */
+  function definition(identifier) {
+    var id = clean(identifier);
+    // To do: next major: return `undefined` when not found.
+    return id && own$4.call(cache, id) ? cache[id] : null;
+  }
+}
+
+/**
+ * @param {string | null | undefined} [value]
+ * @returns {string}
+ */
+function clean(value) {
+  return String(value || '').toUpperCase();
+}
+
+function ownKeys$e(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$e(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$e(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$e(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 var own$3 = {}.hasOwnProperty;
 
 /**
- * Turn mdast into hast.
+ * Create `state` from an mdast tree.
  *
- * @param {MdastNode} tree
- *   mdast node.
- * @param {Options} [options]
- *   Configuration (optional).
- * @returns {H}
- *   `h` function.
+ * @param {MdastNodes} tree
+ *   mdast node to transform.
+ * @param {Options | null | undefined} [options]
+ *   Configuration.
+ * @returns {State}
+ *   `state` function.
  */
-function factory(tree, options) {
+function createState(tree, options) {
   var settings = options || {};
   var dangerous = settings.allowDangerousHtml || false;
-  /** @type {Record<string, FootnoteDefinition>} */
+  /** @type {Record<string, MdastFootnoteDefinition>} */
   var footnoteById = {};
-  h.dangerous = dangerous;
-  h.clobberPrefix = settings.clobberPrefix === undefined || settings.clobberPrefix === null ? 'user-content-' : settings.clobberPrefix;
-  h.footnoteLabel = settings.footnoteLabel || 'Footnotes';
-  h.footnoteLabelTagName = settings.footnoteLabelTagName || 'h2';
-  h.footnoteLabelProperties = settings.footnoteLabelProperties || {
+
+  // To do: next major: add `options` to state, remove:
+  // `dangerous`, `clobberPrefix`, `footnoteLabel`, `footnoteLabelTagName`,
+  // `footnoteLabelProperties`, `footnoteBackLabel`, `passThrough`,
+  // `unknownHandler`.
+
+  // To do: next major: move to `state.options.allowDangerousHtml`.
+  state.dangerous = dangerous;
+  // To do: next major: move to `state.options`.
+  state.clobberPrefix = settings.clobberPrefix === undefined || settings.clobberPrefix === null ? 'user-content-' : settings.clobberPrefix;
+  // To do: next major: move to `state.options`.
+  state.footnoteLabel = settings.footnoteLabel || 'Footnotes';
+  // To do: next major: move to `state.options`.
+  state.footnoteLabelTagName = settings.footnoteLabelTagName || 'h2';
+  // To do: next major: move to `state.options`.
+  state.footnoteLabelProperties = settings.footnoteLabelProperties || {
     className: ['sr-only']
   };
-  h.footnoteBackLabel = settings.footnoteBackLabel || 'Back to content';
-  h.definition = definitions(tree);
-  h.footnoteById = footnoteById;
+  // To do: next major: move to `state.options`.
+  state.footnoteBackLabel = settings.footnoteBackLabel || 'Back to content';
+  // To do: next major: move to `state.options`.
+  state.unknownHandler = settings.unknownHandler;
+  // To do: next major: move to `state.options`.
+  state.passThrough = settings.passThrough;
+  state.handlers = _objectSpread$e(_objectSpread$e({}, handlers), settings.handlers);
+
+  // To do: next major: replace utility with `definitionById` object, so we
+  // only walk once (as we need footnotes too).
+  state.definition = definitions(tree);
+  state.footnoteById = footnoteById;
   /** @type {Array<string>} */
-  h.footnoteOrder = [];
+  state.footnoteOrder = [];
   /** @type {Record<string, number>} */
-  h.footnoteCounts = {};
-  h.augment = augment;
-  h.handlers = _objectSpread$d(_objectSpread$d({}, handlers), settings.handlers);
-  h.unknownHandler = settings.unknownHandler;
-  h.passThrough = settings.passThrough;
+  state.footnoteCounts = {};
+  state.patch = patch;
+  state.applyData = applyData;
+  state.one = oneBound;
+  state.all = allBound;
+  state.wrap = wrap;
+  // To do: next major: remove `augment`.
+  state.augment = augment;
   visit(tree, 'footnoteDefinition', function (definition) {
     var id = String(definition.identifier).toUpperCase();
 
@@ -12268,19 +12945,21 @@ function factory(tree, options) {
   });
 
   // @ts-expect-error Hush, it’s fine!
-  return h;
+  return state;
 
   /**
    * Finalise the created `right`, a hast node, from `left`, an mdast node.
    *
-   * @param {(NodeWithData|PositionLike)?} left
-   * @param {Content} right
-   * @returns {Content}
+   * @param {MdastNodeWithData | PositionLike | null | undefined} left
+   * @param {HastElementContent} right
+   * @returns {HastElementContent}
    */
+  /* c8 ignore start */
+  // To do: next major: remove.
   function augment(left, right) {
     // Handle `data.hName`, `data.hProperties, `data.hChildren`.
     if (left && 'data' in left && left.data) {
-      /** @type {Data} */
+      /** @type {MdastData} */
       var data = left.data;
       if (data.hName) {
         if (right.type !== 'element') {
@@ -12294,7 +12973,7 @@ function factory(tree, options) {
         right.tagName = data.hName;
       }
       if (right.type === 'element' && data.hProperties) {
-        right.properties = _objectSpread$d(_objectSpread$d({}, right.properties), data.hProperties);
+        right.properties = _objectSpread$e(_objectSpread$e({}, right.properties), data.hProperties);
       }
       if ('children' in right && right.children && data.hChildren) {
         right.children = data.hChildren;
@@ -12314,13 +12993,16 @@ function factory(tree, options) {
     }
     return right;
   }
+  /* c8 ignore stop */
 
   /**
    * Create an element for `node`.
    *
    * @type {HFunctionProps}
    */
-  function h(node, tagName, props, children) {
+  /* c8 ignore start */
+  // To do: next major: remove.
+  function state(node, tagName, props, children) {
     if (Array.isArray(props)) {
       children = props;
       props = {};
@@ -12334,25 +13016,484 @@ function factory(tree, options) {
       children: children || []
     });
   }
+  /* c8 ignore stop */
+
+  /**
+   * Transform an mdast node into a hast node.
+   *
+   * @param {MdastNodes} node
+   *   mdast node.
+   * @param {MdastParents | null | undefined} [parent]
+   *   Parent of `node`.
+   * @returns {HastElementContent | Array<HastElementContent> | null | undefined}
+   *   Resulting hast node.
+   */
+  function oneBound(node, parent) {
+    // @ts-expect-error: that’s a state :)
+    return one(state, node, parent);
+  }
+
+  /**
+   * Transform the children of an mdast node into hast nodes.
+   *
+   * @param {MdastNodes} parent
+   *   mdast node to compile
+   * @returns {Array<HastElementContent>}
+   *   Resulting hast nodes.
+   */
+  function allBound(parent) {
+    // @ts-expect-error: that’s a state :)
+    return all(state, parent);
+  }
 }
 
 /**
- * Transform `tree` (an mdast node) to a hast node.
+ * Copy a node’s positional info.
  *
- * @param {MdastNode} tree mdast node
- * @param {Options} [options] Configuration
- * @returns {HastNode|null|undefined} hast node
+ * @param {MdastNodes} from
+ *   mdast node to copy from.
+ * @param {HastNodes} to
+ *   hast node to copy into.
+ * @returns {void}
+ *   Nothing.
  */
+function patch(from, to) {
+  if (from.position) to.position = position(from);
+}
+
+/**
+ * Honor the `data` of `from` and maybe generate an element instead of `to`.
+ *
+ * @template {HastNodes} Type
+ *   Node type.
+ * @param {MdastNodes} from
+ *   mdast node to use data from.
+ * @param {Type} to
+ *   hast node to change.
+ * @returns {Type | HastElement}
+ *   Nothing.
+ */
+function applyData(from, to) {
+  /** @type {Type | HastElement} */
+  var result = to;
+
+  // Handle `data.hName`, `data.hProperties, `data.hChildren`.
+  if (from && from.data) {
+    var hName = from.data.hName;
+    var hChildren = from.data.hChildren;
+    var hProperties = from.data.hProperties;
+    if (typeof hName === 'string') {
+      // Transforming the node resulted in an element with a different name
+      // than wanted:
+      if (result.type === 'element') {
+        result.tagName = hName;
+      }
+      // Transforming the node resulted in a non-element, which happens for
+      // raw, text, and root nodes (unless custom handlers are passed).
+      // The intent is likely to keep the content around (otherwise: pass
+      // `hChildren`).
+      else {
+        result = {
+          type: 'element',
+          tagName: hName,
+          properties: {},
+          children: []
+        };
+
+        // To do: next major: take the children from the `root`, or inject the
+        // raw/text/comment or so into the element?
+        // if ('children' in node) {
+        //   // @ts-expect-error: assume `children` are allowed in elements.
+        //   result.children = node.children
+        // } else {
+        //   // @ts-expect-error: assume `node` is allowed in elements.
+        //   result.children.push(node)
+        // }
+      }
+    }
+
+    if (result.type === 'element' && hProperties) {
+      result.properties = _objectSpread$e(_objectSpread$e({}, result.properties), hProperties);
+    }
+    if ('children' in result && result.children && hChildren !== null && hChildren !== undefined) {
+      // @ts-expect-error: assume valid children are defined.
+      result.children = hChildren;
+    }
+  }
+  return result;
+}
+
+/**
+ * Transform an mdast node into a hast node.
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @param {MdastNodes} node
+ *   mdast node.
+ * @param {MdastParents | null | undefined} [parent]
+ *   Parent of `node`.
+ * @returns {HastElementContent | Array<HastElementContent> | null | undefined}
+ *   Resulting hast node.
+ */
+// To do: next major: do not expose, keep bound.
+function one(state, node, parent) {
+  var type = node && node.type;
+
+  // Fail on non-nodes.
+  if (!type) {
+    throw new Error('Expected node, got `' + node + '`');
+  }
+  if (own$3.call(state.handlers, type)) {
+    return state.handlers[type](state, node, parent);
+  }
+  if (state.passThrough && state.passThrough.includes(type)) {
+    // To do: next major: deep clone.
+    // @ts-expect-error: types of passed through nodes are expected to be added manually.
+    return 'children' in node ? _objectSpread$e(_objectSpread$e({}, node), {}, {
+      children: all(state, node)
+    }) : node;
+  }
+  if (state.unknownHandler) {
+    return state.unknownHandler(state, node, parent);
+  }
+  return defaultUnknownHandler(state, node);
+}
+
+/**
+ * Transform the children of an mdast node into hast nodes.
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @param {MdastNodes} parent
+ *   mdast node to compile
+ * @returns {Array<HastElementContent>}
+ *   Resulting hast nodes.
+ */
+// To do: next major: do not expose, keep bound.
+function all(state, parent) {
+  /** @type {Array<HastElementContent>} */
+  var values = [];
+  if ('children' in parent) {
+    var nodes = parent.children;
+    var index = -1;
+    while (++index < nodes.length) {
+      var result = one(state, nodes[index], parent);
+
+      // To do: see if we van clean this? Can we merge texts?
+      if (result) {
+        if (index && nodes[index - 1].type === 'break') {
+          if (!Array.isArray(result) && result.type === 'text') {
+            result.value = result.value.replace(/^\s+/, '');
+          }
+          if (!Array.isArray(result) && result.type === 'element') {
+            var head = result.children[0];
+            if (head && head.type === 'text') {
+              head.value = head.value.replace(/^\s+/, '');
+            }
+          }
+        }
+        if (Array.isArray(result)) {
+          values.push.apply(values, _toConsumableArray(result));
+        } else {
+          values.push(result);
+        }
+      }
+    }
+  }
+  return values;
+}
+
+/**
+ * Transform an unknown node.
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @param {MdastNodes} node
+ *   Unknown mdast node.
+ * @returns {HastText | HastElement}
+ *   Resulting hast node.
+ */
+function defaultUnknownHandler(state, node) {
+  var data = node.data || {};
+  /** @type {HastText | HastElement} */
+  var result = 'value' in node && !(own$3.call(data, 'hProperties') || own$3.call(data, 'hChildren')) ? {
+    type: 'text',
+    value: node.value
+  } : {
+    type: 'element',
+    tagName: 'div',
+    properties: {},
+    children: all(state, node)
+  };
+  state.patch(node, result);
+  return state.applyData(node, result);
+}
+
+/**
+ * Wrap `nodes` with line endings between each node.
+ *
+ * @template {HastContent} Type
+ *   Node type.
+ * @param {Array<Type>} nodes
+ *   List of nodes to wrap.
+ * @param {boolean | null | undefined} [loose=false]
+ *   Whether to add line endings at start and end.
+ * @returns {Array<Type | HastText>}
+ *   Wrapped nodes.
+ */
+function wrap(nodes, loose) {
+  /** @type {Array<Type | HastText>} */
+  var result = [];
+  var index = -1;
+  if (loose) {
+    result.push({
+      type: 'text',
+      value: '\n'
+    });
+  }
+  while (++index < nodes.length) {
+    if (index) result.push({
+      type: 'text',
+      value: '\n'
+    });
+    result.push(nodes[index]);
+  }
+  if (loose && nodes.length > 0) {
+    result.push({
+      type: 'text',
+      value: '\n'
+    });
+  }
+  return result;
+}
+
+function ownKeys$d(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread$d(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$d(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$d(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+/**
+ * Generate a hast footer for called footnote definitions.
+ *
+ * @param {State} state
+ *   Info passed around.
+ * @returns {Element | undefined}
+ *   `section` element or `undefined`.
+ */
+function footer(state) {
+  /** @type {Array<ElementContent>} */
+  var listItems = [];
+  var index = -1;
+  while (++index < state.footnoteOrder.length) {
+    var def = state.footnoteById[state.footnoteOrder[index]];
+    if (!def) {
+      continue;
+    }
+    var content = state.all(def);
+    var id = String(def.identifier).toUpperCase();
+    var safeId = normalizeUri(id.toLowerCase());
+    var referenceIndex = 0;
+    /** @type {Array<ElementContent>} */
+    var backReferences = [];
+    while (++referenceIndex <= state.footnoteCounts[id]) {
+      /** @type {Element} */
+      var backReference = {
+        type: 'element',
+        tagName: 'a',
+        properties: {
+          href: '#' + state.clobberPrefix + 'fnref-' + safeId + (referenceIndex > 1 ? '-' + referenceIndex : ''),
+          dataFootnoteBackref: true,
+          className: ['data-footnote-backref'],
+          ariaLabel: state.footnoteBackLabel
+        },
+        children: [{
+          type: 'text',
+          value: '↩'
+        }]
+      };
+      if (referenceIndex > 1) {
+        backReference.children.push({
+          type: 'element',
+          tagName: 'sup',
+          children: [{
+            type: 'text',
+            value: String(referenceIndex)
+          }]
+        });
+      }
+      if (backReferences.length > 0) {
+        backReferences.push({
+          type: 'text',
+          value: ' '
+        });
+      }
+      backReferences.push(backReference);
+    }
+    var tail = content[content.length - 1];
+    if (tail && tail.type === 'element' && tail.tagName === 'p') {
+      var _tail$children;
+      var tailTail = tail.children[tail.children.length - 1];
+      if (tailTail && tailTail.type === 'text') {
+        tailTail.value += ' ';
+      } else {
+        tail.children.push({
+          type: 'text',
+          value: ' '
+        });
+      }
+      (_tail$children = tail.children).push.apply(_tail$children, backReferences);
+    } else {
+      content.push.apply(content, backReferences);
+    }
+
+    /** @type {Element} */
+    var listItem = {
+      type: 'element',
+      tagName: 'li',
+      properties: {
+        id: state.clobberPrefix + 'fn-' + safeId
+      },
+      children: state.wrap(content, true)
+    };
+    state.patch(def, listItem);
+    listItems.push(listItem);
+  }
+  if (listItems.length === 0) {
+    return;
+  }
+  return {
+    type: 'element',
+    tagName: 'section',
+    properties: {
+      dataFootnotes: true,
+      className: ['footnotes']
+    },
+    children: [{
+      type: 'element',
+      tagName: state.footnoteLabelTagName,
+      properties: _objectSpread$d(_objectSpread$d({}, JSON.parse(JSON.stringify(state.footnoteLabelProperties))), {}, {
+        id: 'footnote-label'
+      }),
+      children: [{
+        type: 'text',
+        value: state.footnoteLabel
+      }]
+    }, {
+      type: 'text',
+      value: '\n'
+    }, {
+      type: 'element',
+      tagName: 'ol',
+      properties: {},
+      children: state.wrap(listItems, true)
+    }, {
+      type: 'text',
+      value: '\n'
+    }]
+  };
+}
+
+/**
+ * @typedef {import('hast').Content} HastContent
+ * @typedef {import('hast').Root} HastRoot
+ *
+ * @typedef {import('mdast').Content} MdastContent
+ * @typedef {import('mdast').Root} MdastRoot
+ *
+ * @typedef {import('./state.js').Options} Options
+ */
+
+/**
+ * Transform mdast to hast.
+ *
+ * ##### Notes
+ *
+ * ###### HTML
+ *
+ * Raw HTML is available in mdast as `html` nodes and can be embedded in hast
+ * as semistandard `raw` nodes.
+ * Most utilities ignore `raw` nodes but two notable ones don’t:
+ *
+ * *   `hast-util-to-html` also has an option `allowDangerousHtml` which will
+ *     output the raw HTML.
+ *     This is typically discouraged as noted by the option name but is useful
+ *     if you completely trust authors
+ * *   `hast-util-raw` can handle the raw embedded HTML strings by parsing them
+ *     into standard hast nodes (`element`, `text`, etc).
+ *     This is a heavy task as it needs a full HTML parser, but it is the only
+ *     way to support untrusted content
+ *
+ * ###### Footnotes
+ *
+ * Many options supported here relate to footnotes.
+ * Footnotes are not specified by CommonMark, which we follow by default.
+ * They are supported by GitHub, so footnotes can be enabled in markdown with
+ * `mdast-util-gfm`.
+ *
+ * The options `footnoteBackLabel` and `footnoteLabel` define natural language
+ * that explains footnotes, which is hidden for sighted users but shown to
+ * assistive technology.
+ * When your page is not in English, you must define translated values.
+ *
+ * Back references use ARIA attributes, but the section label itself uses a
+ * heading that is hidden with an `sr-only` class.
+ * To show it to sighted users, define different attributes in
+ * `footnoteLabelProperties`.
+ *
+ * ###### Clobbering
+ *
+ * Footnotes introduces a problem, as it links footnote calls to footnote
+ * definitions on the page through `id` attributes generated from user content,
+ * which results in DOM clobbering.
+ *
+ * DOM clobbering is this:
+ *
+ * ```html
+ * <p id=x></p>
+ * <script>alert(x) // `x` now refers to the DOM `p#x` element</script>
+ * ```
+ *
+ * Elements by their ID are made available by browsers on the `window` object,
+ * which is a security risk.
+ * Using a prefix solves this problem.
+ *
+ * More information on how to handle clobbering and the prefix is explained in
+ * Example: headings (DOM clobbering) in `rehype-sanitize`.
+ *
+ * ###### Unknown nodes
+ *
+ * Unknown nodes are nodes with a type that isn’t in `handlers` or `passThrough`.
+ * The default behavior for unknown nodes is:
+ *
+ * *   when the node has a `value` (and doesn’t have `data.hName`,
+ *     `data.hProperties`, or `data.hChildren`, see later), create a hast `text`
+ *     node
+ * *   otherwise, create a `<div>` element (which could be changed with
+ *     `data.hName`), with its children mapped from mdast to hast as well
+ *
+ * This behavior can be changed by passing an `unknownHandler`.
+ *
+ * @param {MdastNodes} tree
+ *   mdast tree.
+ * @param {Options | null | undefined} [options]
+ *   Configuration.
+ * @returns {HastNodes | null | undefined}
+ *   hast tree.
+ */
+// To do: next major: always return a single `root`.
 function toHast(tree, options) {
-  var h = factory(tree, options);
-  var node = one(h, tree, null);
-  var foot = footer(h);
+  var state = createState(tree, options);
+  var node = state.one(tree, null);
+  var foot = footer(state);
   if (foot) {
     // @ts-expect-error If there’s a footer, there were definitions, meaning block
     // content.
     // So assume `node` is a parent node.
-    node.children.push(u('text', '\n'), foot);
+    node.children.push({
+      type: 'text',
+      value: '\n'
+    }, foot);
   }
+
+  // To do: next major: always return root?
   return Array.isArray(node) ? {
     type: 'root',
     children: node
@@ -15319,19 +16460,27 @@ function requireReactIs_development () {
 var ReactIs = /*@__PURE__*/getDefaultExportFromCjs(reactIs.exports);
 
 /**
+ * Check if the given value is *inter-element whitespace*.
+ *
  * @param {unknown} thing
+ *   Thing to check (typically `Node` or `string`).
  * @returns {boolean}
+ *   Whether the `value` is inter-element whitespace (`boolean`): consisting of
+ *   zero or more of space, tab (`\t`), line feed (`\n`), carriage return
+ *   (`\r`), or form feed (`\f`).
+ *   If a node is passed it must be a `Text` node, whose `value` field is
+ *   checked.
  */
 function whitespace(thing) {
   /** @type {string} */
   var value =
-  // @ts-ignore looks like a node.
+  // @ts-expect-error looks like a node.
   thing && typeof thing === 'object' && thing.type === 'text' ?
-  // @ts-ignore looks like a text.
+  // @ts-expect-error looks like a text.
   thing.value || '' : thing;
 
   // HTML whitespace expression.
-  // See <https://html.spec.whatwg.org/#space-character>.
+  // See <https://infra.spec.whatwg.org/#ascii-whitespace>.
   return typeof value === 'string' && value.replace(/[ \t\n\f\r]/g, '') === '';
 }
 
@@ -15373,6 +16522,8 @@ function stringify(values, options) {
   var input = values[values.length - 1] === '' ? [].concat(_toConsumableArray(values), ['']) : values;
   return input.join((settings.padRight ? ' ' : '') + ',' + (settings.padLeft === false ? '' : ' ')).trim();
 }
+
+var styleToObject = {exports: {}};
 
 // http://www.w3.org/TR/CSS21/grammar.html
 // https://github.com/visionmedia/css-parse/pull/49#issuecomment-30088027
@@ -15618,43 +16769,48 @@ function trim(str) {
   return str ? str.replace(TRIM_REGEX, EMPTY_STRING) : EMPTY_STRING;
 }
 
-var parse = inlineStyleParser;
+(function (module) {
+	var parse = inlineStyleParser;
 
-/**
- * Parses inline style to object.
- *
- * @example
- * // returns { 'line-height': '42' }
- * StyleToObject('line-height: 42;');
- *
- * @param  {String}      style      - The inline style.
- * @param  {Function}    [iterator] - The iterator function.
- * @return {null|Object}
- */
-function StyleToObject(style, iterator) {
-  var output = null;
-  if (!style || typeof style !== 'string') {
-    return output;
-  }
-  var declaration;
-  var declarations = parse(style);
-  var hasIterator = typeof iterator === 'function';
-  var property;
-  var value;
-  for (var i = 0, len = declarations.length; i < len; i++) {
-    declaration = declarations[i];
-    property = declaration.property;
-    value = declaration.value;
-    if (hasIterator) {
-      iterator(property, value, declaration);
-    } else if (value) {
-      output || (output = {});
-      output[property] = value;
-    }
-  }
-  return output;
-}
-var styleToObject = StyleToObject;
+	/**
+	 * Parses inline style to object.
+	 *
+	 * @example
+	 * // returns { 'line-height': '42' }
+	 * StyleToObject('line-height: 42;');
+	 *
+	 * @param  {String}      style      - The inline style.
+	 * @param  {Function}    [iterator] - The iterator function.
+	 * @return {null|Object}
+	 */
+	function StyleToObject(style, iterator) {
+	  var output = null;
+	  if (!style || typeof style !== 'string') {
+	    return output;
+	  }
+	  var declaration;
+	  var declarations = parse(style);
+	  var hasIterator = typeof iterator === 'function';
+	  var property;
+	  var value;
+	  for (var i = 0, len = declarations.length; i < len; i++) {
+	    declaration = declarations[i];
+	    property = declaration.property;
+	    value = declaration.value;
+	    if (hasIterator) {
+	      iterator(property, value, declaration);
+	    } else if (value) {
+	      output || (output = {});
+	      output[property] = value;
+	    }
+	  }
+	  return output;
+	}
+	module.exports = StyleToObject;
+	module.exports["default"] = StyleToObject; // ESM support
+} (styleToObject));
+
+var StyleToObject = styleToObject.exports;
 
 /**
  * @template T
@@ -15707,6 +16863,7 @@ function childrenToReact(context, node) {
  */
 function toReact(context, node, index, parent) {
   var options = context.options;
+  var transform = options.transformLinkUri === undefined ? uriTransformer : options.transformLinkUri;
   var parentSchema = context.schema;
   /** @type {ReactMarkdownNames} */
   // @ts-expect-error assume a known HTML/SVG element.
@@ -15761,8 +16918,8 @@ function toReact(context, node, index, parent) {
   if (name === 'a' && options.linkTarget) {
     properties.target = typeof options.linkTarget === 'function' ? options.linkTarget(String(properties.href || ''), node.children, typeof properties.title === 'string' ? properties.title : null) : options.linkTarget;
   }
-  if (name === 'a' && options.transformLinkUri) {
-    properties.href = options.transformLinkUri(String(properties.href || ''), node.children, typeof properties.title === 'string' ? properties.title : null);
+  if (name === 'a' && transform) {
+    properties.href = transform(String(properties.href || ''), node.children, typeof properties.title === 'string' ? properties.title : null);
   }
   if (!basic && name === 'code' && parent.type === 'element' && parent.tagName !== 'pre') {
     properties.inline = true;
@@ -15888,7 +17045,7 @@ function parseStyle(value) {
   /** @type {Record<string, string>} */
   var result = {};
   try {
-    styleToObject(value, iterator);
+    StyleToObject(value, iterator);
   } catch (_unused) {
     // Silent.
   }
@@ -15928,7 +17085,7 @@ var changelog = 'https://github.com/remarkjs/react-markdown/blob/main/changelog.
 /** @type {Record<string, Deprecation>} */
 var deprecated = {
   plugins: {
-    to: 'plugins',
+    to: 'remarkPlugins',
     id: 'change-plugins-to-remarkplugins'
   },
   renderers: {
@@ -16007,9 +17164,6 @@ function ReactMarkdown(options) {
   }
   return result;
 }
-ReactMarkdown.defaultProps = {
-  transformLinkUri: uriTransformer
-};
 ReactMarkdown.propTypes = {
   // Core options:
   children: propTypes.exports.string,
@@ -33765,6 +34919,24 @@ const shortenAddress = (address, symbols = [6, 4]) => {
     const secondPart = address.slice(-symbols[1]);
     return `${firstPart}...${secondPart}`;
 };
+/**
+ *
+ * replacer("example@example.com", [2,2], "#") => ex###############om
+ *
+ * @param toReplace string
+ * @param symbols how many items left in the string
+ * @param replaceBy replace symbol
+ * @returns string
+ */
+const replacer = (toReplace, symbols = [3, 3], replaceBy = "*") => {
+    if (!(toReplace === null || toReplace === void 0 ? void 0 : toReplace.length)) {
+        return "";
+    }
+    const firstPart = toReplace.slice(0, symbols[0]);
+    const secondPart = replaceBy.repeat(toReplace.length - (symbols[0] + symbols[1]));
+    const thirdPart = toReplace.slice(-symbols[1]);
+    return `${firstPart}${secondPart}${thirdPart}`;
+};
 
 var formatters = /*#__PURE__*/Object.freeze({
     __proto__: null,
@@ -33772,7 +34944,8 @@ var formatters = /*#__PURE__*/Object.freeze({
     getCountAfterDot: getCountAfterDot,
     formatPercent: formatPercent,
     parseMimeType: parseMimeType,
-    shortenAddress: shortenAddress
+    shortenAddress: shortenAddress,
+    replacer: replacer
 });
 
 function ownKeys$3(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
@@ -33886,7 +35059,8 @@ function createProfilesApi(backendServiceApi) {
               headers: headers
             };
           },
-          transformResponse: transformResponseItem
+          transformResponse: transformResponseItem,
+          invalidatesTags: profileInvalidate
         }),
         checkFactors: build.mutation({
           query: function query() {

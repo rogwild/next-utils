@@ -11,3 +11,13 @@ export declare const parseMimeType: (mime: any) => {
     renderType: any;
 };
 export declare const shortenAddress: (address: string, symbols?: number[]) => string;
+/**
+ *
+ * replacer("example@example.com", [2,2], "#") => ex###############om
+ *
+ * @param toReplace string
+ * @param symbols how many items left in the string
+ * @param replaceBy replace symbol
+ * @returns string
+ */
+export declare const replacer: (toReplace: string, symbols?: number[], replaceBy?: string) => string;
