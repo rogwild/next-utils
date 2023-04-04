@@ -24,6 +24,10 @@ export const isObject = (data) => data && typeof data === `object`;
 export const isArray = (data) => data && Array.isArray(data);
 
 export const snakeToCamel = (str: string) => {
+  if (str[0] === "_") {
+    return str;
+  }
+
   return str.replace(/([-_][a-z])/gi, (char) => {
     return char.toUpperCase().replace(`-`, ``).replace(`_`, ``);
   });

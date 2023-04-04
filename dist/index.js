@@ -34600,6 +34600,9 @@ const combineHeaders = ({ withAuth }) => {
 const isObject = (data) => data && typeof data === `object`;
 const isArray = (data) => data && Array.isArray(data);
 const snakeToCamel = (str) => {
+    if (str[0] === "_") {
+        return str;
+    }
     return str.replace(/([-_][a-z])/gi, (char) => {
         return char.toUpperCase().replace(`-`, ``).replace(`_`, ``);
     });
