@@ -1,4 +1,6 @@
-import React, { useEffect, useState, FC, ReactNode, useMemo } from "react";
+"use client";
+
+import React, { useEffect, useState, ReactNode } from "react";
 import { useSpring, animated } from "@react-spring/web";
 
 type TAuthWrapperProps = {
@@ -6,6 +8,7 @@ type TAuthWrapperProps = {
   children: ReactNode;
   isPublic?: boolean;
   useRouter?: any;
+  usePathname?: any;
   useMyProfile: any;
   user?: any;
   redirectTo?: string;
@@ -21,6 +24,7 @@ const AuthWrapper = ({
   children,
   isPublic = false,
   useRouter,
+  usePathname,
   // user,
   useMyProfile,
   redirectTo = "",
@@ -28,24 +32,22 @@ const AuthWrapper = ({
 }: TAuthWrapperProps) => {
   const { me: user } = useMyProfile();
   const router = useRouter();
-  const {
-    query: { initPath },
-  } = router;
+  const pathname = usePathname();
 
-  const [cachedInitPath, setCachedInitPath] = useState(redirectTo);
+  const [cachedPathname, setCachedPathname] = useState(redirectTo);
 
   useEffect(() => {
-    setCachedInitPath((prev) => {
-      if (initPath) {
-        return initPath;
+    setCachedPathname((prev) => {
+      if (pathname && !pathname.includes("/auth")) {
+        return pathname;
       }
 
       return prev;
     });
-  }, [initPath]);
+  }, [pathname]);
 
   const [passed, setPassed] = useState(false);
-  const [hideLoader, setHideLoader] = useState(false);
+  const [hideLoader, setHideLoader] = useState(true);
   const [closeLoader, setCloseLoader] = useState(false);
 
   const fromLoaderStyles = {
@@ -87,8 +89,8 @@ const AuthWrapper = ({
     if (user.id) {
       setPassed(true);
 
-      if (router.asPath?.includes("/auth")) {
-        router.push(cachedInitPath);
+      if (pathname?.includes("/auth")) {
+        router.push(cachedPathname);
       }
 
       return;
@@ -99,16 +101,15 @@ const AuthWrapper = ({
         return;
       }
 
-      const pathQuery =
-        !initPath && !router.asPath.includes("/auth")
-          ? `?initPath=${router.asPath}`
-          : ``;
+      const pathQuery = !pathname?.includes("/auth")
+        ? `?initPath=${pathname}`
+        : ``;
 
       router.push(`/auth/login${pathQuery}`);
     } else if (isAuth) {
       setPassed(true);
     }
-  }, [user, router]);
+  }, [user, router, pathname]);
 
   return (
     <>

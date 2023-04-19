@@ -1,30 +1,30 @@
-export declare const checkIsServer: () => boolean;
-export declare const loadScripts: ({ u, type, id }: {
+export declare function checkIsServer(): boolean;
+export declare function loadScripts({ u, type, id }: {
     u: any;
     type?: string;
     id: any;
-}) => Promise<unknown>;
-export declare const GTMPageView: (url: any) => {
+}): Promise<unknown>;
+export declare function GTMPageView(url: any): {
     event: string;
     page: any;
 };
-export declare const isNil: (value: any) => boolean;
+export declare function isNil(value: any): boolean;
 export declare const urlRegex: RegExp;
-export declare const addProtocolToUrl: (url: any) => string;
-export declare const getURLsFromText: (text: any) => {
+export declare function addProtocolToUrl(url: any): string;
+export declare function getURLsFromText(text: any): {
     textWithMarkup: any;
     displayUrl: string;
 };
-export declare const parseMimeType: (mime: any) => {
+export declare function parseMimeType(mime: any): {
     type?: undefined;
     ext?: undefined;
 } | {
     type: any;
     ext: any;
 };
-export declare const getPastDay: (days: any) => Date;
-export declare const getMonthRange: ({ date, firstDayQuantity, lastDayQuantity }: {
+export declare function getPastDay(days: any): Date;
+export declare function getMonthRange({ date, firstDayQuantity, lastDayQuantity }: {
     date: any;
     firstDayQuantity: any;
     lastDayQuantity: any;
-}) => Date[];
+}): Date[];

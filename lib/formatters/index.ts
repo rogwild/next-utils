@@ -1,15 +1,22 @@
 const NUMBERS_AFTER_ZERO = 4;
 
-export const hasZeroAfterDot = (price) => /0[.,](0+)[0-9]+/.test(price);
+export function hasZeroAfterDot(price) {
+  return /0[.,](0+)[0-9]+/.test(price);
+}
 
-export const getCountAfterDot = (price) =>
-  price.toString().match(/0[.,](0*)[0-9]+/)[1].length + NUMBERS_AFTER_ZERO;
+export function getCountAfterDot(price) {
+  return (
+    price.toString().match(/0[.,](0*)[0-9]+/)[1].length + NUMBERS_AFTER_ZERO
+  );
+}
 
-export const formatPercent = (number) =>
-  number ? `${number.toFixed(2)}` : `0`;
+export function formatPercent(number) {
+  return number ? `${number.toFixed(2)}` : `0`;
+}
 
 const allowedImageExtensions = [`png`, `jpeg`, `webp`, `tiff`];
-export const parseMimeType = (mime) => {
+
+export function parseMimeType(mime) {
   if (!mime) return {};
   const splittedMime = mime?.split(`/`);
 
@@ -26,9 +33,9 @@ export const parseMimeType = (mime) => {
   }
 
   return { type, ext, renderType };
-};
+}
 
-export const shortenAddress = (address: string, symbols = [6, 4]) => {
+export function shortenAddress(address: string, symbols = [6, 4]) {
   if (!address?.length) {
     return "";
   }
@@ -37,7 +44,7 @@ export const shortenAddress = (address: string, symbols = [6, 4]) => {
   const secondPart = address.slice(-symbols[1]);
 
   return `${firstPart}...${secondPart}`;
-};
+}
 
 /**
  *
@@ -48,11 +55,7 @@ export const shortenAddress = (address: string, symbols = [6, 4]) => {
  * @param replaceBy replace symbol
  * @returns string
  */
-export const replacer = (
-  toReplace: string,
-  symbols = [3, 3],
-  replaceBy = "*"
-) => {
+export function replacer(toReplace: string, symbols = [3, 3], replaceBy = "*") {
   if (!toReplace?.length) {
     return "";
   }
@@ -64,4 +67,4 @@ export const replacer = (
   const thirdPart = toReplace.slice(-symbols[1]);
 
   return `${firstPart}${secondPart}${thirdPart}`;
-};
+}

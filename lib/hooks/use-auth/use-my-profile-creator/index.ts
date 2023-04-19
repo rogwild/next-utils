@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useMemo } from "react";
 import { selectors } from "../../../redux/slices/auth";
 

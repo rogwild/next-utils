@@ -1,7 +1,7 @@
-export declare const hasZeroAfterDot: (price: any) => boolean;
-export declare const getCountAfterDot: (price: any) => any;
-export declare const formatPercent: (number: any) => string;
-export declare const parseMimeType: (mime: any) => {
+export declare function hasZeroAfterDot(price: any): boolean;
+export declare function getCountAfterDot(price: any): any;
+export declare function formatPercent(number: any): string;
+export declare function parseMimeType(mime: any): {
     type?: undefined;
     ext?: undefined;
     renderType?: undefined;
@@ -10,7 +10,7 @@ export declare const parseMimeType: (mime: any) => {
     ext: any;
     renderType: any;
 };
-export declare const shortenAddress: (address: string, symbols?: number[]) => string;
+export declare function shortenAddress(address: string, symbols?: number[]): string;
 /**
  *
  * replacer("example@example.com", [2,2], "#") => ex###############om
@@ -20,4 +20,4 @@ export declare const shortenAddress: (address: string, symbols?: number[]) => st
  * @param replaceBy replace symbol
  * @returns string
  */
-export declare const replacer: (toReplace: string, symbols?: number[], replaceBy?: string) => string;
+export declare function replacer(toReplace: string, symbols?: number[], replaceBy?: string): string;

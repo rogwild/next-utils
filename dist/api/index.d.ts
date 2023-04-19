@@ -1,62 +1,16 @@
-import { Api } from "./client";
-export declare const getFileUrl: (obj: {
+import { transformResponseItem as transformResponseItemFunc } from "./transform-response-item";
+export declare function getFileUrl(obj: {
     formats?: object;
     url: string;
 }, options?: {
     size?: string;
     BACKEND_URL?: string;
-}) => string;
+}): any;
 /**
- * Will be deprecated, use getFileUrl
+ * @deprecated
+ * Use `getFileUrl`
  */
-export declare const getImageUrl: (obj: {
-    formats?: object;
-    url: string;
-}, options?: {
-    size?: string;
-    BACKEND_URL?: string;
-}) => string;
-export declare const transformPageBlock: (block: any, transformers: any) => any;
-export declare const unlunkRemovedFiles: ({ data }: {
-    data: any;
-}) => any;
-export declare const removeEmptyFields: ({ data, passKey, files, }: {
-    data: object;
-    passKey?: string;
-    files: any;
-}) => any;
-/**
- * Get data for Next.js page form Strapi API
- *
- * @param additionalBlocks - ex. ['header', 'footer']
- * @param transformers - ex.
- * { [`page-blocks.main-block`]: (block) => {
- *   return {
- *      ...block,
- *      images: block?.images?.map((image) =>
- *              getImageUrl(image, {BACKEND_URL: "http://localhost:1337"})) || null,
- *            };
- *    },
- * }
- */
-export declare const getPageData: (params: {
-    url?: string;
-    page: string;
-    locale?: string;
-    keys?: string[];
-    additionalBlocks?: string[];
-    transformers?: any;
-    query?: any;
-}) => Promise<{
-    pageBlocks: any;
-    res: any;
-    additionalBlocks: {};
-}>;
-export declare const handleApiError: (error: any) => {
-    event: string;
-    title: any;
-};
-export declare const appendFilesToFormData: (formData: any, files: any) => void;
-export declare const prepareFormDataToSend: (params: any) => FormData;
-export declare const ApiClient: typeof Api;
-export declare const transformResponseItem: (resItem: any) => any;
+export declare const getImageUrl: typeof getFileUrl;
+export declare function appendFilesToFormData(formData: any, files: any): void;
+export declare function prepareFormDataToSend(params: any): FormData;
+export declare const transformResponseItem: typeof transformResponseItemFunc;

@@ -1,6 +1,8 @@
-export const checkIsServer = () => typeof window === `undefined`;
+export function checkIsServer() {
+  return typeof window === `undefined`;
+}
 
-export const loadScripts = async ({ u, type = `text/javascript`, id }) => {
+export async function loadScripts({ u, type = `text/javascript`, id }) {
   return new Promise(function (resolve, reject) {
     const s = document.createElement(`script`);
     s.type = type;
@@ -15,9 +17,9 @@ export const loadScripts = async ({ u, type = `text/javascript`, id }) => {
 
     document.body.append(s);
   });
-};
+}
 
-export const GTMPageView = (url) => {
+export function GTMPageView(url) {
   const pageEvent = {
     event: `pageview`,
     page: url,
@@ -27,14 +29,16 @@ export const GTMPageView = (url) => {
     (window as any).dataLayer.push(pageEvent);
 
   return pageEvent;
-};
+}
 
-export const isNil = (value) => value === null || value === undefined;
+export function isNil(value) {
+  return value === null || value === undefined;
+}
 
 export const urlRegex =
   /[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/gim;
 
-export const addProtocolToUrl = (url) => {
+export function addProtocolToUrl(url) {
   const splittedString = url.split(`://`);
   let urlWithProtocol = ``;
   if (splittedString.length > 1) {
@@ -44,9 +48,9 @@ export const addProtocolToUrl = (url) => {
     urlWithProtocol = `https://${url}`;
   }
   return urlWithProtocol;
-};
+}
 
-export const getURLsFromText = (text) => {
+export function getURLsFromText(text) {
   let displayUrl = ``;
   const textWithMarkup = text.replace(urlRegex, (replacement) => {
     if (!displayUrl) {
@@ -59,22 +63,22 @@ export const getURLsFromText = (text) => {
     textWithMarkup,
     displayUrl,
   };
-};
+}
 
-export const parseMimeType = (mime) => {
+export function parseMimeType(mime) {
   if (!mime) return {};
   const splittedMime = mime?.split(`/`);
 
   return { type: splittedMime[0], ext: splittedMime[1] };
-};
+}
 
-export const getPastDay = (days) => {
+export function getPastDay(days) {
   const date = new Date();
   date.setDate(date.getDate() - days);
   return date;
-};
+}
 
-export const getMonthRange = ({ date, firstDayQuantity, lastDayQuantity }) => {
+export function getMonthRange({ date, firstDayQuantity, lastDayQuantity }) {
   const firstDay = new Date(
     date.getFullYear(),
     date.getMonth() - (firstDayQuantity || 0),
@@ -87,4 +91,4 @@ export const getMonthRange = ({ date, firstDayQuantity, lastDayQuantity }) => {
   );
 
   return [firstDay, lastDay];
-};
+}

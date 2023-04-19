@@ -7,6 +7,7 @@ import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import typescript from "@rollup/plugin-typescript";
 import { babel } from "@rollup/plugin-babel";
+import preserveDirectives from "rollup-plugin-preserve-directives";
 import pkg from "./package.json";
 
 const config = {
@@ -18,6 +19,7 @@ const config = {
       exports: "named",
       sourcemap: true,
       strict: false,
+      banner: `'use client';`,
     },
   ],
   plugins: [
@@ -33,6 +35,7 @@ const config = {
       presets: ["next/babel"],
     }),
     commonjs(),
+    preserveDirectives(),
   ],
   external: [
     ...Object.keys(pkg.dependencies).filter(
@@ -41,6 +44,11 @@ const config = {
     "react",
     "rect-dom",
   ],
+  onwarn(warning, warn) {
+    if (warning.code !== "MODULE_LEVEL_DIRECTIVE") {
+      warn(warning);
+    }
+  },
 };
 
 export default config;

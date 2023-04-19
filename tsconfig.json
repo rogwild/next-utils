@@ -2,7 +2,7 @@
   "compilerOptions": {
     "outDir": "build",
     "allowJs": true,
-    "target": "es5",
+    "target": "es6",
     "jsx": "preserve",
     "allowSyntheticDefaultImports": true,
     "declaration": true,
@@ -24,6 +24,6 @@
     "typeRoots": ["./node_modules/@types", "types"]
   },
   "types": ["jest", "@testing-library/jest-dom"],
-  "exclude": ["node_modules", "dist", "web3", "use-web3-auth"],
+  "exclude": ["node_modules", "dist"],
   "include": ["lib"]
 }
