@@ -33283,8 +33283,10 @@ useMyProfile, redirectTo = "", Loader = DefaultLoader, }) => {
     const [cachedPathname, setCachedPathname] = React.useState(redirectTo);
     React.useEffect(() => {
         setCachedPathname((prev) => {
-            if (pathname && !pathname.includes("/auth")) {
-                return pathname;
+            if (pathname) {
+                if (!pathname.includes("/auth")) {
+                    return pathname;
+                }
             }
             return prev;
         });
@@ -33341,7 +33343,7 @@ useMyProfile, redirectTo = "", Loader = DefaultLoader, }) => {
         else if (isAuth) {
             setPassed(true);
         }
-    }, [user, router, pathname]);
+    }, [user, router, pathname, isAuth, isPublic]);
     return (React__default["default"].createElement(React__default["default"].Fragment, null,
         React__default["default"].createElement(web.animated.div, { className: `fixed flex inset-0 h-screen w-screen overflow-hidden ${hideLoader ? `-z-1 hidden` : `z-[200] flex-center`}`, style: loaderStyles },
             React__default["default"].createElement(Loader, null)),

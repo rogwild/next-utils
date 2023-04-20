@@ -38,8 +38,10 @@ const AuthWrapper = ({
 
   useEffect(() => {
     setCachedPathname((prev) => {
-      if (pathname && !pathname.includes("/auth")) {
-        return pathname;
+      if (pathname) {
+        if (!pathname.includes("/auth")) {
+          return pathname;
+        }
       }
 
       return prev;
@@ -109,7 +111,7 @@ const AuthWrapper = ({
     } else if (isAuth) {
       setPassed(true);
     }
-  }, [user, router, pathname]);
+  }, [user, router, pathname, isAuth, isPublic]);
 
   return (
     <>
